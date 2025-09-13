@@ -1,14 +1,7 @@
-import { Link, NavLink } from 'react-dom/client';
+import { Link, NavLink } from "react-dom/client";
 
 function TopNav() {
-
-return (
-    <nav className="nav_bar">
-        This is a navbar
-    </nav>
-
-);
+  return <nav className="nav_bar">Navbar Placeholder</nav>;
 }
 
 export default TopNav;
-

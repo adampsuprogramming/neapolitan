@@ -1,19 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 import TopNav from "./TopNav";
-import BorrowBase from './BorrowBase';
+import BorrowBase from "./BorrowBase";
 
 function App() {
   return (
     <div className="App">
-    <TopNav />
-      
-    
-    <BorrowBase />
+      <TopNav />
 
-    
-    
-      
+      <BorrowBase />
     </div>
   );
 }
