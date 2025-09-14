@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
+
+// Basic query for borrowing base.  This will be separated into a separate file and folder along with
+// all othese queries in the coming weeks.
+
 const borrowBaseQuery = `
 select 
 	c.collateral_id,
@@ -60,6 +64,8 @@ left join rate_data rd
 where c.inclusion_date <= $1
 	and (c.removed_date > $1 or c.removed_date is NULL)
 `
+
+// route for borrorwing base query.  This will be expanded upong to receive input from user.
 
 router.get('/api/borrowbase', async (req, res) => {
   try {

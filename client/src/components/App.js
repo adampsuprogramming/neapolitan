@@ -6,8 +6,9 @@ import BorrowBase from "./BorrowBase";
 function App() {
   return (
     <div className="App">
-      <TopNav />
-
+      {/* included as a test item and will be removed later */}
+      <TopNav /> 
+      {/* borrowing base page under development */}
       <BorrowBase />
     </div>
   );

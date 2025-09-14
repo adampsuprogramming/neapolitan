@@ -10,16 +10,15 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 const serverAddress = "http://localhost:5000";
 
 function BorrowBase() {
-  const [borrowBase, setBorrowBase] = useState(null);
-
+  // use effect to get borrowing base data when the page loads. Additional criteria will be included in dependency
+  // array.  For example, re-rerunning query when 'as of date' changes.
   useEffect(() => {
     async function getBorrowBase() {
       try {
         const fullInfoResponse = await axios.get(
           `${serverAddress}/api/borrowbase`,
         );
-        setBorrowBase(fullInfoResponse.data);
-        setRowData(fullInfoResponse.data);
+      setRowData(fullInfoResponse.data);
       } catch (error) {
         console.error("Error fetching");
       }
@@ -27,8 +26,10 @@ function BorrowBase() {
     getBorrowBase();
   }, []);
 
+  // useState hook to set the row data
   const [rowData, setRowData] = useState([]);
 
+  // useState hook to set the column data --- this also renames the columns to appropriate names
   const [colDefs, setColDefs] = useState([
     { field: "collateral_id", headerName: "Collateral ID" },
     { field: "inclusion_date", headerName: "Inclusion Date" },
@@ -67,7 +68,7 @@ function BorrowBase() {
     { field: "spread", headerName: "Spread" },
   ]);
 
-
+  // returns a very basic AGGrid table, which will be elaborated on in the coming weeks.
   return (
     <div className="ag-theme-alpine" style={{ width: "100%", height: "500px" }}>
       <AgGridReact rowData={rowData} columnDefs={colDefs} />

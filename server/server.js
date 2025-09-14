@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+// Test route to ensure that DB connection is working
 app.get('/tranches', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM loan_tranches');
@@ -28,6 +29,7 @@ app.get('/tranches', async (req, res) => {
   }
 });
 
+// Route to retrieve borrowing base
 app.use(borrowBaseRoutes);
 
 app.listen(PORT,console.log(
