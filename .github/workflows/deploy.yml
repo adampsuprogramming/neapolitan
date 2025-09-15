@@ -25,6 +25,8 @@ jobs:
       - name: Build the frontend
         run: npm run build
         working-directory: ./client
+        env:
+          CI: false
 
       - name: Configure AWS Creds
         uses: aws-actions/configure-aws-credentials@v4
