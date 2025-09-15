@@ -5,9 +5,8 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 
-ModuleRegistry.registerModules([AllCommunityModule]);
 
-const serverAddress = "http://localhost:5000";
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 function BorrowBase() {
   // use effect to get borrowing base data when the page loads. Additional criteria will be included in dependency
@@ -16,7 +15,7 @@ function BorrowBase() {
     async function getBorrowBase() {
       try {
         const fullInfoResponse = await axios.get(
-          `${serverAddress}/api/borrowbase`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/borrowbase`,
         );
       setRowData(fullInfoResponse.data);
       } catch (error) {
