@@ -7,7 +7,7 @@ import { AgGridReact } from "ag-grid-react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-function BorrowBase() {
+function BorrowBaseOld() {
   // use effect to get borrowing base data when the page loads. Additional criteria will be included in dependency
   // array.  For example, re-rerunning query when 'as of date' changes.
   
@@ -274,4 +274,4 @@ function BorrowBase() {
   );
 }
 
-export default BorrowBase;
+export default BorrowBaseOld;
