@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       {/* included as a test item and will be removed later */}
-      <TopNav /> 
+      <TopNav />
       {/* borrowing base page under development */}
       <BorrowBase />
     </div>

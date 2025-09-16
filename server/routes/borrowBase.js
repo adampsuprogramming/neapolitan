@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const pool = require('../db');
+const pool = require("../db");
 
 // Basic query for borrowing base.  This will be separated into a separate file and folder along with
 // all othese queries in the coming weeks.
@@ -63,19 +63,18 @@ left join rate_data rd
 	and (rd.end_date > $1 or rd.end_date is null)
 where c.inclusion_date <= $1
 	and (c.removed_date > $1 or c.removed_date is NULL)
-`
+`;
 
 // route for borrorwing base query.  This will be expanded upong to receive input from user.
 
-router.get('/api/borrowbase', async (req, res) => {
+router.get("/api/borrowbase", async (req, res) => {
   try {
-    const result = await pool.query(borrowBaseQuery, ['2025-06-30']);
+    const result = await pool.query(borrowBaseQuery, ["2025-06-30"]);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).send('DB test tranches query failed)');
+    res.status(500).send("DB test tranches query failed)");
   }
 });
 
-
-module.exports = router; 
+module.exports = router;

@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies for frontend
         run: npm install
@@ -37,13 +37,13 @@ jobs:
 
       - name: Upload to S3
         run: aws s3 sync ./client/build/ s3://neapolitandebt.com --delete
-              
+
   deploy-backend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-    
+
       - name: Configure AWS Creds
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -54,11 +54,10 @@ jobs:
       - name: log in to ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-      
+
       - name: Build and push docker
         run: |
           cd ./server
           docker build -t neapolitan-backend .
           docker tag neapolitan-backend:latest ${{ steps.login-ecr.outputs.registry }}/neapolitan-backend:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/neapolitan-backend:latest
-          
