@@ -19,6 +19,10 @@ app.get("/", (req, res) => {
   res.end();
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
+
 const PORT = process.env.PORT || 5000;
 
 // Test route to ensure that DB connection is working
