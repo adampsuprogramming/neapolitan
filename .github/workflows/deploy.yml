@@ -27,6 +27,7 @@ jobs:
         working-directory: ./client
         env:
           CI: false
+          REACT_APP_BACKEND_URL: ${{ secrets.BACKEND_URL }}
 
       - name: Configure AWS Creds
         uses: aws-actions/configure-aws-credentials@v4
@@ -61,3 +62,11 @@ jobs:
           docker build -t neapolitan-backend .
           docker tag neapolitan-backend:latest ${{ steps.login-ecr.outputs.registry }}/neapolitan-backend:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/neapolitan-backend:latest
+
+      - name: Force ECS Service Update
+        run: |
+          aws ecs update-service \
+            --cluster neapolitan-cluster \
+            --service neapolitan-backend-service \
+            --force-new-deployment \
+            --region us-east-1
