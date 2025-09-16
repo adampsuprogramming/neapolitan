@@ -77,8 +77,7 @@ function BorrowBase() {
 
   return (
     <div>
-      {/* <select id="choosePortfolio" value={selectedPortfolio} onChange={handlePortfolioChange}> */}
-      <select value={selectedPortfolio} onChange={handlePortfolioChange}>
+        <select value={selectedPortfolio} onChange={handlePortfolioChange}>
         <option value="">Choose a Portfolio</option>
         {uniqueNames.map((portfolio) => (
           <option key={portfolio} value={portfolio}>
@@ -109,7 +108,7 @@ function BorrowBase() {
       {asOfDate}
 
 
-      
+
     </div>
     
   );
