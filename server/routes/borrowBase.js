@@ -65,7 +65,19 @@ where c.inclusion_date <= $1
 	and (c.removed_date > $1 or c.removed_date is NULL)
 `;
 
+
+
 // route for borrorwing base query.  This will be expanded upong to receive input from user.
+
+// router.get("/api/borrowbase", async (req, res) => {
+//   try {
+//     const result = await pool.query(borrowBaseQuery, ["2025-06-30"]);
+//     res.json(result.rows);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("DB test tranches query failed)");
+//   }
+// });
 
 router.get("/api/borrowbase", async (req, res) => {
   try {
@@ -76,5 +88,6 @@ router.get("/api/borrowbase", async (req, res) => {
     res.status(500).send("DB test tranches query failed)");
   }
 });
+
 
 module.exports = router;

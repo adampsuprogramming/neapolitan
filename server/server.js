@@ -3,6 +3,7 @@ const pool = require("./db");
 const cors = require("cors");
 const app = express();
 const borrowBaseRoutes = require("./routes/borrowBase");
+const facilityRoutes = require("./routes/facilityQuery");
 
 app.use(
   cors({
@@ -33,6 +34,7 @@ app.get("/tranches", async (req, res) => {
 
 // Route to retrieve borrowing base
 app.use(borrowBaseRoutes);
+app.use(facilityRoutes);
 
 app.listen(PORT, console.log(`The Server has been started on port ${PORT}`));
 
