@@ -9,7 +9,6 @@ const allowedOrigins = process.env.FRONTEND_URL
   : ['http://localhost:3000'];
 require("dotenv").config();
 
-
 app.use(
   cors({
     origin: allowedOrigins,
