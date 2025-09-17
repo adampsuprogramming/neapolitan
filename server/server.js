@@ -6,6 +6,7 @@ const borrowBaseRoutes = require("./routes/borrowBase");
 const facilityRoutes = require("./routes/facilityQuery");
 require("dotenv").config();
 
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
