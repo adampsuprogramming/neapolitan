@@ -9,6 +9,7 @@ const facilityQuery = `
 select 
 	p.portfolio_name,
 	d.debt_facility_name,
+	d.debt_facility_id,
 	l.lender_name,
 	dfb.outstanding_amount,
 	dfo.overall_commitment_amount 

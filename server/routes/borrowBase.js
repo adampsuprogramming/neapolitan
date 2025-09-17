@@ -57,17 +57,20 @@ left join loan_metrics lm
 	on lm.tranche_id =lt.tranche_id
 	and lm.start_date <= $1
 	and (lm.end_date > $1 or lm.end_date is null)
+left join debt_facilities df
+	on df.debt_facility_id = c.debt_facility_id
 left join rate_data rd 
 	on rd.tranche_id =lt.tranche_id
 	and rd.start_date <= $1
 	and (rd.end_date > $1 or rd.end_date is null)
 where c.inclusion_date <= $1
 	and (c.removed_date > $1 or c.removed_date is NULL)
+	and df.debt_facility_id = $2
 `;
 
 
 
-// route for borrorwing base query.  This will be expanded upong to receive input from user.
+// route for borrorwing base query.  This will be expanded upon to receive input from user.
 
 // router.get("/api/borrowbase", async (req, res) => {
 //   try {
@@ -80,8 +83,9 @@ where c.inclusion_date <= $1
 // });
 
 router.get("/api/borrowbase", async (req, res) => {
+  const {as_of_date, facility_id} = req.query;
   try {
-    const result = await pool.query(borrowBaseQuery, ["2025-06-30"]);
+    const result = await pool.query(borrowBaseQuery, [as_of_date,facility_id]);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
