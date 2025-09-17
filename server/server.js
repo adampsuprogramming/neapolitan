@@ -4,10 +4,11 @@ const cors = require("cors");
 const app = express();
 const borrowBaseRoutes = require("./routes/borrowBase");
 const facilityRoutes = require("./routes/facilityQuery");
+require("dotenv").config();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
