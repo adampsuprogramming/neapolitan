@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require("../db");
 
 // Basic query for borrowing base.  This will be separated into a separate file and folder along with
-// all othese queries in the coming weeks.
+// all othese queries in the coming weeks
 
 const borrowBaseQuery = `
 select 
