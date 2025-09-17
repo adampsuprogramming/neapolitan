@@ -69,6 +69,6 @@ jobs:
         run: |
           aws ecs update-service \
             --cluster neapolitan-cluster \
-            --service neapolitan-backend-service \
+            --service arn:aws:ecs:us-east-1:390844751276:service/neapolitan-cluster/neapolitan-backend-task-service-j4ed08lj \
             --force-new-deployment \
             --region us-east-1
