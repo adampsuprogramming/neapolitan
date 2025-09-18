@@ -14,7 +14,7 @@ function BorrowBase() {
   const [selectedPortfolio, setSelectedPortfolio] = useState("");
   const [facilityName, setFacilityName] = useState("");
   const [facilityNames, setFacilityNames] = useState([]);
-  const [facilityNumber, setFacilityNumber] = useState([]);
+  const [facilityNumber, setFacilityNumber] = useState(null);
   const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]);
   const [asOfDate, setAsOfDate] = useState("");
 
@@ -273,7 +273,9 @@ function BorrowBase() {
   const handleFacilityChange = (e) => {
     const selectionValue = e.target.value;
     setFacilityName(selectionValue);
-    const facility_record = facilityData.find(f => f.debt_facility_name === selectionValue);
+    const facility_record = facilityData.find(
+      (f) => f.debt_facility_name === selectionValue,
+    );
     const facility_numb = facility_record.debt_facility_id;
     console.log("Hi");
     setFacilityNumber(facility_numb);
@@ -331,24 +333,32 @@ function BorrowBase() {
     async function getBorrowBase() {
       try {
         const fullInfoResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/borrowbase`, {
+          `${process.env.REACT_APP_BACKEND_URL}/api/borrowbase`,
+          {
             params: {
               as_of_date: asOfDate,
-              facility_id: facilityNumber
-            }
-          }
+              facility_id: facilityNumber,
+            },
+          },
         );
         setRowData(fullInfoResponse.data);
       } catch (error) {
         console.error("Error fetching");
       }
     }
-    getBorrowBase();
-  }, [asOfDate,facilityNumber]);
+    if (asOfDate && facilityNumber) {
+      getBorrowBase();
+    }
+  }, [asOfDate, facilityNumber]);
 
   return (
     <div>
-        <select value={selectedPortfolio} onChange={handlePortfolioChange}>
+      <label htmlFor="portfolio_select">Portfolio: </label>
+      <select
+        id="portfolio_select"
+        value={selectedPortfolio}
+        onChange={handlePortfolioChange}
+      >
         <option value="">Choose a Portfolio</option>
         {uniqueNames.map((portfolio) => (
           <option key={portfolio} value={portfolio}>
@@ -357,8 +367,13 @@ function BorrowBase() {
         ))}
       </select>
 
-      <select value={facilityName} onChange={handleFacilityChange} >
-        <option value="">Choose a Facility </option>
+      <label htmlFor="facility_select">Facility: </label>
+      <select
+        id="facility_select"
+        value={facilityName}
+        onChange={handleFacilityChange}
+      >
+        <option value="">Choose a Facility</option>
         {uniqueFacilityNames.map((facility) => (
           <option key={facility} value={facility}>
             {facility}
@@ -366,7 +381,7 @@ function BorrowBase() {
         ))}
       </select>
 
-      <form>
+      <form id="date_select">
         <label form="asOfDate">Select As Of Date:</label>
         <input
           type="date"
@@ -378,15 +393,13 @@ function BorrowBase() {
 
       {facilityNumber}
 
-    <div className="ag-theme-alpine" style={{ width: "100%", height: "500px" }}>
-      <AgGridReact rowData={rowData} columnDefs={colDefs} />
+      <div
+        className="ag-theme-alpine"
+        style={{ width: "100%", height: "500px" }}
+      >
+        <AgGridReact rowData={rowData} columnDefs={colDefs} />
+      </div>
     </div>
-
-
-    </div>
-    
-    
-
   );
 }
 
