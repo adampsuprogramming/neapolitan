@@ -2,40 +2,51 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar a:link,
+.navbar a:visited,
+.navbar a:hover,
+.navbar a:active {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 250;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.navbar .logo a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 500;
 }
 
-.App-link {
-  color: #61dafb;
+.navbar .logo .arrow {
+  color: #f26419;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 500;
 }
 
 .navbar {
+  font-family: "Inter", sans-serif;
+  color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 25px;
-  background-color: #b7b7b7;
+  padding-top: 35px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  background-color: #33648A;
 }
 
 .nav-left-grouping {
+    color: #ffffff;
   display: flex;
   align-items: center;
 }
 
 .nav-mid {
+    color: #ffffff;
   display: flex;
   gap: 30px;
   margin-left: 100px;
