@@ -5,7 +5,9 @@ const TopNav = () => {
     <nav className="navbar">
       <div className="nav-left-grouping">
         <div className="logo">
-          <Link to="/">neapolitan <span className="arrow">&gt;</span></Link>
+          <Link to="/">
+            neapolitan <span className="arrow">&gt;</span>
+          </Link>
         </div>
 
         <div className="nav-mid">

@@ -36,17 +36,17 @@
   padding-bottom: 15px;
   padding-left: 25px;
   padding-right: 25px;
-  background-color: #33648A;
+  background-color: #33648a;
 }
 
 .nav-left-grouping {
-    color: #ffffff;
+  color: #ffffff;
   display: flex;
   align-items: center;
 }
 
 .nav-mid {
-    color: #ffffff;
+  color: #ffffff;
   display: flex;
   gap: 30px;
   margin-left: 100px;

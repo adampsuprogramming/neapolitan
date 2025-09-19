@@ -1,5 +1,5 @@
 import ConfigSubMenu from "./ConfigSubMenu";
- 
+
 const Configuration = () => {
   return (
     <div className="configuration">
