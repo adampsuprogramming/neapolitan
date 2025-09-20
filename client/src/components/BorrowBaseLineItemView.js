@@ -352,7 +352,9 @@ function BorrowBaseLineItemView() {
 
   return (
     <div>
-      <label htmlFor="portfolio_select">Portfolio: </label>
+    <div className="line_item_view_options">
+      <div>
+      <label htmlFor="portfolio_select"><b>Portfolio Name </b></label>
       <select
         id="portfolio_select"
         value={selectedPortfolio}
@@ -365,8 +367,9 @@ function BorrowBaseLineItemView() {
           </option>
         ))}
       </select>
-
-      <label htmlFor="facility_select">Facility: </label>
+        </div>
+        <div>
+      <label htmlFor="facility_select"><b>Facility Name </b></label>
       <select
         id="facility_select"
         value={facilityName}
@@ -379,9 +382,10 @@ function BorrowBaseLineItemView() {
           </option>
         ))}
       </select>
-
+        </div>
+        <div>
       <form id="date_select">
-        <label form="asOfDate">Select As Of Date:</label>
+        <label form="asOfDate"><b>Select As Of Date: </b></label>
         <input
           type="date"
           id="asOfDate"
@@ -389,15 +393,16 @@ function BorrowBaseLineItemView() {
           onChange={handleDateSelection}
         />
       </form>
+      </div>
 
-
+    </div>
       <div
         className="ag-theme-alpine"
         style={{ width: "100%", height: "500px" }}
       >
         <AgGridReact rowData={rowData} columnDefs={colDefs} />
       </div>
-    </div>
+  </div>
   );
 }
 

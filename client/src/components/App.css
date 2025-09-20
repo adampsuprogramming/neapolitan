@@ -39,6 +39,16 @@
   background-color: #33648a;
 }
 
+.line_item_view_options {
+  font-family: "Inter", sans-serif;
+ display: flex;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  gap: 50px;
+}
+
 .nav-left-grouping {
   color: #ffffff;
   display: flex;

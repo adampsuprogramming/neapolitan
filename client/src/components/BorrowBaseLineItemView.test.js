@@ -62,7 +62,7 @@ test("portfolio data correctly loads from API on page load into dropdown menu", 
     );
   });
 
-  const combos_portfolio = await screen.findByLabelText("Portfolio:");
+  const combos_portfolio = await screen.findByLabelText("Portfolio Name");
   const options = await within(combos_portfolio).findAllByRole("option");
   const texts = options.map((opt) => opt.textContent);
 
@@ -121,7 +121,7 @@ test("Facility data correctly loads into second dropdown menu after choice is ma
     );
   });
 
-  const combos_portfolio = await screen.findByLabelText("Portfolio:");
+  const combos_portfolio = await screen.findByLabelText("Portfolio Name");
   const options = await within(combos_portfolio).findAllByRole("option");
   const portfolioText = options.map((opt) => opt.textContent);
 
@@ -131,10 +131,10 @@ test("Facility data correctly loads into second dropdown menu after choice is ma
     "Fund Banana",
   ]);
 
-  const portfolioSelect = screen.getByLabelText("Portfolio:");
+  const portfolioSelect = screen.getByLabelText("Portfolio Name");
   fireEvent.change(portfolioSelect, { target: { value: "Fund Banana" } });
 
-  const combos_facility = await screen.findByLabelText("Facility:");
+  const combos_facility = await screen.findByLabelText("Facility Name");
   const options_facility =
     await within(combos_facility).findAllByRole("option");
   const facilityText = options_facility.map((opt) => opt.textContent);
