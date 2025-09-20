@@ -68,8 +68,6 @@ where c.inclusion_date <= $1
 	and df.debt_facility_id = $2
 `;
 
-
-
 // route for borrorwing base query.  This will be expanded upon to receive input from user.
 
 // router.get("/api/borrowbase", async (req, res) => {
@@ -83,15 +81,14 @@ where c.inclusion_date <= $1
 // });
 
 router.get("/api/borrowbase", async (req, res) => {
-  const {as_of_date, facility_id} = req.query;
+  const { as_of_date, facility_id } = req.query;
   try {
-    const result = await pool.query(borrowBaseQuery, [as_of_date,facility_id]);
+    const result = await pool.query(borrowBaseQuery, [as_of_date, facility_id]);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).send("DB test tranches query failed)");
   }
 });
-
 
 module.exports = router;

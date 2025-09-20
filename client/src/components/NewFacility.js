@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 function NewFacility() {
-
   return (
-
     <Box
       component="form"
-      sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
+      sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
       noValidate
       autoComplete="off"
     >
@@ -18,7 +15,6 @@ function NewFacility() {
       <TextField id="filled-basic" label="Filled" variant="filled" />
       <TextField id="standard-basic" label="Standard" variant="standard" />
     </Box>
-
   );
 }
 
