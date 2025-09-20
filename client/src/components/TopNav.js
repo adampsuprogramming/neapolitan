@@ -12,55 +12,43 @@ const TopNav = () => {
 
         <div className="nav-mid">
           <NavLink
-            to="/borrowingbase"
-            className={({ isActive }) =>
-              isActive ? "nav-button highlighted" : "nav-button"
-            }
+            to="/borrowingbase/"
+            className={({ isActive }) => (isActive ? "navbar-highlighted" : "")}
           >
             borrowing base
           </NavLink>
 
           <NavLink
-            to="/transactions"
-            className={({ isActive }) =>
-              isActive ? "nav-button highlighted" : "nav-button"
-            }
+            to="/transactions/"
+            className={({ isActive }) => (isActive ? "navbar-highlighted" : "")}
           >
             transactions
           </NavLink>
 
           <NavLink
-            to="/performance"
-            className={({ isActive }) =>
-              isActive ? "nav-button highlighted" : "nav-button"
-            }
+            to="/performance/"
+            className={({ isActive }) => (isActive ? "navbar-highlighted" : "")}
           >
             performance
           </NavLink>
 
           <NavLink
-            to="/reporting"
-            className={({ isActive }) =>
-              isActive ? "nav-button highlighted" : "nav-button"
-            }
+            to="/reporting/"
+            className={({ isActive }) => (isActive ? "navbar-highlighted" : "")}
           >
             reporting
           </NavLink>
 
           <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              isActive ? "nav-button highlighted" : "nav-button"
-            }
+            to="/dashboard/"
+            className={({ isActive }) => (isActive ? "navbar-highlighted" : "")}
           >
             dashboard
           </NavLink>
 
           <NavLink
-            to="/configuration"
-            className={({ isActive }) =>
-              isActive ? "nav-button highlighted" : "nav-button"
-            }
+            to="/configuration/"
+            className={({ isActive }) => (isActive ? "navbar-highlighted" : "")}
           >
             configuration
           </NavLink>

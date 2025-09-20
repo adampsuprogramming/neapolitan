@@ -1,6 +1,6 @@
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
-import BorrowBase from "./BorrowBase";
+import BorrowBaseLineItemView from "./BorrowBaseLineItemView";
 import { fireEvent } from "@testing-library/react";
 
 jest.mock("axios");
@@ -54,7 +54,7 @@ test("portfolio data correctly loads from API on page load into dropdown menu", 
     ],
   });
 
-  render(<BorrowBase />);
+  render(<BorrowBaseLineItemView />);
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
@@ -113,7 +113,7 @@ test("Facility data correctly loads into second dropdown menu after choice is ma
     ],
   });
 
-  render(<BorrowBase />);
+  render(<BorrowBaseLineItemView />);
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(

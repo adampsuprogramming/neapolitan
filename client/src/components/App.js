@@ -21,7 +21,7 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/borrowingbase" element={<BorrowBase />} />
+          <Route path="/borrowingbase/*" element={<BorrowBase />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/performance" element={<Performance />} />
           <Route path="/reporting" element={<Reporting />} />
