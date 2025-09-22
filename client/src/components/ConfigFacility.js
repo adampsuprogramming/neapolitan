@@ -8,7 +8,7 @@ export default function ConfigFacility() {
         <NavLink
           to="debtfacilitycreate"
           className={({ isActive }) =>
-            isActive ? "config-nav-highlighted" : ""
+            isActive ? "config-facility-nav-highlighted" : ""
           }
         >
           Create
@@ -17,7 +17,7 @@ export default function ConfigFacility() {
         <NavLink
           to="debtfacilitymodify"
           className={({ isActive }) =>
-            isActive ? "config-nav-highlighted" : ""
+            isActive ? "config-facility-nav-highlighted" : ""
           }
         >
           Modify
@@ -25,7 +25,7 @@ export default function ConfigFacility() {
         <NavLink
           to="debtfacilitydelete"
           className={({ isActive }) =>
-            isActive ? "config-nav-highlighted" : ""
+            isActive ? "config-facility-nav-highlighted" : ""
           }
         >
           Delete
