@@ -12,6 +12,9 @@ import ConfigPortfolio from "./ConfigPortfolio";
 import DebtFacilityCreate from "./DebtFacilityCreate";
 import DebtFacilityModify from "./DebtFacilityModify";
 import DebtFacilityDelete from "./DebtFacilityDelete";
+import BorrowBaseLineItemView from "./BorrowBaseLineItemView";
+import BorrowBaseCovenantView from "./BorrowBaseCovenantView";
+import BorrowBaseCalcView from "./BorrowBaseCalcView";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 
@@ -22,7 +25,11 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/borrowingbase/*" element={<BorrowBase />} />
+          <Route path="/borrowingbase/*" element={<BorrowBase />} >
+            <Route path="borrowbaselineitemview" element={<BorrowBaseLineItemView />} />
+            <Route path="borrowbasecovenantview" element={<BorrowBaseCovenantView />} />
+            <Route path="borrowbasecalcview" element={<BorrowBaseCalcView />} />
+          </Route>
           <Route path="/transactions/*" element={<Transactions />} />
           <Route path="/performance/*" element={<Performance />} />
           <Route path="/reporting/*" element={<Reporting />} />
