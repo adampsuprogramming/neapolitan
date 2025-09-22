@@ -352,57 +352,62 @@ function BorrowBaseLineItemView() {
 
   return (
     <div>
-    <div className="line_item_view_options">
-      <div>
-      <label htmlFor="portfolio_select"><b>Portfolio Name </b></label>
-      <select
-        id="portfolio_select"
-        value={selectedPortfolio}
-        onChange={handlePortfolioChange}
-      >
-        <option value="">Choose a Portfolio</option>
-        {uniqueNames.map((portfolio) => (
-          <option key={portfolio} value={portfolio}>
-            {portfolio}
-          </option>
-        ))}
-      </select>
+      <div className="line_item_view_options">
+        <div>
+          <label htmlFor="portfolio_select">
+            <b>Portfolio Name </b>
+          </label>
+          <select
+            id="portfolio_select"
+            value={selectedPortfolio}
+            onChange={handlePortfolioChange}
+          >
+            <option value="">Choose a Portfolio</option>
+            {uniqueNames.map((portfolio) => (
+              <option key={portfolio} value={portfolio}>
+                {portfolio}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-      <label htmlFor="facility_select"><b>Facility Name </b></label>
-      <select
-        id="facility_select"
-        value={facilityName}
-        onChange={handleFacilityChange}
-      >
-        <option value="">Choose a Facility</option>
-        {uniqueFacilityNames.map((facility) => (
-          <option key={facility} value={facility}>
-            {facility}
-          </option>
-        ))}
-      </select>
+          <label htmlFor="facility_select">
+            <b>Facility Name </b>
+          </label>
+          <select
+            id="facility_select"
+            value={facilityName}
+            onChange={handleFacilityChange}
+          >
+            <option value="">Choose a Facility</option>
+            {uniqueFacilityNames.map((facility) => (
+              <option key={facility} value={facility}>
+                {facility}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-      <form id="date_select">
-        <label form="asOfDate"><b>Select As Of Date: </b></label>
-        <input
-          type="date"
-          id="asOfDate"
-          value={asOfDate}
-          onChange={handleDateSelection}
-        />
-      </form>
+          <form id="date_select">
+            <label form="asOfDate">
+              <b>Select As Of Date: </b>
+            </label>
+            <input
+              type="date"
+              id="asOfDate"
+              value={asOfDate}
+              onChange={handleDateSelection}
+            />
+          </form>
+        </div>
       </div>
-
-    </div>
       <div
         className="ag-theme-alpine"
         style={{ width: "100%", height: "500px" }}
       >
         <AgGridReact rowData={rowData} columnDefs={colDefs} />
       </div>
-  </div>
+    </div>
   );
 }
 
