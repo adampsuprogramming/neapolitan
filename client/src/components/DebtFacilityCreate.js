@@ -1,9 +1,335 @@
-const DebtFacilityCreate = () => {
+import Box from "@mui/material/Box";
+import { useState, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import axios from "axios";
+import Autocomplete from "@mui/material/Autocomplete";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import { NumericFormat } from "react-number-format";
+import Button from "@mui/material/Button";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import FormHelperText from "@mui/material/FormHelperText";
+
+function DebtFacilityCreate() {
+  const [lenderData, setLenderData] = useState([]); // Hold results of getLenderData below, an array of lender_name, lender_id
+  const [portfolioData, setPortfolioData] = useState([]); // Hold results of getPortfolioData below, an array of portfolio_name, portfolio_id
+  const [selectedLender, setSelectedLender] = useState([]); // After user chooses lender, it is set here via an onChange
+  const [selectedLenderId, setSelectedLenderId] = useState(null); // After user chooses lender, a useEffect is run to find the related id and store here
+  const [selectedPortfolio, setSelectedPortfolio] = useState([]); // After user chooses portfolio, it is set here via an onChange
+  const [selectedPortfolioId, setSelectedPortfolioId] = useState(null); // After user chooses a portfolio, a useEffect is run to find the related id and store here
+  const [facilityName, setFacilityName] = useState(null); // After user enters facility name, it is set here via an onChange
+  const [commitmentDate, setCommitmentDate] = useState(null); // After user chooses commitment date, it is stored here
+  const [maturityDate, setMaturityDate] = useState(null); // After user chooses maturity date, it is stored here
+  const [commitmentAmount, setCommitmentAmount] = useState(null); // After user chooses commitment amount, it is stored here
+  const [isOverallRate,setIsOverallRate] = useState(false); // After user chooses toggle for overall rate, it is stored here - defaults to false
+  const [maxAdvanceRate, setMaxAdvanceRate] = useState(null); // After user enters max advance rate, it is stored here --- need to divide by 100 to get percent
+  const [isAssetByAssetRate, setIsAssetByAssetRate] = useState(false);// After user chooses toggle for asset-by-asset rate, it is stored here - defaults to false
+  const [firstLienRate, setFirstLienRate] = useState(null); // After user enteres first lien rate, it is stored here --- need to divide by 100 to get percent
+  const [secondLienRate, setSecondLienRate] = useState(null); // After user enters second lien rate, it is stored here --- need to divide by 100 to get percent
+  const [mezzanineRate, setMezzanineRate] = useState(null); // After user enters mezz rate, it is stored here --- need to divide by 100 to get percent
+  const [isMinimumEquity, setIsMinimumEquity] = useState(false) // After user chooses toggle for min equity, it is stored here - defaults to false
+  const [minimumEquity, setMinimumEquity] = useState(null); //After use enters min equity, it is stored here
+
+
+  // this useEffect loads up the Lender data to populate the dropdown
+  // on page load.
+
+  useEffect(() => {
+    async function getLenderData() {
+      try {
+        const fullInfoResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/lenderquery`,
+        );
+        setLenderData(fullInfoResponse.data);
+      } catch (error) {
+        console.error("Error fetching");
+      }
+    }
+
+    getLenderData();
+  }, []);
+
+  // this useEffect loads up the Portfolio data to populate the dropdown
+  // on page load.
+
+  useEffect(() => {
+    async function getPortfolioData() {
+      try {
+        const fullInfoResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/portfolioquery`,
+        );
+        setPortfolioData(fullInfoResponse.data);
+      } catch (error) {
+        console.error("Error fetching");
+      }
+    }
+
+    getPortfolioData();
+  }, []);
+
+  // this useEffect gets the related lender id number when the lender record
+  // is selected.  The lender number is needed to send back to the server
+
+  useEffect(() => {
+    if (!selectedLender) return;
+    setSelectedLenderId(selectedLender.lender_id);
+  }, [selectedLender]);
+
+  // this useEffect gets the related portfolio id number when the portfolio record
+  // is selected.  The portfolio number is needed to send back to the server
+
+  useEffect(() => {
+    if (!selectedPortfolio) return;
+    setSelectedPortfolioId(selectedPortfolio.portfolio_id);
+  }, [selectedPortfolio]);
+
+  // See what the variable state is
+
+  function variableDump() {
+    console.log("Selected Lender ID: ",selectedLenderId);
+    console.log("Selected Portfolio ID: ",selectedPortfolioId);
+    console.log("Facility Name:", facilityName);
+    console.log("Commitment Date: ", commitmentDate);
+    console.log("Maturity Date: ", maturityDate);
+    console.log("Commitment Amount: ",commitmentAmount);
+    console.log("is Overall Rate: ", isOverallRate);
+    console.log("Max Advance Rate: ", maxAdvanceRate);
+    console.log("Is Asset by Asset Rate: ", isAssetByAssetRate);
+    console.log("First Lien Rate", firstLienRate);
+    console.log("Second Lien Rate", secondLienRate);
+    console.log("Mezzanine Rate", mezzanineRate);
+    console.log("Is Minimum Equity", isMinimumEquity);
+    console.log("Minimum Equity Amount", minimumEquity)
+    
+  }
+
   return (
-    <div className="debt-facility-create">
-      <h1>Placeholder for Debt Facility Creation</h1>
-    </div>
+    <>
+      <div className="debt-facility-create">
+        <h1>Placeholder for Debt Facility Creation</h1>
+      </div>
+      <Box
+        component="form"
+        sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+      >
+        <div className="row-1-new-debt-facility">
+          {/* Textfield which is simply the Facility Name - Stored in */}
+          {/* facilityName via setFacilityName */}
+          <TextField
+            required
+            value={facilityName}
+            onChange={(event) => setFacilityName(event.target.value)}
+            id="facility-name-input"
+            label="Facility Name"
+          />
+
+          {/* Autocomplete for Lender Name - Stored in */}
+          {/* selectedLender via setSelectedLender */}
+
+          <Autocomplete
+            disablePortal
+            required
+            options={lenderData}
+            value={selectedLender}
+            onChange={(event, newValue) => setSelectedLender(newValue)}
+            getOptionLabel={(option) => option.lender_name || ""}
+            renderInput={(params) => (
+              <TextField {...params} label="Lender Name" />
+            )}
+          />
+
+          {/* Autocomplete for Portfolio Name - Stored in */}
+          {/* selectedPortfolio via setSelectedPortfolio */}
+
+          <Autocomplete
+            disablePortal
+            required
+            options={portfolioData}
+            value={selectedPortfolio}
+            onChange={(event, newValue) => setSelectedPortfolio(newValue)}
+            getOptionLabel={(option) => option.portfolio_name || ""}
+            renderInput={(params) => (
+              <TextField {...params} label="Portfolio Name" />
+            )}
+          />
+        </div>
+
+        <div className="row-2-new-debt-facility">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* Picker for Commitment Date */}
+            <DatePicker
+              label="Commitment Date"
+              value={commitmentDate ? dayjs(commitmentDate) : null} // This is needed if date is yet a valid date or a crash occurs
+              onChange={(newDate) => {
+                setCommitmentDate(
+                  newDate ? newDate.format("YYYY-MM-DD") : null,
+                ); // if there is anything in new date, set commitment date or else set it to null
+                console.log(commitmentDate);
+              }}
+              slotProps={{
+                textField: {
+                  helperText: "MM/DD/YYYY",
+                },
+              }}
+            />
+
+            {/* Picker for Maturity Date */}
+
+            <DatePicker
+              label="Maturity Date"
+              value={maturityDate ? dayjs(maturityDate) : null} // This is needed if date is yet a valid date or a crash occurs
+              onChange={(newDate) => {
+                setMaturityDate(newDate ? newDate.format("YYYY-MM-DD") : null); // if there is anything in new date, set maturity date or else set it to null
+                console.log(maturityDate);
+              }}
+              slotProps={{
+                textField: {
+                  helperText: "MM/DD/YYYY",
+                },
+              }}
+            />
+          </LocalizationProvider>
+
+          {/* Textfield which is Commitment Amount - Stored in */}
+          {/* commitmentAmount via setCommitmentAmount */}
+          {/* Uses react-number-format integrated with MUI TextField */}
+          <NumericFormat
+            customInput={TextField}
+            required
+            value={facilityName}
+            onValueChange={(value) => setCommitmentAmount(value.floatValue)}
+            label="Commitment Amount"
+            thousandSeparator=","
+            decimalScale={2}
+            fixedDecimalScale
+            prefix="$"
+          />
+        </div>
+      </Box>
+
+
+      <div>
+
+        {/* Toggle for max advance rate */}
+        <FormControlLabel
+          control={<Switch 
+          checked={isOverallRate}
+          onChange={(e) => setIsOverallRate(e.target.checked)}/>}
+          labelPlacement="start"
+          label="Overall Rate"
+        />
+        <FormHelperText>
+          Is the facility governed by a maximum advance rate?
+        </FormHelperText>
+
+
+        {/* Input for max advance rate */}
+
+        <NumericFormat
+          customInput={TextField}
+          value={maxAdvanceRate}
+          onValueChange={(value) => setMaxAdvanceRate(value.floatValue)}
+          label="Maximum Advance Rate"
+          thousandSeparator=","
+          decimalScale={6}
+          suffix="%"
+          fixedDecimalScale
+        />
+      </div>
+
+      <div>
+                    {/* Toggle for asset-by-asset rate */}
+        <FormControlLabel
+          control={<Switch 
+          checked={isAssetByAssetRate}
+          onChange={(e) => setIsAssetByAssetRate(e.target.checked)}/>}
+          labelPlacement="start"
+          label="Asset By Asset Rate"
+        />
+        <FormHelperText>
+          Is the facility governed by asset-by-asset advance rates?
+        </FormHelperText>
+
+        {/* Input for first lien rate */}
+
+        <NumericFormat
+          customInput={TextField}
+          value={firstLienRate}
+          onValueChange={(value) => setFirstLienRate(value.floatValue)}
+          label="First Lien Rate"
+          thousandSeparator=","
+          decimalScale={6}
+          suffix="%"
+          fixedDecimalScale
+        />
+
+                {/* Input for second lien rate */}
+
+        <NumericFormat
+          customInput={TextField}
+          value={secondLienRate}
+          onValueChange={(value) => setSecondLienRate(value.floatValue)}
+          label="Second Lien Rate"
+          thousandSeparator=","
+          decimalScale={6}
+          suffix="%"
+          fixedDecimalScale
+        />
+
+                        {/* Input for mezzanine rate */}
+
+        <NumericFormat
+          customInput={TextField}
+          value={mezzanineRate}
+          onValueChange={(value) => setMezzanineRate(value.floatValue)}
+          label="Mezzanine Rate"
+          thousandSeparator=","
+          decimalScale={6}
+          suffix="%"
+          fixedDecimalScale
+        />
+      </div>
+
+   <div>
+
+                        {/* Toggle for min equity */}
+        <FormControlLabel
+          control={<Switch 
+          checked={isMinimumEquity}
+          onChange={(e) => setIsMinimumEquity(e.target.checked)}/>}
+          labelPlacement="start"
+          label="Minimum Equity"
+        />
+        <FormHelperText>
+          Is the facility governed by a minimum equity balance?
+        </FormHelperText>
+
+                                {/* Input for min equity amount */}
+
+        <NumericFormat
+          customInput={TextField}
+          value={minimumEquity}
+          onValueChange={(value) => setMinimumEquity(value.floatValue)}
+          label="Minimum Equity Amount"
+          thousandSeparator=","
+          decimalScale={6}
+          prefix="$"
+          fixedDecimalScale
+        />
+
+   </div>
+
+      
+      <div>
+        <Button variant="text" onClick={variableDump}>
+          Save
+        </Button>
+      </div>
+    </>
   );
-};
+}
 
 export default DebtFacilityCreate;

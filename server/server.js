@@ -4,6 +4,9 @@ const cors = require("cors");
 const app = express();
 const borrowBaseRoutes = require("./routes/borrowBase");
 const facilityRoutes = require("./routes/facilityQuery");
+const lenderQueryRoutes = require("./routes/lenderQuery");
+const portfolioQueryRoutes = require("./routes/portfolioQuery");
+
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((origin) => origin.trim())
   : ["http://localhost:3000"];
@@ -43,6 +46,8 @@ app.get("/tranches", async (req, res) => {
 // Route to retrieve borrowing base
 app.use(borrowBaseRoutes);
 app.use(facilityRoutes);
+app.use(lenderQueryRoutes);
+app.use(portfolioQueryRoutes);
 
 app.listen(PORT, console.log(`The Server has been started on port ${PORT}`));
 

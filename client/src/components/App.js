@@ -25,9 +25,15 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/borrowingbase/*" element={<BorrowBase />} >
-            <Route path="borrowbaselineitemview" element={<BorrowBaseLineItemView />} />
-            <Route path="borrowbasecovenantview" element={<BorrowBaseCovenantView />} />
+          <Route path="/borrowingbase/*" element={<BorrowBase />}>
+            <Route
+              path="borrowbaselineitemview"
+              element={<BorrowBaseLineItemView />}
+            />
+            <Route
+              path="borrowbasecovenantview"
+              element={<BorrowBaseCovenantView />}
+            />
             <Route path="borrowbasecalcview" element={<BorrowBaseCalcView />} />
           </Route>
           <Route path="/transactions/*" element={<Transactions />} />
