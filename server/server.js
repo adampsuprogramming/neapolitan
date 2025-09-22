@@ -6,6 +6,7 @@ const borrowBaseRoutes = require("./routes/borrowBase");
 const facilityRoutes = require("./routes/facilityQuery");
 const lenderQueryRoutes = require("./routes/lenderQuery");
 const portfolioQueryRoutes = require("./routes/portfolioQuery");
+const createDebtFacilityRoutes = require("./routes/createDebtFacility");
 
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((origin) => origin.trim())
@@ -48,6 +49,7 @@ app.use(borrowBaseRoutes);
 app.use(facilityRoutes);
 app.use(lenderQueryRoutes);
 app.use(portfolioQueryRoutes);
+app.use(createDebtFacilityRoutes);
 
 app.listen(PORT, console.log(`The Server has been started on port ${PORT}`));
 

@@ -68,7 +68,6 @@ where c.inclusion_date <= $1
 	and df.debt_facility_id = $2
 `;
 
-
 router.get("/api/borrowbase", async (req, res) => {
   const { as_of_date, facility_id } = req.query;
   try {

@@ -16,7 +16,7 @@ select
 
 router.get("/api/portfolioquery", async (req, res) => {
   try {
-    const result = await pool.query(portfolioQuery,[]);
+    const result = await pool.query(portfolioQuery, []);
     res.json(result.rows);
   } catch (err) {
     console.error(err);

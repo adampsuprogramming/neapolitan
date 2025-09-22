@@ -16,7 +16,7 @@ select
 
 router.get("/api/lenderquery", async (req, res) => {
   try {
-    const result = await pool.query(lenderQuery,[]);
+    const result = await pool.query(lenderQuery, []);
     res.json(result.rows);
   } catch (err) {
     console.error(err);

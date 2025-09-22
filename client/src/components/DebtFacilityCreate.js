@@ -16,23 +16,22 @@ import FormHelperText from "@mui/material/FormHelperText";
 function DebtFacilityCreate() {
   const [lenderData, setLenderData] = useState([]); // Hold results of getLenderData below, an array of lender_name, lender_id
   const [portfolioData, setPortfolioData] = useState([]); // Hold results of getPortfolioData below, an array of portfolio_name, portfolio_id
-  const [selectedLender, setSelectedLender] = useState([]); // After user chooses lender, it is set here via an onChange
+  const [selectedLender, setSelectedLender] = useState(null); // After user chooses lender, it is set here via an onChange
   const [selectedLenderId, setSelectedLenderId] = useState(null); // After user chooses lender, a useEffect is run to find the related id and store here
-  const [selectedPortfolio, setSelectedPortfolio] = useState([]); // After user chooses portfolio, it is set here via an onChange
+  const [selectedPortfolio, setSelectedPortfolio] = useState(null); // After user chooses portfolio, it is set here via an onChange
   const [selectedPortfolioId, setSelectedPortfolioId] = useState(null); // After user chooses a portfolio, a useEffect is run to find the related id and store here
   const [facilityName, setFacilityName] = useState(null); // After user enters facility name, it is set here via an onChange
   const [commitmentDate, setCommitmentDate] = useState(null); // After user chooses commitment date, it is stored here
   const [maturityDate, setMaturityDate] = useState(null); // After user chooses maturity date, it is stored here
   const [commitmentAmount, setCommitmentAmount] = useState(null); // After user chooses commitment amount, it is stored here
-  const [isOverallRate,setIsOverallRate] = useState(false); // After user chooses toggle for overall rate, it is stored here - defaults to false
+  const [isOverallRate, setIsOverallRate] = useState(false); // After user chooses toggle for overall rate, it is stored here - defaults to false
   const [maxAdvanceRate, setMaxAdvanceRate] = useState(null); // After user enters max advance rate, it is stored here --- need to divide by 100 to get percent
-  const [isAssetByAssetRate, setIsAssetByAssetRate] = useState(false);// After user chooses toggle for asset-by-asset rate, it is stored here - defaults to false
+  const [isAssetByAssetRate, setIsAssetByAssetRate] = useState(false); // After user chooses toggle for asset-by-asset rate, it is stored here - defaults to false
   const [firstLienRate, setFirstLienRate] = useState(null); // After user enteres first lien rate, it is stored here --- need to divide by 100 to get percent
   const [secondLienRate, setSecondLienRate] = useState(null); // After user enters second lien rate, it is stored here --- need to divide by 100 to get percent
   const [mezzanineRate, setMezzanineRate] = useState(null); // After user enters mezz rate, it is stored here --- need to divide by 100 to get percent
-  const [isMinimumEquity, setIsMinimumEquity] = useState(false) // After user chooses toggle for min equity, it is stored here - defaults to false
+  const [isMinimumEquity, setIsMinimumEquity] = useState(false); // After user chooses toggle for min equity, it is stored here - defaults to false
   const [minimumEquity, setMinimumEquity] = useState(null); //After use enters min equity, it is stored here
-
 
   // this useEffect loads up the Lender data to populate the dropdown
   // on page load.
@@ -88,22 +87,49 @@ function DebtFacilityCreate() {
 
   // See what the variable state is
 
-  function variableDump() {
-    console.log("Selected Lender ID: ",selectedLenderId);
-    console.log("Selected Portfolio ID: ",selectedPortfolioId);
-    console.log("Facility Name:", facilityName);
-    console.log("Commitment Date: ", commitmentDate);
-    console.log("Maturity Date: ", maturityDate);
-    console.log("Commitment Amount: ",commitmentAmount);
-    console.log("is Overall Rate: ", isOverallRate);
-    console.log("Max Advance Rate: ", maxAdvanceRate);
-    console.log("Is Asset by Asset Rate: ", isAssetByAssetRate);
-    console.log("First Lien Rate", firstLienRate);
-    console.log("Second Lien Rate", secondLienRate);
-    console.log("Mezzanine Rate", mezzanineRate);
-    console.log("Is Minimum Equity", isMinimumEquity);
-    console.log("Minimum Equity Amount", minimumEquity)
-    
+  // function variableDump() {
+  //   console.log("Selected Lender ID: ",selectedLenderId);
+  //   console.log("Selected Portfolio ID: ",selectedPortfolioId);
+  //   console.log("Facility Name:", facilityName);
+  //   console.log("Commitment Date: ", commitmentDate);
+  //   console.log("Maturity Date: ", maturityDate);
+  //   console.log("Commitment Amount: ",commitmentAmount);
+  //   console.log("is Overall Rate: ", isOverallRate);
+  //   console.log("Max Advance Rate: ", maxAdvanceRate);
+  //   console.log("Is Asset by Asset Rate: ", isAssetByAssetRate);
+  //   console.log("First Lien Rate", firstLienRate);
+  //   console.log("Second Lien Rate", secondLienRate);
+  //   console.log("Mezzanine Rate", mezzanineRate);
+  //   console.log("Is Minimum Equity", isMinimumEquity);
+  //   console.log("Minimum Equity Amount", minimumEquity)
+
+  // }
+
+  async function postFacility() {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/createdebtfacility`,
+        {
+          debtFacilityName: facilityName,
+          portfolioId: selectedPortfolioId,
+          lenderId: selectedLenderId,
+          startDate: commitmentDate,
+          endDate: maturityDate,
+          overAllCommitmentAmount: commitmentAmount,
+          isOverallRate: isOverallRate,
+          overallRate: maxAdvanceRate / 100,
+          isAssetByAssetAdvance: isAssetByAssetRate,
+          firstLienRate: firstLienRate / 100,
+          secondLienRate: secondLienRate / 100,
+          mezzRate: mezzanineRate / 100,
+          isMinEquity: isMinimumEquity,
+          minEquityAmount: minimumEquity,
+        },
+      );
+    } catch (error) {
+      console.error("Error saving:", error);
+      alert("There was an error creating the facility.");
+    }
   }
 
   return (
@@ -199,7 +225,7 @@ function DebtFacilityCreate() {
           <NumericFormat
             customInput={TextField}
             required
-            value={facilityName}
+            value={commitmentAmount}
             onValueChange={(value) => setCommitmentAmount(value.floatValue)}
             label="Commitment Amount"
             thousandSeparator=","
@@ -210,21 +236,21 @@ function DebtFacilityCreate() {
         </div>
       </Box>
 
-
       <div>
-
         {/* Toggle for max advance rate */}
         <FormControlLabel
-          control={<Switch 
-          checked={isOverallRate}
-          onChange={(e) => setIsOverallRate(e.target.checked)}/>}
+          control={
+            <Switch
+              checked={isOverallRate}
+              onChange={(e) => setIsOverallRate(e.target.checked)}
+            />
+          }
           labelPlacement="start"
           label="Overall Rate"
         />
         <FormHelperText>
           Is the facility governed by a maximum advance rate?
         </FormHelperText>
-
 
         {/* Input for max advance rate */}
 
@@ -241,11 +267,14 @@ function DebtFacilityCreate() {
       </div>
 
       <div>
-                    {/* Toggle for asset-by-asset rate */}
+        {/* Toggle for asset-by-asset rate */}
         <FormControlLabel
-          control={<Switch 
-          checked={isAssetByAssetRate}
-          onChange={(e) => setIsAssetByAssetRate(e.target.checked)}/>}
+          control={
+            <Switch
+              checked={isAssetByAssetRate}
+              onChange={(e) => setIsAssetByAssetRate(e.target.checked)}
+            />
+          }
           labelPlacement="start"
           label="Asset By Asset Rate"
         />
@@ -266,7 +295,7 @@ function DebtFacilityCreate() {
           fixedDecimalScale
         />
 
-                {/* Input for second lien rate */}
+        {/* Input for second lien rate */}
 
         <NumericFormat
           customInput={TextField}
@@ -279,7 +308,7 @@ function DebtFacilityCreate() {
           fixedDecimalScale
         />
 
-                        {/* Input for mezzanine rate */}
+        {/* Input for mezzanine rate */}
 
         <NumericFormat
           customInput={TextField}
@@ -293,13 +322,15 @@ function DebtFacilityCreate() {
         />
       </div>
 
-   <div>
-
-                        {/* Toggle for min equity */}
+      <div>
+        {/* Toggle for min equity */}
         <FormControlLabel
-          control={<Switch 
-          checked={isMinimumEquity}
-          onChange={(e) => setIsMinimumEquity(e.target.checked)}/>}
+          control={
+            <Switch
+              checked={isMinimumEquity}
+              onChange={(e) => setIsMinimumEquity(e.target.checked)}
+            />
+          }
           labelPlacement="start"
           label="Minimum Equity"
         />
@@ -307,7 +338,7 @@ function DebtFacilityCreate() {
           Is the facility governed by a minimum equity balance?
         </FormHelperText>
 
-                                {/* Input for min equity amount */}
+        {/* Input for min equity amount */}
 
         <NumericFormat
           customInput={TextField}
@@ -319,12 +350,10 @@ function DebtFacilityCreate() {
           prefix="$"
           fixedDecimalScale
         />
+      </div>
 
-   </div>
-
-      
       <div>
-        <Button variant="text" onClick={variableDump}>
+        <Button variant="text" onClick={postFacility}>
           Save
         </Button>
       </div>
