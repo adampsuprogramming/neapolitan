@@ -137,226 +137,282 @@ function DebtFacilityCreate() {
       <div className="debt-facility-create">
         <h1>Placeholder for Debt Facility Creation</h1>
       </div>
-      <Box
-        component="form"
-        sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-      >
-        <div className="row-1-new-debt-facility">
-          {/* Textfield which is simply the Facility Name - Stored in */}
-          {/* facilityName via setFacilityName */}
-          <TextField
-            required
-            value={facilityName}
-            onChange={(event) => setFacilityName(event.target.value)}
-            id="facility-name-input"
-            label="Facility Name"
-          />
-
-          {/* Autocomplete for Lender Name - Stored in */}
-          {/* selectedLender via setSelectedLender */}
-
-          <Autocomplete
-            disablePortal
-            required
-            options={lenderData}
-            value={selectedLender}
-            onChange={(event, newValue) => setSelectedLender(newValue)}
-            getOptionLabel={(option) => option.lender_name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="Lender Name" />
-            )}
-          />
-
-          {/* Autocomplete for Portfolio Name - Stored in */}
-          {/* selectedPortfolio via setSelectedPortfolio */}
-
-          <Autocomplete
-            disablePortal
-            required
-            options={portfolioData}
-            value={selectedPortfolio}
-            onChange={(event, newValue) => setSelectedPortfolio(newValue)}
-            getOptionLabel={(option) => option.portfolio_name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="Portfolio Name" />
-            )}
-          />
-        </div>
-
-        <div className="row-2-new-debt-facility">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {/* Picker for Commitment Date */}
-            <DatePicker
-              label="Commitment Date"
-              value={commitmentDate ? dayjs(commitmentDate) : null} // This is needed if date is yet a valid date or a crash occurs
-              onChange={(newDate) => {
-                setCommitmentDate(
-                  newDate ? newDate.format("YYYY-MM-DD") : null,
-                ); // if there is anything in new date, set commitment date or else set it to null
-                console.log(commitmentDate);
-              }}
-              slotProps={{
-                textField: {
-                  helperText: "MM/DD/YYYY",
-                },
-              }}
+      <Box component="form">
+        <Box
+          sx={{
+            border: "1px solid",
+            borderRadius: 4,
+            borderColor: "#c7c7c7ff",
+            width: "110ch",
+            m: 3,
+            padding: 2,
+          }}
+        >
+          <div className="row-1-new-debt-facility">
+            {/* Textfield which is simply the Facility Name - Stored in */}
+            {/* facilityName via setFacilityName */}
+            <TextField
+              required
+              value={facilityName}
+              onChange={(event) => setFacilityName(event.target.value)}
+              id="facility-name-input"
+              label="Facility Name"
+              sx={{ m: 1, width: "30ch" }}
             />
 
-            {/* Picker for Maturity Date */}
+            {/* Autocomplete for Lender Name - Stored in */}
+            {/* selectedLender via setSelectedLender */}
 
-            <DatePicker
-              label="Maturity Date"
-              value={maturityDate ? dayjs(maturityDate) : null} // This is needed if date is yet a valid date or a crash occurs
-              onChange={(newDate) => {
-                setMaturityDate(newDate ? newDate.format("YYYY-MM-DD") : null); // if there is anything in new date, set maturity date or else set it to null
-                console.log(maturityDate);
-              }}
-              slotProps={{
-                textField: {
-                  helperText: "MM/DD/YYYY",
-                },
-              }}
+            <Autocomplete
+              disablePortal
+              required
+              options={lenderData}
+              value={selectedLender}
+              sx={{ m: 1, width: "30ch" }}
+              onChange={(event, newValue) => setSelectedLender(newValue)}
+              getOptionLabel={(option) => option.lender_name || ""}
+              renderInput={(params) => (
+                <TextField {...params} label="Lender Name" />
+              )}
             />
-          </LocalizationProvider>
 
-          {/* Textfield which is Commitment Amount - Stored in */}
-          {/* commitmentAmount via setCommitmentAmount */}
-          {/* Uses react-number-format integrated with MUI TextField */}
+            {/* Autocomplete for Portfolio Name - Stored in */}
+            {/* selectedPortfolio via setSelectedPortfolio */}
+
+            <Autocomplete
+              disablePortal
+              required
+              options={portfolioData}
+              value={selectedPortfolio}
+              sx={{ m: 1, width: "30ch" }}
+              onChange={(event, newValue) => setSelectedPortfolio(newValue)}
+              getOptionLabel={(option) => option.portfolio_name || ""}
+              renderInput={(params) => (
+                <TextField {...params} label="Portfolio Name" />
+              )}
+            />
+          </div>
+
+          <div className="row-2-new-debt-facility">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* Picker for Commitment Date */}
+              <DatePicker
+                label="Commitment Date"
+                sx={{ m: 1, width: "30ch", marginTop: 4 }}
+                value={commitmentDate ? dayjs(commitmentDate) : null} // This is needed if date is yet a valid date or a crash occurs
+                onChange={(newDate) => {
+                  setCommitmentDate(
+                    newDate ? newDate.format("YYYY-MM-DD") : null,
+                  ); // if there is anything in new date, set commitment date or else set it to null
+                  console.log(commitmentDate);
+                }}
+                slotProps={{
+                  textField: {
+                    helperText: "MM/DD/YYYY",
+                  },
+                }}
+              />
+
+              {/* Picker for Maturity Date */}
+
+              <DatePicker
+                label="Maturity Date"
+                sx={{ m: 1, width: "30ch", marginTop: 4 }}
+                value={maturityDate ? dayjs(maturityDate) : null} // This is needed if date is yet a valid date or a crash occurs
+                onChange={(newDate) => {
+                  setMaturityDate(
+                    newDate ? newDate.format("YYYY-MM-DD") : null,
+                  ); // if there is anything in new date, set maturity date or else set it to null
+                  console.log(maturityDate);
+                }}
+                slotProps={{
+                  textField: {
+                    helperText: "MM/DD/YYYY",
+                  },
+                }}
+              />
+            </LocalizationProvider>
+
+            {/* Textfield which is Commitment Amount - Stored in */}
+            {/* commitmentAmount via setCommitmentAmount */}
+            {/* Uses react-number-format integrated with MUI TextField */}
+            <NumericFormat
+              customInput={TextField}
+              sx={{ m: 1, width: "30ch", marginTop: 4 }}
+              required
+              value={commitmentAmount}
+              onValueChange={(value) => setCommitmentAmount(value.floatValue)}
+              label="Commitment Amount"
+              thousandSeparator=","
+              decimalScale={2}
+              fixedDecimalScale
+              prefix="$"
+            />
+          </div>
+        </Box>
+        <Box
+          sx={{
+            border: "1px solid",
+            borderRadius: 4,
+            borderColor: "#c7c7c7ff",
+            width: "110ch",
+            m: 3,
+            padding: 2,
+            display: "flex",
+          }}
+        >
+          <Box>
+            {/* Toggle for max advance rate */}
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isOverallRate}
+                  onChange={(e) => setIsOverallRate(e.target.checked)}
+                />
+              }
+              labelPlacement="start"
+              label="Overall Rate"
+            />
+            <FormHelperText>
+              Is the facility governed by a maximum advance rate?
+            </FormHelperText>
+          </Box>
+          {/* Input for max advance rate */}
+
           <NumericFormat
+            sx={{ m: 1, width: "30ch",  marginLeft: 10, width: "20ch"}}
             customInput={TextField}
-            required
-            value={commitmentAmount}
-            onValueChange={(value) => setCommitmentAmount(value.floatValue)}
-            label="Commitment Amount"
+            value={maxAdvanceRate}
+            onValueChange={(value) => setMaxAdvanceRate(value.floatValue)}
+            label="Overall Advance Rate"
             thousandSeparator=","
-            decimalScale={2}
+            decimalScale={6}
+            suffix="%"
             fixedDecimalScale
-            prefix="$"
           />
+        </Box>
+        <Box
+          sx={{
+            border: "1px solid",
+            borderRadius: 4,
+            borderColor: "#c7c7c7ff",
+            width: "110ch",
+            m: 3,
+            padding: 2,
+            display: "flex"
+          }}
+        >
+          
+            {/* Toggle for asset-by-asset rate */}
+            <Box>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isAssetByAssetRate}
+                  onChange={(e) => setIsAssetByAssetRate(e.target.checked)}
+                />
+              }
+              labelPlacement="start"
+              label="Asset By Asset Rate"
+            />
+            <FormHelperText>
+              Is the facility governed by asset-by-asset advance rates?
+            </FormHelperText>
+            </Box>
+
+              <Box>
+            {/* Input for first lien rate */}
+
+            <NumericFormat
+              customInput={TextField}
+              sx={{ m: 1, width: "20ch",  marginLeft: 3 }}
+              value={firstLienRate}
+              onValueChange={(value) => setFirstLienRate(value.floatValue)}
+              label="First Lien Rate"
+              thousandSeparator=","
+              decimalScale={6}
+              suffix="%"
+              fixedDecimalScale
+            />
+
+            {/* Input for second lien rate */}
+
+            <NumericFormat
+              customInput={TextField}
+              sx={{ m: 1, width: "20ch",  marginLeft: 2 }}
+              value={secondLienRate}
+              onValueChange={(value) => setSecondLienRate(value.floatValue)}
+              label="Second Lien Rate"
+              thousandSeparator=","
+              decimalScale={6}
+              suffix="%"
+              fixedDecimalScale
+            />
+
+            {/* Input for mezzanine rate */}
+
+            <NumericFormat
+              customInput={TextField}
+              sx={{ m: 1, width: "20ch",  marginLeft: 2 }}
+              value={mezzanineRate}
+              onValueChange={(value) => setMezzanineRate(value.floatValue)}
+              label="Mezzanine Rate"
+              thousandSeparator=","
+              decimalScale={6}
+              suffix="%"
+              fixedDecimalScale
+            />
+     </Box>
+        </Box>
+        <Box
+          sx={{
+            border: "1px solid",
+            borderRadius: 4,
+            borderColor: "#c7c7c7ff",
+            width: "110ch",
+            m: 3,
+            padding: 2,
+            display: "flex"
+          }}
+        >
+          <Box>
+     
+            {/* Toggle for min equity */}
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isMinimumEquity}
+                  onChange={(e) => setIsMinimumEquity(e.target.checked)}
+                />
+              }
+              labelPlacement="start"
+              label="Minimum Equity"
+            />
+            <FormHelperText>
+              Is the facility governed by a minimum equity balance?
+            </FormHelperText>
+</Box>
+            {/* Input for min equity amount */}
+
+            <NumericFormat
+              customInput={TextField}
+              sx={{marginLeft:"5ch"}}
+              value={minimumEquity}
+              onValueChange={(value) => setMinimumEquity(value.floatValue)}
+              label="Minimum Equity Amount"
+              thousandSeparator=","
+              decimalScale={6}
+              prefix="$"
+              fixedDecimalScale
+            />
+        
+        </Box>
+        <div>
+          <Button variant="text" onClick={postFacility}>
+            Save
+          </Button>
         </div>
       </Box>
-
-      <div>
-        {/* Toggle for max advance rate */}
-        <FormControlLabel
-          control={
-            <Switch
-              checked={isOverallRate}
-              onChange={(e) => setIsOverallRate(e.target.checked)}
-            />
-          }
-          labelPlacement="start"
-          label="Overall Rate"
-        />
-        <FormHelperText>
-          Is the facility governed by a maximum advance rate?
-        </FormHelperText>
-
-        {/* Input for max advance rate */}
-
-        <NumericFormat
-          customInput={TextField}
-          value={maxAdvanceRate}
-          onValueChange={(value) => setMaxAdvanceRate(value.floatValue)}
-          label="Maximum Advance Rate"
-          thousandSeparator=","
-          decimalScale={6}
-          suffix="%"
-          fixedDecimalScale
-        />
-      </div>
-
-      <div>
-        {/* Toggle for asset-by-asset rate */}
-        <FormControlLabel
-          control={
-            <Switch
-              checked={isAssetByAssetRate}
-              onChange={(e) => setIsAssetByAssetRate(e.target.checked)}
-            />
-          }
-          labelPlacement="start"
-          label="Asset By Asset Rate"
-        />
-        <FormHelperText>
-          Is the facility governed by asset-by-asset advance rates?
-        </FormHelperText>
-
-        {/* Input for first lien rate */}
-
-        <NumericFormat
-          customInput={TextField}
-          value={firstLienRate}
-          onValueChange={(value) => setFirstLienRate(value.floatValue)}
-          label="First Lien Rate"
-          thousandSeparator=","
-          decimalScale={6}
-          suffix="%"
-          fixedDecimalScale
-        />
-
-        {/* Input for second lien rate */}
-
-        <NumericFormat
-          customInput={TextField}
-          value={secondLienRate}
-          onValueChange={(value) => setSecondLienRate(value.floatValue)}
-          label="Second Lien Rate"
-          thousandSeparator=","
-          decimalScale={6}
-          suffix="%"
-          fixedDecimalScale
-        />
-
-        {/* Input for mezzanine rate */}
-
-        <NumericFormat
-          customInput={TextField}
-          value={mezzanineRate}
-          onValueChange={(value) => setMezzanineRate(value.floatValue)}
-          label="Mezzanine Rate"
-          thousandSeparator=","
-          decimalScale={6}
-          suffix="%"
-          fixedDecimalScale
-        />
-      </div>
-
-      <div>
-        {/* Toggle for min equity */}
-        <FormControlLabel
-          control={
-            <Switch
-              checked={isMinimumEquity}
-              onChange={(e) => setIsMinimumEquity(e.target.checked)}
-            />
-          }
-          labelPlacement="start"
-          label="Minimum Equity"
-        />
-        <FormHelperText>
-          Is the facility governed by a minimum equity balance?
-        </FormHelperText>
-
-        {/* Input for min equity amount */}
-
-        <NumericFormat
-          customInput={TextField}
-          value={minimumEquity}
-          onValueChange={(value) => setMinimumEquity(value.floatValue)}
-          label="Minimum Equity Amount"
-          thousandSeparator=","
-          decimalScale={6}
-          prefix="$"
-          fixedDecimalScale
-        />
-      </div>
-
-      <div>
-        <Button variant="text" onClick={postFacility}>
-          Save
-        </Button>
-      </div>
     </>
   );
 }
