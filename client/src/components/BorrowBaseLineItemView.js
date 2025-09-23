@@ -389,7 +389,7 @@ function BorrowBaseLineItemView() {
         </div>
         <div>
           <form id="date_select">
-            <label form="asOfDate">
+            <label htmlFor="asOfDate">
               <b>Select As Of Date: </b>
             </label>
             <input
