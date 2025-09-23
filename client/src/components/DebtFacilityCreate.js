@@ -20,9 +20,9 @@ function DebtFacilityCreate() {
   const [selectedLenderId, setSelectedLenderId] = useState(null); // After user chooses lender, a useEffect is run to find the related id and store here
   const [selectedPortfolio, setSelectedPortfolio] = useState(null); // After user chooses portfolio, it is set here via an onChange
   const [selectedPortfolioId, setSelectedPortfolioId] = useState(null); // After user chooses a portfolio, a useEffect is run to find the related id and store here
-  const [facilityName, setFacilityName] = useState(null); // After user enters facility name, it is set here via an onChange
-  const [commitmentDate, setCommitmentDate] = useState(null); // After user chooses commitment date, it is stored here
-  const [maturityDate, setMaturityDate] = useState(null); // After user chooses maturity date, it is stored here
+  const [facilityName, setFacilityName] = useState(""); // After user enters facility name, it is set here via an onChange
+  const [commitmentDate, setCommitmentDate] = useState(""); // After user chooses commitment date, it is stored here
+  const [maturityDate, setMaturityDate] = useState(""); // After user chooses maturity date, it is stored here
   const [commitmentAmount, setCommitmentAmount] = useState(null); // After user chooses commitment amount, it is stored here
   const [isOverallRate, setIsOverallRate] = useState(false); // After user chooses toggle for overall rate, it is stored here - defaults to false
   const [maxAdvanceRate, setMaxAdvanceRate] = useState(null); // After user enters max advance rate, it is stored here --- need to divide by 100 to get percent
@@ -85,25 +85,6 @@ function DebtFacilityCreate() {
     setSelectedPortfolioId(selectedPortfolio.portfolio_id);
   }, [selectedPortfolio]);
 
-  // See what the variable state is
-
-  // function variableDump() {
-  //   console.log("Selected Lender ID: ",selectedLenderId);
-  //   console.log("Selected Portfolio ID: ",selectedPortfolioId);
-  //   console.log("Facility Name:", facilityName);
-  //   console.log("Commitment Date: ", commitmentDate);
-  //   console.log("Maturity Date: ", maturityDate);
-  //   console.log("Commitment Amount: ",commitmentAmount);
-  //   console.log("is Overall Rate: ", isOverallRate);
-  //   console.log("Max Advance Rate: ", maxAdvanceRate);
-  //   console.log("Is Asset by Asset Rate: ", isAssetByAssetRate);
-  //   console.log("First Lien Rate", firstLienRate);
-  //   console.log("Second Lien Rate", secondLienRate);
-  //   console.log("Mezzanine Rate", mezzanineRate);
-  //   console.log("Is Minimum Equity", isMinimumEquity);
-  //   console.log("Minimum Equity Amount", minimumEquity)
-
-  // }
 
   async function postFacility() {
     try {
@@ -199,12 +180,11 @@ function DebtFacilityCreate() {
               <DatePicker
                 label="Commitment Date"
                 sx={{ m: 1, width: "30ch", marginTop: 4 }}
-                value={commitmentDate ? dayjs(commitmentDate) : null} // This is needed if date is yet a valid date or a crash occurs
+                value={commitmentDate ? dayjs(commitmentDate) : null} // This is needed if date is not yet a valid date or a crash occurs
                 onChange={(newDate) => {
                   setCommitmentDate(
-                    newDate ? newDate.format("YYYY-MM-DD") : null,
-                  ); // if there is anything in new date, set commitment date or else set it to null
-                  console.log(commitmentDate);
+                    newDate ? newDate.format("YYYY-MM-DD") : "",
+                  ); // if there is anything in new date, set commitment date or else set it to blank
                 }}
                 slotProps={{
                   textField: {
@@ -218,12 +198,11 @@ function DebtFacilityCreate() {
               <DatePicker
                 label="Maturity Date"
                 sx={{ m: 1, width: "30ch", marginTop: 4 }}
-                value={maturityDate ? dayjs(maturityDate) : null} // This is needed if date is yet a valid date or a crash occurs
+                value={maturityDate ? dayjs(maturityDate) : null} // This is needed if date is not yet a valid date or a crash occurs
                 onChange={(newDate) => {
                   setMaturityDate(
-                    newDate ? newDate.format("YYYY-MM-DD") : null,
-                  ); // if there is anything in new date, set maturity date or else set it to null
-                  console.log(maturityDate);
+                    newDate ? newDate.format("YYYY-MM-DD") : "",
+                  ); // if there is anything in new date, set maturity date or else set it to blank
                 }}
                 slotProps={{
                   textField: {
@@ -401,7 +380,7 @@ function DebtFacilityCreate() {
               onValueChange={(value) => setMinimumEquity(value.floatValue)}
               label="Minimum Equity Amount"
               thousandSeparator=","
-              decimalScale={6}
+              decimalScale={2}
               prefix="$"
               fixedDecimalScale
             />

@@ -261,13 +261,11 @@ function BorrowBaseLineItemView() {
 
   const handlePortfolioChange = (e) => {
     const selectionValue = e.target.value;
-    console.log(selectionValue);
     setSelectedPortfolio(selectionValue);
     const portfolioFacilities = facilityData.filter((item) =>
       item.portfolio_name.includes(selectionValue),
     );
     setFacilityNames(portfolioFacilities);
-    console.log(facilityNames);
   };
 
   const handleFacilityChange = (e) => {
@@ -283,7 +281,6 @@ function BorrowBaseLineItemView() {
   const handleDateSelection = (e) => {
     const selectionValue = e.target.value;
     setAsOfDate(selectionValue);
-    console.log(asOfDate);
   };
 
   useEffect(() => {
