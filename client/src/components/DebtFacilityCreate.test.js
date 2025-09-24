@@ -1,3 +1,9 @@
+// ************************************************************************
+// *     UT-4 – Populating search options for Bank Name from API call     *
+// *     UT-5 – Populating search options for Portfolio from API call     *
+// *     UT-8 - Testing PUT API Call After Filling in Data from Form      *
+// ************************************************************************
+
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
 import DebtFacilityCreate from "./DebtFacilityCreate";
@@ -137,7 +143,7 @@ axios.get.mockImplementation((url) => {
 });
 
 
-test("UT-8 – Testing PUT API Call After Filling in Data from Form", async () => {
+test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => {
 
 
 // Since there are two separate API's GETs being called in DebtFacilityCreate

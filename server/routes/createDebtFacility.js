@@ -31,20 +31,6 @@ router.post("/api/createdebtfacility", async (req, res) => {
     isMinEquity,
     minEquityAmount,
   } = req.body;
-  console.log("Debt Facility Name: ", debtFacilityName);
-  console.log("Portfolio ID: ", portfolioId);
-  console.log("Lender ID: ", lenderId);
-  console.log("Start Date: ", startDate);
-  console.log("End Date", endDate);
-  console.log("Overall Commitment: ", overAllCommitmentAmount);
-  console.log("Is Overall Rate: ", isOverallRate);
-  console.log("Overall Rate: ", overallRate);
-  console.log("is Asset by Asset Advance: ", isAssetByAssetAdvance);
-  console.log("First Lien Rate: ", firstLienRate);
-  console.log("Second Line Rate: ", secondLienRate);
-  console.log("Mezzanine Rate: ", mezzRate);
-  console.log("Is Minimum Equity: ", isMinEquity);
-  console.log("Minimum Equity Amount: ", minEquityAmount);
 
   try {
     result = await pool.query(createDebtFacilitySQL, [
@@ -85,7 +71,5 @@ router.post("/api/createdebtfacility", async (req, res) => {
     res.status(500).send("DB create debt_facility_options query failed");
   }
 });
-
-
 
 module.exports = router;

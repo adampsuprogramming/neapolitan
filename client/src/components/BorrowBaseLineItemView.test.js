@@ -1,3 +1,10 @@
+// ************************************************************************
+// *  UT-1 – Populating dropdown options for Portfolio Name from API call *
+// *  UT-2 – Populating dropdown options for Facility from API call       *
+// *  UT-7 - Test borrowing base line item data loading and formatting    *
+// ************************************************************************
+
+
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
 import BorrowBaseLineItemView from "./BorrowBaseLineItemView";
@@ -214,13 +221,14 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
         "legal_name": "Test Company A",
         "short_name": "TestCo",
         "ebitda": "45222222.22",
-        "start_date": "2023-08-10T04:00:00.000Z",
+        "loan_metrics_start_date": "2023-08-10T04:00:00.000Z",
         "int_coverage_ratio": "0.5454",
         "is_cov_default": false,
         "is_payment_default": false,
         "leverage_ratio": "4.48548",
         "loan_metrics_id": 454,
         "net_leverage_ratio": "7.45451",
+        "rate_start_date": "2028-04-10T04:00:00.000Z",
         "end_date": "2028-06-10T04:00:00.000Z",
         "fixed_rate": null,
         "floor": null,
@@ -249,13 +257,14 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
         "legal_name": "Test No 2",
         "short_name": "Test2",
         "ebitda": "45000000.00",
-        "start_date": "2024-10-01T04:00:00.000Z",
+        "loan_metrics_start_date": "2024-10-01T04:00:00.000Z",
         "int_coverage_ratio": "6.100000",
         "is_cov_default": false,
         "is_payment_default": false,
         "leverage_ratio": "1.485458",
         "loan_metrics_id": 245,
         "net_leverage_ratio": "1.06481",
+        "rate_start_date": "2028-11-01T04:00:00.000Z",
         "end_date": "2029-01-01T04:00:00.000Z",
         "fixed_rate": "0.09500000",
         "floor": null,
@@ -336,7 +345,7 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
   expect(cellsRow[24]).toHaveTextContent("4.4855"); 
   expect(cellsRow[25]).toHaveTextContent("454"); 
   expect(cellsRow[26]).toHaveTextContent("7.4545"); 
-  expect(cellsRow[27]).toHaveTextContent("8/10/2023"); 
+  expect(cellsRow[27]).toHaveTextContent("4/10/2028"); 
   expect(cellsRow[28]).toHaveTextContent("6/10/2028"); 
   expect(cellsRow[29]).toBeNull;
   expect(cellsRow[30]).toBeNull;

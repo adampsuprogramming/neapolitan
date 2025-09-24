@@ -174,7 +174,7 @@ function BorrowBaseLineItemView() {
       },
     },
     {
-      field: "start_date",
+      field: "loan_metrics_start_date",
       headerName: "Metric As of Date",
       cellDataType: "dateString",
       valueFormatter: (params) => {
@@ -201,7 +201,7 @@ function BorrowBaseLineItemView() {
       valueFormatter: (params) => Number(params.value).toFixed(4),
     },
     {
-      field: "start_date",
+      field: "rate_start_date",
       headerName: "Rate Info Start Date",
       cellDataType: "dateString",
       valueFormatter: (params) => {

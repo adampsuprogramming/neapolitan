@@ -9,5 +9,12 @@
   "devDependencies": {
     "prettier": "^3.6.2",
     "supertest": "^7.1.4"
-  }
+  },
+  
+  "scripts": {
+    "start": "node server.js",
+    "test": "NODE_ENV=test jest --forceExit",
+    "test:coverage": "NODE_ENV=test jest --coverage --forceExit"
+  
+}
 }
