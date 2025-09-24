@@ -16,12 +16,8 @@ select
 from debt_facilities d
 left join debt_facility_balances dfb
 	on dfb.debt_facility_id  = d.debt_facility_id 
-	and dfb.start_date <= $1
-	and (dfb.end_date > $1 or dfb.end_date is null)
 left join debt_facility_options dfo
 	on dfo.debt_facility_id  = d.debt_facility_id 
-	and dfo.start_date <= $1
-	and (dfo.end_date > $1 or dfo.end_date is null)
 left join portfolios p
 	on d.portfolio_id = p.portfolio_id
 left join lenders l
@@ -32,7 +28,7 @@ left join lenders l
 
 router.get("/api/facilities", async (req, res) => {
   try {
-    const result = await pool.query(facilityQuery, ["2025-06-30"]);
+    const result = await pool.query(facilityQuery, []);
     res.json(result.rows);
   } catch (err) {
     console.error(err);

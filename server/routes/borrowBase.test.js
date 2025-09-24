@@ -18,7 +18,6 @@ afterAll(async () =>{
   await pool.end();
 })
 
-
 describe("GET /api/borrowbase", () => {
   it("accepts an borrowing base info request from the front-end, queries the database, and then returns it", async () => {
     mockedQuery.mockResolvedValue({

@@ -9,7 +9,22 @@ returning debt_facility_id
 `;
 
 const createDebtFacilityOptionsSQL = `
-insert into debt_facility_options (debt_facility_id, start_date, end_date, overall_commitment_amount, is_overall_rate, overall_rate, is_asset_by_asset_advance, is_first_lien_advance_rate, first_lien_advance_rate, is_second_lien_advance_rate, second_lien_advance_rate, is_mezzanine_advance_rate, mezzanine_advance_rate, is_minimum_equity, minimum_equity_amount)
+insert into debt_facility_options 
+(debt_facility_id, 
+start_date, 
+end_date, 
+overall_commitment_amount, 
+is_overall_rate, 
+overall_rate, 
+is_asset_by_asset_advance, 
+is_first_lien_advance_rate, 
+first_lien_advance_rate, 
+is_second_lien_advance_rate, 
+second_lien_advance_rate, 
+is_mezzanine_advance_rate, 
+mezzanine_advance_rate, 
+is_minimum_equity, 
+minimum_equity_amount)
 values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15);
 
 `;
@@ -66,6 +81,7 @@ router.post("/api/createdebtfacility", async (req, res) => {
       isMinEquity,
       minEquityAmount,
     ]);
+    res.sendStatus(201)
   } catch (err) {
     console.error(err);
     res.status(500).send("DB create debt_facility_options query failed");
