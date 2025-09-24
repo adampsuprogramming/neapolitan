@@ -315,5 +315,22 @@ axios.get.mockImplementation((url) => {
       })
   );
 }
+
 );
+
+  // simulate cancel click
+  const cancelButton = screen.getByText("Cancel");
+  fireEvent.click(cancelButton);
+  expect(facilityNameInput.value).toBe("");
+  expect(lenderAutocomplete.value).toBe("");
+  expect(portfolioAutocomplete.value).toBe("");
+  expect(commitmentAmountInput.value).toBe("");
+  expect(toggleOverallRate).not.toBeChecked();
+  expect(overallAdvanceRateInput.value).toBe("");
+  expect(toggleAssetByAssetRate).not.toBeChecked();
+  expect(firstLienRateInput.value).toBe("");
+  expect(secondLienRateInput.value).toBe("");
+  expect(mezzanineRateInput.value).toBe("");
+  expect(toggleMinEquity).not.toBeChecked();
+  expect(minimumEquityAmountInput.value).toBe("");
 });

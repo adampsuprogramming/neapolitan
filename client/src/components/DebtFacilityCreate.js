@@ -32,6 +32,7 @@ function DebtFacilityCreate() {
   const [mezzanineRate, setMezzanineRate] = useState(null); // After user enters mezz rate, it is stored here --- need to divide by 100 to get percent
   const [isMinimumEquity, setIsMinimumEquity] = useState(false); // After user chooses toggle for min equity, it is stored here - defaults to false
   const [minimumEquity, setMinimumEquity] = useState(null); //After use enters min equity, it is stored here
+  const [message,setMessage] = useState("");
 
   // this useEffect loads up the Lender data to populate the dropdown
   // on page load.
@@ -88,7 +89,7 @@ function DebtFacilityCreate() {
 
   async function postFacility() {
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createdebtfacility`,
         {
           debtFacilityName: facilityName,
@@ -106,19 +107,42 @@ function DebtFacilityCreate() {
           isMinEquity: isMinimumEquity,
           minEquityAmount: minimumEquity,
         },
-      );
+        );
+      if (response.status === 201) {
+        clearData();
+        setMessage("Facility Created Successfuly");
+      }
+      
     } catch (error) {
-      console.error("Error saving:", error);
-      alert("There was an error creating the facility.");
+      setMessage("There was an error creating the facility.");
     }
+  }
+
+  function clearData(){
+
+    setSelectedLender(null);
+    setSelectedPortfolio(null);
+    setFacilityName("");
+    setCommitmentDate("");
+    setMaturityDate("");
+    setCommitmentAmount("");
+    setIsOverallRate(false);
+    setMaxAdvanceRate("");
+    setIsAssetByAssetRate("");
+    setFirstLienRate("");
+    setSecondLienRate("");
+    setMezzanineRate("");
+    setIsMinimumEquity(false);
+    setMinimumEquity("");
+    setMessage("");
   }
 
   return (
     <>
       <div className="debt-facility-create">
-        <h1>Placeholder for Debt Facility Creation</h1>
+        Create Debt Facility
       </div>
-      <Box component="form">
+      <Box component="form" sx={{paddingLeft: "115px"}}>
         <Box
           sx={{
             border: "1px solid",
@@ -146,6 +170,7 @@ function DebtFacilityCreate() {
 
             <Autocomplete
               disablePortal
+              id="autocomplete-lender-name"
               required
               options={lenderData}
               value={selectedLender}
@@ -162,6 +187,7 @@ function DebtFacilityCreate() {
 
             <Autocomplete
               disablePortal
+              id="autocomplete-portfolio-name"
               required
               options={portfolioData}
               value={selectedPortfolio}
@@ -187,7 +213,9 @@ function DebtFacilityCreate() {
                   ); // if there is anything in new date, set commitment date or else set it to blank
                 }}
                 slotProps={{
+                      
                   textField: {
+                    inputProps: { "data-testid": "commitment-date-picker" },
                     helperText: "MM/DD/YYYY",
                   },
                 }}
@@ -197,6 +225,7 @@ function DebtFacilityCreate() {
 
               <DatePicker
                 label="Maturity Date"
+                id="maturity-date-picker"
                 sx={{ m: 1, width: "30ch", marginTop: 4 }}
                 value={maturityDate ? dayjs(maturityDate) : null} // This is needed if date is not yet a valid date or a crash occurs
                 onChange={(newDate) => {
@@ -217,6 +246,7 @@ function DebtFacilityCreate() {
             {/* Uses react-number-format integrated with MUI TextField */}
             <NumericFormat
               customInput={TextField}
+              id="commitment-amount-field"
               sx={{ m: 1, width: "30ch", marginTop: 4 }}
               required
               value={commitmentAmount}
@@ -246,6 +276,7 @@ function DebtFacilityCreate() {
               control={
                 <Switch
                   checked={isOverallRate}
+                  id="overall-rate-switch"
                   onChange={(e) => setIsOverallRate(e.target.checked)}
                 />
               }
@@ -261,6 +292,7 @@ function DebtFacilityCreate() {
           <NumericFormat
             sx={{ m: 1, width: "30ch",  marginLeft: 10, width: "20ch"}}
             customInput={TextField}
+            id="max-advance-rate-field"
             value={maxAdvanceRate}
             onValueChange={(value) => setMaxAdvanceRate(value.floatValue)}
             label="Overall Advance Rate"
@@ -287,6 +319,7 @@ function DebtFacilityCreate() {
             <FormControlLabel
               control={
                 <Switch
+                  id="asset-by-asset-advance-rate-switch"
                   checked={isAssetByAssetRate}
                   onChange={(e) => setIsAssetByAssetRate(e.target.checked)}
                 />
@@ -304,6 +337,7 @@ function DebtFacilityCreate() {
 
             <NumericFormat
               customInput={TextField}
+              id="first-lien-rate-textfield"
               sx={{ m: 1, width: "20ch",  marginLeft: 3 }}
               value={firstLienRate}
               onValueChange={(value) => setFirstLienRate(value.floatValue)}
@@ -318,6 +352,7 @@ function DebtFacilityCreate() {
 
             <NumericFormat
               customInput={TextField}
+              id="second-lien-rate-textfield"
               sx={{ m: 1, width: "20ch",  marginLeft: 2 }}
               value={secondLienRate}
               onValueChange={(value) => setSecondLienRate(value.floatValue)}
@@ -332,6 +367,7 @@ function DebtFacilityCreate() {
 
             <NumericFormat
               customInput={TextField}
+              id="mezzanine-rate-textfield"
               sx={{ m: 1, width: "20ch",  marginLeft: 2 }}
               value={mezzanineRate}
               onValueChange={(value) => setMezzanineRate(value.floatValue)}
@@ -360,6 +396,7 @@ function DebtFacilityCreate() {
             <FormControlLabel
               control={
                 <Switch
+                  id="min-equity-switch"
                   checked={isMinimumEquity}
                   onChange={(e) => setIsMinimumEquity(e.target.checked)}
                 />
@@ -375,6 +412,7 @@ function DebtFacilityCreate() {
 
             <NumericFormat
               customInput={TextField}
+              id="min-equity-textfield"
               sx={{marginLeft:"5ch"}}
               value={minimumEquity}
               onValueChange={(value) => setMinimumEquity(value.floatValue)}
@@ -387,10 +425,41 @@ function DebtFacilityCreate() {
         
         </Box>
         <div>
-          <Button variant="text" onClick={postFacility}>
+          <Button 
+          variant="contained" 
+          onClick={postFacility} 
+          sx={{marginLeft: "25px",
+            minWidth: "225px",
+            minHeight: "50px",
+            borderRadius: 2,
+            backgroundColor: "#F6AE2D",
+            color: "#000000",
+            textTransform: "none",
+            fontSize:"20px"}}>
             Save
           </Button>
+
+          <Button 
+          variant="contained" 
+          onClick={clearData} 
+          sx={{marginLeft: "25px",
+            minWidth: "225px",
+            minHeight: "50px",
+            borderRadius: 2,
+            backgroundColor: "#d4d4d4ff",
+            color: "#000000",
+            textTransform: "none",
+            fontSize:"20px"}}>
+            Cancel
+          </Button>
         </div>
+
+{/* Displays message below in a success or failure situation */}
+        {message &&
+        <div className="alertMessage">
+          {message}
+        </div>
+      }
       </Box>
     </>
   );

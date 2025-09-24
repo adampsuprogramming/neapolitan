@@ -127,6 +127,15 @@
   text-underline-offset: 5px;
 }
 
+.debt-facility-create {
+  padding-top: 20px;
+  padding-left:150px;
+    font-family: "Inter", sans-serif;
+     font-size: 18px;
+       font-weight: 800;
+}
+
+
 .config-facility-nav {
   font-family: "Inter", sans-serif;
   background-color: #f6ae2d;
@@ -170,4 +179,12 @@
 .row-2-new-debt-facility {
   display: flex;
   gap: 50px;
+}
+
+.alertMessage {
+  margin-top: 10px;
+  margin-left: 25px;
+  color: #33648A;
+  font-size: 16px;
+  font-weight: 800;
 }
