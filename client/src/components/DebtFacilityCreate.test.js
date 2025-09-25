@@ -47,22 +47,6 @@ axios.get.mockImplementation((url) => {
   });
 }
 
-//   if (url.includes("portfolioquery")) {  
-  
-//   return Promise.resolve ({
-//   data: [
-//       {
-//         portfolio_name: "Fund Apple",
-//         portfolio_id: "1",
-//       },
-//       {
-//         portfolio_name: "Fund Banana",
-//         portfolio_id: "2",
-//       },
-//     ],
-//   });
-// }
-
 });
 
   render(<DebtFacilityCreate />);
@@ -89,26 +73,7 @@ test("UT-5 – Populating search options for Portfolio from API call", async () 
 // /facilityquery returns facility data.
 
 axios.get.mockImplementation((url) => {
-  if (url.includes("lenderquery")) {  
   
-  return Promise.resolve ({
-  data: [
-      {
-        lender_name: "Oak Bank",
-        lender_id: "100",
-      },
-      {
-        lender_name: "Poplar Bank",
-        lender_id: "101",
-      },
-      {
-        lender_name: "Cherry Blossom Bank",
-        lender_id: "102",
-      },
-    ],
-  });
-}
-
   if (url.includes("portfolioquery")) {  
   
   return Promise.resolve ({
@@ -229,12 +194,14 @@ axios.get.mockImplementation((url) => {
 
   const commitmentDateInput = screen.getByLabelText("Commitment Date", {selector: 'input'});
   fireEvent.change(commitmentDateInput, { target: { value: "01/02/2025"}});
+  expect(commitmentDateInput.value).toBe("01/02/2025");
 
   // Find autocomplete box for Maturity Date input and enter date
   // Note that we had to specify "input" because React renders the words Maturity Date (including
   // a hidden input, so it doesn't know which to select without the selector)
   const maturityDateInput = screen.getByLabelText("Maturity Date", {selector: 'input'});
   fireEvent.change(maturityDateInput, { target: { value: "01/02/2030"}});
+  expect(maturityDateInput.value).toBe("01/02/2030");
 
   // Find Commitment Amount input box and input text.  Note the text is auto formatted so our
   // expect assertion needs to be as well.

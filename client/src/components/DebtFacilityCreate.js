@@ -110,7 +110,7 @@ function DebtFacilityCreate() {
         );
       if (response.status === 201) {
         clearData();
-        setMessage("Facility Created Successfuly");
+        setMessage("Facility Created Successfully");
       }
       
     } catch (error) {

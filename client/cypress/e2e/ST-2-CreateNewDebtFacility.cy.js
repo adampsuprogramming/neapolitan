@@ -98,8 +98,6 @@ it('submits a new facility form and receives confirmation', function() {
     // Test that the autocomplete fund name works as intended and contains value inputted
     cy.get('#autocomplete-portfolio-name').click();
     cy.get('#autocomplete-portfolio-name').clear();
-    cy.get('#autocomplete-portfolio-name').type('f');
-    cy.get('#autocomplete-portfolio-name').clear();
     cy.get('#autocomplete-portfolio-name').type('fun');
     cy.get('#autocomplete-portfolio-name-option-0').click();
     cy.get('#autocomplete-portfolio-name').should('have.value','Fund A');
@@ -107,6 +105,6 @@ it('submits a new facility form and receives confirmation', function() {
     // Test that the data saves in the database correctly and returns the proper message upon saving.
     cy.get('#root div:nth-child(5) button:nth-child(1)').click();
         cy.wait(500)
-    cy.contains('Facility Created Successfuly').should('be.visible');
+    cy.contains('Facility Created Successfully').should('be.visible');
     
 });
