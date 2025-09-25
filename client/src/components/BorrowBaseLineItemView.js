@@ -67,13 +67,19 @@ function BorrowBaseLineItemView() {
     {
       field: "approved_net_leverage",
       headerName: "Approved Net Leverage",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        
+        return Number(params.value).toFixed(4);
+    }},
     {
       field: "approved_int_coverage",
       headerName: "Interest Coverage",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) =>{
+        if (!params.value) return ""; 
+        return Number(params.value).toFixed(4);
+         
+    }},
     {
       field: "approved_advance_rate",
       headerName: "Approved Advance Rate",
@@ -101,8 +107,11 @@ function BorrowBaseLineItemView() {
     {
       field: "approved_leverage",
       headerName: "Approved Leverage",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+               if (!params.value) return "";   
+        
+        return Number(params.value).toFixed(4);
+    }},
     {
       field: "approved_ebitda",
       headerName: "Approved EBITDA",
@@ -182,24 +191,40 @@ function BorrowBaseLineItemView() {
         return new Date(params.value).toLocaleDateString("en-US");
       },
     },
+
+
     {
       field: "int_coverage_ratio",
       headerName: "Coverage Ratio",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+    }},
+
+
     { field: "is_cov_default", headerName: "Covenant Default?" },
+
     { field: "is_payment_default", headerName: "Payment Default?" },
+
     {
       field: "leverage_ratio",
       headerName: "Leverage Ratio",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+    }},
+
     { field: "loan_metrics_id", headerName: "Loan Metrics ID" },
+    
     {
       field: "net_leverage_ratio",
       headerName: "Net Leverage Ratio",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+      },
     },
+        
     {
       field: "rate_start_date",
       headerName: "Rate Info Start Date",

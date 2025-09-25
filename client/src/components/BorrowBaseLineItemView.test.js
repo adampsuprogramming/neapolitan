@@ -320,7 +320,7 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
 
   expect(cellsRow[0]).toHaveTextContent("100");
   expect(cellsRow[1]).toHaveTextContent("11/30/2023");
-  expect(cellsRow[2]).toBeNull;
+  expect(cellsRow[2]).toHaveTextContent(""); 
   expect(cellsRow[3]).toHaveTextContent("10/15/2025");
   expect(cellsRow[4]).toHaveTextContent("$15,000,000.00");
   expect(cellsRow[5]).toHaveTextContent("6.1500");
@@ -340,17 +340,194 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
   expect(cellsRow[19]).toHaveTextContent("45,222,222.22"); 
   expect(cellsRow[20]).toHaveTextContent("8/10/2023"); 
   expect(cellsRow[21]).toHaveTextContent("0.5454"); 
-  expect(cellsRow[22]).toBeNull;
-  expect(cellsRow[23]).toBeNull;
+  expect(cellsRow[22]).toHaveTextContent(""); 
+  expect(cellsRow[23]).toHaveTextContent(""); 
   expect(cellsRow[24]).toHaveTextContent("4.4855"); 
   expect(cellsRow[25]).toHaveTextContent("454"); 
   expect(cellsRow[26]).toHaveTextContent("7.4545"); 
   expect(cellsRow[27]).toHaveTextContent("4/10/2028"); 
   expect(cellsRow[28]).toHaveTextContent("6/10/2028"); 
-  expect(cellsRow[29]).toBeNull;
-  expect(cellsRow[30]).toBeNull;
-  expect(cellsRow[31]).toBeNull;
-  expect(cellsRow[32]).toBeNull;
+  expect(cellsRow[29]).toHaveTextContent(""); 
+  expect(cellsRow[30]).toHaveTextContent(""); 
+  expect(cellsRow[31]).toHaveTextContent(""); 
+  expect(cellsRow[32]).toHaveTextContent(""); 
   expect(cellsRow[33]).toHaveTextContent("LIBOR"); 
   expect(cellsRow[34]).toHaveTextContent("10.45%"); 
 });
+
+
+test("UT-12: Borrowing base line item data is formatted correctly receiving empty values from API", async () => {
+
+  axios.get.mockResolvedValueOnce({
+    data: [
+      {
+        portfolio_name: "Fund Apple",
+        debt_facility_name: "Orchard Bank Fund Apple Facility",
+        debt_facility_id: 5,
+        lender_name: "Orchard Bank (Test)",
+        outstanding_amount: "1234567",
+        overall_commitment_amount: "1234567",
+      },
+      {
+        portfolio_name: "Fund Banana",
+        debt_facility_name: "Tree Bank Fund Banana",
+        debt_facility_id: 6,
+        lender_name: "Tree Bank",
+        outstanding_amount: "50000000.00",
+        overall_commitment_amount: "100000000.00",
+      },
+      {
+        portfolio_name: "Fund Apple",
+        debt_facility_name: "Golden Bank Fund Apple Facility",
+        debt_facility_id: 7,
+        lender_name: "Golden Bank",
+        outstanding_amount: "5000000.00",
+        overall_commitment_amount: "6000000.00",
+      },
+      {
+        portfolio_name: "Fund Banana",
+        debt_facility_name: "Happy Bank Banana Facility",
+        debt_facility_id: 8,
+        lender_name: "Happy Bank",
+        outstanding_amount: "40000000.00",
+        overall_commitment_amount: "110000000.00",
+      },
+    ],
+  });
+
+  axios.get.mockResolvedValueOnce({
+    data: [
+      {
+        "collateral_id": 100,
+        "inclusion_date": null,
+        "removed_date": null,
+        "approval_date": null,
+        "approved_ebitda": null,
+        "approved_net_leverage": null,
+        "approved_int_coverage": null,
+        "approved_advance_rate": null,
+        "approved_valuation": null,
+        "approved_leverage": null,
+        "commitment_amount": null,
+        "outstanding_amount": null,
+        "lien_type": null,
+        "maturity_date": null,
+        "tranche_type": null,
+        "loan_agreement_date": null,
+        "legal_name": null,
+        "short_name": null,
+        "ebitda": null,
+        "loan_metrics_start_date": null,
+        "int_coverage_ratio": null,
+        "is_cov_default": null,
+        "is_payment_default": null,
+        "leverage_ratio": null,
+        "loan_metrics_id": null,
+        "net_leverage_ratio": null,
+        "rate_start_date": null,
+        "end_date": null,
+        "fixed_rate": null,
+        "floor": null,
+        "has_floor": null,
+        "is_fixed": null,
+        "reference_rate": null,
+        "spread": null
+    },
+          {
+        "collateral_id": 101,
+        "inclusion_date": "2023-08-10T05:00:00.000Z",
+        "removed_date": null,
+        "approval_date": "2023-07-11T05:00:00.000Z",
+        "approved_ebitda": "40000000.00",
+        "approved_net_leverage": "1.65000000",
+        "approved_int_coverage": "5.00000000",
+        "approved_advance_rate": null,
+        "approved_valuation": "1.0000000",
+        "approved_leverage": "2.40000000",
+        "commitment_amount": "56000000.00",
+        "outstanding_amount": "56000000.00",
+        "lien_type": "Second",
+        "maturity_date": "2029-03-01T04:00:00.000Z",
+        "tranche_type": "Term",
+        "loan_agreement_date": "2024-03-01T04:00:00.000Z",
+        "legal_name": "Test No 2",
+        "short_name": "Test2",
+        "ebitda": "45000000.00",
+        "loan_metrics_start_date": "2024-10-01T04:00:00.000Z",
+        "int_coverage_ratio": "6.100000",
+        "is_cov_default": false,
+        "is_payment_default": false,
+        "leverage_ratio": "1.485458",
+        "loan_metrics_id": 245,
+        "net_leverage_ratio": "1.06481",
+        "rate_start_date": "2028-11-01T04:00:00.000Z",
+        "end_date": "2029-01-01T04:00:00.000Z",
+        "fixed_rate": "0.09500000",
+        "floor": null,
+        "has_floor": false,
+        "is_fixed": true,
+        "reference_rate": "",
+        "spread": null
+    },
+    
+    ],
+  });
+
+  render(<BorrowBaseLineItemView />);
+
+  // The waitFor statements on this page are to remedy multiple problems that arose from 
+  // timing issues with the test code executing and react rendering components.
+  // By waiting for the "expect" condition before proceeding, the code ensures that
+  // there are components rendered on which to run the tests.
+
+  await waitFor(() => {
+    const portfolioSelect = screen.getByLabelText("Portfolio Name");
+    const options = within(portfolioSelect).getAllByRole("option");
+    expect(options).toHaveLength(3);
+  });
+
+  const portfolioSelect = screen.getByLabelText("Portfolio Name");
+  fireEvent.change(portfolioSelect, { target: { value: "Fund Banana" } });
+
+  await waitFor(() => {
+    const facilityNameDropdown=screen.getByLabelText("Facility Name");
+    const options = within(facilityNameDropdown).getAllByRole("option");
+    expect(options).toHaveLength(3);
+  })
+
+
+  const combos_facility = await screen.findByLabelText("Facility Name");
+  fireEvent.change(combos_facility, { target: { value: "Happy Bank Banana Facility" } });;
+
+  const inputDate = screen.getByLabelText("Select As Of Date:");
+  fireEvent.change(inputDate, { target: {value: "2025-06-30"}});
+
+  await waitFor(() => {
+    const grid = screen.getByRole("grid");
+    const gridRows = within(grid).getAllByRole("row");
+    expect(gridRows.length).toBeGreaterThan(1);
+
+  })
+
+
+  const grid = screen.getByRole("grid");
+  const gridRows = within(grid).getAllByRole("row");
+  const cellsRow = within(gridRows[1]).getAllByRole("gridcell");
+
+  expect(cellsRow[0]).toHaveTextContent("100");
+  for (let i = 1; i<=34; i++) {
+      expect(cellsRow[i]).toHaveTextContent(""); // loop through all of the columsn to ensure that they are appropriately empty
+  }
+
+}
+);
+
+
+
+
+
+
+
+
+
+
