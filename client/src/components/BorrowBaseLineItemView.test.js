@@ -158,9 +158,7 @@ test("UT-2: Facility data correctly loads into second dropdown menu after choice
 // 1 - If, after data is imported from /api/borrowbase/ it is formatted correctly
 // by the series of formatting statements
 
-// 
-
-test("UT-7: Borrowing base line item data is formatted correctly after loading from API", async () => {
+test("UT-7: Ensure borrowing base line item data is formatted correctly after loading from API", async () => {
 
   axios.get.mockResolvedValueOnce({
     data: [

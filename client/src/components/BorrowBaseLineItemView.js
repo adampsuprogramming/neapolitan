@@ -17,6 +17,7 @@ function BorrowBaseLineItemView() {
   const [facilityNumber, setFacilityNumber] = useState(null);
   const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]);
   const [asOfDate, setAsOfDate] = useState("");
+  const todayDate = new Date();
 
   // useState hook to set the row data
   const [rowData, setRowData] = useState([]);
@@ -301,6 +302,7 @@ function BorrowBaseLineItemView() {
     );
     const facility_numb = facility_record.debt_facility_id;
     setFacilityNumber(facility_numb);
+    setAsOfDate(todayDate.toLocaleDateString("en-CA"));
   };
 
   const handleDateSelection = (e) => {
