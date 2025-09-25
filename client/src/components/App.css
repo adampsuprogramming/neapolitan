@@ -62,6 +62,13 @@
   margin-left: 100px;
 }
 
+
+.nav-right {
+  color: #ffffff;
+  display: flex;
+  gap: 30px;
+  margin-right: 35px;
+}
 .navbar a.navbar-highlighted {
   font-family: "Inter", sans-serif;
   text-decoration: none;
@@ -187,4 +194,12 @@
   color: #33648A;
   font-size: 16px;
   font-weight: 800;
+}
+
+.ag-theme-alpine .ag-header {
+  background-color: #2F4858 !important;
+}
+
+.ag-theme-alpine .ag-header-cell-label {
+  color: #ffffff !important;
 }

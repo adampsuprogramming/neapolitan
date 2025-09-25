@@ -425,8 +425,8 @@ function BorrowBaseLineItemView() {
       </div>
       <div
         className="ag-theme-alpine"
-        style={{ width: "100%", height: "500px" }}
-      >
+        style={{ width: "98%", height: "80vh", margin: "auto", "--ag-header-background-color": "#2F4858"}} 
+     >
         <AgGridReact rowData={rowData} columnDefs={colDefs} />
       </div>
     </div>

@@ -290,7 +290,7 @@ function DebtFacilityCreate() {
           {/* Input for max advance rate */}
 
           <NumericFormat
-            sx={{ m: 1, width: "30ch",  marginLeft: 10, width: "20ch"}}
+            sx={{ m: 1, width: "30ch",  marginLeft: 6, width: "22ch"}}
             customInput={TextField}
             id="max-advance-rate-field"
             value={maxAdvanceRate}
