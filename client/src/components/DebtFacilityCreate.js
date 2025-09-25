@@ -35,7 +35,7 @@ function DebtFacilityCreate() {
   const [message,setMessage] = useState("");
 
   // this useEffect loads up the Lender data to populate the dropdown
-  // on page load.
+  // on page load
 
   useEffect(() => {
     async function getLenderData() {
