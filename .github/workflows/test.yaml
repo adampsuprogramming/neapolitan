@@ -35,7 +35,7 @@ jobs:
         CI: true
     
     - name: Upload client coverage to folder
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: client-coverage
         path: client/coverage/
@@ -67,7 +67,7 @@ jobs:
         NODE_ENV: test
     
     - name: Upload server coverage to folder
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: server-coverage
         path: server/coverage/
