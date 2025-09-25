@@ -17,7 +17,6 @@ select
 	c.approved_advance_rate,
 	c.approved_valuation,
 	c.approved_leverage,
-	c.approved_ebitda,
 	cb.commitment_amount,
 	cb.outstanding_amount,
 	lt.lien_type,
@@ -27,14 +26,14 @@ select
 	b.legal_name,
 	b.short_name,
 	lm.ebitda,
-	lm.start_date,
+	lm.start_date as loan_metrics_start_date,
 	lm.int_coverage_ratio,
 	lm.is_cov_default,
 	lm.is_payment_default,
 	lm.leverage_ratio,
 	lm.loan_metrics_id,
 	lm.net_leverage_ratio,
-	rd.start_date,
+	rd.start_date as rate_start_date,
 	rd.end_date,
 	rd.fixed_rate,
 	rd.floor,
@@ -67,18 +66,6 @@ where c.inclusion_date <= $1
 	and (c.removed_date > $1 or c.removed_date is NULL)
 	and df.debt_facility_id = $2
 `;
-
-// route for borrorwing base query.  This will be expanded upon to receive input from user.
-
-// router.get("/api/borrowbase", async (req, res) => {
-//   try {
-//     const result = await pool.query(borrowBaseQuery, ["2025-06-30"]);
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("DB test tranches query failed)");
-//   }
-// });
 
 router.get("/api/borrowbase", async (req, res) => {
   const { as_of_date, facility_id } = req.query;

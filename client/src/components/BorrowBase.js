@@ -1,7 +1,5 @@
 import { Routes, Route, Link, NavLink } from "react-router-dom";
-import BorrowBaseLineItemView from "./BorrowBaseLineItemView";
-import BorrowBaseCalcView from "./BorrowBaseCalcView";
-import BorrowBaseCovenantView from "./BorrowBaseCovenantView";
+import { Outlet } from "react-router-dom";
 
 export default function BorrowBase() {
   return (
@@ -17,7 +15,7 @@ export default function BorrowBase() {
         </NavLink>
 
         <NavLink
-          to="borrowbasecalview"
+          to="borrowbasecalcview"
           className={({ isActive }) =>
             isActive ? "borrow-base-nav-highlighted" : ""
           }
@@ -33,17 +31,7 @@ export default function BorrowBase() {
           Covenant View
         </NavLink>
       </nav>
-      <Routes>
-        <Route
-          path="borrowbaselineitemview"
-          element={<BorrowBaseLineItemView />}
-        />
-        <Route path="borrowbasecalview" element={<BorrowBaseCalcView />} />
-        <Route
-          path="borrowbasecovenantview"
-          element={<BorrowBaseCovenantView />}
-        />
-      </Routes>
+      <Outlet />
     </div>
   );
 }

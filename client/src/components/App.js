@@ -6,12 +6,16 @@ import Performance from "./Performance";
 import Reporting from "./Reporting";
 import Dashboard from "./Dashboard";
 import Configuration from "./Configuration";
-import ConfigBank from "./ConfigBank";
 import ConfigFacility from "./ConfigFacility";
+import ConfigBank from "./ConfigBank";
 import ConfigPortfolio from "./ConfigPortfolio";
-
+import DebtFacilityCreate from "./DebtFacilityCreate";
+import DebtFacilityModify from "./DebtFacilityModify";
+import DebtFacilityDelete from "./DebtFacilityDelete";
+import BorrowBaseLineItemView from "./BorrowBaseLineItemView";
+import BorrowBaseCovenantView from "./BorrowBaseCovenantView";
+import BorrowBaseCalcView from "./BorrowBaseCalcView";
 import Home from "./Home";
-import NewFacility from "./NewFacility";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -21,12 +25,40 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/borrowingbase/*" element={<BorrowBase />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/performance" element={<Performance />} />
-          <Route path="/reporting" element={<Reporting />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/configuration" element={<Configuration />} />
+          <Route path="/borrowingbase/*" element={<BorrowBase />}>
+            <Route
+              path="borrowbaselineitemview"
+              element={<BorrowBaseLineItemView />}
+            />
+            <Route
+              path="borrowbasecovenantview"
+              element={<BorrowBaseCovenantView />}
+            />
+            <Route path="borrowbasecalcview" element={<BorrowBaseCalcView />} />
+          </Route>
+          <Route path="/transactions/*" element={<Transactions />} />
+          <Route path="/performance/*" element={<Performance />} />
+          <Route path="/reporting/*" element={<Reporting />} />
+          <Route path="/dashboard/*" element={<Dashboard />} />
+
+          <Route path="/configuration/*" element={<Configuration />}>
+            <Route path="configfacility/*" element={<ConfigFacility />}>
+              <Route
+                path="debtfacilitycreate"
+                element={<DebtFacilityCreate />}
+              />
+              <Route
+                path="debtfacilitymodify"
+                element={<DebtFacilityModify />}
+              />
+              <Route
+                path="debtfacilitydelete"
+                element={<DebtFacilityDelete />}
+              />
+            </Route>
+            <Route path="configbank/*" element={<ConfigBank />} />
+            <Route path="configportfolio/*" element={<ConfigPortfolio />} />
+          </Route>
         </Routes>
       </div>
     </div>

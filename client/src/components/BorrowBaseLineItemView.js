@@ -67,13 +67,19 @@ function BorrowBaseLineItemView() {
     {
       field: "approved_net_leverage",
       headerName: "Approved Net Leverage",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        
+        return Number(params.value).toFixed(4);
+    }},
     {
       field: "approved_int_coverage",
       headerName: "Interest Coverage",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) =>{
+        if (!params.value) return ""; 
+        return Number(params.value).toFixed(4);
+         
+    }},
     {
       field: "approved_advance_rate",
       headerName: "Approved Advance Rate",
@@ -101,8 +107,11 @@ function BorrowBaseLineItemView() {
     {
       field: "approved_leverage",
       headerName: "Approved Leverage",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+               if (!params.value) return "";   
+        
+        return Number(params.value).toFixed(4);
+    }},
     {
       field: "approved_ebitda",
       headerName: "Approved EBITDA",
@@ -174,7 +183,7 @@ function BorrowBaseLineItemView() {
       },
     },
     {
-      field: "start_date",
+      field: "loan_metrics_start_date",
       headerName: "Metric As of Date",
       cellDataType: "dateString",
       valueFormatter: (params) => {
@@ -182,26 +191,42 @@ function BorrowBaseLineItemView() {
         return new Date(params.value).toLocaleDateString("en-US");
       },
     },
+
+
     {
       field: "int_coverage_ratio",
       headerName: "Coverage Ratio",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+    }},
+
+
     { field: "is_cov_default", headerName: "Covenant Default?" },
+
     { field: "is_payment_default", headerName: "Payment Default?" },
+
     {
       field: "leverage_ratio",
       headerName: "Leverage Ratio",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
-    },
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+    }},
+
     { field: "loan_metrics_id", headerName: "Loan Metrics ID" },
+    
     {
       field: "net_leverage_ratio",
       headerName: "Net Leverage Ratio",
-      valueFormatter: (params) => Number(params.value).toFixed(4),
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+      },
     },
+        
     {
-      field: "start_date",
+      field: "rate_start_date",
       headerName: "Rate Info Start Date",
       cellDataType: "dateString",
       valueFormatter: (params) => {
@@ -261,13 +286,11 @@ function BorrowBaseLineItemView() {
 
   const handlePortfolioChange = (e) => {
     const selectionValue = e.target.value;
-    console.log(selectionValue);
     setSelectedPortfolio(selectionValue);
     const portfolioFacilities = facilityData.filter((item) =>
       item.portfolio_name.includes(selectionValue),
     );
     setFacilityNames(portfolioFacilities);
-    console.log(facilityNames);
   };
 
   const handleFacilityChange = (e) => {
@@ -283,7 +306,6 @@ function BorrowBaseLineItemView() {
   const handleDateSelection = (e) => {
     const selectionValue = e.target.value;
     setAsOfDate(selectionValue);
-    console.log(asOfDate);
   };
 
   useEffect(() => {
@@ -352,57 +374,62 @@ function BorrowBaseLineItemView() {
 
   return (
     <div>
-    <div className="line_item_view_options">
-      <div>
-      <label htmlFor="portfolio_select"><b>Portfolio Name </b></label>
-      <select
-        id="portfolio_select"
-        value={selectedPortfolio}
-        onChange={handlePortfolioChange}
-      >
-        <option value="">Choose a Portfolio</option>
-        {uniqueNames.map((portfolio) => (
-          <option key={portfolio} value={portfolio}>
-            {portfolio}
-          </option>
-        ))}
-      </select>
+      <div className="line_item_view_options">
+        <div>
+          <label htmlFor="portfolio_select">
+            <b>Portfolio Name </b>
+          </label>
+          <select
+            id="portfolio_select"
+            value={selectedPortfolio}
+            onChange={handlePortfolioChange}
+          >
+            <option value="">Choose a Portfolio</option>
+            {uniqueNames.map((portfolio) => (
+              <option key={portfolio} value={portfolio}>
+                {portfolio}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-      <label htmlFor="facility_select"><b>Facility Name </b></label>
-      <select
-        id="facility_select"
-        value={facilityName}
-        onChange={handleFacilityChange}
-      >
-        <option value="">Choose a Facility</option>
-        {uniqueFacilityNames.map((facility) => (
-          <option key={facility} value={facility}>
-            {facility}
-          </option>
-        ))}
-      </select>
+          <label htmlFor="facility_select">
+            <b>Facility Name </b>
+          </label>
+          <select
+            id="facility_select"
+            value={facilityName}
+            onChange={handleFacilityChange}
+          >
+            <option value="">Choose a Facility</option>
+            {uniqueFacilityNames.map((facility) => (
+              <option key={facility} value={facility}>
+                {facility}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-      <form id="date_select">
-        <label form="asOfDate"><b>Select As Of Date: </b></label>
-        <input
-          type="date"
-          id="asOfDate"
-          value={asOfDate}
-          onChange={handleDateSelection}
-        />
-      </form>
+          <form id="date_select">
+            <label htmlFor="asOfDate">
+              <b>Select As Of Date: </b>
+            </label>
+            <input
+              type="date"
+              id="asOfDate"
+              value={asOfDate}
+              onChange={handleDateSelection}
+            />
+          </form>
+        </div>
       </div>
-
-    </div>
       <div
         className="ag-theme-alpine"
-        style={{ width: "100%", height: "500px" }}
-      >
+        style={{ width: "98%", height: "80vh", margin: "auto", "--ag-header-background-color": "#2F4858"}} 
+     >
         <AgGridReact rowData={rowData} columnDefs={colDefs} />
       </div>
-  </div>
+    </div>
   );
 }
 

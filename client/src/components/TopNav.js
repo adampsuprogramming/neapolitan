@@ -55,16 +55,25 @@ const TopNav = () => {
         </div>
       </div>
       <div className="nav-right">
-        <div>
+     
           <NavLink
             to="/users"
             className={({ isActive }) =>
               isActive ? "nav-button highlighted" : "nav-button"
             }
           >
-            users
+            user
           </NavLink>
-        </div>
+
+                    <NavLink
+            to="/logout"
+            className={({ isActive }) =>
+              isActive ? "nav-button highlighted" : "nav-button"
+            }
+          >
+            logout
+          </NavLink>
+      
       </div>
     </nav>
   );
