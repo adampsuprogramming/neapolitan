@@ -81,7 +81,7 @@ router.post("/api/createdebtfacility", async (req, res) => {
       isMinEquity,
       minEquityAmount,
     ]);
-    res.sendStatus(201)
+    res.sendStatus(201);
   } catch (err) {
     console.error(err);
     res.status(500).send("DB create debt_facility_options query failed");

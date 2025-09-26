@@ -1,14 +1,17 @@
 name: Deploy Project Neapolitan
 
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_run:
+    workflows: ["Run Tests on Project Neapolitan"]
+    types:
+      - completed
     branches: [main]
 
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,6 +44,8 @@ jobs:
 
   deploy-backend:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -14,47 +14,46 @@ require("../db").query = mockedQuery;
 const pool = require("../db");
 pool.end = jest.fn();
 
-afterAll(async () =>{
+afterAll(async () => {
   await pool.end();
-})
+});
 
 describe("GET /api/portfolioquery", () => {
   it("accepts portfolio info request from the front-end, queries the database, and then returns it", async () => {
     mockedQuery.mockResolvedValue({
       rows: [
         {
-        portfolio_name: "Game Fund",
-	    portfolio_id: 501,
+          portfolio_name: "Game Fund",
+          portfolio_id: 501,
         },
         {
-        portfolio_name: "Scene Fund",
-	   portfolio_id: 502,
+          portfolio_name: "Scene Fund",
+          portfolio_id: 502,
         },
       ],
     });
 
-	const response = await request(app).get("/api/portfolioquery").query();
-	
-	expect(response.body).toEqual([
-        {
-        portfolio_name: "Game Fund",
-	    portfolio_id: 501,
-        },
-        {
-        portfolio_name: "Scene Fund",
-	   portfolio_id: 502,
-        },
-      ]);
-		
-expect(mockedQuery).toHaveBeenCalledWith(
+    const response = await request(app).get("/api/portfolioquery").query();
 
-`
+    expect(response.body).toEqual([
+      {
+        portfolio_name: "Game Fund",
+        portfolio_id: 501,
+      },
+      {
+        portfolio_name: "Scene Fund",
+        portfolio_id: 502,
+      },
+    ]);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
 select 
     p.portfolio_name, p.portfolio_id 
     from portfolios p
 
-`, []);
-
-
+`,
+      [],
+    );
   });
 });

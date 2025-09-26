@@ -14,9 +14,9 @@ require("../db").query = mockedQuery;
 const pool = require("../db");
 pool.end = jest.fn();
 
-afterAll(async () =>{
+afterAll(async () => {
   await pool.end();
-})
+});
 
 describe("GET /api/borrowbase", () => {
   it("accepts an borrowing base info request from the front-end, queries the database, and then returns it", async () => {
@@ -30,7 +30,7 @@ describe("GET /api/borrowbase", () => {
           approved_ebitda: 18000000.0,
           approved_net_leverage: 4.3,
           approved_int_coverage: 1.25,
-          approved_advance_rate: .70,
+          approved_advance_rate: 0.7,
           approved_valuation: 1.0,
           approved_leverage: 4.45,
           commitment_amount: 28000000.0,
@@ -97,86 +97,87 @@ describe("GET /api/borrowbase", () => {
       ],
     });
 
-	const response = await request(app).get("/api/borrowbase").query({ as_of_date: "2025-08-31", facility_id: 81 });
-	
-	expect(response.body).toEqual([
-        {
-          collateral_id: 1000,
-          inclusion_date: "2024-11-30",
-          removed_date: null,
-          approval_date: "2024-11-15",
-          approved_ebitda: 18000000.0,
-          approved_net_leverage: 4.3,
-          approved_int_coverage: 1.25,
-          approved_advance_rate: .70,
-          approved_valuation: 1.0,
-          approved_leverage: 4.45,
-          commitment_amount: 28000000.0,
-          outstanding_amount: 28000000.0,
-          lien_type: "First",
-          maturity_date: "2024-10-31",
-          tranche_type: "Term",
-          loan_agreement_date: "2029-10-31",
-          legal_name: "Zelda Tecnologies",
-          short_name: "Zelda Tech",
-          ebitda: 10500415.22,
-          loan_metrics_start_date: "2025-06-30",
-          int_coverage_ratio: 0.71515,
-          is_cov_default: false,
-          is_payment_default: false,
-          leverage_ratio: 4.487841,
-          loan_metrics_id: 487,
-          net_leverage_ratio: 5.484121,
-          rate_start_date: "2024-11-30",
-          end_date: "2024-12-31",
-          fixed_rate: null,
-          floor: null,
-          has_floor: false,
-          is_fixed: false,
-          reference_rate: "LIBOR",
-          spread: 0.0951,
-        },
-        {
-          collateral_id: 1001,
-          inclusion_date: "2024-02-08",
-          removed_date: null,
-          approval_date: "2024-02-08",
-          approved_ebitda: 15000000.0,
-          approved_net_leverage: 3.1,
-          approved_int_coverage: 1.85,
-          approved_advance_rate: 0.55,
-          approved_valuation: 0.7,
-          approved_leverage: 5.15,
-          commitment_amount: 5500000.0,
-          outstanding_amount: 5500000.0,
-          lien_type: "First",
-          maturity_date: "2029-01-31",
-          tranche_type: "Term",
-          loan_agreement_date: "2024-01-31",
-          legal_name: "Yoshi Co.",
-          short_name: "Yoshi Co.",
-          ebitda: 4747841.14,
-          loan_metrics_start_date: "2025-06-30",
-          int_coverage_ratio: 1.4115141,
-          is_cov_default: false,
-          is_payment_default: false,
-          leverage_ratio: 6.4848463,
-          loan_metrics_id: 421,
-          net_leverage_ratio: 7.487842,
-          rate_start_date: "2025-01-01",
-          end_date: "2025-01-31",
-          fixed_rate: null,
-          floor: null,
-          has_floor: false,
-          is_fixed: false,
-          reference_rate: "LIBOR",
-          spread: 0.0875,
-        }
-      ]);
-		
-expect(mockedQuery).toHaveBeenCalledWith(
+    const response = await request(app)
+      .get("/api/borrowbase")
+      .query({ as_of_date: "2025-08-31", facility_id: 81 });
 
-`
+    expect(response.body).toEqual([
+      {
+        collateral_id: 1000,
+        inclusion_date: "2024-11-30",
+        removed_date: null,
+        approval_date: "2024-11-15",
+        approved_ebitda: 18000000.0,
+        approved_net_leverage: 4.3,
+        approved_int_coverage: 1.25,
+        approved_advance_rate: 0.7,
+        approved_valuation: 1.0,
+        approved_leverage: 4.45,
+        commitment_amount: 28000000.0,
+        outstanding_amount: 28000000.0,
+        lien_type: "First",
+        maturity_date: "2024-10-31",
+        tranche_type: "Term",
+        loan_agreement_date: "2029-10-31",
+        legal_name: "Zelda Tecnologies",
+        short_name: "Zelda Tech",
+        ebitda: 10500415.22,
+        loan_metrics_start_date: "2025-06-30",
+        int_coverage_ratio: 0.71515,
+        is_cov_default: false,
+        is_payment_default: false,
+        leverage_ratio: 4.487841,
+        loan_metrics_id: 487,
+        net_leverage_ratio: 5.484121,
+        rate_start_date: "2024-11-30",
+        end_date: "2024-12-31",
+        fixed_rate: null,
+        floor: null,
+        has_floor: false,
+        is_fixed: false,
+        reference_rate: "LIBOR",
+        spread: 0.0951,
+      },
+      {
+        collateral_id: 1001,
+        inclusion_date: "2024-02-08",
+        removed_date: null,
+        approval_date: "2024-02-08",
+        approved_ebitda: 15000000.0,
+        approved_net_leverage: 3.1,
+        approved_int_coverage: 1.85,
+        approved_advance_rate: 0.55,
+        approved_valuation: 0.7,
+        approved_leverage: 5.15,
+        commitment_amount: 5500000.0,
+        outstanding_amount: 5500000.0,
+        lien_type: "First",
+        maturity_date: "2029-01-31",
+        tranche_type: "Term",
+        loan_agreement_date: "2024-01-31",
+        legal_name: "Yoshi Co.",
+        short_name: "Yoshi Co.",
+        ebitda: 4747841.14,
+        loan_metrics_start_date: "2025-06-30",
+        int_coverage_ratio: 1.4115141,
+        is_cov_default: false,
+        is_payment_default: false,
+        leverage_ratio: 6.4848463,
+        loan_metrics_id: 421,
+        net_leverage_ratio: 7.487842,
+        rate_start_date: "2025-01-01",
+        end_date: "2025-01-31",
+        fixed_rate: null,
+        floor: null,
+        has_floor: false,
+        is_fixed: false,
+        reference_rate: "LIBOR",
+        spread: 0.0875,
+      },
+    ]);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
 select 
 	c.collateral_id,
 	c.inclusion_date,
@@ -236,8 +237,8 @@ left join rate_data rd
 where c.inclusion_date <= $1
 	and (c.removed_date > $1 or c.removed_date is NULL)
 	and df.debt_facility_id = $2
-`, ["2025-08-31", "81"]);
-
-
+`,
+      ["2025-08-31", "81"],
+    );
   });
 });
