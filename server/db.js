@@ -13,14 +13,14 @@ const pool = new Pool({
   ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
 });
 
-if (process.env.NODE_ENV !== 'test') {
-pool
-  .connect()
-  .then((client) => {
-    console.log("connected to PostgreSQL");
-    client.release();
-  })
-  .catch((err) => console.error("Error", err.stack));
+if (process.env.NODE_ENV !== "test") {
+  pool
+    .connect()
+    .then((client) => {
+      console.log("connected to PostgreSQL");
+      client.release();
+    })
+    .catch((err) => console.error("Error", err.stack));
 }
 
 module.exports = pool;

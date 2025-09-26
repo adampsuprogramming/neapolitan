@@ -17,6 +17,7 @@ function BorrowBaseLineItemView() {
   const [facilityNumber, setFacilityNumber] = useState(null);
   const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]);
   const [asOfDate, setAsOfDate] = useState("");
+  const todayDate = new Date();
 
   // useState hook to set the row data
   const [rowData, setRowData] = useState([]);
@@ -69,17 +70,18 @@ function BorrowBaseLineItemView() {
       headerName: "Approved Net Leverage",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        
+
         return Number(params.value).toFixed(4);
-    }},
+      },
+    },
     {
       field: "approved_int_coverage",
       headerName: "Interest Coverage",
-      valueFormatter: (params) =>{
-        if (!params.value) return ""; 
+      valueFormatter: (params) => {
+        if (!params.value) return "";
         return Number(params.value).toFixed(4);
-         
-    }},
+      },
+    },
     {
       field: "approved_advance_rate",
       headerName: "Approved Advance Rate",
@@ -108,10 +110,11 @@ function BorrowBaseLineItemView() {
       field: "approved_leverage",
       headerName: "Approved Leverage",
       valueFormatter: (params) => {
-               if (!params.value) return "";   
-        
+        if (!params.value) return "";
+
         return Number(params.value).toFixed(4);
-    }},
+      },
+    },
     {
       field: "approved_ebitda",
       headerName: "Approved EBITDA",
@@ -192,15 +195,14 @@ function BorrowBaseLineItemView() {
       },
     },
 
-
     {
       field: "int_coverage_ratio",
       headerName: "Coverage Ratio",
       valueFormatter: (params) => {
         if (!params.value) return "";
         return Number(params.value).toFixed(4);
-    }},
-
+      },
+    },
 
     { field: "is_cov_default", headerName: "Covenant Default?" },
 
@@ -212,10 +214,11 @@ function BorrowBaseLineItemView() {
       valueFormatter: (params) => {
         if (!params.value) return "";
         return Number(params.value).toFixed(4);
-    }},
+      },
+    },
 
     { field: "loan_metrics_id", headerName: "Loan Metrics ID" },
-    
+
     {
       field: "net_leverage_ratio",
       headerName: "Net Leverage Ratio",
@@ -224,7 +227,7 @@ function BorrowBaseLineItemView() {
         return Number(params.value).toFixed(4);
       },
     },
-        
+
     {
       field: "rate_start_date",
       headerName: "Rate Info Start Date",
@@ -301,6 +304,7 @@ function BorrowBaseLineItemView() {
     );
     const facility_numb = facility_record.debt_facility_id;
     setFacilityNumber(facility_numb);
+    setAsOfDate(todayDate.toLocaleDateString("en-CA"));
   };
 
   const handleDateSelection = (e) => {
@@ -425,8 +429,13 @@ function BorrowBaseLineItemView() {
       </div>
       <div
         className="ag-theme-alpine"
-        style={{ width: "98%", height: "80vh", margin: "auto", "--ag-header-background-color": "#2F4858"}} 
-     >
+        style={{
+          width: "98%",
+          height: "80vh",
+          margin: "auto",
+          "--ag-header-background-color": "#2F4858",
+        }}
+      >
         <AgGridReact rowData={rowData} columnDefs={colDefs} />
       </div>
     </div>

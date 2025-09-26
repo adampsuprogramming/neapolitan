@@ -32,7 +32,7 @@ function DebtFacilityCreate() {
   const [mezzanineRate, setMezzanineRate] = useState(null); // After user enters mezz rate, it is stored here --- need to divide by 100 to get percent
   const [isMinimumEquity, setIsMinimumEquity] = useState(false); // After user chooses toggle for min equity, it is stored here - defaults to false
   const [minimumEquity, setMinimumEquity] = useState(null); //After use enters min equity, it is stored here
-  const [message,setMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   // this useEffect loads up the Lender data to populate the dropdown
   // on page load
@@ -86,7 +86,6 @@ function DebtFacilityCreate() {
     setSelectedPortfolioId(selectedPortfolio.portfolio_id);
   }, [selectedPortfolio]);
 
-
   async function postFacility() {
     try {
       const response = await axios.post(
@@ -107,19 +106,17 @@ function DebtFacilityCreate() {
           isMinEquity: isMinimumEquity,
           minEquityAmount: minimumEquity,
         },
-        );
+      );
       if (response.status === 201) {
         clearData();
-        setMessage("Facility Created Successfuly");
+        setMessage("Facility Created Successfully");
       }
-      
     } catch (error) {
       setMessage("There was an error creating the facility.");
     }
   }
 
-  function clearData(){
-
+  function clearData() {
     setSelectedLender(null);
     setSelectedPortfolio(null);
     setFacilityName("");
@@ -139,10 +136,8 @@ function DebtFacilityCreate() {
 
   return (
     <>
-      <div className="debt-facility-create">
-        Create Debt Facility
-      </div>
-      <Box component="form" sx={{paddingLeft: "115px"}}>
+      <div className="debt-facility-create">Create Debt Facility</div>
+      <Box component="form" sx={{ paddingLeft: "115px" }}>
         <Box
           sx={{
             border: "1px solid",
@@ -213,7 +208,6 @@ function DebtFacilityCreate() {
                   ); // if there is anything in new date, set commitment date or else set it to blank
                 }}
                 slotProps={{
-                      
                   textField: {
                     inputProps: { "data-testid": "commitment-date-picker" },
                     helperText: "MM/DD/YYYY",
@@ -229,9 +223,7 @@ function DebtFacilityCreate() {
                 sx={{ m: 1, width: "30ch", marginTop: 4 }}
                 value={maturityDate ? dayjs(maturityDate) : null} // This is needed if date is not yet a valid date or a crash occurs
                 onChange={(newDate) => {
-                  setMaturityDate(
-                    newDate ? newDate.format("YYYY-MM-DD") : "",
-                  ); // if there is anything in new date, set maturity date or else set it to blank
+                  setMaturityDate(newDate ? newDate.format("YYYY-MM-DD") : ""); // if there is anything in new date, set maturity date or else set it to blank
                 }}
                 slotProps={{
                   textField: {
@@ -290,7 +282,7 @@ function DebtFacilityCreate() {
           {/* Input for max advance rate */}
 
           <NumericFormat
-            sx={{ m: 1, width: "30ch",  marginLeft: 6, width: "22ch"}}
+            sx={{ m: 1, width: "30ch", marginLeft: 6, width: "22ch" }}
             customInput={TextField}
             id="max-advance-rate-field"
             value={maxAdvanceRate}
@@ -310,12 +302,11 @@ function DebtFacilityCreate() {
             width: "110ch",
             m: 3,
             padding: 2,
-            display: "flex"
+            display: "flex",
           }}
         >
-          
-            {/* Toggle for asset-by-asset rate */}
-            <Box>
+          {/* Toggle for asset-by-asset rate */}
+          <Box>
             <FormControlLabel
               control={
                 <Switch
@@ -330,15 +321,15 @@ function DebtFacilityCreate() {
             <FormHelperText>
               Is the facility governed by asset-by-asset advance rates?
             </FormHelperText>
-            </Box>
+          </Box>
 
-              <Box>
+          <Box>
             {/* Input for first lien rate */}
 
             <NumericFormat
               customInput={TextField}
               id="first-lien-rate-textfield"
-              sx={{ m: 1, width: "20ch",  marginLeft: 3 }}
+              sx={{ m: 1, width: "20ch", marginLeft: 3 }}
               value={firstLienRate}
               onValueChange={(value) => setFirstLienRate(value.floatValue)}
               label="First Lien Rate"
@@ -353,7 +344,7 @@ function DebtFacilityCreate() {
             <NumericFormat
               customInput={TextField}
               id="second-lien-rate-textfield"
-              sx={{ m: 1, width: "20ch",  marginLeft: 2 }}
+              sx={{ m: 1, width: "20ch", marginLeft: 2 }}
               value={secondLienRate}
               onValueChange={(value) => setSecondLienRate(value.floatValue)}
               label="Second Lien Rate"
@@ -368,7 +359,7 @@ function DebtFacilityCreate() {
             <NumericFormat
               customInput={TextField}
               id="mezzanine-rate-textfield"
-              sx={{ m: 1, width: "20ch",  marginLeft: 2 }}
+              sx={{ m: 1, width: "20ch", marginLeft: 2 }}
               value={mezzanineRate}
               onValueChange={(value) => setMezzanineRate(value.floatValue)}
               label="Mezzanine Rate"
@@ -377,7 +368,7 @@ function DebtFacilityCreate() {
               suffix="%"
               fixedDecimalScale
             />
-     </Box>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -387,11 +378,10 @@ function DebtFacilityCreate() {
             width: "110ch",
             m: 3,
             padding: 2,
-            display: "flex"
+            display: "flex",
           }}
         >
           <Box>
-     
             {/* Toggle for min equity */}
             <FormControlLabel
               control={
@@ -407,59 +397,60 @@ function DebtFacilityCreate() {
             <FormHelperText>
               Is the facility governed by a minimum equity balance?
             </FormHelperText>
-</Box>
-            {/* Input for min equity amount */}
+          </Box>
+          {/* Input for min equity amount */}
 
-            <NumericFormat
-              customInput={TextField}
-              id="min-equity-textfield"
-              sx={{marginLeft:"5ch"}}
-              value={minimumEquity}
-              onValueChange={(value) => setMinimumEquity(value.floatValue)}
-              label="Minimum Equity Amount"
-              thousandSeparator=","
-              decimalScale={2}
-              prefix="$"
-              fixedDecimalScale
-            />
-        
+          <NumericFormat
+            customInput={TextField}
+            id="min-equity-textfield"
+            sx={{ marginLeft: "5ch" }}
+            value={minimumEquity}
+            onValueChange={(value) => setMinimumEquity(value.floatValue)}
+            label="Minimum Equity Amount"
+            thousandSeparator=","
+            decimalScale={2}
+            prefix="$"
+            fixedDecimalScale
+          />
         </Box>
         <div>
-          <Button 
-          variant="contained" 
-          onClick={postFacility} 
-          sx={{marginLeft: "25px",
-            minWidth: "225px",
-            minHeight: "50px",
-            borderRadius: 2,
-            backgroundColor: "#F6AE2D",
-            color: "#000000",
-            textTransform: "none",
-            fontSize:"20px"}}>
+          <Button
+            variant="contained"
+            onClick={postFacility}
+            sx={{
+              marginLeft: "25px",
+              minWidth: "225px",
+              minHeight: "50px",
+              borderRadius: 2,
+              backgroundColor: "#F6AE2D",
+              color: "#000000",
+              textTransform: "none",
+              fontSize: "20px",
+            }}
+          >
             Save
           </Button>
 
-          <Button 
-          variant="contained" 
-          onClick={clearData} 
-          sx={{marginLeft: "25px",
-            minWidth: "225px",
-            minHeight: "50px",
-            borderRadius: 2,
-            backgroundColor: "#d4d4d4ff",
-            color: "#000000",
-            textTransform: "none",
-            fontSize:"20px"}}>
+          <Button
+            variant="contained"
+            onClick={clearData}
+            sx={{
+              marginLeft: "25px",
+              minWidth: "225px",
+              minHeight: "50px",
+              borderRadius: 2,
+              backgroundColor: "#d4d4d4ff",
+              color: "#000000",
+              textTransform: "none",
+              fontSize: "20px",
+            }}
+          >
             Cancel
           </Button>
         </div>
 
-{/* Displays message below in a success or failure situation */}
-        {message &&
-        <div className="alertMessage">
-          {message}
-        </div>
-      }
+        {/* Displays message below in a success or failure situation */}
+        {message && <div className="alertMessage">{message}</div>}
       </Box>
     </>
   );

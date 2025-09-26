@@ -2,8 +2,9 @@
 // *  UT-1 – Populating dropdown options for Portfolio Name from API call *
 // *  UT-2 – Populating dropdown options for Facility from API call       *
 // *  UT-7 - Test borrowing base line item data loading and formatting    *
+// *  UT-12 - Ensure borrowing base line item data is formatted correctly *
+// *  after receiving array of mostly null objects from /api/borrowbase   *
 // ************************************************************************
-
 
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
@@ -83,7 +84,6 @@ test("UT-1: Portfolio data correctly loads from API on page load into dropdown m
 // 3 - If those option are deduplicated and ordered prior to populating
 
 test("UT-2: Facility data correctly loads into second dropdown menu after choice is made in first dropdown", async () => {
-  
   axios.get.mockResolvedValueOnce({
     data: [
       {
@@ -158,10 +158,7 @@ test("UT-2: Facility data correctly loads into second dropdown menu after choice
 // 1 - If, after data is imported from /api/borrowbase/ it is formatted correctly
 // by the series of formatting statements
 
-// 
-
-test("UT-7: Borrowing base line item data is formatted correctly after loading from API", async () => {
-
+test("UT-7: Ensure borrowing base line item data is formatted correctly after loading from API", async () => {
   axios.get.mockResolvedValueOnce({
     data: [
       {
@@ -202,84 +199,83 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
   axios.get.mockResolvedValueOnce({
     data: [
       {
-        "collateral_id": 100,
-        "inclusion_date": "2023-11-30T05:00:00.000Z",
-        "removed_date": null,
-        "approval_date": "2025-10-15T05:00:00.000Z",
-        "approved_ebitda": "15000000.00",
-        "approved_net_leverage": "6.15000000",
-        "approved_int_coverage": "1.25000000",
-        "approved_advance_rate": "0.60000000",
-        "approved_valuation": "0.95000000",
-        "approved_leverage": "4.25000000",
-        "commitment_amount": "7500000.00",
-        "outstanding_amount": "7500000.00",
-        "lien_type": "Second",
-        "maturity_date": "2028-08-10T04:00:00.000Z",
-        "tranche_type": "Term",
-        "loan_agreement_date": "2023-10-11T04:00:00.000Z",
-        "legal_name": "Test Company A",
-        "short_name": "TestCo",
-        "ebitda": "45222222.22",
-        "loan_metrics_start_date": "2023-08-10T04:00:00.000Z",
-        "int_coverage_ratio": "0.5454",
-        "is_cov_default": false,
-        "is_payment_default": false,
-        "leverage_ratio": "4.48548",
-        "loan_metrics_id": 454,
-        "net_leverage_ratio": "7.45451",
-        "rate_start_date": "2028-04-10T04:00:00.000Z",
-        "end_date": "2028-06-10T04:00:00.000Z",
-        "fixed_rate": null,
-        "floor": null,
-        "has_floor": false,
-        "is_fixed": false,
-        "reference_rate": "LIBOR",
-        "spread": "0.10450000"
-    },
-    {
-        "collateral_id": 101,
-        "inclusion_date": "2023-08-10T05:00:00.000Z",
-        "removed_date": null,
-        "approval_date": "2023-07-11T05:00:00.000Z",
-        "approved_ebitda": "40000000.00",
-        "approved_net_leverage": "1.65000000",
-        "approved_int_coverage": "5.00000000",
-        "approved_advance_rate": null,
-        "approved_valuation": "1.0000000",
-        "approved_leverage": "2.40000000",
-        "commitment_amount": "56000000.00",
-        "outstanding_amount": "56000000.00",
-        "lien_type": "Second",
-        "maturity_date": "2029-03-01T04:00:00.000Z",
-        "tranche_type": "Term",
-        "loan_agreement_date": "2024-03-01T04:00:00.000Z",
-        "legal_name": "Test No 2",
-        "short_name": "Test2",
-        "ebitda": "45000000.00",
-        "loan_metrics_start_date": "2024-10-01T04:00:00.000Z",
-        "int_coverage_ratio": "6.100000",
-        "is_cov_default": false,
-        "is_payment_default": false,
-        "leverage_ratio": "1.485458",
-        "loan_metrics_id": 245,
-        "net_leverage_ratio": "1.06481",
-        "rate_start_date": "2028-11-01T04:00:00.000Z",
-        "end_date": "2029-01-01T04:00:00.000Z",
-        "fixed_rate": "0.09500000",
-        "floor": null,
-        "has_floor": false,
-        "is_fixed": true,
-        "reference_rate": "",
-        "spread": null
-    },
-    
+        collateral_id: 100,
+        inclusion_date: "2023-11-30T05:00:00.000Z",
+        removed_date: null,
+        approval_date: "2025-10-15T05:00:00.000Z",
+        approved_ebitda: "15000000.00",
+        approved_net_leverage: "6.15000000",
+        approved_int_coverage: "1.25000000",
+        approved_advance_rate: "0.60000000",
+        approved_valuation: "0.95000000",
+        approved_leverage: "4.25000000",
+        commitment_amount: "7500000.00",
+        outstanding_amount: "7500000.00",
+        lien_type: "Second",
+        maturity_date: "2028-08-10T04:00:00.000Z",
+        tranche_type: "Term",
+        loan_agreement_date: "2023-10-11T04:00:00.000Z",
+        legal_name: "Test Company A",
+        short_name: "TestCo",
+        ebitda: "45222222.22",
+        loan_metrics_start_date: "2023-08-10T04:00:00.000Z",
+        int_coverage_ratio: "0.5454",
+        is_cov_default: false,
+        is_payment_default: false,
+        leverage_ratio: "4.48548",
+        loan_metrics_id: 454,
+        net_leverage_ratio: "7.45451",
+        rate_start_date: "2028-04-10T04:00:00.000Z",
+        end_date: "2028-06-10T04:00:00.000Z",
+        fixed_rate: null,
+        floor: null,
+        has_floor: false,
+        is_fixed: false,
+        reference_rate: "LIBOR",
+        spread: "0.10450000",
+      },
+      {
+        collateral_id: 101,
+        inclusion_date: "2023-08-10T05:00:00.000Z",
+        removed_date: null,
+        approval_date: "2023-07-11T05:00:00.000Z",
+        approved_ebitda: "40000000.00",
+        approved_net_leverage: "1.65000000",
+        approved_int_coverage: "5.00000000",
+        approved_advance_rate: null,
+        approved_valuation: "1.0000000",
+        approved_leverage: "2.40000000",
+        commitment_amount: "56000000.00",
+        outstanding_amount: "56000000.00",
+        lien_type: "Second",
+        maturity_date: "2029-03-01T04:00:00.000Z",
+        tranche_type: "Term",
+        loan_agreement_date: "2024-03-01T04:00:00.000Z",
+        legal_name: "Test No 2",
+        short_name: "Test2",
+        ebitda: "45000000.00",
+        loan_metrics_start_date: "2024-10-01T04:00:00.000Z",
+        int_coverage_ratio: "6.100000",
+        is_cov_default: false,
+        is_payment_default: false,
+        leverage_ratio: "1.485458",
+        loan_metrics_id: 245,
+        net_leverage_ratio: "1.06481",
+        rate_start_date: "2028-11-01T04:00:00.000Z",
+        end_date: "2029-01-01T04:00:00.000Z",
+        fixed_rate: "0.09500000",
+        floor: null,
+        has_floor: false,
+        is_fixed: true,
+        reference_rate: "",
+        spread: null,
+      },
     ],
   });
 
   render(<BorrowBaseLineItemView />);
 
-  // The waitFor statements on this page are to remedy multiple problems that arose from 
+  // The waitFor statements on this page are to remedy multiple problems that arose from
   // timing issues with the test code executing and react rendering components.
   // By waiting for the "expect" condition before proceeding, the code ensures that
   // there are components rendered on which to run the tests.
@@ -294,25 +290,24 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
   fireEvent.change(portfolioSelect, { target: { value: "Fund Banana" } });
 
   await waitFor(() => {
-    const facilityNameDropdown=screen.getByLabelText("Facility Name");
+    const facilityNameDropdown = screen.getByLabelText("Facility Name");
     const options = within(facilityNameDropdown).getAllByRole("option");
     expect(options).toHaveLength(3);
-  })
-
+  });
 
   const combos_facility = await screen.findByLabelText("Facility Name");
-  fireEvent.change(combos_facility, { target: { value: "Happy Bank Banana Facility" } });;
+  fireEvent.change(combos_facility, {
+    target: { value: "Happy Bank Banana Facility" },
+  });
 
   const inputDate = screen.getByLabelText("Select As Of Date:");
-  fireEvent.change(inputDate, { target: {value: "2025-06-30"}});
+  fireEvent.change(inputDate, { target: { value: "2025-06-30" } });
 
   await waitFor(() => {
     const grid = screen.getByRole("grid");
     const gridRows = within(grid).getAllByRole("row");
     expect(gridRows.length).toBeGreaterThan(1);
-
-  })
-
+  });
 
   const grid = screen.getByRole("grid");
   const gridRows = within(grid).getAllByRole("row");
@@ -320,7 +315,7 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
 
   expect(cellsRow[0]).toHaveTextContent("100");
   expect(cellsRow[1]).toHaveTextContent("11/30/2023");
-  expect(cellsRow[2]).toHaveTextContent(""); 
+  expect(cellsRow[2]).toHaveTextContent("");
   expect(cellsRow[3]).toHaveTextContent("10/15/2025");
   expect(cellsRow[4]).toHaveTextContent("$15,000,000.00");
   expect(cellsRow[5]).toHaveTextContent("6.1500");
@@ -331,33 +326,31 @@ test("UT-7: Borrowing base line item data is formatted correctly after loading f
   expect(cellsRow[10]).toHaveTextContent("$15,000,000.00");
   expect(cellsRow[11]).toHaveTextContent("$7,500,000.00");
   expect(cellsRow[12]).toHaveTextContent("$7,500,000.00");
-  expect(cellsRow[13]).toHaveTextContent("Second"); 
+  expect(cellsRow[13]).toHaveTextContent("Second");
   expect(cellsRow[14]).toHaveTextContent("8/10/2028");
   expect(cellsRow[15]).toHaveTextContent("Term");
   expect(cellsRow[16]).toHaveTextContent("10/11/2023");
   expect(cellsRow[17]).toHaveTextContent("Test Company A");
-  expect(cellsRow[18]).toHaveTextContent("TestCo"); 
-  expect(cellsRow[19]).toHaveTextContent("45,222,222.22"); 
-  expect(cellsRow[20]).toHaveTextContent("8/10/2023"); 
-  expect(cellsRow[21]).toHaveTextContent("0.5454"); 
-  expect(cellsRow[22]).toHaveTextContent(""); 
-  expect(cellsRow[23]).toHaveTextContent(""); 
-  expect(cellsRow[24]).toHaveTextContent("4.4855"); 
-  expect(cellsRow[25]).toHaveTextContent("454"); 
-  expect(cellsRow[26]).toHaveTextContent("7.4545"); 
-  expect(cellsRow[27]).toHaveTextContent("4/10/2028"); 
-  expect(cellsRow[28]).toHaveTextContent("6/10/2028"); 
-  expect(cellsRow[29]).toHaveTextContent(""); 
-  expect(cellsRow[30]).toHaveTextContent(""); 
-  expect(cellsRow[31]).toHaveTextContent(""); 
-  expect(cellsRow[32]).toHaveTextContent(""); 
-  expect(cellsRow[33]).toHaveTextContent("LIBOR"); 
-  expect(cellsRow[34]).toHaveTextContent("10.45%"); 
+  expect(cellsRow[18]).toHaveTextContent("TestCo");
+  expect(cellsRow[19]).toHaveTextContent("45,222,222.22");
+  expect(cellsRow[20]).toHaveTextContent("8/10/2023");
+  expect(cellsRow[21]).toHaveTextContent("0.5454");
+  expect(cellsRow[22]).toHaveTextContent("");
+  expect(cellsRow[23]).toHaveTextContent("");
+  expect(cellsRow[24]).toHaveTextContent("4.4855");
+  expect(cellsRow[25]).toHaveTextContent("454");
+  expect(cellsRow[26]).toHaveTextContent("7.4545");
+  expect(cellsRow[27]).toHaveTextContent("4/10/2028");
+  expect(cellsRow[28]).toHaveTextContent("6/10/2028");
+  expect(cellsRow[29]).toHaveTextContent("");
+  expect(cellsRow[30]).toHaveTextContent("");
+  expect(cellsRow[31]).toHaveTextContent("");
+  expect(cellsRow[32]).toHaveTextContent("");
+  expect(cellsRow[33]).toHaveTextContent("LIBOR");
+  expect(cellsRow[34]).toHaveTextContent("10.45%");
 });
 
-
 test("UT-12: Borrowing base line item data is formatted correctly receiving empty values from API", async () => {
-
   axios.get.mockResolvedValueOnce({
     data: [
       {
@@ -398,84 +391,83 @@ test("UT-12: Borrowing base line item data is formatted correctly receiving empt
   axios.get.mockResolvedValueOnce({
     data: [
       {
-        "collateral_id": 100,
-        "inclusion_date": null,
-        "removed_date": null,
-        "approval_date": null,
-        "approved_ebitda": null,
-        "approved_net_leverage": null,
-        "approved_int_coverage": null,
-        "approved_advance_rate": null,
-        "approved_valuation": null,
-        "approved_leverage": null,
-        "commitment_amount": null,
-        "outstanding_amount": null,
-        "lien_type": null,
-        "maturity_date": null,
-        "tranche_type": null,
-        "loan_agreement_date": null,
-        "legal_name": null,
-        "short_name": null,
-        "ebitda": null,
-        "loan_metrics_start_date": null,
-        "int_coverage_ratio": null,
-        "is_cov_default": null,
-        "is_payment_default": null,
-        "leverage_ratio": null,
-        "loan_metrics_id": null,
-        "net_leverage_ratio": null,
-        "rate_start_date": null,
-        "end_date": null,
-        "fixed_rate": null,
-        "floor": null,
-        "has_floor": null,
-        "is_fixed": null,
-        "reference_rate": null,
-        "spread": null
-    },
-          {
-        "collateral_id": 101,
-        "inclusion_date": "2023-08-10T05:00:00.000Z",
-        "removed_date": null,
-        "approval_date": "2023-07-11T05:00:00.000Z",
-        "approved_ebitda": "40000000.00",
-        "approved_net_leverage": "1.65000000",
-        "approved_int_coverage": "5.00000000",
-        "approved_advance_rate": null,
-        "approved_valuation": "1.0000000",
-        "approved_leverage": "2.40000000",
-        "commitment_amount": "56000000.00",
-        "outstanding_amount": "56000000.00",
-        "lien_type": "Second",
-        "maturity_date": "2029-03-01T04:00:00.000Z",
-        "tranche_type": "Term",
-        "loan_agreement_date": "2024-03-01T04:00:00.000Z",
-        "legal_name": "Test No 2",
-        "short_name": "Test2",
-        "ebitda": "45000000.00",
-        "loan_metrics_start_date": "2024-10-01T04:00:00.000Z",
-        "int_coverage_ratio": "6.100000",
-        "is_cov_default": false,
-        "is_payment_default": false,
-        "leverage_ratio": "1.485458",
-        "loan_metrics_id": 245,
-        "net_leverage_ratio": "1.06481",
-        "rate_start_date": "2028-11-01T04:00:00.000Z",
-        "end_date": "2029-01-01T04:00:00.000Z",
-        "fixed_rate": "0.09500000",
-        "floor": null,
-        "has_floor": false,
-        "is_fixed": true,
-        "reference_rate": "",
-        "spread": null
-    },
-    
+        collateral_id: 100,
+        inclusion_date: null,
+        removed_date: null,
+        approval_date: null,
+        approved_ebitda: null,
+        approved_net_leverage: null,
+        approved_int_coverage: null,
+        approved_advance_rate: null,
+        approved_valuation: null,
+        approved_leverage: null,
+        commitment_amount: null,
+        outstanding_amount: null,
+        lien_type: null,
+        maturity_date: null,
+        tranche_type: null,
+        loan_agreement_date: null,
+        legal_name: null,
+        short_name: null,
+        ebitda: null,
+        loan_metrics_start_date: null,
+        int_coverage_ratio: null,
+        is_cov_default: null,
+        is_payment_default: null,
+        leverage_ratio: null,
+        loan_metrics_id: null,
+        net_leverage_ratio: null,
+        rate_start_date: null,
+        end_date: null,
+        fixed_rate: null,
+        floor: null,
+        has_floor: null,
+        is_fixed: null,
+        reference_rate: null,
+        spread: null,
+      },
+      {
+        collateral_id: 101,
+        inclusion_date: "2023-08-10T05:00:00.000Z",
+        removed_date: null,
+        approval_date: "2023-07-11T05:00:00.000Z",
+        approved_ebitda: "40000000.00",
+        approved_net_leverage: "1.65000000",
+        approved_int_coverage: "5.00000000",
+        approved_advance_rate: null,
+        approved_valuation: "1.0000000",
+        approved_leverage: "2.40000000",
+        commitment_amount: "56000000.00",
+        outstanding_amount: "56000000.00",
+        lien_type: "Second",
+        maturity_date: "2029-03-01T04:00:00.000Z",
+        tranche_type: "Term",
+        loan_agreement_date: "2024-03-01T04:00:00.000Z",
+        legal_name: "Test No 2",
+        short_name: "Test2",
+        ebitda: "45000000.00",
+        loan_metrics_start_date: "2024-10-01T04:00:00.000Z",
+        int_coverage_ratio: "6.100000",
+        is_cov_default: false,
+        is_payment_default: false,
+        leverage_ratio: "1.485458",
+        loan_metrics_id: 245,
+        net_leverage_ratio: "1.06481",
+        rate_start_date: "2028-11-01T04:00:00.000Z",
+        end_date: "2029-01-01T04:00:00.000Z",
+        fixed_rate: "0.09500000",
+        floor: null,
+        has_floor: false,
+        is_fixed: true,
+        reference_rate: "",
+        spread: null,
+      },
     ],
   });
 
   render(<BorrowBaseLineItemView />);
 
-  // The waitFor statements on this page are to remedy multiple problems that arose from 
+  // The waitFor statements on this page are to remedy multiple problems that arose from
   // timing issues with the test code executing and react rendering components.
   // By waiting for the "expect" condition before proceeding, the code ensures that
   // there are components rendered on which to run the tests.
@@ -490,44 +482,31 @@ test("UT-12: Borrowing base line item data is formatted correctly receiving empt
   fireEvent.change(portfolioSelect, { target: { value: "Fund Banana" } });
 
   await waitFor(() => {
-    const facilityNameDropdown=screen.getByLabelText("Facility Name");
+    const facilityNameDropdown = screen.getByLabelText("Facility Name");
     const options = within(facilityNameDropdown).getAllByRole("option");
     expect(options).toHaveLength(3);
-  })
-
+  });
 
   const combos_facility = await screen.findByLabelText("Facility Name");
-  fireEvent.change(combos_facility, { target: { value: "Happy Bank Banana Facility" } });;
+  fireEvent.change(combos_facility, {
+    target: { value: "Happy Bank Banana Facility" },
+  });
 
   const inputDate = screen.getByLabelText("Select As Of Date:");
-  fireEvent.change(inputDate, { target: {value: "2025-06-30"}});
+  fireEvent.change(inputDate, { target: { value: "2025-06-30" } });
 
   await waitFor(() => {
     const grid = screen.getByRole("grid");
     const gridRows = within(grid).getAllByRole("row");
     expect(gridRows.length).toBeGreaterThan(1);
-
-  })
-
+  });
 
   const grid = screen.getByRole("grid");
   const gridRows = within(grid).getAllByRole("row");
   const cellsRow = within(gridRows[1]).getAllByRole("gridcell");
 
   expect(cellsRow[0]).toHaveTextContent("100");
-  for (let i = 1; i<=34; i++) {
-      expect(cellsRow[i]).toHaveTextContent(""); // loop through all of the columsn to ensure that they are appropriately empty
+  for (let i = 1; i <= 34; i++) {
+    expect(cellsRow[i]).toHaveTextContent(""); // loop through all of the columsn to ensure that they are appropriately empty
   }
-
-}
-);
-
-
-
-
-
-
-
-
-
-
+});

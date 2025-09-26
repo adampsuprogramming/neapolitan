@@ -14,60 +14,60 @@ jobs:
     defaults:
       run:
         working-directory: client
-  
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-        cache: 'npm'
-        cache-dependency-path: client/package-lock.json
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: client/package-lock.json
 
-    - name: install dependencies
-      run: npm ci
-    
-    - name: run Tests
-      run: npm test -- --coverage --watchAll=false
-      env:
-        CI: true
-    
-    - name: Upload client coverage to folder
-      uses: actions/upload-artifact@v4
-      with:
-        name: client-coverage
-        path: client/coverage/
-  
+      - name: install dependencies
+        run: npm ci
+
+      - name: run Tests
+        run: npm test -- --coverage --watchAll=false
+        env:
+          CI: true
+
+      - name: Upload client coverage to folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-coverage
+          path: client/coverage/
+
   test-backend:
     runs-on: ubuntu-latest
 
     defaults:
       run:
         working-directory: server
-  
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-        cache: 'npm'
-        cache-dependency-path: server/package-lock.json
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: server/package-lock.json
 
-    - name: install dependencies
-      run: npm ci
-    
-    - name: run Tests
-      run: npm test
-      env:
-        NODE_ENV: test
-    
-    - name: Upload server coverage to folder
-      uses: actions/upload-artifact@v4
-      with:
-        name: server-coverage
-        path: server/coverage/
+      - name: install dependencies
+        run: npm ci
+
+      - name: run Tests
+        run: npm test
+        env:
+          NODE_ENV: test
+
+      - name: Upload server coverage to folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-coverage
+          path: server/coverage/

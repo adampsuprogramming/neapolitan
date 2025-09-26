@@ -62,7 +62,6 @@
   margin-left: 100px;
 }
 
-
 .nav-right {
   color: #ffffff;
   display: flex;
@@ -136,12 +135,11 @@
 
 .debt-facility-create {
   padding-top: 20px;
-  padding-left:150px;
-    font-family: "Inter", sans-serif;
-     font-size: 18px;
-       font-weight: 800;
+  padding-left: 150px;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
 }
-
 
 .config-facility-nav {
   font-family: "Inter", sans-serif;
@@ -191,13 +189,13 @@
 .alertMessage {
   margin-top: 10px;
   margin-left: 25px;
-  color: #33648A;
+  color: #33648a;
   font-size: 16px;
   font-weight: 800;
 }
 
 .ag-theme-alpine .ag-header {
-  background-color: #2F4858 !important;
+  background-color: #2f4858 !important;
 }
 
 .ag-theme-alpine .ag-header-cell-label {
