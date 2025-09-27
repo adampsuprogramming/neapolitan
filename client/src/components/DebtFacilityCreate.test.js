@@ -43,6 +43,8 @@ test("UT-4 – Populating search options for Bank Name from API call", async () 
         ],
       });
     }
+
+    return Promise.resolve({ data: [] });
   });
 
   render(<DebtFacilityCreate />);
@@ -81,6 +83,8 @@ test("UT-5 – Populating search options for Portfolio from API call", async () 
         ],
       });
     }
+
+    return Promise.resolve({ data: [] });
   });
 
   render(<DebtFacilityCreate />);
@@ -138,6 +142,8 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
         ],
       });
     }
+
+    return Promise.resolve({ data: [] });
   });
 
   render(<DebtFacilityCreate />);
@@ -246,7 +252,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   expect(minimumEquityAmountInput.value).toBe("$5,000,000.00");
 
   // mock axios post so that the output can be tested upon a save
-  axios.post.mockResolvedValueOnce({status: 201});
+  axios.post.mockResolvedValueOnce({ status: 201 });
 
   // simulate save click
   const saveButton = screen.getByText("Save");
@@ -291,7 +297,6 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   expect(minimumEquityAmountInput.value).toBe("");
 });
 
-
 test("UT-13 – Test to ensure autocomplete works if there is one lener with a null name.", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("lenderquery")) {
@@ -299,14 +304,15 @@ test("UT-13 – Test to ensure autocomplete works if there is one lener with a n
         data: [
           {
             lender_name: "Donkey Kong Bank",
-            lender_id: "777",            
+            lender_id: "777",
           },
           {
             lender_id: "778",
-          }
+          },
         ],
       });
     }
+    return Promise.resolve({ data: [] });
   });
 
   render(<DebtFacilityCreate />);
@@ -323,23 +329,22 @@ test("UT-13 – Test to ensure autocomplete works if there is one lener with a n
   expect(screen.getByText("Donkey Kong Bank")).toBeInTheDocument(); // ensure that this still renders even though a lender name is null
 });
 
-
 test("UT-13 – Test to ensure autocomplete works if there is one portfolio with a null name.", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("portfolioquery")) {
       return Promise.resolve({
         data: [
           {
             portfolio_name: "Wario Portfolio",
-            portfolio_name_id: "777",            
+            portfolio_name_id: "777",
           },
           {
             portfolio_name_id: "778",
-          }
+          },
         ],
       });
     }
+    return Promise.resolve({ data: [] });
   });
 
   render(<DebtFacilityCreate />);

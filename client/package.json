@@ -22,12 +22,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-  "start": "craco start",
-  "build": "craco build",
-  "test": "craco test --watchAll=false --coverage",
-  "eject": "react-scripts eject",
-  "cypress:open": "cypress open",
-  "cypress:run": "cypress run"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test --watchAll=false --coverage",
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [

@@ -1,9 +1,6 @@
 {
   "all": true,
-  "include": [
-    "src/**/*.js",
-    "src/**/*.jsx"
-  ],
+  "include": ["src/**/*.js", "src/**/*.jsx"],
   "exclude": [
     "src/**/*.test.js",
     "src/**/*.spec.js",
