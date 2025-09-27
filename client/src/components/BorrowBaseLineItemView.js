@@ -32,7 +32,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
+        const dateString = params.value.split('T')[0];
+        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -41,7 +42,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
+        const dateString = params.value.split('T')[0];
+        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -50,7 +52,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
+        const dateString = params.value.split('T')[0];
+        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -113,18 +116,6 @@ function BorrowBaseLineItemView() {
         if (!params.value) return "";
 
         return Number(params.value).toFixed(4);
-      },
-    },
-    {
-      field: "approved_ebitda",
-      headerName: "Approved EBITDA",
-      cellDataType: "number",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(params.value);
       },
     },
     {
@@ -191,7 +182,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
+        const dateString = params.value.split('T')[0];
+        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
 
@@ -234,7 +226,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
+        const dateString = params.value.split('T')[0];
+        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -243,7 +236,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
+        const dateString = params.value.split('T')[0];
+        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
