@@ -1,0 +1,16 @@
+{
+  "all": true,
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ],
+  "exclude": [
+    "src/**/*.test.js",
+    "src/**/*.spec.js",
+    "src/index.js",
+    "src/reportWebVitals.js",
+    "src/setupTests.js"
+  ],
+  "reporter": ["html", "text", "json"],
+  "report-dir": "coverage-cypress"
+}
