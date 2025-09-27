@@ -209,8 +209,6 @@ function BorrowBaseLineItemView() {
       },
     },
 
-    { field: "loan_metrics_id", headerName: "Loan Metrics ID" },
-
     {
       field: "net_leverage_ratio",
       headerName: "Net Leverage Ratio",
