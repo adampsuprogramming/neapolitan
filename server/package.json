@@ -14,6 +14,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "cross-env NODE_ENV=test jest --coverage --forceExit"
+    "test": "cross-env DOTENV_CONFIG_QUIET=true NODE_ENV=test jest --forceExit",
+    "test-coverage": "cross-env DOTENV_CONFIG_QUIET=true NODE_ENV=test jest --coverage --forceExit"
   }
 }

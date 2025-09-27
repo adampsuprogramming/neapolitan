@@ -54,7 +54,7 @@ router.post("/api/createdebtfacility", async (req, res) => {
       portfolioId,
     ]);
     newDebtFacilityID = result.rows[0].debt_facility_id;
-    console.log("New debt facility id: ", newDebtFacilityID);
+    // console.log("New debt facility id: ", newDebtFacilityID);
   } catch (err) {
     console.error(err);
     res.status(500).send("DB create debt_facility query failed");
