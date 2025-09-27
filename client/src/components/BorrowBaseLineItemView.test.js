@@ -323,31 +323,30 @@ test("UT-7: Ensure borrowing base line item data is formatted correctly after lo
   expect(cellsRow[7]).toHaveTextContent("60.00%");
   expect(cellsRow[8]).toHaveTextContent("95.00%");
   expect(cellsRow[9]).toHaveTextContent("4.2500");
-  expect(cellsRow[10]).toHaveTextContent("$15,000,000.00");
+  expect(cellsRow[10]).toHaveTextContent("$7,500,000.00");
   expect(cellsRow[11]).toHaveTextContent("$7,500,000.00");
-  expect(cellsRow[12]).toHaveTextContent("$7,500,000.00");
-  expect(cellsRow[13]).toHaveTextContent("Second");
-  expect(cellsRow[14]).toHaveTextContent("8/10/2028");
-  expect(cellsRow[15]).toHaveTextContent("Term");
-  expect(cellsRow[16]).toHaveTextContent("10/11/2023");
-  expect(cellsRow[17]).toHaveTextContent("Test Company A");
-  expect(cellsRow[18]).toHaveTextContent("TestCo");
-  expect(cellsRow[19]).toHaveTextContent("45,222,222.22");
-  expect(cellsRow[20]).toHaveTextContent("8/10/2023");
-  expect(cellsRow[21]).toHaveTextContent("0.5454");
+  expect(cellsRow[12]).toHaveTextContent("Second");
+  expect(cellsRow[13]).toHaveTextContent("8/10/2028");
+  expect(cellsRow[14]).toHaveTextContent("Term");
+  expect(cellsRow[15]).toHaveTextContent("10/11/2023");
+  expect(cellsRow[16]).toHaveTextContent("Test Company A");
+  expect(cellsRow[17]).toHaveTextContent("TestCo");
+  expect(cellsRow[18]).toHaveTextContent("45,222,222.22");
+  expect(cellsRow[19]).toHaveTextContent("8/10/2023");
+  expect(cellsRow[20]).toHaveTextContent("0.5454");
+  expect(cellsRow[21]).toHaveTextContent("");
   expect(cellsRow[22]).toHaveTextContent("");
-  expect(cellsRow[23]).toHaveTextContent("");
-  expect(cellsRow[24]).toHaveTextContent("4.4855");
-  expect(cellsRow[25]).toHaveTextContent("454");
-  expect(cellsRow[26]).toHaveTextContent("7.4545");
-  expect(cellsRow[27]).toHaveTextContent("4/10/2028");
-  expect(cellsRow[28]).toHaveTextContent("6/10/2028");
+  expect(cellsRow[23]).toHaveTextContent("4.4855");
+  expect(cellsRow[24]).toHaveTextContent("454");
+  expect(cellsRow[25]).toHaveTextContent("7.4545");
+  expect(cellsRow[26]).toHaveTextContent("4/10/2028");
+  expect(cellsRow[27]).toHaveTextContent("6/10/2028");
+  expect(cellsRow[28]).toHaveTextContent("");
   expect(cellsRow[29]).toHaveTextContent("");
   expect(cellsRow[30]).toHaveTextContent("");
   expect(cellsRow[31]).toHaveTextContent("");
-  expect(cellsRow[32]).toHaveTextContent("");
-  expect(cellsRow[33]).toHaveTextContent("LIBOR");
-  expect(cellsRow[34]).toHaveTextContent("10.45%");
+  expect(cellsRow[32]).toHaveTextContent("LIBOR");
+  expect(cellsRow[33]).toHaveTextContent("10.45%");
 });
 
 test("UT-12: Borrowing base line item data is formatted correctly receiving empty values from API", async () => {
@@ -506,7 +505,7 @@ test("UT-12: Borrowing base line item data is formatted correctly receiving empt
   const cellsRow = within(gridRows[1]).getAllByRole("gridcell");
 
   expect(cellsRow[0]).toHaveTextContent("100");
-  for (let i = 1; i <= 34; i++) {
+  for (let i = 1; i <= 33; i++) {
     expect(cellsRow[i]).toHaveTextContent(""); // loop through all of the columsn to ensure that they are appropriately empty
   }
 });
