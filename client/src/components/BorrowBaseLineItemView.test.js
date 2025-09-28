@@ -11,7 +11,10 @@ import { render, screen, within, waitFor } from "@testing-library/react";
 import BorrowBaseLineItemView from "./BorrowBaseLineItemView";
 import { fireEvent } from "@testing-library/react";
 
-jest.mock("axios");
+jest.mock("axios", () => ({
+  get: jest.fn(() => Promise.resolve({ data: [] })),
+  post: jest.fn(() => Promise.resolve({ data: [] })),
+}));
 
 process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
 
@@ -25,43 +28,48 @@ beforeEach(() => {
 // 3 - If those option are deduplicated and ordered prior to populating
 
 test("UT-1: Portfolio data correctly loads from API on page load into dropdown menu", async () => {
-  axios.get.mockResolvedValueOnce({
-    data: [
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Orchard Bank Fund Apple Facility",
-        debt_facility_id: 5,
-        lender_name: "Orchard Bank (Test)",
-        outstanding_amount: "1234567",
-        overall_commitment_amount: "1234567",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Tree Bank Fund Banana",
-        debt_facility_id: 6,
-        lender_name: "Tree Bank",
-        outstanding_amount: "50000000.00",
-        overall_commitment_amount: "100000000.00",
-      },
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Golden Bank Fund Apple Facility",
-        debt_facility_id: 7,
-        lender_name: "Golden Bank",
-        outstanding_amount: "5000000.00",
-        overall_commitment_amount: "6000000.00",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Happy Bank Banana Facility",
-        debt_facility_id: 8,
-        lender_name: "Happy Bank",
-        outstanding_amount: "40000000.00",
-        overall_commitment_amount: "110000000.00",
-      },
-    ],
-  });
+  axios.get.mockImplementation((url) => {
+    if (url.includes("facilities")) {
+      return Promise.resolve({
+        data: [
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Orchard Bank Fund Apple Facility",
+            debt_facility_id: 5,
+            lender_name: "Orchard Bank (Test)",
+            outstanding_amount: "1234567",
+            overall_commitment_amount: "1234567",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Tree Bank Fund Banana",
+            debt_facility_id: 6,
+            lender_name: "Tree Bank",
+            outstanding_amount: "50000000.00",
+            overall_commitment_amount: "100000000.00",
+          },
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Golden Bank Fund Apple Facility",
+            debt_facility_id: 7,
+            lender_name: "Golden Bank",
+            outstanding_amount: "5000000.00",
+            overall_commitment_amount: "6000000.00",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Happy Bank Banana Facility",
+            debt_facility_id: 8,
+            lender_name: "Happy Bank",
+            outstanding_amount: "40000000.00",
+            overall_commitment_amount: "110000000.00",
+          },
+        ],
+      });
+    }
 
+    return Promise.resolve({ data: [] });
+  });
   render(<BorrowBaseLineItemView />);
 
   await waitFor(() => {
@@ -84,41 +92,47 @@ test("UT-1: Portfolio data correctly loads from API on page load into dropdown m
 // 3 - If those option are deduplicated and ordered prior to populating
 
 test("UT-2: Facility data correctly loads into second dropdown menu after choice is made in first dropdown", async () => {
-  axios.get.mockResolvedValueOnce({
-    data: [
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Orchard Bank Fund Apple Facility",
-        debt_facility_id: 5,
-        lender_name: "Orchard Bank (Test)",
-        outstanding_amount: "1234567",
-        overall_commitment_amount: "1234567",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Tree Bank Fund Banana",
-        debt_facility_id: 6,
-        lender_name: "Tree Bank",
-        outstanding_amount: "50000000.00",
-        overall_commitment_amount: "100000000.00",
-      },
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Golden Bank Fund Apple Facility",
-        debt_facility_id: 7,
-        lender_name: "Golden Bank",
-        outstanding_amount: "5000000.00",
-        overall_commitment_amount: "6000000.00",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Happy Bank Banana Facility",
-        debt_facility_id: 8,
-        lender_name: "Happy Bank",
-        outstanding_amount: "40000000.00",
-        overall_commitment_amount: "110000000.00",
-      },
-    ],
+  axios.get.mockImplementation((url) => {
+    if (url.includes("facilities")) {
+      return Promise.resolve({
+        data: [
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Orchard Bank Fund Apple Facility",
+            debt_facility_id: 5,
+            lender_name: "Orchard Bank (Test)",
+            outstanding_amount: "1234567",
+            overall_commitment_amount: "1234567",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Tree Bank Fund Banana",
+            debt_facility_id: 6,
+            lender_name: "Tree Bank",
+            outstanding_amount: "50000000.00",
+            overall_commitment_amount: "100000000.00",
+          },
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Golden Bank Fund Apple Facility",
+            debt_facility_id: 7,
+            lender_name: "Golden Bank",
+            outstanding_amount: "5000000.00",
+            overall_commitment_amount: "6000000.00",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Happy Bank Banana Facility",
+            debt_facility_id: 8,
+            lender_name: "Happy Bank",
+            outstanding_amount: "40000000.00",
+            overall_commitment_amount: "110000000.00",
+          },
+        ],
+      });
+    }
+
+    return Promise.resolve({ data: [] });
   });
 
   render(<BorrowBaseLineItemView />);
@@ -159,118 +173,126 @@ test("UT-2: Facility data correctly loads into second dropdown menu after choice
 // by the series of formatting statements
 
 test("UT-7: Ensure borrowing base line item data is formatted correctly after loading from API", async () => {
-  axios.get.mockResolvedValueOnce({
-    data: [
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Orchard Bank Fund Apple Facility",
-        debt_facility_id: 5,
-        lender_name: "Orchard Bank (Test)",
-        outstanding_amount: "1234567",
-        overall_commitment_amount: "1234567",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Tree Bank Fund Banana",
-        debt_facility_id: 6,
-        lender_name: "Tree Bank",
-        outstanding_amount: "50000000.00",
-        overall_commitment_amount: "100000000.00",
-      },
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Golden Bank Fund Apple Facility",
-        debt_facility_id: 7,
-        lender_name: "Golden Bank",
-        outstanding_amount: "5000000.00",
-        overall_commitment_amount: "6000000.00",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Happy Bank Banana Facility",
-        debt_facility_id: 8,
-        lender_name: "Happy Bank",
-        outstanding_amount: "40000000.00",
-        overall_commitment_amount: "110000000.00",
-      },
-    ],
-  });
+  axios.get.mockImplementation((url) => {
+    if (url.includes("facilities")) {
+      return Promise.resolve({
+        data: [
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Orchard Bank Fund Apple Facility",
+            debt_facility_id: 5,
+            lender_name: "Orchard Bank (Test)",
+            outstanding_amount: "1234567",
+            overall_commitment_amount: "1234567",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Tree Bank Fund Banana",
+            debt_facility_id: 6,
+            lender_name: "Tree Bank",
+            outstanding_amount: "50000000.00",
+            overall_commitment_amount: "100000000.00",
+          },
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Golden Bank Fund Apple Facility",
+            debt_facility_id: 7,
+            lender_name: "Golden Bank",
+            outstanding_amount: "5000000.00",
+            overall_commitment_amount: "6000000.00",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Happy Bank Banana Facility",
+            debt_facility_id: 8,
+            lender_name: "Happy Bank",
+            outstanding_amount: "40000000.00",
+            overall_commitment_amount: "110000000.00",
+          },
+        ],
+      });
+    }
 
-  axios.get.mockResolvedValueOnce({
-    data: [
-      {
-        collateral_id: 100,
-        inclusion_date: "2023-11-30T05:00:00.000Z",
-        removed_date: null,
-        approval_date: "2025-10-15T05:00:00.000Z",
-        approved_ebitda: "15000000.00",
-        approved_net_leverage: "6.15000000",
-        approved_int_coverage: "1.25000000",
-        approved_advance_rate: "0.60000000",
-        approved_valuation: "0.95000000",
-        approved_leverage: "4.25000000",
-        commitment_amount: "7500000.00",
-        outstanding_amount: "7500000.00",
-        lien_type: "Second",
-        maturity_date: "2028-08-10T04:00:00.000Z",
-        tranche_type: "Term",
-        loan_agreement_date: "2023-10-11T04:00:00.000Z",
-        legal_name: "Test Company A",
-        short_name: "TestCo",
-        ebitda: "45222222.22",
-        loan_metrics_start_date: "2023-08-10T04:00:00.000Z",
-        int_coverage_ratio: "0.5454",
-        is_cov_default: false,
-        is_payment_default: false,
-        leverage_ratio: "4.48548",
-        loan_metrics_id: 454,
-        net_leverage_ratio: "7.45451",
-        rate_start_date: "2028-04-10T04:00:00.000Z",
-        end_date: "2028-06-10T04:00:00.000Z",
-        fixed_rate: null,
-        floor: null,
-        has_floor: false,
-        is_fixed: false,
-        reference_rate: "LIBOR",
-        spread: "0.10450000",
-      },
-      {
-        collateral_id: 101,
-        inclusion_date: "2023-08-10T05:00:00.000Z",
-        removed_date: null,
-        approval_date: "2023-07-11T05:00:00.000Z",
-        approved_ebitda: "40000000.00",
-        approved_net_leverage: "1.65000000",
-        approved_int_coverage: "5.00000000",
-        approved_advance_rate: null,
-        approved_valuation: "1.0000000",
-        approved_leverage: "2.40000000",
-        commitment_amount: "56000000.00",
-        outstanding_amount: "56000000.00",
-        lien_type: "Second",
-        maturity_date: "2029-03-01T04:00:00.000Z",
-        tranche_type: "Term",
-        loan_agreement_date: "2024-03-01T04:00:00.000Z",
-        legal_name: "Test No 2",
-        short_name: "Test2",
-        ebitda: "45000000.00",
-        loan_metrics_start_date: "2024-10-01T04:00:00.000Z",
-        int_coverage_ratio: "6.100000",
-        is_cov_default: false,
-        is_payment_default: false,
-        leverage_ratio: "1.485458",
-        loan_metrics_id: 245,
-        net_leverage_ratio: "1.06481",
-        rate_start_date: "2028-11-01T04:00:00.000Z",
-        end_date: "2029-01-01T04:00:00.000Z",
-        fixed_rate: "0.09500000",
-        floor: null,
-        has_floor: false,
-        is_fixed: true,
-        reference_rate: "",
-        spread: null,
-      },
-    ],
+    if (url.includes("borrowbase")) {
+      return Promise.resolve({
+        data: [
+          {
+            collateral_id: 100,
+            inclusion_date: "2023-11-30T05:00:00.000Z",
+            removed_date: null,
+            approval_date: "2025-10-15T05:00:00.000Z",
+            approved_ebitda: "15000000.00",
+            approved_net_leverage: "6.15000000",
+            approved_int_coverage: "1.25000000",
+            approved_advance_rate: "0.60000000",
+            approved_valuation: "0.95000000",
+            approved_leverage: "4.25000000",
+            commitment_amount: "7500000.00",
+            outstanding_amount: "7500000.00",
+            lien_type: "Second",
+            maturity_date: "2028-08-10T04:00:00.000Z",
+            tranche_type: "Term",
+            loan_agreement_date: "2023-10-11T04:00:00.000Z",
+            legal_name: "Test Company A",
+            short_name: "TestCo",
+            ebitda: "45222222.22",
+            loan_metrics_start_date: "2023-08-10T04:00:00.000Z",
+            int_coverage_ratio: "0.5454",
+            is_cov_default: false,
+            is_payment_default: false,
+            leverage_ratio: "4.48548",
+            loan_metrics_id: 454,
+            net_leverage_ratio: "7.45451",
+            rate_start_date: "2028-04-10T04:00:00.000Z",
+            end_date: "2028-06-10T04:00:00.000Z",
+            fixed_rate: null,
+            floor: null,
+            has_floor: false,
+            is_fixed: false,
+            reference_rate: "LIBOR",
+            spread: "0.10450000",
+          },
+          {
+            collateral_id: 101,
+            inclusion_date: "2023-08-10T05:00:00.000Z",
+            removed_date: null,
+            approval_date: "2023-07-11T05:00:00.000Z",
+            approved_ebitda: "40000000.00",
+            approved_net_leverage: "1.65000000",
+            approved_int_coverage: "5.00000000",
+            approved_advance_rate: null,
+            approved_valuation: "1.0000000",
+            approved_leverage: "2.40000000",
+            commitment_amount: "56000000.00",
+            outstanding_amount: "56000000.00",
+            lien_type: "Second",
+            maturity_date: "2029-03-01T04:00:00.000Z",
+            tranche_type: "Term",
+            loan_agreement_date: "2024-03-01T04:00:00.000Z",
+            legal_name: "Test No 2",
+            short_name: "Test2",
+            ebitda: "45000000.00",
+            loan_metrics_start_date: "2024-10-01T04:00:00.000Z",
+            int_coverage_ratio: "6.100000",
+            is_cov_default: false,
+            is_payment_default: false,
+            leverage_ratio: "1.485458",
+            loan_metrics_id: 245,
+            net_leverage_ratio: "1.06481",
+            rate_start_date: "2028-11-01T04:00:00.000Z",
+            end_date: "2029-01-01T04:00:00.000Z",
+            fixed_rate: "0.09500000",
+            floor: null,
+            has_floor: false,
+            is_fixed: true,
+            reference_rate: "",
+            spread: null,
+          },
+        ],
+      });
+    }
+
+    return Promise.resolve({ data: [] });
   });
 
   render(<BorrowBaseLineItemView />);
@@ -349,118 +371,126 @@ test("UT-7: Ensure borrowing base line item data is formatted correctly after lo
 });
 
 test("UT-12: Borrowing base line item data is formatted correctly receiving empty values from API", async () => {
-  axios.get.mockResolvedValueOnce({
-    data: [
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Orchard Bank Fund Apple Facility",
-        debt_facility_id: 5,
-        lender_name: "Orchard Bank (Test)",
-        outstanding_amount: "1234567",
-        overall_commitment_amount: "1234567",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Tree Bank Fund Banana",
-        debt_facility_id: 6,
-        lender_name: "Tree Bank",
-        outstanding_amount: "50000000.00",
-        overall_commitment_amount: "100000000.00",
-      },
-      {
-        portfolio_name: "Fund Apple",
-        debt_facility_name: "Golden Bank Fund Apple Facility",
-        debt_facility_id: 7,
-        lender_name: "Golden Bank",
-        outstanding_amount: "5000000.00",
-        overall_commitment_amount: "6000000.00",
-      },
-      {
-        portfolio_name: "Fund Banana",
-        debt_facility_name: "Happy Bank Banana Facility",
-        debt_facility_id: 8,
-        lender_name: "Happy Bank",
-        outstanding_amount: "40000000.00",
-        overall_commitment_amount: "110000000.00",
-      },
-    ],
-  });
+  axios.get.mockImplementation((url) => {
+    if (url.includes("facilities")) {
+      return Promise.resolve({
+        data: [
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Orchard Bank Fund Apple Facility",
+            debt_facility_id: 5,
+            lender_name: "Orchard Bank (Test)",
+            outstanding_amount: "1234567",
+            overall_commitment_amount: "1234567",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Tree Bank Fund Banana",
+            debt_facility_id: 6,
+            lender_name: "Tree Bank",
+            outstanding_amount: "50000000.00",
+            overall_commitment_amount: "100000000.00",
+          },
+          {
+            portfolio_name: "Fund Apple",
+            debt_facility_name: "Golden Bank Fund Apple Facility",
+            debt_facility_id: 7,
+            lender_name: "Golden Bank",
+            outstanding_amount: "5000000.00",
+            overall_commitment_amount: "6000000.00",
+          },
+          {
+            portfolio_name: "Fund Banana",
+            debt_facility_name: "Happy Bank Banana Facility",
+            debt_facility_id: 8,
+            lender_name: "Happy Bank",
+            outstanding_amount: "40000000.00",
+            overall_commitment_amount: "110000000.00",
+          },
+        ],
+      });
+    }
 
-  axios.get.mockResolvedValueOnce({
-    data: [
-      {
-        collateral_id: 100,
-        inclusion_date: null,
-        removed_date: null,
-        approval_date: null,
-        approved_ebitda: null,
-        approved_net_leverage: null,
-        approved_int_coverage: null,
-        approved_advance_rate: null,
-        approved_valuation: null,
-        approved_leverage: null,
-        commitment_amount: null,
-        outstanding_amount: null,
-        lien_type: null,
-        maturity_date: null,
-        tranche_type: null,
-        loan_agreement_date: null,
-        legal_name: null,
-        short_name: null,
-        ebitda: null,
-        loan_metrics_start_date: null,
-        int_coverage_ratio: null,
-        is_cov_default: null,
-        is_payment_default: null,
-        leverage_ratio: null,
-        loan_metrics_id: null,
-        net_leverage_ratio: null,
-        rate_start_date: null,
-        end_date: null,
-        fixed_rate: null,
-        floor: null,
-        has_floor: null,
-        is_fixed: null,
-        reference_rate: null,
-        spread: null,
-      },
-      {
-        collateral_id: 101,
-        inclusion_date: "2023-08-10T05:00:00.000Z",
-        removed_date: null,
-        approval_date: "2023-07-11T05:00:00.000Z",
-        approved_ebitda: "40000000.00",
-        approved_net_leverage: "1.65000000",
-        approved_int_coverage: "5.00000000",
-        approved_advance_rate: null,
-        approved_valuation: "1.0000000",
-        approved_leverage: "2.40000000",
-        commitment_amount: "56000000.00",
-        outstanding_amount: "56000000.00",
-        lien_type: "Second",
-        maturity_date: "2029-03-01T04:00:00.000Z",
-        tranche_type: "Term",
-        loan_agreement_date: "2024-03-01T04:00:00.000Z",
-        legal_name: "Test No 2",
-        short_name: "Test2",
-        ebitda: "45000000.00",
-        loan_metrics_start_date: "2024-10-01T04:00:00.000Z",
-        int_coverage_ratio: "6.100000",
-        is_cov_default: false,
-        is_payment_default: false,
-        leverage_ratio: "1.485458",
-        loan_metrics_id: 245,
-        net_leverage_ratio: "1.06481",
-        rate_start_date: "2028-11-01T04:00:00.000Z",
-        end_date: "2029-01-01T04:00:00.000Z",
-        fixed_rate: "0.09500000",
-        floor: null,
-        has_floor: false,
-        is_fixed: true,
-        reference_rate: "",
-        spread: null,
-      },
-    ],
+    if (url.includes("borrowbase")) {
+      return Promise.resolve({
+        data: [
+          {
+            collateral_id: 100,
+            inclusion_date: null,
+            removed_date: null,
+            approval_date: null,
+            approved_ebitda: null,
+            approved_net_leverage: null,
+            approved_int_coverage: null,
+            approved_advance_rate: null,
+            approved_valuation: null,
+            approved_leverage: null,
+            commitment_amount: null,
+            outstanding_amount: null,
+            lien_type: null,
+            maturity_date: null,
+            tranche_type: null,
+            loan_agreement_date: null,
+            legal_name: null,
+            short_name: null,
+            ebitda: null,
+            loan_metrics_start_date: null,
+            int_coverage_ratio: null,
+            is_cov_default: null,
+            is_payment_default: null,
+            leverage_ratio: null,
+            loan_metrics_id: null,
+            net_leverage_ratio: null,
+            rate_start_date: null,
+            end_date: null,
+            fixed_rate: null,
+            floor: null,
+            has_floor: null,
+            is_fixed: null,
+            reference_rate: null,
+            spread: null,
+          },
+          {
+            collateral_id: 101,
+            inclusion_date: "2023-08-10T05:00:00.000Z",
+            removed_date: null,
+            approval_date: "2023-07-11T05:00:00.000Z",
+            approved_ebitda: "40000000.00",
+            approved_net_leverage: "1.65000000",
+            approved_int_coverage: "5.00000000",
+            approved_advance_rate: null,
+            approved_valuation: "1.0000000",
+            approved_leverage: "2.40000000",
+            commitment_amount: "56000000.00",
+            outstanding_amount: "56000000.00",
+            lien_type: "Second",
+            maturity_date: "2029-03-01T04:00:00.000Z",
+            tranche_type: "Term",
+            loan_agreement_date: "2024-03-01T04:00:00.000Z",
+            legal_name: "Test No 2",
+            short_name: "Test2",
+            ebitda: "45000000.00",
+            loan_metrics_start_date: "2024-10-01T04:00:00.000Z",
+            int_coverage_ratio: "6.100000",
+            is_cov_default: false,
+            is_payment_default: false,
+            leverage_ratio: "1.485458",
+            loan_metrics_id: 245,
+            net_leverage_ratio: "1.06481",
+            rate_start_date: "2028-11-01T04:00:00.000Z",
+            end_date: "2029-01-01T04:00:00.000Z",
+            fixed_rate: "0.09500000",
+            floor: null,
+            has_floor: false,
+            is_fixed: true,
+            reference_rate: "",
+            spread: null,
+          },
+        ],
+      });
+    }
+
+    return Promise.resolve({ data: [] });
   });
 
   render(<BorrowBaseLineItemView />);

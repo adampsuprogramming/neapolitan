@@ -32,8 +32,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        const dateString = params.value.split('T')[0];
-        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -42,8 +42,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        const dateString = params.value.split('T')[0];
-        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -52,8 +52,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        const dateString = params.value.split('T')[0];
-        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -182,8 +182,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        const dateString = params.value.split('T')[0];
-        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
 
@@ -224,8 +224,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        const dateString = params.value.split('T')[0];
-        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
@@ -234,8 +234,8 @@ function BorrowBaseLineItemView() {
       cellDataType: "dateString",
       valueFormatter: (params) => {
         if (!params.value) return "";
-        const dateString = params.value.split('T')[0];
-        return new Date(dateString + 'T12:00:00').toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
     {
