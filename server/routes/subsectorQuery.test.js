@@ -1,5 +1,5 @@
 // ************************************************************************
-// *       UT-16 – Testing /api/subsectorQuery endpoint’s functionality      *
+// *       UT-16 – Testing /api/subsectorQuery endpoint’s functionality   *
 // ************************************************************************
 
 // This mock must come before the import of object

@@ -10,17 +10,17 @@ import FormHelperText from "@mui/material/FormHelperText";
 
 function BorrowerCreate() {
   const [regionData, setRegionData] = useState([]); // Hold results of getRegionData below
-  const [selectedCorpHQRegion, setSelectedCorpHQRegion] = useState([]); // Which corporate region was selected?
+  const [selectedCorpHQRegion, setSelectedCorpHQRegion] = useState(null); // Which corporate region was selected?
   const [selectedCorpHQId, setSelectedCorpHQId] = useState(null); // What is primary key for corporate region
-  const [selectedRevRegion, setSelectedRevRegion] = useState([]); // Which revenue region was selected?
+  const [selectedRevRegion, setSelectedRevRegion] = useState(null); // Which revenue region was selected?
   const [selectedRevId, setSelectedRevId] = useState(null); // What is primary key for revenue region
   const [naicsSubSectorData, setNaicsSubSectorData] = useState([]); // Hold subsector data from API call
-  const [selectedNaicsSubsector, setSelectedNaicsSubsector] = useState([]); // Which subsector was selected?
-  const [selectedNaicsSubsectorId, setSelectedNaicsSubsectorId] = useState([]); // What is primary key for subsector?
+  const [selectedNaicsSubsector, setSelectedNaicsSubsector] = useState(null); // Which subsector was selected?
+  const [selectedNaicsSubsectorId, setSelectedNaicsSubsectorId] = useState(null); // What is primary key for subsector?
   const [legalName, setLegalName] = useState(""); // After user enters borrower legal name, it is set here via an onChange
   const [shortName, setShortName] = useState(""); // After user enters borrower nick name, it is set here via an onChange
   const [isPublicBorrower, setIsPublicBorrower] = useState(false); // Sets based on user interaction with toggle switch
-  const [tickerSymbol, setTickerSymbol] = useState(null); // What is the ticker symbol?
+  const [tickerSymbol, setTickerSymbol] = useState(""); // What is the ticker symbol?
 
   const [message, setMessage] = useState("");
 
@@ -234,7 +234,6 @@ function BorrowerCreate() {
 
           <TextField
             sx={{ m: 1, width: "30ch", marginLeft: 6, width: "22ch" }}
-            customInput={TextField}
             id="ticker-symbol"
             value={tickerSymbol}
             onChange={(event) => setTickerSymbol(event.target.value)}

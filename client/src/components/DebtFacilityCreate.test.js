@@ -297,7 +297,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   expect(minimumEquityAmountInput.value).toBe("");
 });
 
-test("UT-13 – Test to ensure autocomplete works if there is one lener with a null name.", async () => {
+test("UT-13 – Test to ensure autocomplete works if there is one lender with a null name.", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("lenderquery")) {
       return Promise.resolve({
