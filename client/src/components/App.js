@@ -33,7 +33,6 @@ import LoanTrancheDelete from "./LoanTrancheDelete";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 
-
 function App() {
   return (
     <div className="page">
@@ -53,21 +52,18 @@ function App() {
             <Route path="borrowbasecalcview" element={<BorrowBaseCalcView />} />
           </Route>
           <Route path="/transactions/*" element={<Transactions />}>
-            <Route path="borrowertransactions/*" element={<BorrowerTransactions />}>
-              <Route
-                path="borrowercreate"
-                element={<BorrowerCreate />}
-              />
-              <Route
-                path="borrowermodify"
-                element={<BorrowerModify />}
-              />
-              <Route
-                path="borrowerdelete"
-                element={<BorrowerDelete />}
-              />
+            <Route
+              path="borrowertransactions/*"
+              element={<BorrowerTransactions />}
+            >
+              <Route path="borrowercreate" element={<BorrowerCreate />} />
+              <Route path="borrowermodify" element={<BorrowerModify />} />
+              <Route path="borrowerdelete" element={<BorrowerDelete />} />
             </Route>
-            <Route path="loanagreementtransactions/*" element={<LoanAgreementTransactions />}>
+            <Route
+              path="loanagreementtransactions/*"
+              element={<LoanAgreementTransactions />}
+            >
               <Route
                 path="loanagreementcreate"
                 element={<LoanAgreementCreate />}
@@ -81,21 +77,18 @@ function App() {
                 element={<LoanAgreementDelete />}
               />
             </Route>
-            <Route path="loantranchetransactions/*" element={<LoanTrancheTransactions />}>
-              <Route
-                path="loantranchecreate"
-                element={<LoanTrancheCreate />}
-              />
-              <Route
-                path="loantranchemodify"
-                element={<LoanTrancheModify />}
-              />
-              <Route
-                path="loantranchedelete"
-                element={<LoanTrancheDelete />}
-              />
+            <Route
+              path="loantranchetransactions/*"
+              element={<LoanTrancheTransactions />}
+            >
+              <Route path="loantranchecreate" element={<LoanTrancheCreate />} />
+              <Route path="loantranchemodify" element={<LoanTrancheModify />} />
+              <Route path="loantranchedelete" element={<LoanTrancheDelete />} />
             </Route>
-            <Route path="collateralpledgetransactions/*" element={<CollateralPledgeTransactions />}>
+            <Route
+              path="collateralpledgetransactions/*"
+              element={<CollateralPledgeTransactions />}
+            >
               <Route
                 path="collateralpledgeadd"
                 element={<CollateralPledgeAdd />}
@@ -104,10 +97,8 @@ function App() {
                 path="collateralpledgeremove"
                 element={<CollateralPledgeRemove />}
               />
-
             </Route>
           </Route>
-
 
           <Route path="/performance/*" element={<Performance />} />
           <Route path="/reporting/*" element={<Reporting />} />

@@ -40,18 +40,18 @@ describe("GET /api/regionQuery", () => {
     const response = await request(app).get("/api/regionQuery").query();
 
     expect(response.body).toEqual([
-        {
-          naics_subsector_id: 601,
-          naics_subsector_name: "Narnia",
-        },
-        {
-          naics_subsector_id: 602,
-          naics_subsector_name: "Foon",
-        },
-        {
-          naics_subsector_id: 603,
-          naics_subsector_name: "Middle Earth",
-        },
+      {
+        naics_subsector_id: 601,
+        naics_subsector_name: "Narnia",
+      },
+      {
+        naics_subsector_id: 602,
+        naics_subsector_name: "Foon",
+      },
+      {
+        naics_subsector_id: 603,
+        naics_subsector_name: "Middle Earth",
+      },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(

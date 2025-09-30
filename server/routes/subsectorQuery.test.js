@@ -40,18 +40,18 @@ describe("GET /api/subsectorQuery", () => {
     const response = await request(app).get("/api/subsectorQuery").query();
 
     expect(response.body).toEqual([
-        {
-          naics_subsector_id: 500,
-          naics_subsector_name: "video game production",
-        },
-        {
-          naics_subsector_id: 501,
-          naics_subsector_name: "pizza making",
-        },
-        {
-          naics_subsector_id: 502,
-          naics_subsector_name: "travel",
-        },
+      {
+        naics_subsector_id: 500,
+        naics_subsector_name: "video game production",
+      },
+      {
+        naics_subsector_id: 501,
+        naics_subsector_name: "pizza making",
+      },
+      {
+        naics_subsector_id: 502,
+        naics_subsector_name: "travel",
+      },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(
