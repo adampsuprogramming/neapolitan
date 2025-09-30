@@ -1,9 +1,45 @@
-const Transactions = () => {
+import { Routes, Route, Link, NavLink } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+
+export default function Transactions() {
   return (
-    <div className="transactions">
-      <h1>Placeholder for Transactions</h1>
+    <div>
+      <nav className="transactions-nav">
+        <NavLink
+          to="borrowertransactions"
+          className={({ isActive }) =>
+            isActive ? "transactions-nav-highlighted" : ""
+          }
+        >
+          Borrower
+        </NavLink>
+
+        <NavLink
+          to="loanagreementtransactions"
+          className={({ isActive }) =>
+            isActive ? "transactions-nav-highlighted" : ""
+          }
+        >
+          Loan Agreement
+        </NavLink>
+        <NavLink
+          to="loantranchetransactions"
+          className={({ isActive }) =>
+            isActive ? "transactions-nav-highlighted" : ""
+          }
+        >
+          Loan Tranche
+        </NavLink>
+        <NavLink
+          to="collateralpledgetransactions"
+          className={({ isActive }) =>
+            isActive ? "transactions-nav-highlighted" : ""
+          }
+        >
+          Collateral Pledge
+        </NavLink>
+      </nav>
+      <Outlet />
     </div>
   );
-};
-
-export default Transactions;
+}
