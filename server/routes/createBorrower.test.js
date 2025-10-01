@@ -19,27 +19,11 @@ afterAll(async () => {
 });
 
 describe("POST /api/createborrower", () => {
-  it("accepts borrower data from a mocked api put and then runs an insert query on the borrower record of the database", async () => {
+  it("accepts borrower data from a mocked api put and then runs an insert query on the borrower table of the database", async () => {
     mockedQuery
-      .mockResolvedValueOnce({}) //first insert sends back debt facility primary key
+      .mockResolvedValueOnce({}) 
       
     const response = await request(app).post("/api/createborrower").send({
-      debtFacilityName: "Mario Kart Facility",
-      portfolioId: "2",
-      lenderId: "102",
-      startDate: "2025-01-02",
-      endDate: "2030-01-02",
-      overAllCommitmentAmount: 100000000,
-      isOverallRate: true,
-      overallRate: 0.65,
-      isAssetByAssetAdvance: true,
-      firstLienRate: 0.7,
-      secondLienRate: 0.45,
-      mezzRate: 0.3,
-      isMinEquity: true,
-      minEquityAmount: 5000000,
-
-
       legalName: "The Uncharted Company",
       shortName: "Uncharted Co.",
       corporateHqId: 123,
