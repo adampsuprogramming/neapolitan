@@ -25,7 +25,12 @@ function LoanAgreementCreate() {
         const fullInfoResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/borrowerquery`,
         );
-        setBorrowerData(fullInfoResponse.data);
+        const data = fullInfoResponse.data;
+        const sortedBorrowers = data.sort((first,second) => {
+          return first.legal_name.localeCompare(second.legal_name);
+        });
+
+        setBorrowerData(sortedBorrowers);
       } catch (error) {
         console.error("Error fetching");
       }
