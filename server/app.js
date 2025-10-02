@@ -16,6 +16,7 @@ const createBorrowerRoutes = require("./routes/createBorrower");
 const borrowerQueryRoutes = require("./routes/borrowerQuery");
 const createLoanAgreementRoutes = require("./routes/createLoanAgreement");
 const loanAgreementQueryRoutes = require("./routes/loanAgreementQuery");
+const createLoanTrancheRoutes = require("./routes/createLoanTranche");
 
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((origin) => origin.trim())
@@ -62,6 +63,7 @@ app.use(createBorrowerRoutes);
 app.use(borrowerQueryRoutes);
 app.use(createLoanAgreementRoutes);
 app.use(loanAgreementQueryRoutes);
+app.use(createLoanTrancheRoutes);
 
 
 module.exports = app;

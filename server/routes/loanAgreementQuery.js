@@ -5,8 +5,10 @@ const pool = require("../db");
 
 const loanAgreementQuery = `
 select 
-    l.loan_agreement_id, l.borrower_id, l.loan_agreement_date, l.loan_agreement_name
-    from loan_agreements l
+    l.loan_agreement_id, l.borrower_id, l.loan_agreement_date, l.loan_agreement_name, b.legal_name
+from loan_agreements l
+left join borrowers b
+    on b.borrower_id = l.borrower_id
 
 `;
 

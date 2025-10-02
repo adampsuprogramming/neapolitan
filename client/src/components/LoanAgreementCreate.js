@@ -93,7 +93,7 @@ function LoanAgreementCreate() {
             padding: 2,
           }}
         >
-          <div className="row-1-new-loan-agreement">
+          <div className="row-1-new-loan-agreement" style ={{display: "flex", gap: "50px"}}>
 
             <Autocomplete
               disablePortal
@@ -116,7 +116,7 @@ function LoanAgreementCreate() {
               onChange={(event) => setLoanAgreementTitle(event.target.value)}
               id="loan-agreement-title-input"
               label="Loan Agreement Title"
-              sx={{ m: 1, width: "35ch" }}
+              sx={{ m: 1, width: "60ch" }}
             />
 
           </div>
@@ -149,12 +149,9 @@ function LoanAgreementCreate() {
         </Box>
         <Box
           sx={{
-            border: "1px solid",
-            borderRadius: 4,
-            borderColor: "#c7c7c7ff",
             width: "110ch",
-            m: 3,
-            padding: 2,
+            marginTop: 4,
+            padding: 0,
             display: "flex",
           }}
         >
