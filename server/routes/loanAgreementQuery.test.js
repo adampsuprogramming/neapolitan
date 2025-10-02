@@ -26,13 +26,15 @@ describe("GET /api/loanagreementquery", () => {
           loan_agreement_id: 101,
           borrower_id: 501,
           loan_agreement_date: "2024-01-31",
-          loan_agreement_name: "Loan Agreement Name 1"
+          loan_agreement_name: "Loan Agreement Name 1",
+          legal_name: "Borrower ABC"
         },
         {
           loan_agreement_id: 102,
           borrower_id: 501,
           loan_agreement_date: "2025-02-28",
-          loan_agreement_name: "Loan Agreement Name 2"
+          loan_agreement_name: "Loan Agreement Name 2",
+          legal_name: "Borrower DEF"
         },
       ],
     });
@@ -44,21 +46,25 @@ describe("GET /api/loanagreementquery", () => {
           loan_agreement_id: 101,
           borrower_id: 501,
           loan_agreement_date: "2024-01-31",
-          loan_agreement_name: "Loan Agreement Name 1"
+          loan_agreement_name: "Loan Agreement Name 1",
+          legal_name: "Borrower ABC"
         },
         {
           loan_agreement_id: 102,
           borrower_id: 501,
           loan_agreement_date: "2025-02-28",
-          loan_agreement_name: "Loan Agreement Name 2"
+          loan_agreement_name: "Loan Agreement Name 2",
+          legal_name: "Borrower DEF"
         },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(
       `
 select 
-    l.loan_agreement_id, l.borrower_id, l.loan_agreement_date, l.loan_agreement_name
-    from loan_agreements l
+    l.loan_agreement_id, l.borrower_id, l.loan_agreement_date, l.loan_agreement_name, b.legal_name
+from loan_agreements l
+left join borrowers b
+    on b.borrower_id = l.borrower_id
 
 `,
       [],
