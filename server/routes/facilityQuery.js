@@ -32,7 +32,7 @@ router.get("/api/facilities", async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).send("DB test tranches query failed");
+    res.status(500).send("Facility query failed");
   }
 });
 

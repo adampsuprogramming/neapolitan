@@ -74,7 +74,7 @@ router.get("/api/borrowbase", async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).send("DB test tranches query failed)");
+    res.status(500).send("Borrower base query failed)");
   }
 });
 

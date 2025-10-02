@@ -19,7 +19,7 @@ router.get("/api/regionQuery", async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Subsector query Has Failed)");
+    res.status(500).send("Region query Has Failed)");
   }
 });
 
