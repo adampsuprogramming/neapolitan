@@ -26,13 +26,14 @@ function LoanAgreementCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/borrowerquery`,
         );
         const data = fullInfoResponse.data;
-        const sortedBorrowers = data.sort((first,second) => {
+        const dataWithoutNull = data.filter(borrower => borrower.legal_name);
+        const sortedBorrowers = dataWithoutNull.sort((first,second) => {
           return first.legal_name.localeCompare(second.legal_name);
         });
 
         setBorrowerData(sortedBorrowers);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("There was an error updating borrower data");
       }
     }
 
@@ -102,7 +103,7 @@ function LoanAgreementCreate() {
               value={selectedBorrower}
               sx={{ m: 1, width: "35ch" }}
               onChange={(event, newValue) => setSelectedBorrower(newValue)}
-              getOptionLabel={(option) => option.legal_name || ""}
+              getOptionLabel={(option) => option.legal_name} // doesn't need '|| ""' since we are filtering nulls above
               renderInput={(params) => (
                 <TextField {...params} label="Borrower Name" />
               )}
