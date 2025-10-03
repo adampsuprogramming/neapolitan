@@ -1,5 +1,5 @@
 // ************************************************************************
-// *       UT-16 – Testing /api/subsectorQuery endpoint’s functionality   *
+// *       UT-16 – Testing /api/subsectorquery endpoint’s functionality   *
 // ************************************************************************
 
 // This mock must come before the import of object
@@ -19,7 +19,7 @@ afterAll(async () => {
 });
 
 describe("GET /api/subsectorQuery", () => {
-  it("accepts subsectorQuery info request from the front-end, queries the database, and then returns it", async () => {
+  it("accepts subsector info request from the front-end, queries the database, and then returns it", async () => {
     mockedQuery.mockResolvedValue({
       rows: [
         {

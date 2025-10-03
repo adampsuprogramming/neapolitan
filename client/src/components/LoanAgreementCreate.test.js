@@ -1,7 +1,7 @@
 // ************************************************************************************************
-// *     UT-25 – Populating borrowers from API call - /api/borowerquery                           *
-// *     UT-26 - Testing PUT API Call to createloanagreement after filling out form               *
-// *     UT-27 – Populating search options from API call -- Borrower Name but with some null data *
+// *     UT-26 – Populating borrowers from API call - /api/borowerquery                           *
+// *     UT-27 - Testing PUT API Call to createloanagreement after filling out form               *
+// *     UT-28 – Populating search options from API call -- Borrower Name but with some null data *
 // ************************************************************************************************
 
 import axios from "axios";
@@ -17,7 +17,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-test("UT-25 – Populating borrower dropdown from API call -- /api/borrowerquery", async () => {
+test("UT-26 – Populating borrower dropdown from API call -- /api/borrowerquery", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
       return Promise.resolve({
@@ -58,7 +58,7 @@ test("UT-25 – Populating borrower dropdown from API call -- /api/borrowerquery
 });
 
 
-test("UT-26 - Testing PUT API Call to createloanagreement after filling out form", async () => {
+test("UT-27 - Testing PUT API Call to createloanagreement after filling out form", async () => {
 
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
@@ -136,7 +136,7 @@ test("UT-26 - Testing PUT API Call to createloanagreement after filling out form
   expect(loanAgreementDate.value).toBe("");
 });
 
-test("UT-27 – Populating search options from API call -- Borrower Name but with some null data", async () => {
+test("UT-28 – Populating search options from API call -- Borrower Name but with some null data", async () => {
 
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
