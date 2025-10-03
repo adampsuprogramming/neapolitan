@@ -98,9 +98,10 @@ function LoanTrancheCreate() {
           netLeverageRatio: netLeverageRatio,
           interestCoverage: interestCoverage,
           rateType: rateType,
-          fixedRate: fixedRate / 100,
-          spread: spread / 100,
-          floor: floor / 100,
+          fixedRate:
+            fixedRate != null ? Number((fixedRate / 100).toFixed(6)) : null,
+          spread: spread != null ? Number((spread / 100).toFixed(6)) : null,
+          floor: floor != null ? Number((floor / 100).toFixed(6)) : null,
           refRate: refRate,
         },
       );
@@ -394,7 +395,7 @@ function LoanTrancheCreate() {
             sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
             value={fixedRate}
             onValueChange={(value) => setFixedRate(value.floatValue)}
-            label="Fixed Rate"
+            label="Fixed Coupon"
             thousandSeparator=","
             decimalScale={6}
             suffix="%"

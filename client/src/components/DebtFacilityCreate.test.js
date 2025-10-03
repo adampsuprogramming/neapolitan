@@ -1,8 +1,10 @@
-// ************************************************************************
-// *     UT-4 – Populating search options for Bank Name from API call     *
-// *     UT-5 – Populating search options for Portfolio from API call     *
-// *     UT-8 - Testing PUT API Call After Filling in Data from Form      *
-// ************************************************************************
+// ********************************************************************************************
+// *     UT-4 – Populating search options for Bank Name from API call                         *
+// *     UT-5 – Populating search options for Portfolio from API call                         *
+// *     UT-8 - Testing PUT API Call After Filling in Data from Form                          *
+// *     UT-13 – Test to ensure autocomplete works if there is one lender with a null name.   *
+// *     UT-14 – Test to ensure autocomplete works if there is one portfolio with a null name.*
+// ********************************************************************************************
 
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
@@ -329,7 +331,7 @@ test("UT-13 – Test to ensure autocomplete works if there is one lender with a 
   expect(screen.getByText("Donkey Kong Bank")).toBeInTheDocument(); // ensure that this still renders even though a lender name is null
 });
 
-test("UT-13 – Test to ensure autocomplete works if there is one portfolio with a null name.", async () => {
+test("UT-14 – Test to ensure autocomplete works if there is one portfolio with a null name.", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("portfolioquery")) {
       return Promise.resolve({
