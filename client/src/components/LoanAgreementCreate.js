@@ -26,8 +26,8 @@ function LoanAgreementCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/borrowerquery`,
         );
         const data = fullInfoResponse.data;
-        const dataWithoutNull = data.filter(borrower => borrower.legal_name);
-        const sortedBorrowers = dataWithoutNull.sort((first,second) => {
+        const dataWithoutNull = data.filter((borrower) => borrower.legal_name);
+        const sortedBorrowers = dataWithoutNull.sort((first, second) => {
           return first.legal_name.localeCompare(second.legal_name);
         });
 
@@ -39,7 +39,6 @@ function LoanAgreementCreate() {
 
     getBorrowerData();
   }, []);
-
 
   // this useEffect gets the related borrower id number when the borrower
   // is selected.  The borrower is later sent back to the server
@@ -59,7 +58,6 @@ function LoanAgreementCreate() {
           loanAgreementName: loanAgreementTitle,
           borrowerId: selectedBorrowerId,
           loanAgreementDate: agreementDate,
-
         },
       );
       if (response.status === 201) {
@@ -93,8 +91,10 @@ function LoanAgreementCreate() {
             padding: 2,
           }}
         >
-          <div className="row-1-new-loan-agreement" style ={{display: "flex", gap: "50px"}}>
-
+          <div
+            className="row-1-new-loan-agreement"
+            style={{ display: "flex", gap: "50px" }}
+          >
             <Autocomplete
               disablePortal
               id="borrower-name"
@@ -109,7 +109,6 @@ function LoanAgreementCreate() {
               )}
             />
 
-
             <TextField
               required
               value={loanAgreementTitle}
@@ -118,22 +117,17 @@ function LoanAgreementCreate() {
               label="Loan Agreement Title"
               sx={{ m: 1, width: "60ch" }}
             />
-
           </div>
 
           <div className="row-2-new-loan-agreement">
-
-
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Loan Agreement Date"
                 required
                 sx={{ m: 1, width: "30ch", marginTop: 4 }}
                 value={agreementDate ? dayjs(agreementDate) : null} // This is needed if date is not yet a valid date or a crash occurs
                 onChange={(newDate) => {
-                  setAgreementDate(
-                    newDate ? newDate.format("YYYY-MM-DD") : "",
-                  ); // if there is anything in new date, set commitment date or else set it to blank
+                  setAgreementDate(newDate ? newDate.format("YYYY-MM-DD") : ""); // if there is anything in new date, set commitment date or else set it to blank
                 }}
                 slotProps={{
                   textField: {
@@ -142,9 +136,7 @@ function LoanAgreementCreate() {
                   },
                 }}
               />
-      
             </LocalizationProvider>
-           
           </div>
         </Box>
         <Box
@@ -155,47 +147,45 @@ function LoanAgreementCreate() {
             display: "flex",
           }}
         >
-          
+          <div>
+            <Button
+              variant="contained"
+              onClick={postLoanAgreement}
+              sx={{
+                marginLeft: "25px",
+                minWidth: "225px",
+                minHeight: "50px",
+                borderRadius: 2,
+                backgroundColor: "#F6AE2D",
+                color: "#000000",
+                textTransform: "none",
+                fontSize: "20px",
+              }}
+            >
+              Save
+            </Button>
 
-        <div>
-          <Button
-            variant="contained"
-            onClick={postLoanAgreement}
-            sx={{
-              marginLeft: "25px",
-              minWidth: "225px",
-              minHeight: "50px",
-              borderRadius: 2,
-              backgroundColor: "#F6AE2D",
-              color: "#000000",
-              textTransform: "none",
-              fontSize: "20px",
-            }}
-          >
-            Save
-          </Button>
+            <Button
+              variant="contained"
+              onClick={clearData}
+              sx={{
+                marginLeft: "25px",
+                minWidth: "225px",
+                minHeight: "50px",
+                borderRadius: 2,
+                backgroundColor: "#d4d4d4ff",
+                color: "#000000",
+                textTransform: "none",
+                fontSize: "20px",
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
 
-          <Button
-            variant="contained"
-            onClick={clearData}
-            sx={{
-              marginLeft: "25px",
-              minWidth: "225px",
-              minHeight: "50px",
-              borderRadius: 2,
-              backgroundColor: "#d4d4d4ff",
-              color: "#000000",
-              textTransform: "none",
-              fontSize: "20px",
-            }}
-          >
-            Cancel
-          </Button>
-        </div>
-
-        {/* Displays message below in a success or failure situation */}
-        {message && <div className="alertMessage">{message}</div>}
-      </Box>
+          {/* Displays message below in a success or failure situation */}
+          {message && <div className="alertMessage">{message}</div>}
+        </Box>
       </Box>
     </>
   );

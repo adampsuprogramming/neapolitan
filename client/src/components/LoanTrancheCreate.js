@@ -20,17 +20,17 @@ function LoanTrancheCreate() {
   const [selectedBorrower, setSelectedBorrower] = useState(null); // Holds the borrower's name
   const [selectedLoanAgreement, setSelectedLoanAgreement] = useState(null); // Holds Loan Agreement Name
   const [loanAgreementOptions, setLoanAgreementOptions] = useState([]); // Filtered loan agreement options based on borrower name
-  const [trancheType, setTrancheType] = useState (null); // Hold results for tranche type, as selected in autocomplete
-  const [lienType, setLienType] = useState (null); // Hold results for lien type, as selected in autocomplete
+  const [trancheType, setTrancheType] = useState(null); // Hold results for tranche type, as selected in autocomplete
+  const [lienType, setLienType] = useState(null); // Hold results for lien type, as selected in autocomplete
   const [ebitda, setEbitda] = useState(null); //After use enters EBTIDA (LTM), it is stored here
   const [leverageRatio, setLeverageRatio] = useState(null); //After use enters leverage ratio, it is stored here
   const [netLeverageRatio, setNetLeverageRatio] = useState(null); //After use enters net leverage ratio, it is stored here
   const [interestCoverage, setInterestCoverage] = useState(null); //After use enters net leverage ratio, it is stored here
-  const [rateType, setRateType] = useState (null); // Hold results for rate type, as selected in autocomplete
+  const [rateType, setRateType] = useState(null); // Hold results for rate type, as selected in autocomplete
   const [fixedRate, setFixedRate] = useState(null); //After use enters leverage ratio, it is stored here
   const [spread, setSpread] = useState(null); //After use enters spread, it is stored here
   const [floor, setFloor] = useState(null); //After use enters spread, it is stored here
-  const [refRate, setRefRate] = useState (null); // Hold results for reference rate, as selected in autocomplete
+  const [refRate, setRefRate] = useState(null); // Hold results for reference rate, as selected in autocomplete
   const [selectedAgreementId, setSelectedAgreementId] = useState(null); // After user chooses loan agreement, related ID is set here
   const [trancheStart, setTrancheStart] = useState(""); // After user chooses tranche start date, it is stored here
   const [trancheMaturity, setTrancheMaturity] = useState(""); // After user chooses tranche maturity date, it is stored here
@@ -60,8 +60,8 @@ function LoanTrancheCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/borrowerquery`,
         );
         const data = fullInfoResponse.data;
-        const dataWithoutNull = data.filter(borrower => borrower.legal_name);
-        const sortedBorrowers = dataWithoutNull.sort((first,second) => {
+        const dataWithoutNull = data.filter((borrower) => borrower.legal_name);
+        const sortedBorrowers = dataWithoutNull.sort((first, second) => {
           return first.legal_name.localeCompare(second.legal_name);
         });
 
@@ -81,7 +81,6 @@ function LoanTrancheCreate() {
     if (!selectedLoanAgreement) return;
     setSelectedAgreementId(selectedLoanAgreement.loan_agreement_id);
   }, [selectedLoanAgreement]);
-
 
   async function postFacility() {
     try {
@@ -141,13 +140,30 @@ function LoanTrancheCreate() {
       item.legal_name.includes(setValue.legal_name),
     );
     setLoanAgreementOptions(loanAgreements);
-  };  
+  };
 
   return (
     <>
-      <div className="loan-tranche-create" style ={{fontSize: "18px", fontWeight: "600", fontFamily: "Inter", paddingLeft: "150px"}}>Create Loan Tranche</div>
-      <Box component="form" sx={{ paddingLeft: "115px", paddingTop:"50px" }}>
-        <Box sx ={{fontSize: "16px", fontWeight: "600", fontFamily: "Inter", paddingLeft: "35px"}}>
+      <div
+        className="loan-tranche-create"
+        style={{
+          fontSize: "18px",
+          fontWeight: "600",
+          fontFamily: "Inter",
+          paddingLeft: "150px",
+        }}
+      >
+        Create Loan Tranche
+      </div>
+      <Box component="form" sx={{ paddingLeft: "115px", paddingTop: "50px" }}>
+        <Box
+          sx={{
+            fontSize: "16px",
+            fontWeight: "600",
+            fontFamily: "Inter",
+            paddingLeft: "35px",
+          }}
+        >
           Tranche Information
         </Box>
         <Box
@@ -157,12 +173,15 @@ function LoanTrancheCreate() {
             borderColor: "#c7c7c7ff",
             width: "150ch",
             marginTop: 1,
-            marginLeft:3,
-            marginBottom:3,
+            marginLeft: 3,
+            marginBottom: 3,
             padding: 2,
           }}
         >
-          <div className="row-1-tranche-information" style ={{display: "flex", gap: "50px"}}>
+          <div
+            className="row-1-tranche-information"
+            style={{ display: "flex", gap: "50px" }}
+          >
             <TextField
               required
               value={trancheName}
@@ -201,15 +220,17 @@ function LoanTrancheCreate() {
             />
           </div>
 
-          <div className="row-2-tranche-information" style ={{display: "flex", gap: "50px"}}>
-
+          <div
+            className="row-2-tranche-information"
+            style={{ display: "flex", gap: "50px" }}
+          >
             <Autocomplete
               disablePortal
               id="autocomplete-tranche-type"
               required
-              options={["Term", "Delayed Draw","Revolver"]}
+              options={["Term", "Delayed Draw", "Revolver"]}
               value={trancheType}
-              sx={{ m: 1, width: "350px", marginTop: 4}}
+              sx={{ m: 1, width: "350px", marginTop: 4 }}
               onChange={(event, newValue) => setTrancheType(newValue)}
               renderInput={(params) => (
                 <TextField {...params} label="Tranche Type" />
@@ -222,22 +243,19 @@ function LoanTrancheCreate() {
               required
               options={["First Lien", "Second Lien", "Unsecured"]}
               value={lienType}
-              sx={{ m: 1, width: "350px", marginTop: 4}}
+              sx={{ m: 1, width: "350px", marginTop: 4 }}
               onChange={(event, newValue) => setLienType(newValue)}
               renderInput={(params) => (
                 <TextField {...params} label="Lien Type" />
               )}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-
               <DatePicker
                 label="Tranche Start Date"
                 sx={{ m: 1, width: "35ch", marginTop: 4 }}
                 value={trancheStart ? dayjs(trancheStart) : null} //
                 onChange={(newDate) => {
-                  setTrancheStart(
-                    newDate ? newDate.format("YYYY-MM-DD") : "",
-                  ); 
+                  setTrancheStart(newDate ? newDate.format("YYYY-MM-DD") : "");
                 }}
                 slotProps={{
                   textField: {
@@ -245,7 +263,7 @@ function LoanTrancheCreate() {
                     helperText: "MM/DD/YYYY",
                   },
                 }}
-              /> 
+              />
               <DatePicker
                 label="Tranche Maturity Date"
                 sx={{ m: 1, width: "35ch", marginTop: 4 }}
@@ -253,32 +271,39 @@ function LoanTrancheCreate() {
                 onChange={(newDate) => {
                   setTrancheMaturity(
                     newDate ? newDate.format("YYYY-MM-DD") : "",
-                  ); 
+                  );
                 }}
                 slotProps={{
                   textField: {
-                    inputProps: { "data-testid": "tranche-maturity-date-picker" },
+                    inputProps: {
+                      "data-testid": "tranche-maturity-date-picker",
+                    },
                     helperText: "MM/DD/YYYY",
                   },
                 }}
-              />             
+              />
             </LocalizationProvider>
-
           </div>
         </Box>
-        <Box sx ={{fontSize: "16px", fontWeight: "600", fontFamily: "Inter", paddingLeft: "35px"}}>
+        <Box
+          sx={{
+            fontSize: "16px",
+            fontWeight: "600",
+            fontFamily: "Inter",
+            paddingLeft: "35px",
+          }}
+        >
           Loan Metric at Closing
         </Box>
         <Box
-        
           sx={{
             border: "1px solid",
             borderRadius: 4,
             borderColor: "#c7c7c7ff",
             width: "150ch",
             marginTop: 1,
-            marginLeft:3,
-            marginBottom:3,
+            marginLeft: 3,
+            marginBottom: 3,
             padding: 2,
             display: "flex",
           }}
@@ -286,7 +311,7 @@ function LoanTrancheCreate() {
           <NumericFormat
             customInput={TextField}
             id="ebitda-ltm-textfield"
-            sx={{ marginLeft: "1ch", marginTop: 1, marginBottom: 1}}
+            sx={{ marginLeft: "1ch", marginTop: 1, marginBottom: 1 }}
             value={ebitda}
             onValueChange={(value) => setEbitda(value.floatValue)}
             label="EBITDA (LTM)"
@@ -328,9 +353,15 @@ function LoanTrancheCreate() {
             decimalScale={6}
             fixedDecimalScale
           />
-
         </Box>
-                <Box sx ={{fontSize: "16px", fontWeight: "600", fontFamily: "Inter", paddingLeft: "35px"}}>
+        <Box
+          sx={{
+            fontSize: "16px",
+            fontWeight: "600",
+            fontFamily: "Inter",
+            paddingLeft: "35px",
+          }}
+        >
           Rate Info at Closing
         </Box>
         <Box
@@ -340,74 +371,73 @@ function LoanTrancheCreate() {
             borderColor: "#c7c7c7ff",
             width: "150ch",
             marginTop: 1,
-            marginLeft:3,
+            marginLeft: 3,
             padding: 2,
             display: "flex",
           }}
         >
           <Autocomplete
-              disablePortal
-              id="autocomplete-rate-type"
-              required
-              options={["Fixed Rate", "Floating Rate"]}
-              value={rateType}
-              sx={{ m: 1, width: "200px", marginTop: 1}}
-              onChange={(event, newValue) => setRateType(newValue)}
-              renderInput={(params) => (
-                <TextField {...params} label="Rate Type" />
-              )}
-            />
-            <NumericFormat
-              customInput={TextField}
-              id="fixed-rate-textfield"
-              sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
-              value={fixedRate}
-              onValueChange={(value) => setFixedRate(value.floatValue)}
-              label="Fixed Rate"
-              thousandSeparator=","
-              decimalScale={6}
-              suffix="%"
-              fixedDecimalScale
-            />
-            <NumericFormat
-              customInput={TextField}
-              id="spread-textfield"
-              sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
-              value={spread}
-              onValueChange={(value) => setSpread(value.floatValue)}
-              label="Spread"
-              thousandSeparator=","
-              decimalScale={6}
-              suffix="%"
-              fixedDecimalScale
-            />
-            <NumericFormat
-              customInput={TextField}
-              id="floor-textfield"
-              sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9}}
-              value={floor}
-              onValueChange={(value) => setFloor(value.floatValue)}
-              label="Floor"
-              thousandSeparator=","
-              decimalScale={6}
-              suffix="%"
-              fixedDecimalScale
-            />
+            disablePortal
+            id="autocomplete-rate-type"
+            required
+            options={["Fixed Rate", "Floating Rate"]}
+            value={rateType}
+            sx={{ m: 1, width: "200px", marginTop: 1 }}
+            onChange={(event, newValue) => setRateType(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} label="Rate Type" />
+            )}
+          />
+          <NumericFormat
+            customInput={TextField}
+            id="fixed-rate-textfield"
+            sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
+            value={fixedRate}
+            onValueChange={(value) => setFixedRate(value.floatValue)}
+            label="Fixed Rate"
+            thousandSeparator=","
+            decimalScale={6}
+            suffix="%"
+            fixedDecimalScale
+          />
+          <NumericFormat
+            customInput={TextField}
+            id="spread-textfield"
+            sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
+            value={spread}
+            onValueChange={(value) => setSpread(value.floatValue)}
+            label="Spread"
+            thousandSeparator=","
+            decimalScale={6}
+            suffix="%"
+            fixedDecimalScale
+          />
+          <NumericFormat
+            customInput={TextField}
+            id="floor-textfield"
+            sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
+            value={floor}
+            onValueChange={(value) => setFloor(value.floatValue)}
+            label="Floor"
+            thousandSeparator=","
+            decimalScale={6}
+            suffix="%"
+            fixedDecimalScale
+          />
           <Autocomplete
-              disablePortal
-              id="autocomplete-ref-rate-type"
-              required
-              options={["LIBOR", "PRIME"]}
-              value={refRate}
-              sx={{ m: 1, width: "200px", marginTop: 1, marginLeft: 9}}
-              onChange={(event, newValue) => setRefRate(newValue)}
-              renderInput={(params) => (
-                <TextField {...params} label="Reference Rate" />
-              )}
-            />
-
+            disablePortal
+            id="autocomplete-ref-rate-type"
+            required
+            options={["LIBOR", "PRIME"]}
+            value={refRate}
+            sx={{ m: 1, width: "200px", marginTop: 1, marginLeft: 9 }}
+            onChange={(event, newValue) => setRefRate(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} label="Reference Rate" />
+            )}
+          />
         </Box>
-        <div style={{marginTop: "40px"}}>
+        <div style={{ marginTop: "40px" }}>
           <Button
             variant="contained"
             onClick={postFacility}

@@ -23,6 +23,4 @@ router.get("/api/borrowerquery", async (req, res) => {
   }
 });
 
-
-
 module.exports = router;

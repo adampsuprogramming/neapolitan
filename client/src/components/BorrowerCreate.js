@@ -16,7 +16,8 @@ function BorrowerCreate() {
   const [selectedRevId, setSelectedRevId] = useState(null); // What is primary key for revenue region
   const [naicsSubSectorData, setNaicsSubSectorData] = useState([]); // Hold subsector data from API call
   const [selectedNaicsSubsector, setSelectedNaicsSubsector] = useState(null); // Which subsector was selected?
-  const [selectedNaicsSubsectorId, setSelectedNaicsSubsectorId] = useState(null); // What is primary key for subsector?
+  const [selectedNaicsSubsectorId, setSelectedNaicsSubsectorId] =
+    useState(null); // What is primary key for subsector?
   const [legalName, setLegalName] = useState(""); // After user enters borrower legal name, it is set here via an onChange
   const [shortName, setShortName] = useState(""); // After user enters borrower nick name, it is set here via an onChange
   const [isPublicBorrower, setIsPublicBorrower] = useState(false); // Sets based on user interaction with toggle switch

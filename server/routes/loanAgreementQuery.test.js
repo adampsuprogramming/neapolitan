@@ -27,14 +27,14 @@ describe("GET /api/loanagreementquery", () => {
           borrower_id: 501,
           loan_agreement_date: "2024-01-31",
           loan_agreement_name: "Loan Agreement Name 1",
-          legal_name: "Borrower ABC"
+          legal_name: "Borrower ABC",
         },
         {
           loan_agreement_id: 102,
           borrower_id: 501,
           loan_agreement_date: "2025-02-28",
           loan_agreement_name: "Loan Agreement Name 2",
-          legal_name: "Borrower DEF"
+          legal_name: "Borrower DEF",
         },
       ],
     });
@@ -42,20 +42,20 @@ describe("GET /api/loanagreementquery", () => {
     const response = await request(app).get("/api/loanagreementquery").query();
 
     expect(response.body).toEqual([
-        {
-          loan_agreement_id: 101,
-          borrower_id: 501,
-          loan_agreement_date: "2024-01-31",
-          loan_agreement_name: "Loan Agreement Name 1",
-          legal_name: "Borrower ABC"
-        },
-        {
-          loan_agreement_id: 102,
-          borrower_id: 501,
-          loan_agreement_date: "2025-02-28",
-          loan_agreement_name: "Loan Agreement Name 2",
-          legal_name: "Borrower DEF"
-        },
+      {
+        loan_agreement_id: 101,
+        borrower_id: 501,
+        loan_agreement_date: "2024-01-31",
+        loan_agreement_name: "Loan Agreement Name 1",
+        legal_name: "Borrower ABC",
+      },
+      {
+        loan_agreement_id: 102,
+        borrower_id: 501,
+        loan_agreement_date: "2025-02-28",
+        loan_agreement_name: "Loan Agreement Name 2",
+        legal_name: "Borrower DEF",
+      },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(

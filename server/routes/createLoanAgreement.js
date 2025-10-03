@@ -8,19 +8,13 @@ values ($1,$2,$3)
 `;
 
 router.post("/api/createloanagreement", async (req, res) => {
-  const {
-    loanAgreementName,
-    borrowerId,
-    loanAgreementDate,
-    
-  } = req.body;
+  const { loanAgreementName, borrowerId, loanAgreementDate } = req.body;
 
   try {
     result = await pool.query(createAgreementSQL, [
       loanAgreementName,
       borrowerId,
       loanAgreementDate,
-    
     ]);
     res.sendStatus(201);
   } catch (err) {

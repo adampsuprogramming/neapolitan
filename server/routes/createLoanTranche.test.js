@@ -1,7 +1,11 @@
-// ************************************************************************
-// * UT-6– Determine that Node Receives Debt Facility Data and Sends out  *
-// * Correct SQL Inserts                                                  *
-// ************************************************************************
+// *********************************************************************************************************
+// * UT-30 – Determine that Node Receives Loan Tranche Creation Data (Floating, with Floor) and Sends out  *
+// * Correct SQL Inserts                                                                                   *
+// * UT-31 – Determine that Node Receives Loan Tranche Creation Data (Floating, without Floor) and Sends   *
+// * out Correct SQL Inserts                                                                               *
+// * UT-32 – Determine that Node Receives Loan Tranche Creation Data (Fixed) and Send sout Correct SQL     *
+// * Inserts                                                                                               *
+// *********************************************************************************************************
 
 // This mock must come before the import of object
 jest.mock("../db");
@@ -14,32 +18,39 @@ require("../db").query = mockedQuery;
 
 const pool = require("../db");
 pool.end = jest.fn();
+beforeEach(() => {
+  mockedQuery.mockClear();
+});
 
 afterAll(async () => {
   await pool.end();
 });
 
-describe("POST /api/createdebtfacility", () => {
-  it("accepts data from a mocked api put and then runs an insert query on the database", async () => {
-    mockedQuery
-      .mockResolvedValueOnce({ rows: [{ debt_facility_id: 444 }] }) //first insert sends back debt facility primary key
-      .mockResolvedValueOnce({}); // second returns nothing (like the query actual query)
+// UT-30
 
-    const response = await request(app).post("/api/createdebtfacility").send({
-      debtFacilityName: "Mario Kart Facility",
-      portfolioId: "2",
-      lenderId: "102",
-      startDate: "2025-01-02",
-      endDate: "2030-01-02",
-      overAllCommitmentAmount: 100000000,
-      isOverallRate: true,
-      overallRate: 0.65,
-      isAssetByAssetAdvance: true,
-      firstLienRate: 0.7,
-      secondLienRate: 0.45,
-      mezzRate: 0.3,
-      isMinEquity: true,
-      minEquityAmount: 5000000,
+(describe("POST /api/createloantranche", () => {
+  it("accepts data from a mocked api put for a floating rate loan with a floor and then runs an insert query on the database", async () => {
+    mockedQuery
+      .mockResolvedValueOnce({ rows: [{ tranche_id: 111 }] }) //first insert sends back debt facility primary key
+      .mockResolvedValueOnce({}) // second returns nothing (like the query actual query)
+      .mockResolvedValueOnce({}); // third returns nothing (like the query actual query)
+
+    const response = await request(app).post("/api/createloantranche").send({
+      loanTrancheName: "Fortnite Loan Tranche",
+      loanAgreementId: "101",
+      trancheType: "Term",
+      lienType: "First Lien",
+      trancheStart: "2025-10-31",
+      trancheMaturity: "2030-10-31",
+      ebitda: 15000000,
+      leverageRatio: 5.4,
+      netLeverageRatio: 5.32,
+      interestCoverage: 1.5,
+      rateType: "Floating Rate",
+      fixedRate: null,
+      spread: 2.25,
+      floor: 1.5,
+      refRate: "LIBOR",
     });
 
     expect(response.status).toBe(201);
@@ -48,53 +59,174 @@ describe("POST /api/createdebtfacility", () => {
       1,
 
       `
-insert into debt_facilities (debt_facility_name, lender_id, portfolio_id)
-values ($1,$2,$3)
-returning debt_facility_id
+insert into loan_tranches (loan_agreement_id, tranche_type, lien_type, start_date, maturity_date, tranche_name)
+values ($1,$2,$3,$4,$5,$6)
+returning tranche_id
 `,
-      ["Mario Kart Facility", "102", "2"],
+      [
+        "101",
+        "Term",
+        "First Lien",
+        "2025-10-31",
+        "2030-10-31",
+        "Fortnite Loan Tranche",
+      ],
     );
 
     expect(mockedQuery).toHaveBeenNthCalledWith(
       2,
 
       `
-insert into debt_facility_options 
-(debt_facility_id, 
-start_date, 
-end_date, 
-overall_commitment_amount, 
-is_overall_rate, 
-overall_rate, 
-is_asset_by_asset_advance, 
-is_first_lien_advance_rate, 
-first_lien_advance_rate, 
-is_second_lien_advance_rate, 
-second_lien_advance_rate, 
-is_mezzanine_advance_rate, 
-mezzanine_advance_rate, 
-is_minimum_equity, 
-minimum_equity_amount)
-values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15);
-
+insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda)
+values ($1,$2,$3,$4,$5,$6)
 `,
-      [
-        444,
-        "2025-01-02",
-        "2030-01-02",
-        100000000,
-        true,
-        0.65,
-        true,
-        true,
-        0.7,
-        true,
-        0.45,
-        true,
-        0.3,
-        true,
-        5000000,
-      ],
+      [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000],
+    );
+
+    expect(mockedQuery).toHaveBeenNthCalledWith(
+      3,
+
+      `
+insert into rate_data (tranche_id, is_fixed, start_date, fixed_rate, spread, floor, has_floor, reference_rate)
+values ($1,$2,$3,$4,$5,$6,$7,$8)
+`,
+      [111, false, "2025-10-31", null, 2.25, 1.5, true, "LIBOR"],
     );
   });
-});
+}),
+  // UT-31
+
+  describe("POST /api/createloantranche", () => {
+    it("accepts data from a mocked api put for a floating rate loan without a floor and then runs an insert query on the database", async () => {
+      mockedQuery
+        .mockResolvedValueOnce({ rows: [{ tranche_id: 111 }] }) //first insert sends back debt facility primary key
+        .mockResolvedValueOnce({}) // second returns nothing (like the query actual query)
+        .mockResolvedValueOnce({}); // third returns nothing (like the query actual query)
+
+      const response = await request(app).post("/api/createloantranche").send({
+        loanTrancheName: "Fortnite Loan Tranche",
+        loanAgreementId: "101",
+        trancheType: "Term",
+        lienType: "First Lien",
+        trancheStart: "2025-10-31",
+        trancheMaturity: "2030-10-31",
+        ebitda: 15000000,
+        leverageRatio: 5.4,
+        netLeverageRatio: 5.32,
+        interestCoverage: 1.5,
+        rateType: "Floating Rate",
+        fixedRate: null,
+        spread: 2.25,
+        floor: null,
+        refRate: "LIBOR",
+      });
+
+      expect(response.status).toBe(201);
+
+      expect(mockedQuery).toHaveBeenNthCalledWith(
+        1,
+
+        `
+insert into loan_tranches (loan_agreement_id, tranche_type, lien_type, start_date, maturity_date, tranche_name)
+values ($1,$2,$3,$4,$5,$6)
+returning tranche_id
+`,
+        [
+          "101",
+          "Term",
+          "First Lien",
+          "2025-10-31",
+          "2030-10-31",
+          "Fortnite Loan Tranche",
+        ],
+      );
+
+      expect(mockedQuery).toHaveBeenNthCalledWith(
+        2,
+
+        `
+insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda)
+values ($1,$2,$3,$4,$5,$6)
+`,
+        [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000],
+      );
+
+      expect(mockedQuery).toHaveBeenNthCalledWith(
+        3,
+
+        `
+insert into rate_data (tranche_id, is_fixed, start_date, fixed_rate, spread, floor, has_floor, reference_rate)
+values ($1,$2,$3,$4,$5,$6,$7,$8)
+`,
+        [111, false, "2025-10-31", null, 2.25, null, false, "LIBOR"],
+      );
+    });
+  }),
+  // UT-32
+
+  describe("POST /api/createloantranche", () => {
+    it("accepts data from a mocked api put for a fixed rate loan and then runs an insert query on the database", async () => {
+      mockedQuery
+        .mockResolvedValueOnce({ rows: [{ tranche_id: 111 }] }) //first insert sends back debt facility primary key
+        .mockResolvedValueOnce({}) // second returns nothing (like the query actual query)
+        .mockResolvedValueOnce({}); // third returns nothing (like the query actual query)
+
+      const response = await request(app).post("/api/createloantranche").send({
+        loanTrancheName: "Fortnite Loan Tranche",
+        loanAgreementId: "101",
+        trancheType: "Term",
+        lienType: "First Lien",
+        trancheStart: "2025-10-31",
+        trancheMaturity: "2030-10-31",
+        ebitda: 15000000,
+        leverageRatio: 5.4,
+        netLeverageRatio: 5.32,
+        interestCoverage: 1.5,
+        rateType: "Fixed Rate",
+        fixedRate: 10.25,
+        spread: null,
+        floor: null,
+        refRate: null,
+      });
+
+      expect(response.status).toBe(201);
+
+      expect(mockedQuery).toHaveBeenNthCalledWith(
+        1,
+
+        `
+insert into loan_tranches (loan_agreement_id, tranche_type, lien_type, start_date, maturity_date, tranche_name)
+values ($1,$2,$3,$4,$5,$6)
+returning tranche_id
+`,
+        [
+          "101",
+          "Term",
+          "First Lien",
+          "2025-10-31",
+          "2030-10-31",
+          "Fortnite Loan Tranche",
+        ],
+      );
+
+      expect(mockedQuery).toHaveBeenNthCalledWith(
+        2,
+
+        `
+insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda)
+values ($1,$2,$3,$4,$5,$6)
+`,
+        [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000],
+      );
+
+      expect(mockedQuery).toHaveBeenNthCalledWith(
+        3,
+
+        `
+insert into rate_data (tranche_id, is_fixed, start_date, fixed_rate, spread, floor, has_floor, reference_rate)
+values ($1,$2,$3,$4,$5,$6,$7,$8)
+`,
+        [111, true, "2025-10-31", 10.25, null, null, false, null],
+      );
+    });
+  }));

@@ -35,14 +35,14 @@ describe("GET /api/borrowerquery", () => {
     const response = await request(app).get("/api/borrowerquery").query();
 
     expect(response.body).toEqual([
-        {
-          legal_name: "The Mario Company",
-          borrower_id: 998,
-        },
-        {
-          legal_name: "The Yoshi Corporation",
-          borrower_id: 999,
-        },
+      {
+        legal_name: "The Mario Company",
+        borrower_id: 998,
+      },
+      {
+        legal_name: "The Yoshi Corporation",
+        borrower_id: 999,
+      },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(

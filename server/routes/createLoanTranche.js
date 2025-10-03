@@ -19,7 +19,7 @@ values ($1,$2,$3,$4,$5,$6,$7,$8)
 `;
 
 router.post("/api/createloantranche", async (req, res) => {
-    console.log("PING");
+  console.log("PING");
   const {
     loanTrancheName,
     loanAgreementId,
@@ -35,7 +35,7 @@ router.post("/api/createloantranche", async (req, res) => {
     fixedRate,
     spread,
     floor,
-    refRate
+    refRate,
   } = req.body;
 
   try {

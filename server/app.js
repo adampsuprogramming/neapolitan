@@ -65,5 +65,4 @@ app.use(createLoanAgreementRoutes);
 app.use(loanAgreementQueryRoutes);
 app.use(createLoanTrancheRoutes);
 
-
 module.exports = app;

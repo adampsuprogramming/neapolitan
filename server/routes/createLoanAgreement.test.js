@@ -20,13 +20,12 @@ afterAll(async () => {
 
 describe("POST /api/createloanagreement", () => {
   it("accepts loan agreement data from a mocked api put and then runs an insert query on the loan_agreements table of the database", async () => {
-    mockedQuery
-      .mockResolvedValueOnce({}) 
-      
+    mockedQuery.mockResolvedValueOnce({});
+
     const response = await request(app).post("/api/createloanagreement").send({
-          loanAgreementName: "The Luigi's Mansion Term Loan A Agreement",
-          borrowerId: 998,
-          loanAgreementDate: "2025-05-04",
+      loanAgreementName: "The Luigi's Mansion Term Loan A Agreement",
+      borrowerId: 998,
+      loanAgreementDate: "2025-05-04",
     });
 
     expect(response.status).toBe(201);
@@ -36,9 +35,7 @@ describe("POST /api/createloanagreement", () => {
 insert into loan_agreements (loan_agreement_name, borrower_id, loan_agreement_date)
 values ($1,$2,$3)
 `,
-      ["The Luigi's Mansion Term Loan A Agreement",998,"2025-05-04"],
+      ["The Luigi's Mansion Term Loan A Agreement", 998, "2025-05-04"],
     );
-
-
   });
 });

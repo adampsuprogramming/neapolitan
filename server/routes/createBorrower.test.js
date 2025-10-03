@@ -20,9 +20,8 @@ afterAll(async () => {
 
 describe("POST /api/createborrower", () => {
   it("accepts borrower data from a mocked api put and then runs an insert query on the borrower table of the database", async () => {
-    mockedQuery
-      .mockResolvedValueOnce({}) 
-      
+    mockedQuery.mockResolvedValueOnce({});
+
     const response = await request(app).post("/api/createborrower").send({
       legalName: "The Uncharted Company",
       shortName: "Uncharted Co.",
@@ -42,7 +41,5 @@ values ($1,$2,$3,$4,$5,$6,$7)
 `,
       ["The Uncharted Company", "Uncharted Co.", 123, 456, 111, true, "ABC"],
     );
-
-
   });
 });

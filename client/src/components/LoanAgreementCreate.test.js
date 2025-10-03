@@ -54,12 +54,9 @@ test("UT-26 – Populating borrower dropdown from API call -- /api/borrowerquery
   fireEvent.mouseDown(borrowerName);
 
   expect(screen.getByText("Megaman Company")).toBeInTheDocument();
-
 });
 
-
 test("UT-27 - Testing PUT API Call to createloanagreement after filling out form", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
       return Promise.resolve({
@@ -102,7 +99,9 @@ test("UT-27 - Testing PUT API Call to createloanagreement after filling out form
   fireEvent.change(loanAgreementInput, {
     target: { value: "The Megaman Company Term Loan Agreement" },
   });
-  expect(loanAgreementInput.value).toBe("The Megaman Company Term Loan Agreement");
+  expect(loanAgreementInput.value).toBe(
+    "The Megaman Company Term Loan Agreement",
+  );
 
   const loanAgreementDate = screen.getByLabelText("Loan Agreement Date", {
     selector: "input",
@@ -121,9 +120,9 @@ test("UT-27 - Testing PUT API Call to createloanagreement after filling out form
     expect(axios.post).toHaveBeenCalledWith(
       expect.stringContaining("createloanagreement"),
       expect.objectContaining({
-          loanAgreementName: "The Megaman Company Term Loan Agreement",
-          borrowerId: "801",
-          loanAgreementDate: "2025-10-31",
+        loanAgreementName: "The Megaman Company Term Loan Agreement",
+        borrowerId: "801",
+        loanAgreementDate: "2025-10-31",
       }),
     );
   });
@@ -137,7 +136,6 @@ test("UT-27 - Testing PUT API Call to createloanagreement after filling out form
 });
 
 test("UT-28 – Populating search options from API call -- Borrower Name but with some null data", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
       return Promise.resolve({
@@ -172,5 +170,4 @@ test("UT-28 – Populating search options from API call -- Borrower Name but wit
   fireEvent.mouseDown(borrowerName);
 
   expect(screen.getByText("Megaman Company")).toBeInTheDocument();
-
 });

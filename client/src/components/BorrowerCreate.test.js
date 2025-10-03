@@ -22,7 +22,6 @@ beforeEach(() => {
 });
 
 test("UT-18 – Populating search options from API call -- selectedCorpHQId", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
@@ -59,12 +58,9 @@ test("UT-18 – Populating search options from API call -- selectedCorpHQId", as
   fireEvent.mouseDown(corpHQ);
 
   expect(screen.getByText("Middle Earth")).toBeInTheDocument();
-
 });
 
-
 test("UT-19 – Populating search options from API call -- selectedRevRegion", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
@@ -104,7 +100,6 @@ test("UT-19 – Populating search options from API call -- selectedRevRegion", a
 });
 
 test("UT-20 – Populating search options from API call -- NAICS subsector", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("subsectorquery")) {
       return Promise.resolve({
@@ -144,7 +139,6 @@ test("UT-20 – Populating search options from API call -- NAICS subsector", asy
 });
 
 test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
@@ -222,7 +216,9 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
   expect(corpHqAutocomplete.value).toBe("Labyrinth");
 
   // Find autocomplete box for Primary Geography (Revenue) and Select
-  const primaryGeoRevAutocomplete = screen.getByLabelText("Primary Geography (Revenue)");
+  const primaryGeoRevAutocomplete = screen.getByLabelText(
+    "Primary Geography (Revenue)",
+  );
   fireEvent.mouseDown(primaryGeoRevAutocomplete);
   fireEvent.click(screen.getByText("Middle Earth"));
   expect(primaryGeoRevAutocomplete.value).toBe("Middle Earth");
@@ -245,7 +241,6 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
   });
   expect(tickerSymbolInput.value).toBe("ABC");
 
-
   // mock axios post so that the output can be tested upon a save
   axios.post.mockResolvedValueOnce({ status: 201 });
 
@@ -257,13 +252,13 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
     expect(axios.post).toHaveBeenCalledWith(
       expect.stringContaining("createborrower"),
       expect.objectContaining({
-          legalName: "The BioShock Company",
-          shortName: "BioShock Co.",
-          corporateHqId: "21",
-          revenueGeographyId: "22",
-          naicsSubsectorId: "222",
-          isPublic: true,
-          tickerSymbol: "ABC",
+        legalName: "The BioShock Company",
+        shortName: "BioShock Co.",
+        corporateHqId: "21",
+        revenueGeographyId: "22",
+        naicsSubsectorId: "222",
+        isPublic: true,
+        tickerSymbol: "ABC",
       }),
     );
   });
@@ -281,7 +276,6 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
 });
 
 test("UT-22 – Populating search options from API call -- NAICS subsector but with some null data", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("subsectorquery")) {
       return Promise.resolve({
@@ -291,7 +285,6 @@ test("UT-22 – Populating search options from API call -- NAICS subsector but w
           },
           {
             naics_subsector_name: "Croissant Making",
-            
           },
           {
             naics_subsector_name: "Improv Comedy",
@@ -320,7 +313,6 @@ test("UT-22 – Populating search options from API call -- NAICS subsector but w
 });
 
 test("UT-23 – Populating search options from API call -- selectedCorpHQId -- but with some null data", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
@@ -330,7 +322,6 @@ test("UT-23 – Populating search options from API call -- selectedCorpHQId -- b
           },
           {
             region_name: "Narnia",
-            
           },
           {
             region_name: "Middle Earth",
@@ -356,12 +347,9 @@ test("UT-23 – Populating search options from API call -- selectedCorpHQId -- b
   fireEvent.mouseDown(corpHQ);
 
   expect(screen.getByText("Middle Earth")).toBeInTheDocument();
-
 });
 
-
 test("UT-24 – Populating search options from API call -- selectedRevRegion --- but with some null data", async () => {
-
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
