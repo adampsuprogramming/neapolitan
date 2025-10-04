@@ -25,6 +25,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test --watchAll=false --coverage",
+    "test-no-coverage": "craco test --watchAll=false",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"

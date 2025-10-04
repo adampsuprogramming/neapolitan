@@ -201,3 +201,180 @@
 .ag-theme-alpine .ag-header-cell-label {
   color: #ffffff !important;
 }
+
+.transactions-nav {
+  font-family: "Inter", sans-serif;
+  background-color: #86bbdb;
+  display: flex;
+  gap: 90px;
+  padding: 10px;
+  padding-left: 295px;
+}
+
+.transactions-nav a:link,
+.transactions-nav a:visited,
+.transactions-nav a:hover,
+.transactions-nav a:active {
+  color: #000000;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.transactions-nav a.transactions-nav-highlighted {
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.borrower-transactions-sub-nav {
+  font-family: "Inter", sans-serif;
+  background-color: #f6ae2d;
+  display: flex;
+  gap: 22px;
+  left: 240px;
+  position: relative;
+  top: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  max-width: 175px;
+  border-radius: 20px;
+}
+
+.borrower-transactions-sub-nav a:link,
+.borrower-transactions-sub-nav a:visited,
+.borrower-transactions-sub-nav a:hover,
+.borrower-transactions-sub-nav a:active {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.borrower-transactions-sub-nav a.borrower-transactions-sub-nav-highlighted {
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.loan-agreement-sub-nav {
+  font-family: "Inter", sans-serif;
+  background-color: #f6ae2d;
+  display: flex;
+  gap: 22px;
+  left: 402px;
+  position: relative;
+  top: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  max-width: 175px;
+  border-radius: 20px;
+}
+
+.loan-agreement-sub-nav a:link,
+.loan-agreement-sub-nav a:visited,
+.loan-agreement-sub-nav a:hover,
+.loan-agreement-sub-nav a:active {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.loan-agreement-sub-nav a.loan-agreement-sub-nav-highlighted {
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.loan-tranche-sub-nav {
+  font-family: "Inter", sans-serif;
+  background-color: #f6ae2d;
+  display: flex;
+  gap: 22px;
+  left: 608px;
+  position: relative;
+  top: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  max-width: 175px;
+  border-radius: 20px;
+}
+
+.loan-tranche-sub-nav a:link,
+.loan-tranche-sub-nav a:visited,
+.loan-tranche-sub-nav a:hover,
+.loan-tranche-sub-nav a:active {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.loan-tranche-sub-nav a.loan-tranche-sub-nav-highlighted {
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.collateral-transactions-sub-nav {
+  font-family: "Inter", sans-serif;
+  background-color: #f6ae2d;
+  display: flex;
+  gap: 22px;
+  left: 840px;
+  position: relative;
+  top: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  max-width: 120px;
+  border-radius: 20px;
+}
+
+.collateral-transactions-sub-nav a:link,
+.collateral-transactions-sub-nav a:visited,
+.collateral-transactions-sub-nav a:hover,
+.collateral-transactions-sub-nav a:active {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.collateral-transactions-sub-nav a.collateral-transactions-sub-nav-highlighted {
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.borrower-create {
+  padding-top: 40px;
+  padding-left: 150px;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+}

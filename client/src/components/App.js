@@ -15,6 +15,21 @@ import DebtFacilityDelete from "./DebtFacilityDelete";
 import BorrowBaseLineItemView from "./BorrowBaseLineItemView";
 import BorrowBaseCovenantView from "./BorrowBaseCovenantView";
 import BorrowBaseCalcView from "./BorrowBaseCalcView";
+import BorrowerCreate from "./BorrowerCreate";
+import BorrowerDelete from "./BorrowerDelete";
+import BorrowerModify from "./BorrowerModify";
+import BorrowerTransactions from "./BorrowerTransactions";
+import CollateralPledgeTransactions from "./CollateralPledgeTransactions";
+import CollateralPledgeAdd from "./CollateralPledgeAdd";
+import CollateralPledgeRemove from "./CollateralPledgeRemove";
+import LoanAgreementTransactions from "./LoanAgreementTransactions";
+import LoanAgreementCreate from "./LoanAgreementCreate";
+import LoanAgreementModify from "./LoanAgreeementModify";
+import LoanAgreementDelete from "./LoanAgreementDelete";
+import LoanTrancheTransactions from "./LoanTrancheTransactions";
+import LoanTrancheCreate from "./LoanTrancheCreate";
+import LoanTrancheModify from "./LoanTrancheModify";
+import LoanTrancheDelete from "./LoanTrancheDelete";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 
@@ -36,7 +51,55 @@ function App() {
             />
             <Route path="borrowbasecalcview" element={<BorrowBaseCalcView />} />
           </Route>
-          <Route path="/transactions/*" element={<Transactions />} />
+          <Route path="/transactions/*" element={<Transactions />}>
+            <Route
+              path="borrowertransactions/*"
+              element={<BorrowerTransactions />}
+            >
+              <Route path="borrowercreate" element={<BorrowerCreate />} />
+              <Route path="borrowermodify" element={<BorrowerModify />} />
+              <Route path="borrowerdelete" element={<BorrowerDelete />} />
+            </Route>
+            <Route
+              path="loanagreementtransactions/*"
+              element={<LoanAgreementTransactions />}
+            >
+              <Route
+                path="loanagreementcreate"
+                element={<LoanAgreementCreate />}
+              />
+              <Route
+                path="loanagreementmodify"
+                element={<LoanAgreementModify />}
+              />
+              <Route
+                path="loanagreementdelete"
+                element={<LoanAgreementDelete />}
+              />
+            </Route>
+            <Route
+              path="loantranchetransactions/*"
+              element={<LoanTrancheTransactions />}
+            >
+              <Route path="loantranchecreate" element={<LoanTrancheCreate />} />
+              <Route path="loantranchemodify" element={<LoanTrancheModify />} />
+              <Route path="loantranchedelete" element={<LoanTrancheDelete />} />
+            </Route>
+            <Route
+              path="collateralpledgetransactions/*"
+              element={<CollateralPledgeTransactions />}
+            >
+              <Route
+                path="collateralpledgeadd"
+                element={<CollateralPledgeAdd />}
+              />
+              <Route
+                path="collateralpledgeremove"
+                element={<CollateralPledgeRemove />}
+              />
+            </Route>
+          </Route>
+
           <Route path="/performance/*" element={<Performance />} />
           <Route path="/reporting/*" element={<Reporting />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
