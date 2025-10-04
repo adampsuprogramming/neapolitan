@@ -1,5 +1,5 @@
 // ************************************************************************
-// *       UT-25 – Testing /api/borrowerquery endpoint’s functionality    *
+// *       UT-39 – Testing /api/borrowerquery endpoint’s functionality    *
 // ************************************************************************
 
 jest.mock("../db");

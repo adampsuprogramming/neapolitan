@@ -1,11 +1,11 @@
-// *************************************************************************************************************************************************
-// *     UT-33 – Populating search options for Borrower Name from API call                                                                         *
-// *     UT-34 – Populating search options for Loan Agreement from API call                                                                        *
-// *     UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rate)                                                              *
-// *     UT-36 - Test to ensure autocomplete works if there is a borrower with a null name and a borrower a null borrower_id                       *
-// *     UT-37 - Test to ensure autocomplete works if there is one loan agreement with a null name and a loan agreement with a null portfolio_id.  *
-// *     UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)                                                                 *
-// *************************************************************************************************************************************************
+// ******************************************************************************************************************************************************
+// *     UT-33 – Populating search options for Borrower Name from API call                                                                              *
+// *     UT-34 – Populating search options for Loan Agreement from API call                                                                             *
+// *     UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rate)                                                                   *
+// *     UT-36 - Test to ensure autocomplete works if there is a borrower with a null name and a borrower a null borrower_id                            *
+// *     UT-37 - Test to ensure autocomplete works if there is one loan agreement with a null name and a loan agreement with a null loan_agreement_id.  *
+// *     UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)                                                                      *
+// ******************************************************************************************************************************************************
 
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
@@ -394,7 +394,7 @@ test("UT-36 – Test to ensure autocomplete works if there is a borrower with a 
   expect(screen.getByText("The Link Company")).toBeInTheDocument();
 });
 
-test("UT-37 – Test to ensure autocomplete works if there is one loan agreement with a null name and a loan agreement with a null portfolio_id.", async () => {
+test("UT-37 – Test to ensure autocomplete works if there is one loan agreement with a null name and a loan agreement with a null loan_agreement_id.", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
       return Promise.resolve({

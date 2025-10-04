@@ -1,5 +1,5 @@
 // ************************************************************************************************
-// *     UT-26 – Populating borrowers from API call - /api/borowerquery                           *
+// *     UT-26 – Populating borrowers from API call - /api/borrowerquery                           *
 // *     UT-27 - Testing PUT API Call to createloanagreement after filling out form               *
 // *     UT-28 – Populating search options from API call -- Borrower Name but with some null data *
 // ************************************************************************************************

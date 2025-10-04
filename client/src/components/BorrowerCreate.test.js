@@ -275,7 +275,7 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
   expect(tickerSymbolInput.value).toBe("");
 });
 
-test("UT-22 – Populating search options from API call -- NAICS subsector but with some null data", async () => {
+test("UT-22 – Populating search options from API call for NAICS subsector but with some null data", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("subsectorquery")) {
       return Promise.resolve({
@@ -312,7 +312,7 @@ test("UT-22 – Populating search options from API call -- NAICS subsector but w
   expect(screen.getByText("Improv Comedy")).toBeInTheDocument();
 });
 
-test("UT-23 – Populating search options from API call -- selectedCorpHQId -- but with some null data", async () => {
+test("UT-23 – Populating search options from API call for Corporate Headquarters -- but with some null data", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
@@ -349,7 +349,7 @@ test("UT-23 – Populating search options from API call -- selectedCorpHQId -- b
   expect(screen.getByText("Middle Earth")).toBeInTheDocument();
 });
 
-test("UT-24 – Populating search options from API call -- selectedRevRegion --- but with some null data", async () => {
+test("UT-24 – Populating search options from API call for Primary Geography (Revenue) -- but with some null data", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
