@@ -10,13 +10,14 @@ select
 	c.collateral_id,
 	c.inclusion_date,
 	c.removed_date,
-	c.approval_date,
-	c.approved_ebitda,
-	c.approved_net_leverage,
-	c.approved_int_coverage,
-	c.approved_advance_rate,
-	c.approved_valuation,
-	c.approved_leverage,
+	lap.approval_date,
+	lap.approved_ebitda,
+	lap.approved_net_leverage,
+	lap.approved_int_coverage,
+	lap.approved_advance_rate,
+	lap.approved_valuation,
+	lap.approved_leverage,
+	lap.approved_amount,
 	cb.commitment_amount,
 	cb.outstanding_amount,
 	lt.lien_type,
@@ -42,6 +43,8 @@ select
 	rd.reference_rate,
 	rd.spread
 from collateral c
+left join loan_approvals lap
+	on lap.loan_approval_id = c.loan_approval_id
 left join collateral_balance cb 
 	on cb.collateral_id = c.collateral_id 
 	and cb.start_date <= $1
