@@ -7,7 +7,7 @@ const pool = require("../db");
 
 const loanTrancheQuery = `
 select 
-    lt.tranche_name, lt.tranche_id
+    lt.tranche_name, lt.tranche_id, lt.loan_agreement_id
     from loan_tranches lt
 `;
 

@@ -25,10 +25,12 @@ describe("GET /api/loantranchequery", () => {
         {
           tranche_id: 100001,
           tranche_name: "Loan Tranche Test 1",
+          loan_agreement_id: 3
         },
         {
           tranche_id: 100002,
           tranche_name: "Loan Tranche Test 2",
+          loan_agreement_id: 4
         },
       ],
     });
@@ -39,17 +41,19 @@ describe("GET /api/loantranchequery", () => {
         {
             tranche_id: 100001,
             tranche_name: "Loan Tranche Test 1",
+            loan_agreement_id: 3
         },
         {
             tranche_id: 100002,
             tranche_name: "Loan Tranche Test 2",
+            loan_agreement_id: 4
         },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(
       `
 select 
-    lt.tranche_name, lt.tranche_id
+    lt.tranche_name, lt.tranche_id, lt.loan_agreement_id
     from loan_tranches lt
 `,
       [],

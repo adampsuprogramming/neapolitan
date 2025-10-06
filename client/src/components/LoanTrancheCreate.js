@@ -9,13 +9,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
 import Button from "@mui/material/Button";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import FormHelperText from "@mui/material/FormHelperText";
 
 function LoanTrancheCreate() {
   const [loanAgreementData, setLoanAgreementData] = useState([]); // Hold results of getLoanAgreementData which includes borrower name and loan agreement info
-  const [borrowerData, setBorrowerData] = useState([]);
+  const [borrowerData, setBorrowerData] = useState([]); // Hold results of getBorrowerData which includes borrower name and loan agreement info
   const [trancheName, setTrancheName] = useState([]); // Hold the results of Loan Tranche Name textbox
   const [selectedBorrower, setSelectedBorrower] = useState(null); // Holds the borrower's name
   const [selectedLoanAgreement, setSelectedLoanAgreement] = useState(null); // Holds Loan Agreement Name
@@ -294,7 +291,7 @@ function LoanTrancheCreate() {
             paddingLeft: "35px",
           }}
         >
-          Loan Metric at Closing
+          Loan Metrics at Closing
         </Box>
         <Box
           sx={{

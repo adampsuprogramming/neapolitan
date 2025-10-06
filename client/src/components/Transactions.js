@@ -30,6 +30,16 @@ export default function Transactions() {
         >
           Loan Tranche
         </NavLink>
+
+        <NavLink
+          to="loanapprovaltransactions"
+          className={({ isActive }) =>
+            isActive ? "transactions-nav-highlighted" : ""
+          }
+        >
+          Loan Approval
+        </NavLink>
+
         <NavLink
           to="collateralpledgetransactions"
           className={({ isActive }) =>

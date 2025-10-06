@@ -24,8 +24,12 @@ import CollateralPledgeAdd from "./CollateralPledgeAdd";
 import CollateralPledgeRemove from "./CollateralPledgeRemove";
 import LoanAgreementTransactions from "./LoanAgreementTransactions";
 import LoanAgreementCreate from "./LoanAgreementCreate";
-import LoanAgreementModify from "./LoanAgreeementModify";
+import LoanAgreementModify from "./LoanAgreementModify";
 import LoanAgreementDelete from "./LoanAgreementDelete";
+import LoanApprovalTransactions from "./LoanApprovalTransactions";
+import LoanApprovalCreate from "./LoanApprovalCreate";
+import LoanApprovalModify from "./LoanApprovalModify";
+import LoanApprovalDelete from "./LoanApprovalDelete";
 import LoanTrancheTransactions from "./LoanTrancheTransactions";
 import LoanTrancheCreate from "./LoanTrancheCreate";
 import LoanTrancheModify from "./LoanTrancheModify";
@@ -85,6 +89,16 @@ function App() {
               <Route path="loantranchemodify" element={<LoanTrancheModify />} />
               <Route path="loantranchedelete" element={<LoanTrancheDelete />} />
             </Route>
+
+            <Route
+              path="loanapprovaltransactions/*"
+              element={<LoanApprovalTransactions />}
+            >
+              <Route path="loanapprovalcreate" element={<LoanApprovalCreate />} />
+              <Route path="loanapprovalmodify" element={<LoanApprovalModify />} />
+              <Route path="loanapprovaldelete" element={<LoanApprovalDelete />} />
+            </Route>
+
             <Route
               path="collateralpledgetransactions/*"
               element={<CollateralPledgeTransactions />}
