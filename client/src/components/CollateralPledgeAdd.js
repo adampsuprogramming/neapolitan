@@ -19,13 +19,13 @@ function CollateralPledgeAdd() {
   const [loanApprovalId, setLoanApprovalId] = useState(null); // Gets loan approval id when user selects loan approval name
   const [debtFacilityId, setDebtFacilityId] = useState(null); // Gets debt facility id when user loan approval name
   const [trancheId, setTrancheId] = useState(null); // Gets tranche id when use selects tranche id
-  const [borrowerName, setBorrowerName] = useState("");
-  const [agreementName, setAgreementName] = useState("");
-  const [trancheName, setTrancheName] = useState("");
-  const [maxApproved, setMaxApproved] = useState("");
-  const [expiration, setExpiration] = useState("");
-  const [bankName, setBankName] = useState("");
-  const [facilityName, setFacilityName] = useState("");
+  const [borrowerName, setBorrowerName] = useState(""); // Holds borrower name for reporting box on screen
+  const [agreementName, setAgreementName] = useState(""); // Holds agreement name for reporting box on screen
+  const [trancheName, setTrancheName] = useState(""); // Holds tranche name for reporting box on screen
+  const [maxApproved, setMaxApproved] = useState(""); // Holds max approval for reporting box on screen
+  const [expiration, setExpiration] = useState(""); // Holds expiration date for reporting box on screen
+  const [bankName, setBankName] = useState(""); // Holds expiration date for reporting box on screen
+  const [facilityName, setFacilityName] = useState(""); // Holds facility name for reporting box on screen
   const [message, setMessage] = useState("");
 
   // this useEffect populates loan approval info on page load
@@ -46,8 +46,6 @@ function CollateralPledgeAdd() {
     getLoanApprovalData();
   }, []);
 
- 
-
   useEffect(() => {
     if (!selectedApproval) return;
     setLoanApprovalId(selectedApproval.loan_approval_id);
@@ -62,10 +60,25 @@ function CollateralPledgeAdd() {
     setFacilityName(selectedApproval.debt_facility_name);
   }, [selectedApproval]);
 
-
-
   async function createCollateral() {
     try {
+      if (inclusionDate >= expiration) {
+        setMessage("Inclusion Date Must Be Prior to Expiration Date");
+        return;
+      }
+      if (outstandingAmount > commitmentAmount) {
+        setMessage(
+          "Outstanding Amount Must Be Less Than Or Equal To Commitment Amount",
+        );
+        return;
+      }
+      if (outstandingAmount > maxApproved) {
+        setMessage(
+          "Outstanding Amount Must Be Less Than Or Equal To Maximum Approved",
+        );
+        return;
+      }
+
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createcollateral`,
         {
@@ -74,7 +87,7 @@ function CollateralPledgeAdd() {
           trancheId,
           inclusionDate,
           outstandingAmount,
-          commitmentAmount
+          commitmentAmount,
         },
       );
       if (response.status === 201) {
@@ -98,8 +111,10 @@ function CollateralPledgeAdd() {
 
   return (
     <>
-      <div style={{display: "flex"}}className="debt-facility-create">Pledge Collateral to Facility</div>
-      <Box component="form" sx={{ paddingLeft: "115px", display: "flex"}}>
+      <div style={{ display: "flex" }} className="debt-facility-create">
+        Pledge Collateral to Facility
+      </div>
+      <Box component="form" sx={{ paddingLeft: "115px", display: "flex" }}>
         <Box
           sx={{
             border: "1px solid",
@@ -110,71 +125,67 @@ function CollateralPledgeAdd() {
             padding: 2,
           }}
         >
+          <Autocomplete
+            disablePortal
+            id="autocomplete-loan-approval-name"
+            required
+            options={loanApprovalData}
+            value={selectedApproval}
+            sx={{ m: 1, marginTop: 3, width: "80ch" }}
+            onChange={(event, newValue) => setSelectedApproval(newValue)}
+            getOptionLabel={(option) => option.loan_approval_name || ""}
+            renderInput={(params) => (
+              <TextField {...params} label="Select Loan Approval" />
+            )}
+          />
 
-            <Autocomplete
-              disablePortal
-              id="autocomplete-loan-approval-name"
-              required
-              options={loanApprovalData}
-              value={selectedApproval}
-              sx={{ m: 1, marginTop: 3, width: "80ch" }}
-              onChange={(event, newValue) => setSelectedApproval(newValue)}
-              getOptionLabel={(option) => option.loan_approval_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Select Loan Approval" />
-              )}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Inclusion Date"
+              id="inclusion-date-picker"
+              sx={{ m: 1, width: "25ch", marginTop: 5 }}
+              value={inclusionDate ? dayjs(inclusionDate) : null}
+              onChange={(newDate) => {
+                setInclusionDate(newDate ? newDate.format("YYYY-MM-DD") : "");
+              }}
+              slotProps={{
+                textField: {
+                  helperText: "MM/DD/YYYY",
+                },
+              }}
             />
+          </LocalizationProvider>
 
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Inclusion Date"
-                id="inclusion-date-picker"
-                sx={{ m: 1, width: "25ch", marginTop: 7 }}
-                value={inclusionDate ? dayjs(inclusionDate) : null} 
-                onChange={(newDate) => {
-                  setInclusionDate(newDate ? newDate.format("YYYY-MM-DD") : ""); 
-                }}
-                slotProps={{
-                  textField: {
-                    helperText: "MM/DD/YYYY",
-                  },
-                }}
-              />
-            </LocalizationProvider>
+          <NumericFormat
+            customInput={TextField}
+            id="outstanding-amount-field"
+            sx={{ m: 1, width: "25ch", marginTop: 5 }}
+            required
+            value={outstandingAmount}
+            onValueChange={(value) => setOutstandingAmount(value.floatValue)}
+            label="Outstanding Pledged"
+            thousandSeparator=","
+            decimalScale={2}
+            fixedDecimalScale
+            prefix="$"
+          />
 
-            <NumericFormat
-              customInput={TextField}
-              id="outstanding-amount-field"
-              sx={{ m: 1, width: "25ch", marginTop: 7 }}
-              required
-              value={outstandingAmount}
-              onValueChange={(value) => setOutstandingAmount(value.floatValue)}
-              label="Outstanding Pledged"
-              thousandSeparator=","
-              decimalScale={2}
-              fixedDecimalScale
-              prefix="$"
-            />
-
-
-
-
-            <NumericFormat
-              customInput={TextField}
-              id="commitment-amount-field"
-              sx={{ m: 1, width: "25ch", marginTop: 7 }}
-              required
-              value={commitmentAmount}
-              onValueChange={(value) => setCommitmentAmount(value.floatValue)}
-              label="Commitment Pledged"
-              thousandSeparator=","
-              decimalScale={2}
-              fixedDecimalScale
-              prefix="$"
-            />
-          
+          <NumericFormat
+            customInput={TextField}
+            id="commitment-amount-field"
+            sx={{ m: 1, width: "25ch", marginTop: 5 }}
+            required
+            value={commitmentAmount}
+            onValueChange={(value) => setCommitmentAmount(value.floatValue)}
+            label="Commitment Pledged"
+            thousandSeparator=","
+            decimalScale={2}
+            fixedDecimalScale
+            prefix="$"
+          />
         </Box>
-       <Box sx={{
+        <Box
+          sx={{
             border: "1px solid",
             borderRadius: 4,
             borderColor: "#c7c7c7ff",
@@ -185,83 +196,80 @@ function CollateralPledgeAdd() {
             display: "grid",
             rowGap: 2,
             columnGap: 5,
-          gridTemplateColumns:  "auto 1fr",
-
-          }}>
-
-            
-        
-        <Box sx={{fontWeight: "700"}}>Borrower Name:</Box>
-        <Box>{borrowerName}</Box>
-       
-        <Box sx={{fontWeight: "700"}}>Agreement Name:</Box>
-        <Box>{agreementName}</Box>
-
-        <Box sx={{fontWeight: "700"}}>Loan Tranche:</Box>
-        <Box>{trancheName}</Box>
-        
-        <Box sx={{fontWeight: "700"}}>Maximum Approved:</Box>
-        <Box>{Number(maxApproved).toLocaleString('en-US', { style: 'currency', currency: 'USD'} )}</Box>
-
-                
-        <Box sx={{fontWeight: "700"}}>Approval Expiration:</Box>
-        <Box>{new Date(expiration).toLocaleDateString('en-US', {})}</Box>
-
-        <Box sx={{fontWeight: "700"}}>Bank Name:</Box>
-        <Box>{bankName}</Box>
-
-        <Box sx={{fontWeight: "700"}}>Facility Name:</Box>
-        <Box>{facilityName}</Box>
-
-       </Box>
-       </Box>
-       
-       
-        <Box
-          sx={{
-
-            width: "110ch",
-            marginLeft: "100px",
-            padding: 2,
-            display: "flex",
+            gridTemplateColumns: "auto 1fr",
           }}
         >
-     
-         <Button
-            variant="contained"
-            onClick={createCollateral}
-            sx={{
-              marginLeft: "25px",
-              minWidth: "225px",
-              minHeight: "50px",
-              borderRadius: 2,
-              backgroundColor: "#F6AE2D",
-              color: "#000000",
-              textTransform: "none",
-              fontSize: "20px",
-            }}
-          >
-            Pledge Collateral
-          </Button>
+          <Box sx={{ fontWeight: "700" }}>Borrower Name:</Box>
+          <Box>{borrowerName}</Box>
 
-          <Button
-            variant="contained"
-            onClick={clearData}
-            sx={{
-              marginLeft: "25px",
-              minWidth: "225px",
-              minHeight: "50px",
-              borderRadius: 2,
-              backgroundColor: "#d4d4d4ff",
-              color: "#000000",
-              textTransform: "none",
-              fontSize: "20px",
-            }}
-          >
-            Cancel
-          </Button>
-       
+          <Box sx={{ fontWeight: "700" }}>Agreement Name:</Box>
+          <Box>{agreementName}</Box>
 
+          <Box sx={{ fontWeight: "700" }}>Loan Tranche:</Box>
+          <Box>{trancheName}</Box>
+
+          <Box sx={{ fontWeight: "700" }}>Maximum Approved:</Box>
+          <Box>
+            {Number(maxApproved).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </Box>
+
+          <Box sx={{ fontWeight: "700" }}>Approval Expiration:</Box>
+          <Box>{new Date(expiration).toLocaleDateString("en-US", {})}</Box>
+
+          <Box sx={{ fontWeight: "700" }}>Bank Name:</Box>
+          <Box>{bankName}</Box>
+
+          <Box sx={{ fontWeight: "700" }}>Facility Name:</Box>
+          <Box>{facilityName}</Box>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          width: "110ch",
+          marginLeft: "100px",
+          padding: 2,
+          display: "flex",
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={createCollateral}
+          sx={{
+            marginLeft: "25px",
+            minWidth: "225px",
+            minHeight: "50px",
+            borderRadius: 2,
+            backgroundColor: "#F6AE2D",
+            color: "#000000",
+            textTransform: "none",
+            fontSize: "20px",
+          }}
+        >
+          Pledge Collateral
+        </Button>
+
+        <Button
+          variant="contained"
+          onClick={clearData}
+          sx={{
+            marginLeft: "25px",
+            minWidth: "225px",
+            minHeight: "50px",
+            borderRadius: 2,
+            backgroundColor: "#d4d4d4ff",
+            color: "#000000",
+            textTransform: "none",
+            fontSize: "20px",
+          }}
+        >
+          Cancel
+        </Button>
+      </Box>
+      <Box sx={{ marginLeft: "14ch" }}>
         {/* Displays message below in a success or failure situation */}
         {message && <div className="alertMessage">{message}</div>}
       </Box>

@@ -4,8 +4,7 @@ const pool = require("../db");
 
 // Return loan approval data to populate collateral pledge page
 
-const loanApprovalQuery = 
-`
+const loanApprovalQuery = `
 select 
 	lap.approved_amount,
     lap.loan_approval_name,
@@ -29,9 +28,7 @@ left join debt_facilities df
 	on df.debt_facility_id = lap.debt_facility_id
 left join lenders ln
     on ln.lender_id = df.lender_id 
-`
-;
-
+`;
 // API Endpoint to return every loan approval in the db
 
 router.get("/api/loanapprovalquery", async (req, res) => {

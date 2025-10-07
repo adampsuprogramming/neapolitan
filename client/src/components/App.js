@@ -94,9 +94,18 @@ function App() {
               path="loanapprovaltransactions/*"
               element={<LoanApprovalTransactions />}
             >
-              <Route path="loanapprovalcreate" element={<LoanApprovalCreate />} />
-              <Route path="loanapprovalmodify" element={<LoanApprovalModify />} />
-              <Route path="loanapprovaldelete" element={<LoanApprovalDelete />} />
+              <Route
+                path="loanapprovalcreate"
+                element={<LoanApprovalCreate />}
+              />
+              <Route
+                path="loanapprovalmodify"
+                element={<LoanApprovalModify />}
+              />
+              <Route
+                path="loanapprovaldelete"
+                element={<LoanApprovalDelete />}
+              />
             </Route>
 
             <Route

@@ -25,12 +25,12 @@ describe("GET /api/loantranchequery", () => {
         {
           tranche_id: 100001,
           tranche_name: "Loan Tranche Test 1",
-          loan_agreement_id: 3
+          loan_agreement_id: 3,
         },
         {
           tranche_id: 100002,
           tranche_name: "Loan Tranche Test 2",
-          loan_agreement_id: 4
+          loan_agreement_id: 4,
         },
       ],
     });
@@ -38,16 +38,16 @@ describe("GET /api/loantranchequery", () => {
     const response = await request(app).get("/api/loantranchequery").query();
 
     expect(response.body).toEqual([
-        {
-            tranche_id: 100001,
-            tranche_name: "Loan Tranche Test 1",
-            loan_agreement_id: 3
-        },
-        {
-            tranche_id: 100002,
-            tranche_name: "Loan Tranche Test 2",
-            loan_agreement_id: 4
-        },
+      {
+        tranche_id: 100001,
+        tranche_name: "Loan Tranche Test 1",
+        loan_agreement_id: 3,
+      },
+      {
+        tranche_id: 100002,
+        tranche_name: "Loan Tranche Test 2",
+        loan_agreement_id: 4,
+      },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(

@@ -13,7 +13,6 @@ insert into collateral_balance (collateral_id, start_date, outstanding_amount, c
 values ($1,$2,$3,$4)
 `;
 
-
 router.post("/api/createCollateral", async (req, res) => {
   const {
     loanApprovalId,
@@ -21,7 +20,7 @@ router.post("/api/createCollateral", async (req, res) => {
     trancheId,
     inclusionDate,
     outstandingAmount,
-    commitmentAmount
+    commitmentAmount,
   } = req.body;
 
   try {
@@ -29,10 +28,10 @@ router.post("/api/createCollateral", async (req, res) => {
       inclusionDate,
       debtFacilityId,
       trancheId,
-      loanApprovalId
+      loanApprovalId,
     ]);
     newCollateralId = result.rows[0].collateral_id;
-    } catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send("Collateral create query failed");
   }
@@ -42,7 +41,7 @@ router.post("/api/createCollateral", async (req, res) => {
       newCollateralId,
       inclusionDate,
       outstandingAmount,
-      commitmentAmount
+      commitmentAmount,
     ]);
     res.sendStatus(201);
   } catch (err) {

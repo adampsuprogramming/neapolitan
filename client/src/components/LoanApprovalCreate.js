@@ -10,7 +10,6 @@ import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
 import Button from "@mui/material/Button";
 
-
 function LoanApprovalCreate() {
   const [loanAgreementData, setLoanAgreementData] = useState([]); // Hold results of getLoanAgreementData which includes borrower name and loan agreement info
   const [loanTrancheData, setLoanTrancheData] = useState([]); // Hold results of getLoanTrancheData
@@ -29,8 +28,10 @@ function LoanApprovalCreate() {
   const [approvedAmount, setApprovedAmount] = useState(null); //After use enters approved amount, it is stored here
   const [approvedEbitda, setApprovedEbitda] = useState(null); //After use enters approved ebitda, it is stored here
   const [approvedLeverageRatio, setApprovedLeverageRatio] = useState(null); //After use enters leverage ratio, it is stored here
-  const [approvedNetLeverageRatio, setApprovedNetLeverageRatio] = useState(null); //After use enters net leverage ratio, it is stored here
-  const [approvedInterestCoverage, setApprovedInterestCoverage] = useState(null); //After use enters interest coverage ratio, it is stored here
+  const [approvedNetLeverageRatio, setApprovedNetLeverageRatio] =
+    useState(null); //After use enters net leverage ratio, it is stored here
+  const [approvedInterestCoverage, setApprovedInterestCoverage] =
+    useState(null); //After use enters interest coverage ratio, it is stored here
   const [approvedAdvanceRate, setApprovedAdvanceRate] = useState(null); //After use enters approved amount, it is stored here
   const [approvedValue, setApprovedValue] = useState(null); //After use enters approved value (the value the bank assigned the loan), it is stored here
   const [selectedTrancheId, setSelectedTrancheId] = useState(null); // After user chooses loan tranche, related ID is set here
@@ -91,7 +92,7 @@ function LoanApprovalCreate() {
     getLoanTrancheData();
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     async function getLenderData() {
       try {
         const fullInfoResponse = await axios.get(
@@ -105,7 +106,7 @@ function LoanApprovalCreate() {
     getLenderData();
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     async function getFacilityData() {
       try {
         const fullInfoResponse = await axios.get(
@@ -119,7 +120,6 @@ function LoanApprovalCreate() {
     getFacilityData();
   }, []);
 
-
   // this useEffect gets the related tranche id number when the tranche record
   // is selected.  The tranche number is needed to send back to the server
 
@@ -127,7 +127,6 @@ function LoanApprovalCreate() {
     if (!selectedLoanTranche) return;
     setSelectedTrancheId(selectedLoanTranche.tranche_id);
   }, [selectedLoanTranche]);
-
 
   // this useEffect gets the related facility id number when the facility record
   // is selected.  The facility id number is needed to send back to the server
@@ -139,23 +138,30 @@ function LoanApprovalCreate() {
 
   async function postApproval() {
     // creates the loan approval name for access in the Collateral Pledge feature
-    const approvalName=`${approvalDate} - ${lenderName} - ${selectedBorrower.legal_name}`;
-   
+    const approvalName = `${approvalDate} - ${lenderName} - ${selectedBorrower.legal_name}`;
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createloanapproval`,
-        {approvalName,
-        selectedTrancheId,
-        selectedFacilityId,
-        approvalDate,
-        approvalExpiration,
-        approvedAmount,
-        approvedEbitda,
-        approvedLeverageRatio,
-        approvedInterestCoverage,
-        approvedNetLeverageRatio,
-        approvedAdvanceRate: approvedAdvanceRate!= null ? Number((approvedAdvanceRate / 100).toFixed(6)) : null,
-        approvedValue: approvedValue!= null ? Number((approvedValue / 100).toFixed(6)) : null,
+        {
+          approvalName,
+          selectedTrancheId,
+          selectedFacilityId,
+          approvalDate,
+          approvalExpiration,
+          approvedAmount,
+          approvedEbitda,
+          approvedLeverageRatio,
+          approvedInterestCoverage,
+          approvedNetLeverageRatio,
+          approvedAdvanceRate:
+            approvedAdvanceRate != null
+              ? Number((approvedAdvanceRate / 100).toFixed(6))
+              : null,
+          approvedValue:
+            approvedValue != null
+              ? Number((approvedValue / 100).toFixed(6))
+              : null,
         },
       );
       if (response.status === 201) {
@@ -198,8 +204,8 @@ function LoanApprovalCreate() {
     setLoanTrancheOptions([]);
     setSelectedLoanTranche(null);
     setSelectedLoanAgreement(setValue);
-    const loanTranches = loanTrancheData.filter((item) =>
-      item.loan_agreement_id === setValue.loan_agreement_id,
+    const loanTranches = loanTrancheData.filter(
+      (item) => item.loan_agreement_id === setValue.loan_agreement_id,
     );
     setLoanTrancheOptions(loanTranches);
   };
@@ -210,8 +216,9 @@ function LoanApprovalCreate() {
     setSelectedLender(setValue);
     setLenderName(setValue.lender_name);
 
-    const facilities = facilityData.filter((item) =>
-      item.lender_id === setValue.lender_id);
+    const facilities = facilityData.filter(
+      (item) => item.lender_id === setValue.lender_id,
+    );
     setFacilityOptions(facilities);
   };
 
@@ -280,7 +287,14 @@ function LoanApprovalCreate() {
               getOptionLabel={(option) => option.loan_agreement_name || ""}
               disabled={!selectedBorrower}
               renderInput={(params) => (
-                <TextField {...params} label={selectedBorrower ? "Loan Agreement" : "Loan Agreement (Select Borrower First)"} />
+                <TextField
+                  {...params}
+                  label={
+                    selectedBorrower
+                      ? "Loan Agreement"
+                      : "Loan Agreement (Select Borrower First)"
+                  }
+                />
               )}
             />
 
@@ -295,10 +309,16 @@ function LoanApprovalCreate() {
               getOptionLabel={(option) => option.tranche_name || ""}
               disabled={!selectedLoanAgreement}
               renderInput={(params) => (
-                <TextField {...params} label={selectedLoanAgreement ? "Loan Tranche" : "Loan Tranche (Select Agreement First)"} />
+                <TextField
+                  {...params}
+                  label={
+                    selectedLoanAgreement
+                      ? "Loan Tranche"
+                      : "Loan Tranche (Select Agreement First)"
+                  }
+                />
               )}
             />
-
           </div>
 
           <div
@@ -330,7 +350,14 @@ function LoanApprovalCreate() {
               getOptionLabel={(option) => option.debt_facility_name || ""}
               disabled={!selectedLender}
               renderInput={(params) => (
-                <TextField {...params} label={selectedLender ? "Loan Facilities" : "Loan Facilities (Select Lender First)"} />
+                <TextField
+                  {...params}
+                  label={
+                    selectedLender
+                      ? "Loan Facilities"
+                      : "Loan Facilities (Select Lender First)"
+                  }
+                />
               )}
             />
 
@@ -344,7 +371,9 @@ function LoanApprovalCreate() {
                 }}
                 slotProps={{
                   textField: {
-                    inputProps: { "data-testid": "tranche-approval-date-picker" },
+                    inputProps: {
+                      "data-testid": "tranche-approval-date-picker",
+                    },
                     helperText: "MM/DD/YYYY",
                   },
                 }}
@@ -354,11 +383,15 @@ function LoanApprovalCreate() {
                 sx={{ m: 1, minWidth: "175px" }}
                 value={approvalExpiration ? dayjs(approvalExpiration) : null} //
                 onChange={(newDate) => {
-                  setApprovalExpiration(newDate ? newDate.format("YYYY-MM-DD") : "");
+                  setApprovalExpiration(
+                    newDate ? newDate.format("YYYY-MM-DD") : "",
+                  );
                 }}
                 slotProps={{
                   textField: {
-                    inputProps: { "data-testid": "tranche-approval-expiration-picker" },
+                    inputProps: {
+                      "data-testid": "tranche-approval-expiration-picker",
+                    },
                     helperText: "MM/DD/YYYY",
                   },
                 }}
@@ -386,101 +419,140 @@ function LoanApprovalCreate() {
             marginLeft: 3,
             marginBottom: 3,
             padding: 2,
-            
           }}
         >
-            <div
-            className="row-1-approved-amounts"
-            style={{ display: "flex"}}
-          >
-          <NumericFormat
-            customInput={TextField}
-            id="approved-amount-textfield"
-            sx={{ marginLeft: "1ch", marginTop: 1, marginBottom: 1, minWidth: "30ch" }}
-            value={approvedAmount}
-            onValueChange={(value) => setApprovedAmount(value.floatValue)}
-            label="Approved Amount"
-            thousandSeparator=","
-            decimalScale={2}
-            prefix="$"
-            fixedDecimalScale
-          />
+          <div className="row-1-approved-amounts" style={{ display: "flex" }}>
+            <NumericFormat
+              customInput={TextField}
+              id="approved-amount-textfield"
+              sx={{
+                marginLeft: "1ch",
+                marginTop: 1,
+                marginBottom: 1,
+                minWidth: "30ch",
+              }}
+              value={approvedAmount}
+              onValueChange={(value) => setApprovedAmount(value.floatValue)}
+              label="Approved Amount"
+              thousandSeparator=","
+              decimalScale={2}
+              prefix="$"
+              fixedDecimalScale
+            />
 
-          <NumericFormat
-            customInput={TextField}
-            id="approved-ebitda-textfield"
-            sx={{ marginLeft: "9ch", marginTop: 1, marginBottom: 1, minWidth: "30ch"  }}
-            value={approvedEbitda}
-            onValueChange={(value) => setApprovedEbitda(value.floatValue)}
-            label="Approved EBITDA"
-            thousandSeparator=","
-            decimalScale={2}
-            prefix="$"
-            fixedDecimalScale
-          />
+            <NumericFormat
+              customInput={TextField}
+              id="approved-ebitda-textfield"
+              sx={{
+                marginLeft: "9ch",
+                marginTop: 1,
+                marginBottom: 1,
+                minWidth: "30ch",
+              }}
+              value={approvedEbitda}
+              onValueChange={(value) => setApprovedEbitda(value.floatValue)}
+              label="Approved EBITDA"
+              thousandSeparator=","
+              decimalScale={2}
+              prefix="$"
+              fixedDecimalScale
+            />
 
-          <NumericFormat
-            customInput={TextField}
-            id="leverage-ratio-textfield"
-            sx={{ marginLeft: "9ch", marginTop: 1, marginBottom: 1, minWidth: "30ch"  }}
-            value={approvedLeverageRatio}
-            onValueChange={(value) => setApprovedLeverageRatio(value.floatValue)}
-            label="Leverage Ratio"
-            decimalScale={6}
-            fixedDecimalScale
-          />
+            <NumericFormat
+              customInput={TextField}
+              id="leverage-ratio-textfield"
+              sx={{
+                marginLeft: "9ch",
+                marginTop: 1,
+                marginBottom: 1,
+                minWidth: "30ch",
+              }}
+              value={approvedLeverageRatio}
+              onValueChange={(value) =>
+                setApprovedLeverageRatio(value.floatValue)
+              }
+              label="Leverage Ratio"
+              decimalScale={6}
+              fixedDecimalScale
+            />
 
-          <NumericFormat
-            customInput={TextField}
-            id="interest-coverage-ratio-textfield"
-            sx={{ marginLeft: "9ch", marginTop: 1, marginBottom: 1, marginRight: "1ch", minWidth: "30ch" }}
-            value={approvedInterestCoverage}
-            onValueChange={(value) => setApprovedInterestCoverage(value.floatValue)}
-            label="Interest Coverage Ratio"
-            decimalScale={6}
-            fixedDecimalScale
-          />
-
-
-</div>
-            <div
+            <NumericFormat
+              customInput={TextField}
+              id="interest-coverage-ratio-textfield"
+              sx={{
+                marginLeft: "9ch",
+                marginTop: 1,
+                marginBottom: 1,
+                marginRight: "1ch",
+                minWidth: "30ch",
+              }}
+              value={approvedInterestCoverage}
+              onValueChange={(value) =>
+                setApprovedInterestCoverage(value.floatValue)
+              }
+              label="Interest Coverage Ratio"
+              decimalScale={6}
+              fixedDecimalScale
+            />
+          </div>
+          <div
             className="row-2-approved-amounts"
             style={{ display: "flex", marginTop: "25px" }}
           >
-          <NumericFormat
-            customInput={TextField}
-            id="net-leverage-ratio-textfield"
-            sx={{ marginLeft: "1ch", marginTop: 1, marginBottom: 1, minWidth: "30ch"  }}
-            value={approvedNetLeverageRatio}
-            onValueChange={(value) => setApprovedNetLeverageRatio(value.floatValue)}
-            label="Net Leverage Ratio"
-            decimalScale={6}
-            fixedDecimalScale
-          />
-          <NumericFormat
-            customInput={TextField}
-            id="approved-advance-rate-textfield"
-            sx={{ marginLeft: "9ch", marginTop: 1, marginBottom: 1, minWidth: "30ch"  }}
-            value={approvedAdvanceRate}
-            onValueChange={(value) => setApprovedAdvanceRate(value.floatValue)}
-            label="Approved Advance Rate"
-            decimalScale={6}
-            suffix="%"
-            fixedDecimalScale
-          />
+            <NumericFormat
+              customInput={TextField}
+              id="net-leverage-ratio-textfield"
+              sx={{
+                marginLeft: "1ch",
+                marginTop: 1,
+                marginBottom: 1,
+                minWidth: "30ch",
+              }}
+              value={approvedNetLeverageRatio}
+              onValueChange={(value) =>
+                setApprovedNetLeverageRatio(value.floatValue)
+              }
+              label="Net Leverage Ratio"
+              decimalScale={6}
+              fixedDecimalScale
+            />
+            <NumericFormat
+              customInput={TextField}
+              id="approved-advance-rate-textfield"
+              sx={{
+                marginLeft: "9ch",
+                marginTop: 1,
+                marginBottom: 1,
+                minWidth: "30ch",
+              }}
+              value={approvedAdvanceRate}
+              onValueChange={(value) =>
+                setApprovedAdvanceRate(value.floatValue)
+              }
+              label="Approved Advance Rate"
+              decimalScale={6}
+              suffix="%"
+              fixedDecimalScale
+            />
 
-           <NumericFormat
-            customInput={TextField}
-            id="approved-value-textfield"
-            sx={{ marginLeft: "9ch", marginTop: 1, marginBottom: 1, marginRight: "1ch", minWidth: "30ch" }}
-            value={approvedValue}
-            onValueChange={(value) => setApprovedValue(value.floatValue)}
-            label="Approved Value"
-            thousandSeparator=","
-            decimalScale={6}
-            suffix="%"
-            fixedDecimalScale
-          />
+            <NumericFormat
+              customInput={TextField}
+              id="approved-value-textfield"
+              sx={{
+                marginLeft: "9ch",
+                marginTop: 1,
+                marginBottom: 1,
+                marginRight: "1ch",
+                minWidth: "30ch",
+              }}
+              value={approvedValue}
+              onValueChange={(value) => setApprovedValue(value.floatValue)}
+              label="Approved Value"
+              thousandSeparator=","
+              decimalScale={6}
+              suffix="%"
+              fixedDecimalScale
+            />
           </div>
         </Box>
         <Box
@@ -491,42 +563,41 @@ function LoanApprovalCreate() {
             paddingLeft: "35px",
           }}
         >
-         
-        <div style={{ marginTop: "40px" }}>
-          <Button
-            variant="contained"
-            onClick={postApproval}
-            sx={{
-              marginLeft: "25px",
-              minWidth: "225px",
-              minHeight: "50px",
-              borderRadius: 2,
-              backgroundColor: "#F6AE2D",
-              color: "#000000",
-              textTransform: "none",
-              fontSize: "20px",
-            }}
-          >
-            Save
-          </Button>
+          <div style={{ marginTop: "40px" }}>
+            <Button
+              variant="contained"
+              onClick={postApproval}
+              sx={{
+                marginLeft: "25px",
+                minWidth: "225px",
+                minHeight: "50px",
+                borderRadius: 2,
+                backgroundColor: "#F6AE2D",
+                color: "#000000",
+                textTransform: "none",
+                fontSize: "20px",
+              }}
+            >
+              Save
+            </Button>
 
-          <Button
-            variant="contained"
-            onClick={clearData}
-            sx={{
-              marginLeft: "25px",
-              minWidth: "225px",
-              minHeight: "50px",
-              borderRadius: 2,
-              backgroundColor: "#d4d4d4ff",
-              color: "#000000",
-              textTransform: "none",
-              fontSize: "20px",
-            }}
-          >
-            Cancel
-          </Button>
-        </div>
+            <Button
+              variant="contained"
+              onClick={clearData}
+              sx={{
+                marginLeft: "25px",
+                minWidth: "225px",
+                minHeight: "50px",
+                borderRadius: 2,
+                backgroundColor: "#d4d4d4ff",
+                color: "#000000",
+                textTransform: "none",
+                fontSize: "20px",
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
         </Box>
 
         {/* Displays message below in a success or failure situation */}

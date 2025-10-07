@@ -8,10 +8,23 @@ values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
 `;
 
 router.post("/api/createloanapproval", async (req, res) => {
-  const { approvalName, selectedTrancheId, selectedFacilityId, approvalDate, approvalExpiration, approvedAmount, approvedEbitda, approvedLeverageRatio, approvedInterestCoverage, approvedNetLeverageRatio, approvedAdvanceRate, approvedValue} = req.body;
+  const {
+    approvalName,
+    selectedTrancheId,
+    selectedFacilityId,
+    approvalDate,
+    approvalExpiration,
+    approvedAmount,
+    approvedEbitda,
+    approvedLeverageRatio,
+    approvedInterestCoverage,
+    approvedNetLeverageRatio,
+    approvedAdvanceRate,
+    approvedValue,
+  } = req.body;
   try {
     result = await pool.query(createApprovalSQL, [
-      approvalName,  
+      approvalName,
       selectedTrancheId,
       selectedFacilityId,
       approvalDate,
@@ -22,7 +35,7 @@ router.post("/api/createloanapproval", async (req, res) => {
       approvedInterestCoverage,
       approvedNetLeverageRatio,
       approvedAdvanceRate,
-      approvedValue
+      approvedValue,
     ]);
     res.sendStatus(201);
   } catch (err) {
