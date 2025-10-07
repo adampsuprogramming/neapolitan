@@ -36,6 +36,7 @@ function LoanApprovalCreate() {
   const [selectedTrancheId, setSelectedTrancheId] = useState(null); // After user chooses loan tranche, related ID is set here
   const [selectedFacilityId, setSelectedFacilityId] = useState(null); // After user chooses loan facility, related ID is set here
   const [approvalDate, setApprovalDate] = useState(""); // After user chooses approval date, it is stored here
+  const [approvalExpiration, setApprovalExpiration] = useState(""); // After user chooses approval expiration date, it is stored here
   const [message, setMessage] = useState("");
 
   // the following useEffects load up the following on page loan:
@@ -147,13 +148,14 @@ function LoanApprovalCreate() {
         selectedTrancheId,
         selectedFacilityId,
         approvalDate,
+        approvalExpiration,
         approvedAmount,
         approvedEbitda,
         approvedLeverageRatio,
         approvedInterestCoverage,
         approvedNetLeverageRatio,
         approvedAdvanceRate: approvedAdvanceRate!= null ? Number((approvedAdvanceRate / 100).toFixed(6)) : null,
-        approvedValue
+        approvedValue: approvedValue!= null ? Number((approvedValue / 100).toFixed(6)) : null,
         },
       );
       if (response.status === 201) {
@@ -172,6 +174,7 @@ function LoanApprovalCreate() {
     setSelectedLender(null);
     setSelectedFacility(null);
     setApprovalDate("");
+    setApprovalExpiration("");
     setApprovedAmount("");
     setApprovedEbitda("");
     setApprovedLeverageRatio("");
@@ -334,7 +337,7 @@ function LoanApprovalCreate() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Approval Date"
-                sx={{ m: 1, minWidth: "250px" }}
+                sx={{ m: 1, minWidth: "175px" }}
                 value={approvalDate ? dayjs(approvalDate) : null} //
                 onChange={(newDate) => {
                   setApprovalDate(newDate ? newDate.format("YYYY-MM-DD") : "");
@@ -346,7 +349,20 @@ function LoanApprovalCreate() {
                   },
                 }}
               />
-
+              <DatePicker
+                label="Approval Expiration"
+                sx={{ m: 1, minWidth: "175px" }}
+                value={approvalExpiration ? dayjs(approvalExpiration) : null} //
+                onChange={(newDate) => {
+                  setApprovalExpiration(newDate ? newDate.format("YYYY-MM-DD") : "");
+                }}
+                slotProps={{
+                  textField: {
+                    inputProps: { "data-testid": "tranche-approval-expiration-picker" },
+                    helperText: "MM/DD/YYYY",
+                  },
+                }}
+              />
             </LocalizationProvider>
           </div>
         </Box>
@@ -461,8 +477,8 @@ function LoanApprovalCreate() {
             onValueChange={(value) => setApprovedValue(value.floatValue)}
             label="Approved Value"
             thousandSeparator=","
-            decimalScale={2}
-            prefix="$"
+            decimalScale={6}
+            suffix="%"
             fixedDecimalScale
           />
           </div>
