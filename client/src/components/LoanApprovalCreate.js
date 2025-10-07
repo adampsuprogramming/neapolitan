@@ -219,7 +219,19 @@ function LoanApprovalCreate() {
     const facilities = facilityData.filter(
       (item) => item.lender_id === setValue.lender_id,
     );
-    setFacilityOptions(facilities);
+
+    const uniqueFacilities = [];
+    const idsInFacilities = new Set();
+
+    for (const facility of facilities) {
+      if (!idsInFacilities.has(facility.facility_id)) {
+        idsInFacilities.add(facility.facility_id);
+        uniqueFacilities.push(facility);
+      }
+    }
+
+    console.log(uniqueFacilities);
+    setFacilityOptions(uniqueFacilities);
   };
 
   return (

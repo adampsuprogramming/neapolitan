@@ -210,14 +210,20 @@ function CollateralPledgeAdd() {
 
           <Box sx={{ fontWeight: "700" }}>Maximum Approved:</Box>
           <Box>
-            {Number(maxApproved).toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
+            {maxApproved === ""
+              ? ""
+              : Number(maxApproved).toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}
           </Box>
 
           <Box sx={{ fontWeight: "700" }}>Approval Expiration:</Box>
-          <Box>{new Date(expiration).toLocaleDateString("en-US", {})}</Box>
+          <Box>
+            {expiration === ""
+              ? ""
+              : new Date(expiration).toLocaleDateString("en-US", {})}
+          </Box>
 
           <Box sx={{ fontWeight: "700" }}>Bank Name:</Box>
           <Box>{bankName}</Box>

@@ -1,5 +1,5 @@
 // ************************************************************************
-// * UT-46– Determine that Node Receives Loan Approval Data and Sends Out  *
+// * UT-46– Determine if Node Receives Loan Approval Data and Sends Out  *
 // * Correct SQL Inserts                                                  *
 // ************************************************************************
 
