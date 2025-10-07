@@ -27,11 +27,9 @@ function LoanApprovalCreate() {
   const [loanTrancheOptions, setLoanTrancheOptions] = useState([]); // Filtered loan tranche options based on loan_agreement
   const [approvedAmount, setApprovedAmount] = useState(null); //After use enters approved amount, it is stored here
   const [approvedEbitda, setApprovedEbitda] = useState(null); //After use enters approved ebitda, it is stored here
-  const [approvedLeverageRatio, setApprovedLeverageRatio] = useState(null); //After use enters leverage ratio, it is stored here
-  const [approvedNetLeverageRatio, setApprovedNetLeverageRatio] =
-    useState(null); //After use enters net leverage ratio, it is stored here
-  const [approvedInterestCoverage, setApprovedInterestCoverage] =
-    useState(null); //After use enters interest coverage ratio, it is stored here
+  const [approvedLeverageRatio, setApprovedLeverageRatio] = useState(null); //After user enters leverage ratio, it is stored here
+  const [approvedNetLeverageRatio, setApprovedNetLeverageRatio] = useState(null); //After use enters net leverage ratio, it is stored here
+  const [approvedInterestCoverage, setApprovedInterestCoverage] = useState(null); //After use enters interest coverage ratio, it is stored here
   const [approvedAdvanceRate, setApprovedAdvanceRate] = useState(null); //After use enters approved amount, it is stored here
   const [approvedValue, setApprovedValue] = useState(null); //After use enters approved value (the value the bank assigned the loan), it is stored here
   const [selectedTrancheId, setSelectedTrancheId] = useState(null); // After user chooses loan tranche, related ID is set here
