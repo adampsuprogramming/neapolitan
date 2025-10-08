@@ -1,3 +1,7 @@
+// ************************************************************************
+// *  ST-3 – Test System Navigation                                       *
+// ************************************************************************
+
 it("Displays the correct navigation pages while navigating through the System", function () {
   cy.visit("localhost:3000");
   cy.get('#root [href="/borrowingbase/"]').click();

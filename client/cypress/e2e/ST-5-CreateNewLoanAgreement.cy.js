@@ -3,7 +3,6 @@
 // ************************************************************************
 
 it("submits a new loan agreement form", function () {
-  
   //Navigate to the borrower create page
   cy.visit("localhost:3000");
   cy.get('#root [href="/transactions/"]').click();
