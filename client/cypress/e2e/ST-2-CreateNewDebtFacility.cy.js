@@ -13,8 +13,8 @@ it("submits a new facility form and receives confirmation", function () {
 
   // Test that Facility Name input works and contains value inputted
   cy.get("#facility-name-input").click();
-  const randomNumber=Math.floor(Math.random() * 10000000)
-  const facilityName= `Test Facility ST-2 #${randomNumber}`
+  const randomNumber = Math.floor(Math.random() * 10000000);
+  const facilityName = `Test Facility ST-2 #${randomNumber}`;
   cy.get("#facility-name-input").type(facilityName);
   cy.get("#facility-name-input").should("have.value", facilityName);
 
