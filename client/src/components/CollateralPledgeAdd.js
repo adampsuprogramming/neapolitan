@@ -150,6 +150,9 @@ function CollateralPledgeAdd() {
               }}
               slotProps={{
                 textField: {
+                  inputProps: {
+                      "data-testid": "inclusion-date-picker",
+                    },
                   helperText: "MM/DD/YYYY",
                 },
               }}
