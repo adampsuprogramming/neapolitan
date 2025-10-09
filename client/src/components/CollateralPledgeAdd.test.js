@@ -1,3 +1,10 @@
+// ************************************************************************************************
+// *     UT-48 – Testing populating and submitting create Collateral Pledge form                  *
+// *     UT-49 - UT-49 – Testing Error Message if Inclusion Date is On or After Expiration Date   *
+// *     UT-50 – Testing Error Message if Outstanding Amount is Greater than Commitment Amount    *
+// *     UT-51 - Testing Error Message if Outstanding Amount is Greater than Approval Amount      *
+// ************************************************************************************************
+
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
 import CollateralPledgeAdd from "./CollateralPledgeAdd";
@@ -114,7 +121,7 @@ test("UT-48 - Testing PUT API Call to Collateral Pledge After Filling in Data fr
   expect(commitmentPledged.value).toBe("");
 });
 
-test("UT-49 - Testing Error Message if Inclusion Date is After Expiration Date", async () => {
+test("UT-49 - Testing Error Message if Inclusion Date Is On or After Expiration Date", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("loanapprovalquery")) {
       return Promise.resolve({
