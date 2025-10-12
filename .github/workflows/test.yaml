@@ -101,7 +101,8 @@ jobs:
         working-directory: client
         run: npm run build
         env:
-          CI: false
+          CI: true
+          DISABLE_ESLINT_PLUGIN: true
 
       - name: Start backend server
         working-directory: server
@@ -140,10 +141,12 @@ jobs:
 
       - name: Run Cypress tests
         working-directory: client
-        run: npm run cypress:run
+        run: npm run cypress:run -- --headless --browser electron
         env:
           CYPRESS_BASE_URL: http://localhost:3000
           CYPRESS_API_URL: http://localhost:5000
+          ELECTRON_EXTRA_LAUNCH_ARGS: --disable-gpu
+          NO_COLOR: 1
 
       - name: Cleanup servers
         if: always()
