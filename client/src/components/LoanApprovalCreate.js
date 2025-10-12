@@ -137,6 +137,10 @@ function LoanApprovalCreate() {
   }, [selectedFacility]);
 
   async function postApproval() {
+    if ((!selectedBorrower||!selectedLoanAgreement||!selectedLoanTranche||!selectedLender||!selectedFacility||!approvalDate||!approvalExpiration)) {
+      setMessage("Please input all required fields (denoted by *)");
+      return;
+    }
     // creates the loan approval name for access in the Collateral Pledge feature
     const approvalName = `${approvalDate} - ${lenderName} - ${selectedBorrower.legal_name}`;
 
@@ -284,14 +288,13 @@ function LoanApprovalCreate() {
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" />
+                <TextField {...params} label="Borrower Name" required/>
               )}
             />
 
             <Autocomplete
               disablePortal
               id="autocomplete-loan-agreeements"
-              required
               options={loanAgreementOptions}
               value={selectedLoanAgreement}
               sx={{ m: 1, minWidth: "450px" }}
@@ -306,14 +309,15 @@ function LoanApprovalCreate() {
                       ? "Loan Agreement"
                       : "Loan Agreement (Select Borrower First)"
                   }
+                required
                 />
+                
               )}
             />
 
             <Autocomplete
               disablePortal
               id="autocomplete-loan-tranches"
-              required
               options={loanTrancheOptions}
               value={selectedLoanTranche}
               sx={{ m: 1, minWidth: "450px" }}
@@ -328,6 +332,7 @@ function LoanApprovalCreate() {
                       ? "Loan Tranche"
                       : "Loan Tranche (Select Agreement First)"
                   }
+                  required
                 />
               )}
             />
@@ -340,21 +345,19 @@ function LoanApprovalCreate() {
             <Autocomplete
               disablePortal
               id="autocomplete-lender-name"
-              required
               options={lenderData}
               value={selectedLender}
               sx={{ m: 1, minWidth: "300px" }}
               onChange={handleLenderChange}
               getOptionLabel={(option) => option.lender_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Lender Name" />
+                <TextField {...params} label="Lender Name" required/>
               )}
             />
 
             <Autocomplete
               disablePortal
               id="autocomplete-facilities"
-              required
               options={facilityOptions}
               value={selectedFacility}
               sx={{ m: 1, minWidth: "450px" }}
@@ -368,7 +371,9 @@ function LoanApprovalCreate() {
                     selectedLender
                       ? "Loan Facilities"
                       : "Loan Facilities (Select Lender First)"
-                  }
+                      
+                  } 
+                  required
                 />
               )}
             />
@@ -387,6 +392,7 @@ function LoanApprovalCreate() {
                       "data-testid": "tranche-approval-date-picker",
                     },
                     helperText: "MM/DD/YYYY",
+                    required: true
                   },
                 }}
               />
@@ -405,6 +411,7 @@ function LoanApprovalCreate() {
                       "data-testid": "tranche-approval-expiration-picker",
                     },
                     helperText: "MM/DD/YYYY",
+                    required: true
                   },
                 }}
               />

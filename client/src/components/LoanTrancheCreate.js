@@ -79,7 +79,25 @@ function LoanTrancheCreate() {
     setSelectedAgreementId(selectedLoanAgreement.loan_agreement_id);
   }, [selectedLoanAgreement]);
 
+  // Clear floating rate values if changed to Fixed Rate and vice versa
+
+  useEffect(() => {
+    if (!rateType) return;
+    if (rateType === "Fixed Rate") {
+      setSpread("");
+      setFloor("");
+      setRefRate("");
+    }
+    if (rateType === "Floating Rate") {
+      setFixedRate("");
+    }
+  }, [rateType]);
+
   async function postFacility() {
+    if ((!trancheName||!selectedBorrower||!selectedLoanAgreement||!trancheType||!lienType||!trancheStart||!trancheMaturity)) {
+      setMessage("Please input all required fields (denoted by *)");
+      return;
+    }
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createloantranche`,
@@ -96,10 +114,10 @@ function LoanTrancheCreate() {
           interestCoverage: interestCoverage,
           rateType: rateType,
           fixedRate:
-            fixedRate != null ? Number((fixedRate / 100).toFixed(6)) : null,
-          spread: spread != null ? Number((spread / 100).toFixed(6)) : null,
-          floor: floor != null ? Number((floor / 100).toFixed(6)) : null,
-          refRate: refRate,
+            ((fixedRate != null) && (fixedRate != "")) ? Number((fixedRate / 100).toFixed(6)) : null,
+          spread: ((spread != null) && (spread != "")) ? Number((spread / 100).toFixed(6)) : null,
+          floor: ((floor != null) && (floor != "")) ? Number((floor / 100).toFixed(6)) : null,
+          refRate: refRate!= "" ? refRate: null,
         },
       );
       if (response.status === 201) {
@@ -192,28 +210,26 @@ function LoanTrancheCreate() {
             <Autocomplete
               disablePortal
               id="autocomplete-borrower-name"
-              required
               options={borrowerData}
               value={selectedBorrower}
               sx={{ m: 1, width: "350px" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" />
+                <TextField {...params} label="Borrower Name" required/>
               )}
             />
 
             <Autocomplete
               disablePortal
               id="autocomplete-loan-agreeements"
-              required
               options={loanAgreementOptions}
               value={selectedLoanAgreement}
               sx={{ m: 1, width: "450px" }}
               onChange={(event, newValue) => setSelectedLoanAgreement(newValue)}
               getOptionLabel={(option) => option.loan_agreement_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Loan Agreement" />
+                <TextField {...params} label="Loan Agreement" required/>
               )}
             />
           </div>
@@ -225,26 +241,24 @@ function LoanTrancheCreate() {
             <Autocomplete
               disablePortal
               id="autocomplete-tranche-type"
-              required
               options={["Term", "Delayed Draw", "Revolver"]}
               value={trancheType}
               sx={{ m: 1, width: "350px", marginTop: 4 }}
               onChange={(event, newValue) => setTrancheType(newValue)}
               renderInput={(params) => (
-                <TextField {...params} label="Tranche Type" />
+                <TextField {...params} label="Tranche Type" required/>
               )}
             />
 
             <Autocomplete
               disablePortal
               id="autocomplete-lien-type"
-              required
               options={["First Lien", "Second Lien", "Unsecured"]}
               value={lienType}
               sx={{ m: 1, width: "350px", marginTop: 4 }}
               onChange={(event, newValue) => setLienType(newValue)}
               renderInput={(params) => (
-                <TextField {...params} label="Lien Type" />
+                <TextField {...params} label="Lien Type" required/>
               )}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -255,10 +269,12 @@ function LoanTrancheCreate() {
                 onChange={(newDate) => {
                   setTrancheStart(newDate ? newDate.format("YYYY-MM-DD") : "");
                 }}
+                
                 slotProps={{
                   textField: {
                     inputProps: { "data-testid": "tranche-start-date-picker" },
                     helperText: "MM/DD/YYYY",
+                    required: true,
                   },
                 }}
               />
@@ -276,6 +292,7 @@ function LoanTrancheCreate() {
                     inputProps: {
                       "data-testid": "tranche-maturity-date-picker",
                     },
+                    required: true,
                     helperText: "MM/DD/YYYY",
                   },
                 }}
@@ -390,6 +407,7 @@ function LoanTrancheCreate() {
             customInput={TextField}
             id="fixed-rate-textfield"
             sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
+            disabled={!rateType || rateType === "Floating Rate"}
             value={fixedRate}
             onValueChange={(value) => setFixedRate(value.floatValue)}
             label="Fixed Coupon"
@@ -402,6 +420,7 @@ function LoanTrancheCreate() {
             customInput={TextField}
             id="spread-textfield"
             sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
+            disabled={!rateType || rateType === "Fixed Rate"}
             value={spread}
             onValueChange={(value) => setSpread(value.floatValue)}
             label="Spread"
@@ -414,6 +433,7 @@ function LoanTrancheCreate() {
             customInput={TextField}
             id="floor-textfield"
             sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
+            disabled={!rateType || rateType === "Fixed Rate"}
             value={floor}
             onValueChange={(value) => setFloor(value.floatValue)}
             label="Floor"
@@ -425,7 +445,7 @@ function LoanTrancheCreate() {
           <Autocomplete
             disablePortal
             id="autocomplete-ref-rate-type"
-            required
+            disabled={!rateType || rateType === "Fixed Rate"}
             options={["LIBOR", "PRIME"]}
             value={refRate}
             sx={{ m: 1, width: "200px", marginTop: 1, marginLeft: 9 }}

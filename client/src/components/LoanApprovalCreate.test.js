@@ -52,7 +52,7 @@ test("UT-40 – Populating borrower dropdown from API call -- /api/borrowerquery
     );
   });
 
-  const borrowerName = screen.getByLabelText("Borrower Name");
+  const borrowerName = screen.getByLabelText("Borrower Name *");
 
   fireEvent.mouseDown(borrowerName);
 
@@ -125,11 +125,11 @@ test("UT-41 – Populating loan agreement dropdown from API call -- /api/loanagr
     );
   });
 
-  const borrowerAutoComplete = screen.getByLabelText("Borrower Name");
+  const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
   fireEvent.mouseDown(borrowerAutoComplete);
   fireEvent.click(screen.getByText("Megaman Company"));
 
-  const loanAgreementName = screen.getByLabelText("Loan Agreement");
+  const loanAgreementName = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementName);
   expect(screen.getByText("Loan Agreement Name 2")).toBeInTheDocument();
 });
@@ -228,15 +228,15 @@ test("UT-42 – Populating loan tranche dropdown from API call -- /api/loantranc
     );
   });
 
-  const borrowerAutoComplete = screen.getByLabelText("Borrower Name");
+  const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
   fireEvent.mouseDown(borrowerAutoComplete);
   fireEvent.click(screen.getByText("Megaman Company"));
 
-  const loanAgreementName = screen.getByLabelText("Loan Agreement");
+  const loanAgreementName = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementName);
   fireEvent.click(screen.getByText("Loan Agreement Name 2"));
 
-  const loanTrancheName = screen.getByLabelText("Loan Tranche");
+  const loanTrancheName = screen.getByLabelText("Loan Tranche *");
   fireEvent.mouseDown(loanTrancheName);
   expect(screen.getByText("Tranche 2")).toBeInTheDocument();
 });
@@ -273,7 +273,7 @@ test("UT-43 – Populating lender name from API call -- /api/lenderQuery", async
     );
   });
 
-  const lenderName = screen.getByLabelText("Lender Name");
+  const lenderName = screen.getByLabelText("Lender Name *");
   fireEvent.mouseDown(lenderName);
   expect(screen.getByText("Lender 3")).toBeInTheDocument();
 });
@@ -350,11 +350,11 @@ test("UT-44 – Populating loan facilities dropdown -- /api/facilities", async (
     );
   });
 
-  const lenderAutoComplete = screen.getByLabelText("Lender Name");
+  const lenderAutoComplete = screen.getByLabelText("Lender Name *");
   fireEvent.mouseDown(lenderAutoComplete);
   fireEvent.click(screen.getByText("Lender 2"));
 
-  const facilityName = screen.getByLabelText("Loan Facilities");
+  const facilityName = screen.getByLabelText("Loan Facilities *");
   fireEvent.mouseDown(facilityName);
   expect(screen.getByText("Test Debt Facility B")).toBeInTheDocument();
 });
@@ -518,38 +518,38 @@ test("UT-45 – Testing populating and submitting create Loan Approval form", as
     );
   });
 
-  const borrowerAutoComplete = screen.getByLabelText("Borrower Name");
+  const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
   fireEvent.mouseDown(borrowerAutoComplete);
   fireEvent.click(screen.getByText("Megaman Company"));
   expect(borrowerAutoComplete.value).toBe("Megaman Company");
 
-  const loanAgreementName = screen.getByLabelText("Loan Agreement");
+  const loanAgreementName = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementName);
   fireEvent.click(screen.getByText("Loan Agreement Name 2"));
   expect(loanAgreementName.value).toBe("Loan Agreement Name 2");
 
-  const loanTrancheName = screen.getByLabelText("Loan Tranche");
+  const loanTrancheName = screen.getByLabelText("Loan Tranche *");
   fireEvent.mouseDown(loanTrancheName);
   fireEvent.click(screen.getByText("Tranche 2"));
   expect(loanTrancheName.value).toBe("Tranche 2");
 
-  const lenderAutoComplete = screen.getByLabelText("Lender Name");
+  const lenderAutoComplete = screen.getByLabelText("Lender Name *");
   fireEvent.mouseDown(lenderAutoComplete);
   fireEvent.click(screen.getByText("Lender 2"));
   expect(lenderAutoComplete.value).toBe("Lender 2");
 
-  const facilityName = screen.getByLabelText("Loan Facilities");
+  const facilityName = screen.getByLabelText("Loan Facilities *");
   fireEvent.mouseDown(facilityName);
   fireEvent.click(screen.getByText("Test Debt Facility B"));
   expect(facilityName.value).toBe("Test Debt Facility B");
 
-  const approvalDateInput = screen.getByLabelText("Approval Date", {
+  const approvalDateInput = screen.getByLabelText("Approval Date *", {
     selector: "input",
   });
   fireEvent.change(approvalDateInput, { target: { value: "09/02/2025" } });
   expect(approvalDateInput.value).toBe("09/02/2025");
 
-  const approvalDateExpiration = screen.getByLabelText("Approval Expiration", {
+  const approvalDateExpiration = screen.getByLabelText("Approval Expiration *", {
     selector: "input",
   });
   fireEvent.change(approvalDateExpiration, { target: { value: "11/02/2025" } });

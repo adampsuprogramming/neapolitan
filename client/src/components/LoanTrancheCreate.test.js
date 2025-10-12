@@ -55,7 +55,7 @@ test("UT-33 – Populating search options for Borrower Name from API call", asyn
     );
   });
 
-  const borrowerName = screen.getByLabelText("Borrower Name");
+  const borrowerName = screen.getByLabelText("Borrower Name *");
 
   fireEvent.mouseDown(borrowerName);
 
@@ -129,11 +129,11 @@ test("UT-34 – Populating search options for Loan Agreement from API call", asy
     );
   });
 
-  const borrowerAutoComplete = screen.getByLabelText("Borrower Name");
+  const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
   fireEvent.mouseDown(borrowerAutoComplete);
   fireEvent.click(screen.getByText("The Triforce Company"));
 
-  const loanAgreementName = screen.getByLabelText("Loan Agreement");
+  const loanAgreementName = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementName);
   expect(
     screen.getByText("Term Loan A Facility with The Triforce Co."),
@@ -214,13 +214,13 @@ test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rat
   expect(loanTrancheNameInput.value).toBe("Senior Term Loan - The Link Co.");
 
   // Find autocomplete box for borrower name and select borower name
-  const borrowerAutoComplete = screen.getByLabelText("Borrower Name");
+  const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
   fireEvent.mouseDown(borrowerAutoComplete);
   fireEvent.click(screen.getByText("The Link Company"));
   expect(borrowerAutoComplete.value).toBe("The Link Company");
 
   // Find autocomplete box for loan agreement name and select loan agreement
-  const loanAgreementAutocomplete = screen.getByLabelText("Loan Agreement");
+  const loanAgreementAutocomplete = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementAutocomplete);
   fireEvent.click(screen.getByText("Term Loan B Facility with Link Co."));
   expect(loanAgreementAutocomplete.value).toBe(
@@ -228,26 +228,26 @@ test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rat
   );
 
   // Find autocomplete box for Tranche Type and make selection
-  const trancheTypeAutocomplete = screen.getByLabelText("Tranche Type");
+  const trancheTypeAutocomplete = screen.getByLabelText("Tranche Type *");
   fireEvent.mouseDown(trancheTypeAutocomplete);
   fireEvent.click(screen.getByText("Term"));
   expect(trancheTypeAutocomplete.value).toBe("Term");
 
   // Find autocomplete box for Lien Type and make selection
-  const lienTypeAutocomplete = screen.getByLabelText("Lien Type");
+  const lienTypeAutocomplete = screen.getByLabelText("Lien Type *");
   fireEvent.mouseDown(lienTypeAutocomplete);
   fireEvent.click(screen.getByText("First Lien"));
   expect(lienTypeAutocomplete.value).toBe("First Lien");
 
   // Find autocomplete box for tranche start date input and enter date
-  const startDateInput = screen.getByLabelText("Tranche Start Date", {
+  const startDateInput = screen.getByLabelText("Tranche Start Date *", {
     selector: "input",
   });
   fireEvent.change(startDateInput, { target: { value: "10/31/2025" } });
   expect(startDateInput.value).toBe("10/31/2025");
 
   // Find autocomplete box for tranche maturity date input and enter date
-  const maturityDateInput = screen.getByLabelText("Tranche Maturity Date", {
+  const maturityDateInput = screen.getByLabelText("Tranche Maturity Date *", {
     selector: "input",
   });
   fireEvent.change(maturityDateInput, { target: { value: "10/31/2030" } });
@@ -387,7 +387,7 @@ test("UT-36 – Test to ensure autocomplete works if there is a borrower with a 
     );
   });
 
-  const borrowerName = screen.getByLabelText("Borrower Name");
+  const borrowerName = screen.getByLabelText("Borrower Name *");
 
   fireEvent.mouseDown(borrowerName);
 
@@ -457,11 +457,11 @@ test("UT-37 – Test to ensure autocomplete works if there is one loan agreement
     );
   });
 
-  const borrowerAutoComplete = screen.getByLabelText("Borrower Name");
+  const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
   fireEvent.mouseDown(borrowerAutoComplete);
   fireEvent.click(screen.getByText("The Triforce Company"));
 
-  const loanAgreementName = screen.getByLabelText("Loan Agreement");
+  const loanAgreementName = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementName);
   expect(
     screen.getByText("Term Loan A Facility with The Triforce Co."),
@@ -542,13 +542,13 @@ test("UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)"
   expect(loanTrancheNameInput.value).toBe("Senior Term Loan - The Link Co.");
 
   // Find autocomplete box for borrower name and select borower name
-  const borrowerAutoComplete = screen.getByLabelText("Borrower Name");
+  const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
   fireEvent.mouseDown(borrowerAutoComplete);
   fireEvent.click(screen.getByText("The Link Company"));
   expect(borrowerAutoComplete.value).toBe("The Link Company");
 
   // Find autocomplete box for loan agreement name and select loan agreement
-  const loanAgreementAutocomplete = screen.getByLabelText("Loan Agreement");
+  const loanAgreementAutocomplete = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementAutocomplete);
   fireEvent.click(screen.getByText("Term Loan B Facility with Link Co."));
   expect(loanAgreementAutocomplete.value).toBe(
@@ -556,26 +556,26 @@ test("UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)"
   );
 
   // Find autocomplete box for Tranche Type and make selection
-  const trancheTypeAutocomplete = screen.getByLabelText("Tranche Type");
+  const trancheTypeAutocomplete = screen.getByLabelText("Tranche Type *");
   fireEvent.mouseDown(trancheTypeAutocomplete);
   fireEvent.click(screen.getByText("Term"));
   expect(trancheTypeAutocomplete.value).toBe("Term");
 
   // Find autocomplete box for Lien Type and make selection
-  const lienTypeAutocomplete = screen.getByLabelText("Lien Type");
+  const lienTypeAutocomplete = screen.getByLabelText("Lien Type *");
   fireEvent.mouseDown(lienTypeAutocomplete);
   fireEvent.click(screen.getByText("First Lien"));
   expect(lienTypeAutocomplete.value).toBe("First Lien");
 
   // Find autocomplete box for tranche start date input and enter date
-  const startDateInput = screen.getByLabelText("Tranche Start Date", {
+  const startDateInput = screen.getByLabelText("Tranche Start Date *", {
     selector: "input",
   });
   fireEvent.change(startDateInput, { target: { value: "10/31/2025" } });
   expect(startDateInput.value).toBe("10/31/2025");
 
   // Find autocomplete box for tranche maturity date input and enter date
-  const maturityDateInput = screen.getByLabelText("Tranche Maturity Date", {
+  const maturityDateInput = screen.getByLabelText("Tranche Maturity Date *", {
     selector: "input",
   });
   fireEvent.change(maturityDateInput, { target: { value: "10/31/2030" } });

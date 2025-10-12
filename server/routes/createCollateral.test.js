@@ -22,7 +22,7 @@ afterAll(async () => {
 describe("POST /api/createCollateral", () => {
   it("accepts data from a mocked api put and then runs an insert query on the database", async () => {
     mockedQuery
-      .mockResolvedValueOnce({ rows: [{ collateral_id: "9876" }] }) //first insert sends back debt facility primary key
+      .mockResolvedValueOnce({ rows: [{ collateral_id: "9876" }] }) //first insert sends back collateral's primary key
       .mockResolvedValueOnce({}); // second returns nothing (like the query actual query)
 
     const response = await request(app).post("/api/createCollateral").send({
