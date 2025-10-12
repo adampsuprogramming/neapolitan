@@ -122,7 +122,7 @@ function LoanTrancheCreate() {
       );
       if (response.status === 201) {
         clearData();
-        setMessage("Loan Agreement Created Successfully");
+        setMessage("Loan Tranche Created Successfully");
       }
     } catch (error) {
       setMessage("There was an error creating the loan agreement.");
