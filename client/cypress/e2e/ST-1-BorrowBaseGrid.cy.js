@@ -32,3 +32,7 @@ describe("template spec", () => {
     cy.get(".ag-center-cols-container .ag-row").should("have.length", 19);
   });
 });
+
+it("createloanagreement", function () {
+  cy.visit("localhost:3000");
+});

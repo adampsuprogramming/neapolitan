@@ -13,8 +13,10 @@ it("submits a new facility form and receives confirmation", function () {
 
   // Test that Facility Name input works and contains value inputted
   cy.get("#facility-name-input").click();
-  cy.get("#facility-name-input").type("Test Facility ST-2");
-  cy.get("#facility-name-input").should("have.value", "Test Facility ST-2");
+  const randomNumber = Math.floor(Math.random() * 10000000);
+  const facilityName = `Test Facility ST-2 #${randomNumber}`;
+  cy.get("#facility-name-input").type(facilityName);
+  cy.get("#facility-name-input").should("have.value", facilityName);
 
   // Just click on the 15th of the current month and asserting that the calendar worked
   // using cypress with MUI month and date navigation is incredibly difficult.

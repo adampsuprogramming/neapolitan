@@ -341,7 +341,7 @@
   background-color: #f6ae2d;
   display: flex;
   gap: 22px;
-  left: 840px;
+  left: 1044px;
   position: relative;
   top: 2px;
   padding-left: 20px;
@@ -377,4 +377,39 @@
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 800;
+}
+
+.loan-approval-sub-nav {
+  font-family: "Inter", sans-serif;
+  background-color: #f6ae2d;
+  display: flex;
+  gap: 22px;
+  left: 802px;
+  position: relative;
+  top: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  max-width: 175px;
+  border-radius: 20px;
+}
+
+.loan-approval-sub-nav a:link,
+.loan-approval-sub-nav a:visited,
+.loan-approval-sub-nav a:hover,
+.loan-approval-sub-nav a:active {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.loan-approval-sub-nav a.loan-approval-sub-nav-highlighted {
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
 }

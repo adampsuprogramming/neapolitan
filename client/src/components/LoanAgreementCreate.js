@@ -123,6 +123,7 @@ function LoanAgreementCreate() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Loan Agreement Date"
+                id="loan-agreement-date"
                 required
                 sx={{ m: 1, width: "30ch", marginTop: 4 }}
                 value={agreementDate ? dayjs(agreementDate) : null} // This is needed if date is not yet a valid date or a crash occurs

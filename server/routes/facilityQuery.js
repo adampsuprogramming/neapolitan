@@ -11,6 +11,7 @@ select
 	d.debt_facility_name,
 	d.debt_facility_id,
 	l.lender_name,
+	l.lender_id,
 	dfb.outstanding_amount,
 	dfo.overall_commitment_amount 
 from debt_facilities d
