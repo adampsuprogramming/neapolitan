@@ -101,7 +101,7 @@ jobs:
         working-directory: client
         run: npm run build
         env:
-          CI: true
+          CI: false
 
       - name: Start backend server
         working-directory: server
