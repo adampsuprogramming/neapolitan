@@ -5,6 +5,9 @@
 // *     UT-43 – Populating lender name from API call -- /api/lenderQuery                         *
 // *     UT-44 – Populating loan facilities dropdown -- /api/facilities                           *
 // *     UT-45 – Testing populating and submitting create Loan Approval form                      *
+// *     UT-59 - Ensure error message is displayed if data missing from submission                *
+// *     UT-60 - Testing server error handling                                                    *
+// *     UT-61 - Testing APIs throwing error                                                      *
 // ************************************************************************************************
 
 import axios from "axios";
@@ -14,7 +17,7 @@ import LoanApprovalCreate from "./LoanApprovalCreate";
 
 jest.mock("axios");
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -48,7 +51,7 @@ test("UT-40 – Populating borrower dropdown from API call -- /api/borrowerquery
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
@@ -115,13 +118,13 @@ test("UT-41 – Populating loan agreement dropdown from API call -- /api/loanagr
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
@@ -212,19 +215,19 @@ test("UT-42 – Populating loan tranche dropdown from API call -- /api/loantranc
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loantranchequery",
+      "http://localhost:5000/api/loantranchequery",
     );
   });
 
@@ -269,7 +272,7 @@ test("UT-43 – Populating lender name from API call -- /api/lenderQuery", async
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
@@ -340,13 +343,13 @@ test("UT-44 – Populating loan facilities dropdown -- /api/facilities", async (
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/facilities",
+      "http://localhost:5000/api/facilities",
     );
   });
 
@@ -490,31 +493,31 @@ test("UT-45 – Testing populating and submitting create Loan Approval form", as
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loantranchequery",
+      "http://localhost:5000/api/loantranchequery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/facilities",
+      "http://localhost:5000/api/facilities",
     );
   });
 
@@ -774,31 +777,31 @@ test("UT-59 – This is a unit test to ensure that error message is correctly di
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loantranchequery",
+      "http://localhost:5000/api/loantranchequery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/facilities",
+      "http://localhost:5000/api/facilities",
     );
   });
 
@@ -942,31 +945,31 @@ test("UT-60 – Testing server error handling", async () => {
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loantranchequery",
+      "http://localhost:5000/api/loantranchequery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/facilities",
+      "http://localhost:5000/api/facilities",
     );
   });
 
@@ -1071,31 +1074,31 @@ test("UT-61 – Testing APIs throwing error", async () => {
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loantranchequery",
+      "http://localhost:5000/api/loantranchequery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/facilities",
+      "http://localhost:5000/api/facilities",
     );
   });
 

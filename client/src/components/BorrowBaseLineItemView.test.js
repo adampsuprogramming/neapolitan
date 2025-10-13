@@ -16,7 +16,7 @@ jest.mock("axios", () => ({
   post: jest.fn(() => Promise.resolve({ data: [] })),
 }));
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -74,7 +74,7 @@ test("UT-1: Portfolio data correctly loads from API on page load into dropdown m
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/facilities",
+      "http://localhost:5000/api/facilities",
     );
   });
 
@@ -139,7 +139,7 @@ test("UT-2: Facility data correctly loads into second dropdown menu after choice
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/facilities",
+      "http://localhost:5000/api/facilities",
     );
   });
 

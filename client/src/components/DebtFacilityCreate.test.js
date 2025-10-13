@@ -14,7 +14,7 @@ import userEvent from "@testing-library/user-event";
 
 jest.mock("axios");
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -53,7 +53,7 @@ test("UT-4 – Populating search options for Bank Name from API call", async () 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
@@ -93,7 +93,7 @@ test("UT-5 – Populating search options for Portfolio from API call", async () 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/portfolioquery",
+      "http://localhost:5000/api/portfolioquery",
     );
   });
 
@@ -152,13 +152,13 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/portfolioquery",
+      "http://localhost:5000/api/portfolioquery",
     );
   });
 
@@ -321,7 +321,7 @@ test("UT-13 – Test to ensure autocomplete works if there is one lender with a 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
@@ -353,7 +353,7 @@ test("UT-14 – Test to ensure autocomplete works if there is one portfolio with
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/portfolioquery",
+      "http://localhost:5000/api/portfolioquery",
     );
   });
 

@@ -11,7 +11,7 @@ import { fireEvent } from "@testing-library/react";
 
 jest.mock("axios");
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -45,7 +45,7 @@ test("UT-26 – Populating borrower dropdown from API call -- /api/borrowerquery
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
@@ -84,7 +84,7 @@ test("UT-27 - Testing PUT API Call to createloanagreement after filling out form
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
@@ -161,7 +161,7 @@ test("UT-28 – Populating search options from API call -- Borrower Name but wit
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
@@ -200,7 +200,7 @@ test("UT-58 - Testing error for missing agreement data", async () => {
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 

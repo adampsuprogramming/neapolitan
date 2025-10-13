@@ -15,7 +15,7 @@ import { fireEvent } from "@testing-library/react";
 
 jest.mock("axios");
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -49,7 +49,7 @@ test("UT-18 – Populating search options from API call -- selectedCorpHQId", as
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/regionquery",
+      "http://localhost:5000/api/regionquery",
     );
   });
 
@@ -88,7 +88,7 @@ test("UT-19 – Populating search options from API call -- selectedRevRegion", a
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/regionquery",
+      "http://localhost:5000/api/regionquery",
     );
   });
 
@@ -127,7 +127,7 @@ test("UT-20 – Populating search options from API call -- NAICS subsector", asy
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/subsectorquery",
+      "http://localhost:5000/api/subsectorquery",
     );
   });
 
@@ -185,13 +185,13 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/regionquery",
+      "http://localhost:5000/api/regionquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/subsectorquery",
+      "http://localhost:5000/api/subsectorquery",
     );
   });
 
@@ -301,7 +301,7 @@ test("UT-22 – Populating search options from API call for NAICS subsector but 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/subsectorquery",
+      "http://localhost:5000/api/subsectorquery",
     );
   });
 
@@ -338,7 +338,7 @@ test("UT-23 – Populating search options from API call for Corporate Headquarte
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/regionquery",
+      "http://localhost:5000/api/regionquery",
     );
   });
 
@@ -396,13 +396,13 @@ test("UT-57 – Testing error for missing borrower data", async () => {
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/regionquery",
+      "http://localhost:5000/api/regionquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/subsectorquery",
+      "http://localhost:5000/api/subsectorquery",
     );
   });
 

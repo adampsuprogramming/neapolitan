@@ -16,7 +16,7 @@ import LoanTrancheCreate from "./LoanTrancheCreate";
 
 jest.mock("axios");
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -51,7 +51,7 @@ test("UT-33 – Populating search options for Borrower Name from API call", asyn
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
@@ -119,13 +119,13 @@ test("UT-34 – Populating search options for Loan Agreement from API call", asy
   render(<LoanTrancheCreate />);
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
@@ -196,13 +196,13 @@ test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rat
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
@@ -383,7 +383,7 @@ test("UT-36 – Test to ensure autocomplete works if there is a borrower with a 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
@@ -447,13 +447,13 @@ test("UT-37 – Test to ensure autocomplete works if there is one loan agreement
   render(<LoanTrancheCreate />);
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
@@ -524,13 +524,13 @@ test("UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)"
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/borrowerquery",
+      "http://localhost:5000/api/borrowerquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanagreementquery",
+      "http://localhost:5000/api/loanagreementquery",
     );
   });
 
