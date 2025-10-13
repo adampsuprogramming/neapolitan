@@ -51,6 +51,10 @@ function LoanAgreementCreate() {
   // The following axios post function is run when the user clicks save
 
   async function postLoanAgreement() {
+    if(!selectedBorrower || !loanAgreementTitle || !agreementDate) {
+      setMessage("Not Saved - Please fill out all required fields - denoted by *");
+      return;
+    }
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createloanagreement`,
@@ -98,14 +102,13 @@ function LoanAgreementCreate() {
             <Autocomplete
               disablePortal
               id="borrower-name"
-              required
               options={borrowerData}
               value={selectedBorrower}
               sx={{ m: 1, width: "35ch" }}
               onChange={(event, newValue) => setSelectedBorrower(newValue)}
               getOptionLabel={(option) => option.legal_name} // doesn't need '|| ""' since we are filtering nulls above
               renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" />
+                <TextField {...params} label="Borrower Name" required/>
               )}
             />
 
@@ -132,6 +135,7 @@ function LoanAgreementCreate() {
                 }}
                 slotProps={{
                   textField: {
+                    required: true,
                     inputProps: { "data-testid": "agreement-date-picker" },
                     helperText: "MM/DD/YYYY",
                   },
@@ -184,9 +188,10 @@ function LoanAgreementCreate() {
             </Button>
           </div>
 
+        </Box>
+        
           {/* Displays message below in a success or failure situation */}
           {message && <div className="alertMessage">{message}</div>}
-        </Box>
       </Box>
     </>
   );
