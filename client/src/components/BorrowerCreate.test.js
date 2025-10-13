@@ -414,6 +414,4 @@ test("UT-57 – Testing error for missing borrower data", async () => {
     "Not Saved - Please fill out all required fields - denoted by *",
   );
   expect(errorMessage).toBeVisible();
-
 });
-

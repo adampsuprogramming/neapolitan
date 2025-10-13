@@ -51,8 +51,10 @@ function LoanAgreementCreate() {
   // The following axios post function is run when the user clicks save
 
   async function postLoanAgreement() {
-    if(!selectedBorrower || !loanAgreementTitle || !agreementDate) {
-      setMessage("Not Saved - Please fill out all required fields - denoted by *");
+    if (!selectedBorrower || !loanAgreementTitle || !agreementDate) {
+      setMessage(
+        "Not Saved - Please fill out all required fields - denoted by *",
+      );
       return;
     }
     try {
@@ -108,7 +110,7 @@ function LoanAgreementCreate() {
               onChange={(event, newValue) => setSelectedBorrower(newValue)}
               getOptionLabel={(option) => option.legal_name} // doesn't need '|| ""' since we are filtering nulls above
               renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required/>
+                <TextField {...params} label="Borrower Name" required />
               )}
             />
 
@@ -187,11 +189,10 @@ function LoanAgreementCreate() {
               Cancel
             </Button>
           </div>
-
         </Box>
-        
-          {/* Displays message below in a success or failure situation */}
-          {message && <div className="alertMessage">{message}</div>}
+
+        {/* Displays message below in a success or failure situation */}
+        {message && <div className="alertMessage">{message}</div>}
       </Box>
     </>
   );

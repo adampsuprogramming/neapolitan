@@ -137,8 +137,18 @@ function LoanApprovalCreate() {
   }, [selectedFacility]);
 
   async function postApproval() {
-    if ((!selectedBorrower||!selectedLoanAgreement||!selectedLoanTranche||!selectedLender||!selectedFacility||!approvalDate||!approvalExpiration)) {
-      setMessage("Not Saved - Please fill out all required fields - denoted by *");
+    if (
+      !selectedBorrower ||
+      !selectedLoanAgreement ||
+      !selectedLoanTranche ||
+      !selectedLender ||
+      !selectedFacility ||
+      !approvalDate ||
+      !approvalExpiration
+    ) {
+      setMessage(
+        "Not Saved - Please fill out all required fields - denoted by *",
+      );
       return;
     }
     // creates the loan approval name for access in the Collateral Pledge feature
@@ -288,7 +298,7 @@ function LoanApprovalCreate() {
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required/>
+                <TextField {...params} label="Borrower Name" required />
               )}
             />
 
@@ -309,9 +319,8 @@ function LoanApprovalCreate() {
                       ? "Loan Agreement"
                       : "Loan Agreement (Select Borrower First)"
                   }
-                required
+                  required
                 />
-                
               )}
             />
 
@@ -351,7 +360,7 @@ function LoanApprovalCreate() {
               onChange={handleLenderChange}
               getOptionLabel={(option) => option.lender_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Lender Name" required/>
+                <TextField {...params} label="Lender Name" required />
               )}
             />
 
@@ -371,8 +380,7 @@ function LoanApprovalCreate() {
                     selectedLender
                       ? "Loan Facilities"
                       : "Loan Facilities (Select Lender First)"
-                      
-                  } 
+                  }
                   required
                 />
               )}
@@ -392,7 +400,7 @@ function LoanApprovalCreate() {
                       "data-testid": "tranche-approval-date-picker",
                     },
                     helperText: "MM/DD/YYYY",
-                    required: true
+                    required: true,
                   },
                 }}
               />
@@ -411,7 +419,7 @@ function LoanApprovalCreate() {
                       "data-testid": "tranche-approval-expiration-picker",
                     },
                     helperText: "MM/DD/YYYY",
-                    required: true
+                    required: true,
                   },
                 }}
               />

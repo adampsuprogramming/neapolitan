@@ -21,6 +21,8 @@ const loanTrancheQuery = require("./routes/loanTrancheQuery");
 const createLoanApproval = require("./routes/createLoanApproval");
 const loanApprovalQuery = require("./routes/loanApprovalQuery");
 const createCollateral = require("./routes/createCollateral");
+const rateDataQuery = require("./routes/rateDataQuery");
+const createRateChange = require("./routes/createRateChange");
 
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((origin) => origin.trim())
@@ -72,5 +74,7 @@ app.use(loanTrancheQuery);
 app.use(createLoanApproval);
 app.use(loanApprovalQuery);
 app.use(createCollateral);
+app.use(rateDataQuery);
+app.use(createRateChange);
 
 module.exports = app;

@@ -549,9 +549,12 @@ test("UT-45 – Testing populating and submitting create Loan Approval form", as
   fireEvent.change(approvalDateInput, { target: { value: "09/02/2025" } });
   expect(approvalDateInput.value).toBe("09/02/2025");
 
-  const approvalDateExpiration = screen.getByLabelText("Approval Expiration *", {
-    selector: "input",
-  });
+  const approvalDateExpiration = screen.getByLabelText(
+    "Approval Expiration *",
+    {
+      selector: "input",
+    },
+  );
   fireEvent.change(approvalDateExpiration, { target: { value: "11/02/2025" } });
   expect(approvalDateExpiration.value).toBe("11/02/2025");
 
@@ -808,8 +811,6 @@ test("UT-59 – This is a unit test to ensure that error message is correctly di
   expect(errorMessage).toBeVisible();
 });
 
-
-
 test("UT-60 – Testing server error handling", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
@@ -1000,9 +1001,12 @@ test("UT-60 – Testing server error handling", async () => {
   fireEvent.change(approvalDateInput, { target: { value: "09/02/2025" } });
   expect(approvalDateInput.value).toBe("09/02/2025");
 
-  const approvalDateExpiration = screen.getByLabelText("Approval Expiration *", {
-    selector: "input",
-  });
+  const approvalDateExpiration = screen.getByLabelText(
+    "Approval Expiration *",
+    {
+      selector: "input",
+    },
+  );
   fireEvent.change(approvalDateExpiration, { target: { value: "11/02/2025" } });
   expect(approvalDateExpiration.value).toBe("11/02/2025");
 
@@ -1055,14 +1059,13 @@ test("UT-60 – Testing server error handling", async () => {
 
   await waitFor(() => {
     expect(
-      screen.getByText("There was an error creating the loan approval.")).toBeVisible();
-    
-  })
+      screen.getByText("There was an error creating the loan approval."),
+    ).toBeVisible();
+  });
 });
 
 test("UT-61 – Testing APIs throwing error", async () => {
   axios.get.mockRejectedValue(new Error("API Get Error"));
-
 
   render(<LoanApprovalCreate />);
 
@@ -1096,8 +1099,6 @@ test("UT-61 – Testing APIs throwing error", async () => {
     );
   });
 
-  const errorMessage = screen.getByText(
-        "Error fetching data from server"
-  );
+  const errorMessage = screen.getByText("Error fetching data from server");
   expect(errorMessage).toBeVisible();
 });

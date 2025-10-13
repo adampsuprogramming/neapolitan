@@ -172,7 +172,6 @@ test("UT-28 – Populating search options from API call -- Borrower Name but wit
   expect(screen.getByText("Megaman Company")).toBeInTheDocument();
 });
 
-
 test("UT-58 - Testing error for missing agreement data", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
@@ -204,7 +203,7 @@ test("UT-58 - Testing error for missing agreement data", async () => {
       "http://localhost:3000/api/borrowerquery",
     );
   });
-  
+
   // simulate save click
   const saveButton = screen.getByText("Save");
   fireEvent.click(saveButton);
@@ -213,6 +212,4 @@ test("UT-58 - Testing error for missing agreement data", async () => {
     "Not Saved - Please fill out all required fields - denoted by *",
   );
   expect(errorMessage).toBeVisible();
-
-
 });
