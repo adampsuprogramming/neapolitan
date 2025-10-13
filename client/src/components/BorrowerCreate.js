@@ -88,6 +88,18 @@ function BorrowerCreate() {
   // The following axios post function is run when the user clicks save
 
   async function postBorrower() {
+    if (!legalName || !selectedCorpHQId || !selectedCorpHQRegion || !selectedNaicsSubsector) {
+      setMessage("Not Saved - Please fill out all required fields - denoted by *");
+      return;
+    }
+    if (isPublicBorrower && !tickerSymbol) {
+      setMessage("Not Saved - If borrower is public, a ticker symbol must be entered.");
+      return;
+    }
+    if (!isPublicBorrower && tickerSymbol) {
+      setMessage("Not Saved - A ticker symbol has been entered, but borrower has not be listed as public.");
+      return;
+    }
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createborrower`,
@@ -148,7 +160,6 @@ function BorrowerCreate() {
             />
 
             <TextField
-              required
               value={shortName}
               onChange={(event) => setShortName(event.target.value)}
               id="short-name-input"
@@ -169,7 +180,7 @@ function BorrowerCreate() {
               onChange={(event, newValue) => setSelectedCorpHQRegion(newValue)}
               getOptionLabel={(option) => option.region_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Corporate Headquarters" />
+                <TextField {...params} label="Corporate Headquarters" required/>
               )}
             />
           </div>
@@ -185,7 +196,7 @@ function BorrowerCreate() {
               onChange={(event, newValue) => setSelectedRevRegion(newValue)}
               getOptionLabel={(option) => option.region_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Primary Geography (Revenue)" />
+                <TextField {...params} label="Primary Geography (Revenue) " required/>
               )}
             />
             <Autocomplete
@@ -194,13 +205,13 @@ function BorrowerCreate() {
               required
               options={naicsSubSectorData}
               value={selectedNaicsSubsector}
-              sx={{ m: 1, width: "35ch", marginTop: 4 }}
+              sx={{ m: 1, width: "40ch", marginTop: 4 }}
               onChange={(event, newValue) =>
                 setSelectedNaicsSubsector(newValue)
               }
-              getOptionLabel={(option) => option.naics_subsector_name || ""}
+              getOptionLabel={(option) => `${option.naics_subsector_id} - ${option.naics_subsector_name}` || ""}
               renderInput={(params) => (
-                <TextField {...params} label="NAICS Subsector" />
+                <TextField {...params} label="NAICS Subsector Code" required/>
               )}
             />
           </div>
@@ -235,6 +246,7 @@ function BorrowerCreate() {
 
           <TextField
             sx={{ m: 1, width: "30ch", marginLeft: 6, width: "22ch" }}
+            required={isPublicBorrower}
             id="ticker-symbol"
             value={tickerSymbol}
             onChange={(event) => setTickerSymbol(event.target.value)}

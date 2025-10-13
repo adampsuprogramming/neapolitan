@@ -53,7 +53,7 @@ test("UT-18 – Populating search options from API call -- selectedCorpHQId", as
     );
   });
 
-  const corpHQ = screen.getByLabelText("Corporate Headquarters");
+  const corpHQ = screen.getByLabelText("Corporate Headquarters *");
 
   fireEvent.mouseDown(corpHQ);
 
@@ -92,7 +92,7 @@ test("UT-19 – Populating search options from API call -- selectedRevRegion", a
     );
   });
 
-  const revGeography = screen.getByLabelText("Primary Geography (Revenue)");
+  const revGeography = screen.getByLabelText("Primary Geography (Revenue) *");
 
   fireEvent.mouseDown(revGeography);
 
@@ -131,11 +131,11 @@ test("UT-20 – Populating search options from API call -- NAICS subsector", asy
     );
   });
 
-  const naicsSubsector = screen.getByLabelText("NAICS Subsector");
+  const naicsSubsector = screen.getByLabelText("NAICS Subsector Code *");
 
   fireEvent.mouseDown(naicsSubsector);
 
-  expect(screen.getByText("Improv Comedy")).toBeInTheDocument();
+  expect(screen.getByText("333 - Improv Comedy")).toBeInTheDocument();
 });
 
 test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form", async () => {
@@ -203,31 +203,31 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
   expect(borrowerLongNameInput.value).toBe("The BioShock Company");
 
   // Find borrower nickname and input borrow
-  const borrowerNickNameInput = screen.getByLabelText("Borrower Nickname *");
+  const borrowerNickNameInput = screen.getByLabelText("Borrower Nickname");
   fireEvent.change(borrowerNickNameInput, {
     target: { value: "BioShock Co." },
   });
   expect(borrowerNickNameInput.value).toBe("BioShock Co.");
 
   // Find autocomplete box for Corporate HQ and Select
-  const corpHqAutocomplete = screen.getByLabelText("Corporate Headquarters");
+  const corpHqAutocomplete = screen.getByLabelText("Corporate Headquarters *");
   fireEvent.mouseDown(corpHqAutocomplete);
   fireEvent.click(screen.getByText("Labyrinth"));
   expect(corpHqAutocomplete.value).toBe("Labyrinth");
 
   // Find autocomplete box for Primary Geography (Revenue) and Select
   const primaryGeoRevAutocomplete = screen.getByLabelText(
-    "Primary Geography (Revenue)",
+    "Primary Geography (Revenue) *",
   );
   fireEvent.mouseDown(primaryGeoRevAutocomplete);
   fireEvent.click(screen.getByText("Middle Earth"));
   expect(primaryGeoRevAutocomplete.value).toBe("Middle Earth");
 
   // Find autocomplete box for NAICS Subsector and Select
-  const naicsSubsector = screen.getByLabelText("NAICS Subsector");
+  const naicsSubsector = screen.getByLabelText("NAICS Subsector Code *");
   fireEvent.mouseDown(naicsSubsector);
-  fireEvent.click(screen.getByText("Croissant Making"));
-  expect(naicsSubsector.value).toBe("Croissant Making");
+  fireEvent.click(screen.getByText("222 - Croissant Making"));
+  expect(naicsSubsector.value).toBe("222 - Croissant Making");
 
   // Find Toggle for Public Borrower and click
   const togglePublic = screen.getByLabelText("Public Borrower");
@@ -235,7 +235,7 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
   expect(togglePublic).toBeChecked();
 
   // Find Ticker Symbol and Input Text
-  const tickerSymbolInput = screen.getByLabelText("Ticker Symbol");
+  const tickerSymbolInput = screen.getByLabelText("Ticker Symbol *");
   fireEvent.change(tickerSymbolInput, {
     target: { value: "ABC" },
   });
@@ -305,11 +305,11 @@ test("UT-22 – Populating search options from API call for NAICS subsector but 
     );
   });
 
-  const naicsSubsector = screen.getByLabelText("NAICS Subsector");
+  const naicsSubsector = screen.getByLabelText("NAICS Subsector Code *");
 
   fireEvent.mouseDown(naicsSubsector);
 
-  expect(screen.getByText("Improv Comedy")).toBeInTheDocument();
+  expect(screen.getByText("333 - Improv Comedy")).toBeInTheDocument();
 });
 
 test("UT-23 – Populating search options from API call for Corporate Headquarters -- but with some null data", async () => {
@@ -342,22 +342,24 @@ test("UT-23 – Populating search options from API call for Corporate Headquarte
     );
   });
 
-  const corpHQ = screen.getByLabelText("Corporate Headquarters");
+  const corpHQ = screen.getByLabelText("Corporate Headquarters *");
 
   fireEvent.mouseDown(corpHQ);
 
   expect(screen.getByText("Middle Earth")).toBeInTheDocument();
 });
 
-test("UT-24 – Populating search options from API call for Primary Geography (Revenue) -- but with some null data", async () => {
+test("UT-57 – Testing error for missing borrower data", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("regionquery")) {
       return Promise.resolve({
         data: [
           {
             region_name: "Narnia",
+            region_id: "20",
           },
           {
+            region_name: "Labyrinth",
             region_id: "21",
           },
           {
@@ -368,7 +370,26 @@ test("UT-24 – Populating search options from API call for Primary Geography (R
       });
     }
 
-    return Promise.resolve({ data: [] });
+    if (url.includes("subsectorquery")) {
+      return Promise.resolve({
+        data: [
+          {
+            naics_subsector_name: "Video Games Production",
+            naics_subsector_id: "111",
+          },
+          {
+            naics_subsector_name: "Croissant Making",
+            naics_subsector_id: "222",
+          },
+          {
+            naics_subsector_name: "Improv Comedy",
+            naics_subsector_id: "333",
+          },
+        ],
+      });
+    }
+
+    return Promise.resolve({ data: [] }); // Catch all
   });
 
   render(<BorrowerCreate />);
@@ -379,9 +400,20 @@ test("UT-24 – Populating search options from API call for Primary Geography (R
     );
   });
 
-  const revGeography = screen.getByLabelText("Primary Geography (Revenue)");
+  await waitFor(() => {
+    expect(axios.get).toHaveBeenCalledWith(
+      "http://localhost:3000/api/subsectorquery",
+    );
+  });
 
-  fireEvent.mouseDown(revGeography);
+  // simulate save click
+  const saveButton = screen.getByText("Save");
+  fireEvent.click(saveButton);
 
-  expect(screen.getByText("Middle Earth")).toBeInTheDocument();
+  const errorMessage = screen.getByText(
+    "Not Saved - Please fill out all required fields - denoted by *",
+  );
+  expect(errorMessage).toBeVisible();
+
 });
+
