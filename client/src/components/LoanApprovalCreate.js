@@ -57,7 +57,7 @@ function LoanApprovalCreate() {
 
         setBorrowerData(sortedBorrowers);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("Error fetching data from server");
       }
     }
 
@@ -72,7 +72,7 @@ function LoanApprovalCreate() {
         );
         setLoanAgreementData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("Error fetching data from server");
       }
     }
     getLoanAgreementData();
@@ -86,7 +86,7 @@ function LoanApprovalCreate() {
         );
         setLoanTrancheData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("Error fetching data from server");
       }
     }
     getLoanTrancheData();
@@ -100,7 +100,7 @@ function LoanApprovalCreate() {
         );
         setLenderData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("Error fetching data from server");
       }
     }
     getLenderData();
@@ -114,7 +114,7 @@ function LoanApprovalCreate() {
         );
         setFacilityData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("Error fetching data from server");
       }
     }
     getFacilityData();
@@ -138,7 +138,7 @@ function LoanApprovalCreate() {
 
   async function postApproval() {
     if ((!selectedBorrower||!selectedLoanAgreement||!selectedLoanTranche||!selectedLender||!selectedFacility||!approvalDate||!approvalExpiration)) {
-      setMessage("Please input all required fields (denoted by *)");
+      setMessage("Not Saved - Please fill out all required fields - denoted by *");
       return;
     }
     // creates the loan approval name for access in the Collateral Pledge feature
