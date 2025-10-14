@@ -335,39 +335,36 @@ test("UT-7: Ensure borrowing base line item data is formatted correctly after lo
   const gridRows = within(grid).getAllByRole("row");
   const cellsRow = within(gridRows[1]).getAllByRole("gridcell");
 
-  expect(cellsRow[0]).toHaveTextContent("100");
-  expect(cellsRow[1]).toHaveTextContent("11/30/2023");
-  expect(cellsRow[2]).toHaveTextContent("");
-  expect(cellsRow[3]).toHaveTextContent("10/15/2025");
-  expect(cellsRow[4]).toHaveTextContent("$15,000,000.00");
-  expect(cellsRow[5]).toHaveTextContent("6.1500");
-  expect(cellsRow[6]).toHaveTextContent("1.2500");
-  expect(cellsRow[7]).toHaveTextContent("60.00%");
-  expect(cellsRow[8]).toHaveTextContent("95.00%");
-  expect(cellsRow[9]).toHaveTextContent("4.2500");
-  expect(cellsRow[10]).toHaveTextContent("$7,500,000.00");
-  expect(cellsRow[11]).toHaveTextContent("$7,500,000.00");
-  expect(cellsRow[12]).toHaveTextContent("Second");
-  expect(cellsRow[13]).toHaveTextContent("8/10/2028");
-  expect(cellsRow[14]).toHaveTextContent("Term");
-  expect(cellsRow[15]).toHaveTextContent("10/11/2023");
-  expect(cellsRow[16]).toHaveTextContent("Test Company A");
-  expect(cellsRow[17]).toHaveTextContent("TestCo");
-  expect(cellsRow[18]).toHaveTextContent("45,222,222.22");
-  expect(cellsRow[19]).toHaveTextContent("8/10/2023");
-  expect(cellsRow[20]).toHaveTextContent("0.5454");
-  expect(cellsRow[21]).toHaveTextContent("");
-  expect(cellsRow[22]).toHaveTextContent("");
-  expect(cellsRow[23]).toHaveTextContent("4.4855");
-  expect(cellsRow[24]).toHaveTextContent("7.4545");
-  expect(cellsRow[25]).toHaveTextContent("4/10/2028");
-  expect(cellsRow[26]).toHaveTextContent("6/10/2028");
-  expect(cellsRow[27]).toHaveTextContent("");
-  expect(cellsRow[28]).toHaveTextContent("");
-  expect(cellsRow[29]).toHaveTextContent("");
-  expect(cellsRow[30]).toHaveTextContent("");
-  expect(cellsRow[31]).toHaveTextContent("LIBOR");
-  expect(cellsRow[32]).toHaveTextContent("10.45%");
+  expect(cellsRow[0]).toHaveTextContent("100"); // Collateral ID
+  expect(cellsRow[1]).toHaveTextContent("Test Company A"); // Legal Name
+  expect(cellsRow[2]).toHaveTextContent("TestCo"); // Short Name
+  expect(cellsRow[3]).toHaveTextContent("11/30/2023"); // Inclusion Date
+  expect(cellsRow[4]).toHaveTextContent("$7,500,000.00"); // Commitment Amount
+  expect(cellsRow[5]).toHaveTextContent("$7,500,000.00"); // Outstanding Amount
+  expect(cellsRow[6]).toHaveTextContent("45,222,222.22"); // EBITDA
+  expect(cellsRow[7]).toHaveTextContent("4.4855"); // Leverage Ratio
+  expect(cellsRow[8]).toHaveTextContent("7.4545"); // Net Leverage Ratio
+  expect(cellsRow[9]).toHaveTextContent("0.5454"); // Int Coverage Ratio
+  expect(cellsRow[10]).toHaveTextContent("8/10/2023"); // Loan Metrics Start Date
+  expect(cellsRow[11]).toHaveTextContent("4/10/2028"); // Rate Start Date
+  expect(cellsRow[12]).toHaveTextContent(""); //Fixed Rate
+  expect(cellsRow[13]).toHaveTextContent(""); //Floor
+  expect(cellsRow[14]).toHaveTextContent(""); // Has a Floor
+  expect(cellsRow[15]).toHaveTextContent(""); // Is Fixed
+  expect(cellsRow[16]).toHaveTextContent("LIBOR"); // Ref rate
+  expect(cellsRow[17]).toHaveTextContent("10.45%"); // Spread
+  expect(cellsRow[18]).toHaveTextContent("10/15/2025"); // Approval Date
+  expect(cellsRow[19]).toHaveTextContent(""); // Removed Date
+  expect(cellsRow[20]).toHaveTextContent("$15,000,000.00"); // Approved EBITDA
+  expect(cellsRow[21]).toHaveTextContent("6.1500"); // Approved Net Leverage
+  expect(cellsRow[22]).toHaveTextContent("1.2500"); // Approved Int COverage
+  expect(cellsRow[23]).toHaveTextContent("60.00%"); // Approved Advance Rate
+  expect(cellsRow[24]).toHaveTextContent("95.00%"); // Approved Valuation
+  expect(cellsRow[25]).toHaveTextContent("4.2500"); // Approved Leverage
+  expect(cellsRow[26]).toHaveTextContent("Second"); // Lient Type
+  expect(cellsRow[27]).toHaveTextContent("8/10/2028"); // Maturity Date
+  expect(cellsRow[28]).toHaveTextContent("Term"); // Tranche Type
+  expect(cellsRow[29]).toHaveTextContent("10/11/2023"); // Loan Agreement Date
 });
 
 test("UT-12: Borrowing base line item data is formatted correctly receiving empty values from API", async () => {
@@ -534,7 +531,7 @@ test("UT-12: Borrowing base line item data is formatted correctly receiving empt
   const cellsRow = within(gridRows[1]).getAllByRole("gridcell");
 
   expect(cellsRow[0]).toHaveTextContent("100");
-  for (let i = 1; i <= 32; i++) {
+  for (let i = 1; i <= 29; i++) {
     expect(cellsRow[i]).toHaveTextContent(""); // loop through all of the columsn to ensure that they are appropriately empty
   }
 });
