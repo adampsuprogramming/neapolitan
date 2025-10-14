@@ -34,6 +34,17 @@ describe("template spec", () => {
   });
 });
 
-it("createloanagreement", function () {
-  cy.visit("localhost:3000");
+it('Test1', function() {
+  cy.visit('localhost:3000')
+  
+});
+
+it('Test1', function() {
+  cy.visit('localhost:3000')
+  
+});
+
+it('Test 2', function() {
+  cy.visit('localhost:3000')
+  
 });
