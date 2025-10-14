@@ -107,6 +107,13 @@ function CollateralPledgeAdd() {
     setLoanApprovalId("");
     setDebtFacilityId("");
     setTrancheId("");
+    setBorrowerName("");
+    setAgreementName("");
+    setTrancheName("");
+    setMaxApproved("");
+    setExpiration("");
+    setBankName("");
+    setFacilityName("");
   }
 
   return (

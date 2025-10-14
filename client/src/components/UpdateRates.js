@@ -284,7 +284,7 @@ function UpdateRates() {
           </div>
         </Box>
         <Box>
-          <Box component="form" sx={{ paddingLeft: "20px", display: "flex"}}>
+          <Box component="form" sx={{ paddingLeft: "20px", display: "flex" }}>
             <Box
               sx={{
                 border: "1px solid",
@@ -443,32 +443,44 @@ function UpdateRates() {
                   gridTemplateColumns: "auto 1fr",
                 }}
               >
-                <Box sx={{fontWeight: "bold", fontSize:"18px"}}>As of Date: </Box>
-                <Box sx={{fontSize:"18px"}}>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>
+                  As of Date:{" "}
+                </Box>
+                <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
                     ? new Date(rateData[0].start_date).toLocaleDateString(
                         "en-US",
                       )
                     : ""}
                 </Box>
-                <Box sx={{fontWeight: "bold", fontSize:"18px", marginTop: "1.2ch"}}>Rate Type:</Box>
-                <Box sx={{fontSize:"18px", marginTop: "1.2ch"}}>
+                <Box
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    marginTop: "1.2ch",
+                  }}
+                >
+                  Rate Type:
+                </Box>
+                <Box sx={{ fontSize: "18px", marginTop: "1.2ch" }}>
                   {rateData[0]?.start_date
                     ? rateData[0]?.is_fixed
                       ? "Fixed"
                       : "Floating"
                     : ""}
                 </Box>
-                <Box sx={{fontWeight: "bold", fontSize:"18px"}}>Fixed Rate:</Box>
-                <Box sx={{fontSize:"18px"}}>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>
+                  Fixed Rate:
+                </Box>
+                <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
                     ? rateData[0]?.is_fixed
                       ? `${(rateData[0]?.fixed_rate * 100).toFixed(6)}%`
                       : "N/A"
                     : ""}
                 </Box>
-                <Box sx={{fontWeight: "bold", fontSize:"18px"}}>Spread:</Box>
-                <Box sx={{fontSize:"18px"}}>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>Spread:</Box>
+                <Box sx={{ fontSize: "18px" }}>
                   {" "}
                   {rateData[0]?.start_date
                     ? rateData[0]?.is_fixed
@@ -476,16 +488,18 @@ function UpdateRates() {
                       : `${(rateData[0]?.spread * 100).toFixed(6)}%`
                     : ""}
                 </Box>
-                <Box sx={{fontWeight: "bold", fontSize:"18px"}}>Floor:</Box>
-                <Box sx={{fontSize:"18px"}}>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>Floor:</Box>
+                <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
                     ? rateData[0]?.is_fixed
                       ? "N/A"
                       : `${(rateData[0]?.floor * 100).toFixed(6)}%`
                     : ""}
                 </Box>
-                <Box sx={{fontWeight: "bold", fontSize:"18px"}}>Reference Rate:</Box>
-                <Box sx={{fontSize:"18px"}}>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>
+                  Reference Rate:
+                </Box>
+                <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
                     ? rateData[0]?.is_fixed
                       ? "N/A"

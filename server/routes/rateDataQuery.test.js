@@ -37,22 +37,23 @@ describe("GET /api/ratedataquery", () => {
       ],
     });
 
-    const response = await request(app).get("/api/ratedataquery").query({tranche_id: "5555"});
+    const response = await request(app)
+      .get("/api/ratedataquery")
+      .query({ tranche_id: "5555" });
 
     expect(response.body).toEqual([
       {
-          rate_data_id: 1111,
-          tranche_id: 5555,
-          is_fixed: false,
-          fixed_rate: null,
-          spread: 0.05,
-          floor: 0.025,
-          start_date: "2023-01-01",
-          end_date: "2026-09-30",
-          has_floor: true,
-          reference_rate: "LIBOR",
+        rate_data_id: 1111,
+        tranche_id: 5555,
+        is_fixed: false,
+        fixed_rate: null,
+        spread: 0.05,
+        floor: 0.025,
+        start_date: "2023-01-01",
+        end_date: "2026-09-30",
+        has_floor: true,
+        reference_rate: "LIBOR",
       },
-
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(

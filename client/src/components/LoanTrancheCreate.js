@@ -101,7 +101,9 @@ function LoanTrancheCreate() {
       !trancheType ||
       !lienType ||
       !trancheStart ||
-      !trancheMaturity
+      !trancheMaturity ||
+      (rateType === "Floating Rate" && (!spread || !refRate)) ||
+      (rateType === "Fixed Rate" && !fixedRate)
     ) {
       setMessage("Please input all required fields (denoted by *)");
       return;
@@ -241,11 +243,20 @@ function LoanTrancheCreate() {
               id="autocomplete-loan-agreeements"
               options={loanAgreementOptions}
               value={selectedLoanAgreement}
+              disabled={!selectedBorrower}
               sx={{ m: 1, width: "450px" }}
               onChange={(event, newValue) => setSelectedLoanAgreement(newValue)}
               getOptionLabel={(option) => option.loan_agreement_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Loan Agreement" required />
+                <TextField
+                  {...params}
+                  label={
+                    selectedBorrower
+                      ? "Loan Agreement"
+                      : "Loan Agreement (Select Borrower First)"
+                  }
+                  required
+                />
               )}
             />
           </div>
@@ -423,6 +434,7 @@ function LoanTrancheCreate() {
             id="fixed-rate-textfield"
             sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
             disabled={!rateType || rateType === "Floating Rate"}
+            required={rateType === "Fixed Rate"}
             value={fixedRate}
             onValueChange={(value) => setFixedRate(value.floatValue)}
             label="Fixed Coupon"
@@ -434,6 +446,7 @@ function LoanTrancheCreate() {
           <NumericFormat
             customInput={TextField}
             id="spread-textfield"
+            required={rateType === "Floating Rate"}
             sx={{ m: 1, width: "20ch", marginTop: 1, marginLeft: 9 }}
             disabled={!rateType || rateType === "Fixed Rate"}
             value={spread}
@@ -466,7 +479,11 @@ function LoanTrancheCreate() {
             sx={{ m: 1, width: "200px", marginTop: 1, marginLeft: 9 }}
             onChange={(event, newValue) => setRefRate(newValue)}
             renderInput={(params) => (
-              <TextField {...params} label="Reference Rate" />
+              <TextField
+                {...params}
+                label="Reference Rate"
+                required={rateType === "Floating Rate"}
+              />
             )}
           />
         </Box>

@@ -125,7 +125,7 @@ function DebtFacilityCreate() {
     setCommitmentAmount("");
     setIsOverallRate(false);
     setMaxAdvanceRate("");
-    setIsAssetByAssetRate("");
+    setIsAssetByAssetRate(false);
     setFirstLienRate("");
     setSecondLienRate("");
     setMezzanineRate("");

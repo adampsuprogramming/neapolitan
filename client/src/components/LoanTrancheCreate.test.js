@@ -288,7 +288,7 @@ test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rat
   expect(rateTypeAutocomplete.value).toBe("Floating Rate");
 
   // Find Spread input box and input text
-  const spreadInput = screen.getByLabelText("Spread");
+  const spreadInput = screen.getByLabelText("Spread *");
   fireEvent.change(spreadInput, {
     target: { value: "5.9" },
   });
@@ -302,7 +302,7 @@ test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rat
   expect(floorInput.value).toBe("2.550000%");
 
   // Find autocomplete box for Reference Rate and make selection
-  const refRateAutocomplete = screen.getByLabelText("Reference Rate");
+  const refRateAutocomplete = screen.getByLabelText("Reference Rate *");
   fireEvent.mouseDown(refRateAutocomplete);
   fireEvent.click(screen.getByText("LIBOR"));
   expect(refRateAutocomplete.value).toBe("LIBOR");
@@ -616,7 +616,7 @@ test("UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)"
   expect(rateTypeAutocomplete.value).toBe("Fixed Rate");
 
   // Find Fixed Rate input box and input text
-  const fixedInput = screen.getByLabelText("Fixed Coupon");
+  const fixedInput = screen.getByLabelText("Fixed Coupon *");
   fireEvent.change(fixedInput, {
     target: { value: "8.9" },
   });

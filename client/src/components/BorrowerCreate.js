@@ -224,7 +224,7 @@ function BorrowerCreate() {
               required
               options={naicsSubSectorData}
               value={selectedNaicsSubsector}
-              sx={{ m: 1, width: "40ch", marginTop: 4 }}
+              sx={{ m: 1, width: "60ch", marginTop: 4 }}
               onChange={(event, newValue) =>
                 setSelectedNaicsSubsector(newValue)
               }
@@ -269,6 +269,7 @@ function BorrowerCreate() {
           <TextField
             sx={{ m: 1, width: "30ch", marginLeft: 6, width: "22ch" }}
             required={isPublicBorrower}
+            disabled={!isPublicBorrower}
             id="ticker-symbol"
             value={tickerSymbol}
             onChange={(event) => setTickerSymbol(event.target.value)}

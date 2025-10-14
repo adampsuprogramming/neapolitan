@@ -21,9 +21,7 @@ afterAll(async () => {
 
 describe("POST /api/createratechange", () => {
   it("accepts data from a mocked api put and then runs an insert query on the database", async () => {
-    mockedQuery
-      .mockResolvedValueOnce({}) 
-      .mockResolvedValueOnce({}); 
+    mockedQuery.mockResolvedValueOnce({}).mockResolvedValueOnce({});
 
     const response = await request(app).post("/api/createratechange").send({
       trancheId: "1111",
@@ -32,7 +30,7 @@ describe("POST /api/createratechange", () => {
       fixedCoupon: null,
       spread: 0.04,
       floor: 0.015,
-      refRate: "LIBOR"
+      refRate: "LIBOR",
     });
 
     expect(response.status).toBe(201);

@@ -15,8 +15,6 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-
-
 test("UT-54 – Testing populating and submitting Update Rate Data form", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
@@ -92,16 +90,16 @@ test("UT-54 – Testing populating and submitting Update Rate Data form", async 
       return Promise.resolve({
         data: [
           {
-          rate_data_id: "111",
-          tranche_id: "5555",
-          is_fixed: false,
-          fixed_rate: null,
-          spread: 0.05,
-          floor: 0.025,
-          start_date: "2023-06-30",
-          end_date: null,
-          has_floor: true,
-          reference_rate: "LIBOR",
+            rate_data_id: "111",
+            tranche_id: "5555",
+            is_fixed: false,
+            fixed_rate: null,
+            spread: 0.05,
+            floor: 0.025,
+            start_date: "2023-06-30",
+            end_date: null,
+            has_floor: true,
+            reference_rate: "LIBOR",
           },
         ],
       });
@@ -147,25 +145,23 @@ test("UT-54 – Testing populating and submitting Update Rate Data form", async 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-        expect.stringContaining("rateDataQuery"),
-        expect.objectContaining({
-            params: { tranche_id: "112"}
-        })
+      expect.stringContaining("rateDataQuery"),
+      expect.objectContaining({
+        params: { tranche_id: "112" },
+      }),
     );
   });
 
-    const changeDataInput = screen.getByLabelText("Change Date *", {
+  const changeDataInput = screen.getByLabelText("Change Date *", {
     selector: "input",
   });
   fireEvent.change(changeDataInput, { target: { value: "09/30/2025" } });
   expect(changeDataInput.value).toBe("09/30/2025");
 
-
   const rateTypeAutocomplete = screen.getByLabelText("Rate Type *");
   fireEvent.mouseDown(rateTypeAutocomplete);
   fireEvent.click(screen.getByText("Floating Rate"));
   expect(rateTypeAutocomplete.value).toBe("Floating Rate");
-
 
   const spreadTextBox = screen.getByLabelText("Spread *");
   fireEvent.change(spreadTextBox, {
@@ -215,5 +211,4 @@ test("UT-54 – Testing populating and submitting Update Rate Data form", async 
   expect(spreadTextBox.value).toBe("");
   expect(floorTextBox.value).toBe("");
   expect(refRateAutocomplete.value).toBe("");
-
 });
