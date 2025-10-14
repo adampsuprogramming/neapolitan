@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import {Button} from '@mui/material';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -18,6 +20,7 @@ function BorrowBaseLineItemView() {
   const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]);
   const [asOfDate, setAsOfDate] = useState("");
   const todayDate = new Date();
+  const gridRef = useRef(null);
 
   // useState hook to set the row data
   const [rowData, setRowData] = useState([]);
@@ -26,6 +29,8 @@ function BorrowBaseLineItemView() {
   // valueFormatter calls arrow function to format cell data, as appropriate
   const [colDefs, setColDefs] = useState([
     { field: "collateral_id", headerName: "Collateral ID" },
+        { field: "legal_name", headerName: "Legal Name" },
+    { field: "short_name", headerName: "Short Name" },
     {
       field: "inclusion_date",
       headerName: "Inclusion Date",
@@ -36,89 +41,7 @@ function BorrowBaseLineItemView() {
         return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
-    {
-      field: "removed_date",
-      headerName: "Removed Date",
-      cellDataType: "dateString",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        const dateString = params.value.split("T")[0];
-        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
-      },
-    },
-    {
-      field: "approval_date",
-      headerName: "Approval Date",
-      cellDataType: "dateString",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        const dateString = params.value.split("T")[0];
-        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
-      },
-    },
-    {
-      field: "approved_ebitda",
-      headerName: "Approved EBITDA",
-      cellDataType: "number",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(params.value);
-      },
-    },
-    {
-      field: "approved_net_leverage",
-      headerName: "Approved Net Leverage",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-
-        return Number(params.value).toFixed(4);
-      },
-    },
-    {
-      field: "approved_int_coverage",
-      headerName: "Interest Coverage",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return Number(params.value).toFixed(4);
-      },
-    },
-    {
-      field: "approved_advance_rate",
-      headerName: "Approved Advance Rate",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return new Intl.NumberFormat("en-US", {
-          style: "percent",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(params.value);
-      },
-    },
-    {
-      field: "approved_valuation",
-      headerName: "Approved Valuation",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return new Intl.NumberFormat("en-US", {
-          style: "percent",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(params.value);
-      },
-    },
-    {
-      field: "approved_leverage",
-      headerName: "Approved Leverage",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-
-        return Number(params.value).toFixed(4);
-      },
-    },
-    {
+        {
       field: "commitment_amount",
       headerName: "Commitment Amount",
       cellDataType: "number",
@@ -142,29 +65,7 @@ function BorrowBaseLineItemView() {
         }).format(params.value);
       },
     },
-    { field: "lien_type", headerName: "Lien Type" },
-    {
-      field: "maturity_date",
-      headerName: "Maturity Date",
-      cellDataType: "dateString",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
-      },
-    },
-    { field: "tranche_type", headerName: "Tranche Type" },
-    {
-      field: "loan_agreement_date",
-      headerName: "Loan Agreement Date",
-      cellDataType: "dateString",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return new Date(params.value).toLocaleDateString("en-US");
-      },
-    },
-    { field: "legal_name", headerName: "Legal Name" },
-    { field: "short_name", headerName: "Short Name" },
-    {
+        {
       field: "ebitda",
       headerName: "EBITDA",
       cellDataType: "number",
@@ -176,31 +77,7 @@ function BorrowBaseLineItemView() {
         }).format(params.value);
       },
     },
-    {
-      field: "loan_metrics_start_date",
-      headerName: "Metric As of Date",
-      cellDataType: "dateString",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        const dateString = params.value.split("T")[0];
-        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
-      },
-    },
-
-    {
-      field: "int_coverage_ratio",
-      headerName: "Coverage Ratio",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        return Number(params.value).toFixed(4);
-      },
-    },
-
-    { field: "is_cov_default", headerName: "Covenant Default?" },
-
-    { field: "is_payment_default", headerName: "Payment Default?" },
-
-    {
+        {
       field: "leverage_ratio",
       headerName: "Leverage Ratio",
       valueFormatter: (params) => {
@@ -217,7 +94,25 @@ function BorrowBaseLineItemView() {
         return Number(params.value).toFixed(4);
       },
     },
-
+        {
+      field: "int_coverage_ratio",
+      headerName: "Coverage Ratio",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+      },
+    },
+        
+    {
+      field: "loan_metrics_start_date",
+      headerName: "Metric As of Date",
+      cellDataType: "dateString",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+      },
+    },
     {
       field: "rate_start_date",
       headerName: "Rate Info Start Date",
@@ -228,16 +123,16 @@ function BorrowBaseLineItemView() {
         return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
-    {
-      field: "end_date",
-      headerName: "Rate Info End Date",
-      cellDataType: "dateString",
-      valueFormatter: (params) => {
-        if (!params.value) return "";
-        const dateString = params.value.split("T")[0];
-        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
-      },
-    },
+    // {
+    //   field: "end_date",
+    //   headerName: "Rate Info End Date",
+    //   cellDataType: "dateString",
+    //   valueFormatter: (params) => {
+    //     if (!params.value) return "";
+    //     const dateString = params.value.split("T")[0];
+    //     return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+    //   },
+    // },
     {
       field: "fixed_rate",
       headerName: "Fixed Rate",
@@ -277,6 +172,119 @@ function BorrowBaseLineItemView() {
         }).format(params.value);
       },
     },
+    {
+      field: "approval_date",
+      headerName: "Approval Date",
+      cellDataType: "dateString",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+      },
+    },
+        {
+      field: "removed_date",
+      headerName: "Removed Date",
+      cellDataType: "dateString",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        const dateString = params.value.split("T")[0];
+        return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
+      },
+    },
+    {
+      field: "approved_ebitda",
+      headerName: "Approved EBITDA",
+      cellDataType: "number",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(params.value);
+      },
+    },
+    {
+      field: "approved_net_leverage",
+      headerName: "Approved Net Leverage",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+
+        return Number(params.value).toFixed(4);
+      },
+    },
+    {
+      field: "approved_int_coverage",
+      headerName: "Approved Coverage",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return Number(params.value).toFixed(4);
+      },
+    },
+
+
+    {
+      field: "approved_advance_rate",
+      headerName: "Approved Advance Rate",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return new Intl.NumberFormat("en-US", {
+          style: "percent",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(params.value);
+      },
+    },
+    {
+      field: "approved_valuation",
+      headerName: "Approved Valuation",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return new Intl.NumberFormat("en-US", {
+          style: "percent",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(params.value);
+      },
+    },
+    {
+      field: "approved_leverage",
+      headerName: "Approved Leverage",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+
+        return Number(params.value).toFixed(4);
+      },
+    },
+
+    { field: "lien_type", headerName: "Lien Type" },
+    {
+      field: "maturity_date",
+      headerName: "Maturity Date",
+      cellDataType: "dateString",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return new Date(params.value).toLocaleDateString("en-US");
+      },
+    },
+    { field: "tranche_type", headerName: "Tranche Type" },
+    {
+      field: "loan_agreement_date",
+      headerName: "Loan Agreement Date",
+      cellDataType: "dateString",
+      valueFormatter: (params) => {
+        if (!params.value) return "";
+        return new Date(params.value).toLocaleDateString("en-US");
+      },
+    },
+
+
+
+    // { field: "is_cov_default", headerName: "Covenant Default?" },
+
+    // { field: "is_payment_default", headerName: "Payment Default?" },
+
+
   ]);
 
   const handlePortfolioChange = (e) => {
@@ -368,9 +376,20 @@ function BorrowBaseLineItemView() {
     }
   }, [asOfDate, facilityNumber]);
 
+  function handleExport() {
+    gridRef.current.api.exportDataAsCsv({
+      fileName: 'borrowingbase.csv',
+      columnSeparator: ',',
+      suppressQuotes: false,
+    });
+    
+    
+
+  }
+
   return (
     <div>
-      <div className="line_item_view_options">
+      <div className="line_item_view_options" style={{display: "flex", alignItems: "center"}}>
         <div>
           <label htmlFor="portfolio_select">
             <b>Portfolio Name </b>
@@ -418,6 +437,11 @@ function BorrowBaseLineItemView() {
             />
           </form>
         </div>
+        <div  style={{marginLeft: "auto"}}>
+        <Button variant="contained" startIcon={<FileDownloadIcon />} onClick={handleExport} sx={{textTransform: 'none', backgroundColor: '#33648a'}}>
+          Export to CSV
+        </Button>
+        </div>
       </div>
       <div
         className="ag-theme-alpine"
@@ -428,7 +452,7 @@ function BorrowBaseLineItemView() {
           "--ag-header-background-color": "#2F4858",
         }}
       >
-        <AgGridReact rowData={rowData} columnDefs={colDefs} />
+        <AgGridReact ref={gridRef} rowData={rowData} columnDefs={colDefs} />
       </div>
     </div>
   );
