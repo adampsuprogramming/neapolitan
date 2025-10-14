@@ -121,7 +121,6 @@ function LoanAgreementCreate() {
               id="loan-agreement-title-input"
               label="Loan Agreement Title"
               sx={{ m: 1, width: "60ch" }}
-              
             />
           </div>
 

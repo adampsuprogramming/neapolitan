@@ -4,8 +4,8 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import {Button} from '@mui/material';
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { Button } from "@mui/material";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -29,7 +29,7 @@ function BorrowBaseLineItemView() {
   // valueFormatter calls arrow function to format cell data, as appropriate
   const [colDefs, setColDefs] = useState([
     { field: "collateral_id", headerName: "Collateral ID" },
-        { field: "legal_name", headerName: "Legal Name" },
+    { field: "legal_name", headerName: "Legal Name" },
     { field: "short_name", headerName: "Short Name" },
     {
       field: "inclusion_date",
@@ -41,7 +41,7 @@ function BorrowBaseLineItemView() {
         return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
-        {
+    {
       field: "commitment_amount",
       headerName: "Commitment Amount",
       cellDataType: "number",
@@ -65,7 +65,7 @@ function BorrowBaseLineItemView() {
         }).format(params.value);
       },
     },
-        {
+    {
       field: "ebitda",
       headerName: "EBITDA",
       cellDataType: "number",
@@ -77,7 +77,7 @@ function BorrowBaseLineItemView() {
         }).format(params.value);
       },
     },
-        {
+    {
       field: "leverage_ratio",
       headerName: "Leverage Ratio",
       valueFormatter: (params) => {
@@ -94,7 +94,7 @@ function BorrowBaseLineItemView() {
         return Number(params.value).toFixed(4);
       },
     },
-        {
+    {
       field: "int_coverage_ratio",
       headerName: "Coverage Ratio",
       valueFormatter: (params) => {
@@ -102,7 +102,7 @@ function BorrowBaseLineItemView() {
         return Number(params.value).toFixed(4);
       },
     },
-        
+
     {
       field: "loan_metrics_start_date",
       headerName: "Metric As of Date",
@@ -182,7 +182,7 @@ function BorrowBaseLineItemView() {
         return new Date(dateString + "T12:00:00").toLocaleDateString("en-US"); //Adding this corrects AWS timezone issue
       },
     },
-        {
+    {
       field: "removed_date",
       headerName: "Removed Date",
       cellDataType: "dateString",
@@ -221,7 +221,6 @@ function BorrowBaseLineItemView() {
         return Number(params.value).toFixed(4);
       },
     },
-
 
     {
       field: "approved_advance_rate",
@@ -278,13 +277,9 @@ function BorrowBaseLineItemView() {
       },
     },
 
-
-
     // { field: "is_cov_default", headerName: "Covenant Default?" },
 
     // { field: "is_payment_default", headerName: "Payment Default?" },
-
-
   ]);
 
   const handlePortfolioChange = (e) => {
@@ -378,18 +373,18 @@ function BorrowBaseLineItemView() {
 
   function handleExport() {
     gridRef.current.api.exportDataAsCsv({
-      fileName: 'borrowingbase.csv',
-      columnSeparator: ',',
+      fileName: "borrowingbase.csv",
+      columnSeparator: ",",
       suppressQuotes: false,
     });
-    
-    
-
   }
 
   return (
     <div>
-      <div className="line_item_view_options" style={{display: "flex", alignItems: "center"}}>
+      <div
+        className="line_item_view_options"
+        style={{ display: "flex", alignItems: "center" }}
+      >
         <div>
           <label htmlFor="portfolio_select">
             <b>Portfolio Name </b>
@@ -437,10 +432,15 @@ function BorrowBaseLineItemView() {
             />
           </form>
         </div>
-        <div  style={{marginLeft: "auto"}}>
-        <Button variant="contained" startIcon={<FileDownloadIcon />} onClick={handleExport} sx={{textTransform: 'none', backgroundColor: '#33648a'}}>
-          Export to CSV
-        </Button>
+        <div style={{ marginLeft: "auto" }}>
+          <Button
+            variant="contained"
+            startIcon={<FileDownloadIcon />}
+            onClick={handleExport}
+            sx={{ textTransform: "none", backgroundColor: "#33648a" }}
+          >
+            Export to CSV
+          </Button>
         </div>
       </div>
       <div
