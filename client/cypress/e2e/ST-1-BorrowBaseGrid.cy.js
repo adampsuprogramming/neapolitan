@@ -33,18 +33,3 @@ describe("template spec", () => {
     cy.get(".ag-center-cols-container .ag-row").should("have.length", 19);
   });
 });
-
-it('Test1', function() {
-  cy.visit('localhost:3000')
-  
-});
-
-it('Test1', function() {
-  cy.visit('localhost:3000')
-  
-});
-
-it('Test 2', function() {
-  cy.visit('localhost:3000')
-  
-});
