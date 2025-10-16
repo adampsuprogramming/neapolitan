@@ -124,18 +124,18 @@ function LoanTrancheCreate() {
           interestCoverage: interestCoverage,
           rateType: rateType,
           fixedRate:
-            fixedRate != null && fixedRate != ""
+            fixedRate !== null && fixedRate !== ""
               ? Number((fixedRate / 100).toFixed(6))
               : null,
           spread:
-            spread != null && spread != ""
+            spread !== null && spread !== ""
               ? Number((spread / 100).toFixed(6))
               : null,
           floor:
-            floor != null && floor != ""
+            floor !== null && floor !== ""
               ? Number((floor / 100).toFixed(6))
               : null,
-          refRate: refRate != "" ? refRate : null,
+          refRate: refRate !== "" ? refRate : null,
         },
       );
       if (response.status === 201) {

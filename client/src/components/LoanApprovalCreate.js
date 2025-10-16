@@ -260,8 +260,6 @@ function LoanApprovalCreate() {
         uniqueFacilities.push(facility);
       }
     }
-
-    console.log(uniqueFacilities);
     setFacilityOptions(uniqueFacilities);
   };
 

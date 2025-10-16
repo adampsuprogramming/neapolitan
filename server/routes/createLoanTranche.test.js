@@ -28,7 +28,7 @@ afterAll(async () => {
 
 // UT-30
 
-(describe("POST /api/createloantranche", () => {
+describe("POST /api/createloantranche", () => {
   it("accepts data from a mocked api put for a floating rate loan with a floor and then runs an insert query on the database", async () => {
     mockedQuery
       .mockResolvedValueOnce({ rows: [{ tranche_id: 111 }] }) //first insert sends back debt facility primary key
@@ -229,4 +229,4 @@ values ($1,$2,$3,$4,$5,$6,$7,$8)
         [111, true, "2025-10-31", 10.25, null, null, false, null],
       );
     });
-  }));
+  });

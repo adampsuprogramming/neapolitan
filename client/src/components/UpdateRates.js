@@ -284,7 +284,7 @@ function UpdateRates() {
           </div>
         </Box>
         <Box>
-          <Box component="form" sx={{ paddingLeft: "20px", display: "flex" }}>
+          <Box sx={{ paddingLeft: "20px", display: "flex" }}>
             <Box
               sx={{
                 border: "1px solid",
