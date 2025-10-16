@@ -9,7 +9,6 @@ it("fills out rate update form", function () {
   cy.get('#root a[href="/performance/"]').click();
   cy.get('#root a[href="/performance/updaterates"]').click();
 
-
   // Test that autocomplete for borrower and contains value inputted
   cy.get("#autocomplete-borrower-name").click();
   cy.get("#autocomplete-borrower-name").type("Test - The Donkey Kong Company");
@@ -32,7 +31,6 @@ it("fills out rate update form", function () {
   );
   cy.wait(200);
 
-
   // Test that autocomplete for loan tranche works and contains value inputted
   cy.get("#autocomplete-loan-tranches").click();
   cy.get("#autocomplete-loan-tranches-option-0").click();
@@ -44,26 +42,17 @@ it("fills out rate update form", function () {
   );
   cy.wait(200);
 
-
   // Ensure that Info Box to the right is populated with correct information after loan approval is selected.
   cy.get("#root div.css-1aegatr div:nth-child(2)")
     .contains("10/9/2025")
     .should("be.visible");
-  cy.get('#root div.css-u0gk6s')
-    .contains("Floating")
-    .should("be.visible");
-  cy.get('#root div.css-1aegatr div:nth-child(6)')
+  cy.get("#root div.css-u0gk6s").contains("Floating").should("be.visible");
+  cy.get("#root div.css-1aegatr div:nth-child(6)")
     .contains("N/A")
     .should("be.visible");
-  cy.get("#root div:nth-child(8)")
-    .contains("5.000000%")
-    .should("be.visible");
-  cy.get("#root div:nth-child(10)")
-    .contains("5.000000%")
-    .should("be.visible");
-  cy.get("#root div:nth-child(12)")
-    .contains("LIBOR")
-    .should("be.visible");
+  cy.get("#root div:nth-child(8)").contains("5.000000%").should("be.visible");
+  cy.get("#root div:nth-child(10)").contains("5.000000%").should("be.visible");
+  cy.get("#root div:nth-child(12)").contains("LIBOR").should("be.visible");
 
   // Test that inclusion date picker works and does not contain blank value after input
   cy.get('[data-testid="CalendarIcon"]').click();
@@ -76,31 +65,24 @@ it("fills out rate update form", function () {
   cy.get("#autocomplete-rate-type-option-1").click();
   cy.wait(200);
 
-  cy.get("#autocomplete-rate-type").should(
-    "have.value",
-    "Floating Rate",
-  );
+  cy.get("#autocomplete-rate-type").should("have.value", "Floating Rate");
   cy.wait(200);
-  
+
   // Test that text box for spread and contains value inputted
   cy.get("#spread-textfield").click();
   cy.get("#spread-textfield").type("4");
   cy.get("#spread-textfield").should("have.value", "4.000000%");
-  
+
   // Test that text box for floor and contains value inputted
   cy.get("#floor-textfield").click();
   cy.get("#floor-textfield").type("5.2525");
   cy.get("#floor-textfield").should("have.value", "5.252500%");
 
-
-    // Test that autocomplete for ref rate type works and contains value inputted
+  // Test that autocomplete for ref rate type works and contains value inputted
   cy.get("#autocomplete-ref-rate-type").click();
   cy.get("#autocomplete-ref-rate-type-option-0").click();
   cy.wait(200);
 
-  cy.get("#autocomplete-ref-rate-type").should(
-    "have.value",
-    "LIBOR",
-  );
+  cy.get("#autocomplete-ref-rate-type").should("have.value", "LIBOR");
   cy.wait(200);
 });

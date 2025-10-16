@@ -37,9 +37,8 @@ function CollateralPledgeAdd() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loanapprovalquery`,
         );
         setLoanApprovalData(fullInfoResponse.data);
-        console.log(setLoanApprovalData);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("Error fetching data");
       }
     }
 

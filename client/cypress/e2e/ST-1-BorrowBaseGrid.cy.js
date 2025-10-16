@@ -15,7 +15,7 @@ describe("template spec", () => {
   });
 
   it("displays the correct EBITDA amount in the first row", () => {
-    cy.get('.ag-body-horizontal-scroll-viewport').scrollTo(3000,0);
+    cy.get(".ag-body-horizontal-scroll-viewport").scrollTo(3000, 0);
     cy.get(".ag-center-cols-container .ag-row")
       .eq(0)
       .find('[col-id="approved_ebitda"]')

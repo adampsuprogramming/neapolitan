@@ -26,7 +26,7 @@ router.post("/api/createratechange", async (req, res) => {
   } = req.body;
 
   try {
-    result = await pool.query(rateDataUpdate, [changeDate, trancheId]);
+    const result = await pool.query(rateDataUpdate, [changeDate, trancheId]);
   } catch (err) {
     console.error(err);
     res.status(500).send("DB create debt_facility query failed");

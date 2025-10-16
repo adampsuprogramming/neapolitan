@@ -195,14 +195,14 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
     );
   });
 
-  // Find borrower name and input borrow
+  // Find borrower name and input borrower
   const borrowerLongNameInput = screen.getByLabelText("Borrower Name *");
   fireEvent.change(borrowerLongNameInput, {
     target: { value: "The BioShock Company" },
   });
   expect(borrowerLongNameInput.value).toBe("The BioShock Company");
 
-  // Find borrower nickname and input borrow
+  // Find borrower nickname and input borrower nickname
   const borrowerNickNameInput = screen.getByLabelText("Borrower Nickname");
   fireEvent.change(borrowerNickNameInput, {
     target: { value: "BioShock Co." },
@@ -263,16 +263,18 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
     );
   });
 
-  // simulate cancel click
-  const cancelButton = screen.getByText("Cancel");
-  fireEvent.click(cancelButton);
-  expect(borrowerLongNameInput.value).toBe("");
-  expect(borrowerNickNameInput.value).toBe("");
-  expect(corpHqAutocomplete.value).toBe("");
-  expect(primaryGeoRevAutocomplete.value).toBe("");
-  expect(naicsSubsector.value).toBe("");
-  expect(togglePublic).not.toBeChecked();
-  expect(tickerSymbolInput.value).toBe("");
+  await waitFor(() => {
+    expect(borrowerLongNameInput.value).toBe("");
+    expect(borrowerNickNameInput.value).toBe("");
+    expect(corpHqAutocomplete.value).toBe("");
+    expect(primaryGeoRevAutocomplete.value).toBe("");
+    expect(naicsSubsector.value).toBe("");
+    expect(togglePublic).not.toBeChecked();
+    expect(tickerSymbolInput.value).toBe("");
+  });
+
+  const successMessage = screen.getByText("Borrower Created Successfully");
+  expect(successMessage).toBeVisible();
 });
 
 test("UT-22 – Populating search options from API call for NAICS subsector but with some null data", async () => {
