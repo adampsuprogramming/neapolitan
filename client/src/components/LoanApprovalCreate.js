@@ -212,6 +212,11 @@ function LoanApprovalCreate() {
     setLoanAgreementOptions([]);
     setSelectedLoanAgreement(null);
     setSelectedBorrower(setValue);
+    if(!setValue) {  // If value in Borrower is null, set Loan Agreement Options and Loan Tranche Options to Null
+      setLoanAgreementOptions([]);
+      setLoanTrancheOptions([]);
+      return;
+    }
     const loanAgreements = loanAgreementData.filter((item) =>
       item.legal_name.includes(setValue.legal_name),
     );
@@ -222,6 +227,10 @@ function LoanApprovalCreate() {
     setLoanTrancheOptions([]);
     setSelectedLoanTranche(null);
     setSelectedLoanAgreement(setValue);
+    if(!setValue) {  // If value in Loan Agreement is null, set Loan Tranche Options to Null
+      setLoanTrancheOptions([]);
+      return;
+    }
     const loanTranches = loanTrancheData.filter(
       (item) => item.loan_agreement_id === setValue.loan_agreement_id,
     );
@@ -232,6 +241,10 @@ function LoanApprovalCreate() {
     setFacilityOptions([]);
     setSelectedFacility(null);
     setSelectedLender(setValue);
+    if(!setValue) {  // If value in Lender Name is null, set Loan Facilities Options to Null
+      setFacilityOptions([]);
+      return;
+    }
     setLenderName(setValue.lender_name);
 
     const facilities = facilityData.filter(
