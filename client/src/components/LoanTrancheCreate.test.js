@@ -9,9 +9,7 @@
 
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
-import DebtFacilityCreate from "./DebtFacilityCreate";
 import { fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import LoanTrancheCreate from "./LoanTrancheCreate";
 
 jest.mock("axios");

@@ -170,6 +170,10 @@ function LoanTrancheCreate() {
     setLoanAgreementOptions([]);
     setSelectedLoanAgreement(null);
     setSelectedBorrower(setValue);
+    if(!setValue) {  // If value in Borrower is null, set Loan Agreement Options to Null
+      setLoanAgreementOptions([]);
+      return;
+    }
     const loanAgreements = loanAgreementData.filter((item) =>
       item.legal_name.includes(setValue.legal_name),
     );
