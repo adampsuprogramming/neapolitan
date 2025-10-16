@@ -194,7 +194,8 @@ function UpdateRates() {
         style={{
           fontSize: "18px",
           fontFamily: "Inter",
-          paddingLeft: "150px",
+          paddingLeft: "180px",
+          paddingBottom: 20,
         }}
       >
         Update Rate Data
@@ -202,19 +203,12 @@ function UpdateRates() {
       <Box component="form" sx={{ paddingLeft: "115px", paddingTop: "5px" }}>
         <Box
           sx={{
-            fontSize: "16px",
-            fontWeight: "600",
-            fontFamily: "Inter",
-            paddingLeft: "35px",
-          }}
-        ></Box>
-        <Box
-          sx={{
+            border: 1,
             borderRadius: 4,
             borderColor: "#c7c7c7ff",
-            width: "150ch",
+            width: "112ch",
             marginTop: 0,
-            marginLeft: 3,
+            marginLeft: 6,
             marginBottom: 3,
             padding: 2,
           }}
@@ -229,7 +223,7 @@ function UpdateRates() {
               required
               options={borrowerData}
               value={selectedBorrower}
-              sx={{ m: 1, minWidth: "300px" }}
+              sx={{ m: 1, minWidth: "450px" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
               renderInput={(params) => (
@@ -258,7 +252,11 @@ function UpdateRates() {
                 />
               )}
             />
-
+          </div>
+          <div
+            className="row-1-tranche-selection"
+            style={{ display: "flex", gap: "25px" }}
+          >
             <Autocomplete
               disablePortal
               id="autocomplete-loan-tranches"
@@ -428,7 +426,7 @@ function UpdateRates() {
                   marginBottom: "25px",
                 }}
               >
-                Enter New Rate Data
+                Current Rate Data
               </div>
 
               <Box

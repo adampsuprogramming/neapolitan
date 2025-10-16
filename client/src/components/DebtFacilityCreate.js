@@ -43,7 +43,11 @@ function DebtFacilityCreate() {
         const fullInfoResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/lenderquery`,
         );
-        setLenderData(fullInfoResponse.data);
+        const data = fullInfoResponse.data;
+        const sortedLenders = data.sort((first, second) => {
+          return first.lender_name.localeCompare(second.lender_name);
+        });
+        setLenderData(sortedLenders);
       } catch (error) {
         console.error("Error fetching: ", error);
       }
