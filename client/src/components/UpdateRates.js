@@ -14,7 +14,6 @@ function UpdateRates() {
   const [loanAgreementData, setLoanAgreementData] = useState([]); // Hold results of getLoanAgreementData which includes borrower name and loan agreement info
   const [loanTrancheData, setLoanTrancheData] = useState([]); // Hold results of getLoanTrancheData
   const [borrowerData, setBorrowerData] = useState([]); // Hold results of getBorrowerNames
-  const [facilityData, setFacilityData] = useState([]); // Hold results of getFacilityData
   const [selectedBorrower, setSelectedBorrower] = useState(null); // Holds the borrower's name
   const [selectedLoanAgreement, setSelectedLoanAgreement] = useState(null); // Holds Loan Agreement Name
   const [loanAgreementOptions, setLoanAgreementOptions] = useState([]); // Filtered loan agreement options based on borrower name
@@ -46,7 +45,7 @@ function UpdateRates() {
         });
 
         setBorrowerData(sortedBorrowers);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -61,7 +60,7 @@ function UpdateRates() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loanagreementquery`,
         );
         setLoanAgreementData(fullInfoResponse.data);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -75,7 +74,7 @@ function UpdateRates() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loantranchequery`,
         );
         setLoanTrancheData(fullInfoResponse.data);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -97,7 +96,7 @@ function UpdateRates() {
         );
 
         setRateData(fullInfoResponse.data);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -151,7 +150,7 @@ function UpdateRates() {
         clearData();
         setMessage("Coupon Update Successful");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error updating the coupon.");
     }
   }

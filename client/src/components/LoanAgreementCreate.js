@@ -32,7 +32,7 @@ function LoanAgreementCreate() {
         });
 
         setBorrowerData(sortedBorrowers);
-      } catch (error) {
+      } catch {
         setMessage("There was an error updating borrower data");
       }
     }
@@ -70,7 +70,7 @@ function LoanAgreementCreate() {
         clearData();
         setMessage("Loan Agreement Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the loan agreement.");
     }
   }

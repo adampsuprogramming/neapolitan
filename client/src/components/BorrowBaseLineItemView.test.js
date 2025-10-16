@@ -537,16 +537,12 @@ test("UT-12: Borrowing base line item data is formatted correctly receiving empt
   }
 });
 
-
 beforeEach(() => {
   jest.clearAllMocks();
-
-  
 });
 
-
 test("UT-55: Test that global.URL.createObjectURL() is being called correctly", async () => {
-  global.URL.createObjectURL = jest.fn(() => 'mock-url');
+  global.URL.createObjectURL = jest.fn(() => "mock-url");
   axios.get.mockImplementation((url) => {
     if (url.includes("facilities")) {
       return Promise.resolve({
@@ -705,11 +701,8 @@ test("UT-55: Test that global.URL.createObjectURL() is being called correctly", 
     expect(gridRows.length).toBeGreaterThan(1);
   });
 
+  const exportButton = screen.getByText("Export to CSV");
+  fireEvent.click(exportButton);
 
- const exportButton = screen.getByText("Export to CSV");
- fireEvent.click(exportButton);
-
- expect(global.URL.createObjectURL).toHaveBeenCalled();
-
+  expect(global.URL.createObjectURL).toHaveBeenCalled();
 });
-

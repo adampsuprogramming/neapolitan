@@ -25,9 +25,9 @@ function BorrowBaseLineItemView() {
   // useState hook to set the row data
   const [rowData, setRowData] = useState([]);
 
-  // useState hook to set the column data --- this also renames the columns to appropriate names
+  // set the column data and rename the columns to appropriate names
   // valueFormatter calls arrow function to format cell data, as appropriate
-  const [colDefs, setColDefs] = useState([
+  const colDefs = [
     { field: "collateral_id", headerName: "Collateral ID" },
     { field: "legal_name", headerName: "Legal Name" },
     { field: "short_name", headerName: "Short Name" },
@@ -280,7 +280,7 @@ function BorrowBaseLineItemView() {
     // { field: "is_cov_default", headerName: "Covenant Default?" },
 
     // { field: "is_payment_default", headerName: "Payment Default?" },
-  ]);
+  ];
 
   const handlePortfolioChange = (e) => {
     const selectionValue = e.target.value;
@@ -329,7 +329,7 @@ function BorrowBaseLineItemView() {
         );
         setFacilityData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -363,7 +363,7 @@ function BorrowBaseLineItemView() {
         );
         setRowData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
     if (asOfDate && facilityNumber) {

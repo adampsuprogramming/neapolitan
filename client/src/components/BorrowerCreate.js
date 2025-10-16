@@ -36,7 +36,7 @@ function BorrowerCreate() {
         );
         setRegionData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -54,7 +54,7 @@ function BorrowerCreate() {
         );
         setNaicsSubSectorData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -128,7 +128,7 @@ function BorrowerCreate() {
         clearData();
         setMessage("Borrower Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the borrower.");
     }
   }
@@ -229,8 +229,9 @@ function BorrowerCreate() {
                 setSelectedNaicsSubsector(newValue)
               }
               getOptionLabel={(option) =>
-                `${option.naics_subsector_id} - ${option.naics_subsector_name}` ||
-                ""
+                option
+                  ? `${option.naics_subsector_id ?? ""} - ${option.naics_subsector_name ?? ""}`
+                  : ""
               }
               renderInput={(params) => (
                 <TextField {...params} label="NAICS Subsector Code" required />
@@ -267,7 +268,7 @@ function BorrowerCreate() {
           </Box>
 
           <TextField
-            sx={{ m: 1, width: "30ch", marginLeft: 6, width: "22ch" }}
+            sx={{ m: 1, marginLeft: 6, width: "22ch" }}
             required={isPublicBorrower}
             disabled={!isPublicBorrower}
             id="ticker-symbol"

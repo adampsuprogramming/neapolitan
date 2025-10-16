@@ -38,7 +38,7 @@ function CollateralPledgeAdd() {
         );
         setLoanApprovalData(fullInfoResponse.data);
       } catch (error) {
-        setMessage("Error fetching data");
+        setMessage("Error fetching data: ", error);
       }
     }
 
@@ -93,7 +93,7 @@ function CollateralPledgeAdd() {
         clearData();
         setMessage("Collateral Pledge Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the collateral pledge.");
     }
   }

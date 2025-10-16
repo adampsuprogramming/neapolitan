@@ -23,8 +23,10 @@ router.post("/api/createCollateral", async (req, res) => {
     commitmentAmount,
   } = req.body;
 
+  let newCollateralId;
+
   try {
-    result = await pool.query(createCollateral, [
+    const result = await pool.query(createCollateral, [
       inclusionDate,
       debtFacilityId,
       trancheId,

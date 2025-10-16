@@ -45,7 +45,7 @@ function DebtFacilityCreate() {
         );
         setLenderData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -63,7 +63,7 @@ function DebtFacilityCreate() {
         );
         setPortfolioData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -111,7 +111,7 @@ function DebtFacilityCreate() {
         clearData();
         setMessage("Facility Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the facility.");
     }
   }
@@ -282,7 +282,7 @@ function DebtFacilityCreate() {
           {/* Input for max advance rate */}
 
           <NumericFormat
-            sx={{ m: 1, width: "30ch", marginLeft: 6, width: "22ch" }}
+            sx={{ m: 1, marginLeft: 6, width: "22ch" }}
             customInput={TextField}
             id="max-advance-rate-field"
             value={maxAdvanceRate}

@@ -21,7 +21,6 @@ afterAll(async () => {
   await pool.end();
 });
 
-
 beforeEach(() => {
   mockedQuery.mockClear();
 });
@@ -105,8 +104,6 @@ values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15);
     );
   });
 });
-
-
 
 describe("POST /api/createdebtfacility", () => {
   it("accepts data from a mocked api put and then runs an insert query on the database - null rate types", async () => {

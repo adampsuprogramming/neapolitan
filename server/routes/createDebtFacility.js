@@ -47,8 +47,10 @@ router.post("/api/createdebtfacility", async (req, res) => {
     minEquityAmount,
   } = req.body;
 
+  let newDebtFacilityID;
+
   try {
-    result = await pool.query(createDebtFacilitySQL, [
+    const result = await pool.query(createDebtFacilitySQL, [
       debtFacilityName,
       lenderId,
       portfolioId,

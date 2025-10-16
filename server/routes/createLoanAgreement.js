@@ -11,7 +11,7 @@ router.post("/api/createloanagreement", async (req, res) => {
   const { loanAgreementName, borrowerId, loanAgreementDate } = req.body;
 
   try {
-    result = await pool.query(createAgreementSQL, [
+    await pool.query(createAgreementSQL, [
       loanAgreementName,
       borrowerId,
       loanAgreementDate,

@@ -18,8 +18,6 @@ insert into rate_data (tranche_id, is_fixed, start_date, fixed_rate, spread, flo
 values ($1,$2,$3,$4,$5,$6,$7,$8)
 `;
 
-let newTrancheId;
-
 router.post("/api/createloantranche", async (req, res) => {
   const {
     loanTrancheName,
@@ -39,8 +37,10 @@ router.post("/api/createloantranche", async (req, res) => {
     refRate,
   } = req.body;
 
+  let newTrancheId;
+
   try {
-    result = await pool.query(createLoanTrancheSQL, [
+    const result = await pool.query(createLoanTrancheSQL, [
       loanAgreementId,
       trancheType,
       lienType,

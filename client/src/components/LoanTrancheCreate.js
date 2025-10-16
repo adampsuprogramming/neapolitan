@@ -44,7 +44,7 @@ function LoanTrancheCreate() {
         );
         setLoanAgreementData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
     getLoanAgreementData();
@@ -64,7 +64,7 @@ function LoanTrancheCreate() {
 
         setBorrowerData(sortedBorrowers);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -142,7 +142,7 @@ function LoanTrancheCreate() {
         clearData();
         setMessage("Loan Tranche Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the loan agreement.");
     }
   }
@@ -170,7 +170,8 @@ function LoanTrancheCreate() {
     setLoanAgreementOptions([]);
     setSelectedLoanAgreement(null);
     setSelectedBorrower(setValue);
-    if(!setValue) {  // If value in Borrower is null, set Loan Agreement Options to Null
+    if (!setValue) {
+      // If value in Borrower is null, set Loan Agreement Options to Null
       setLoanAgreementOptions([]);
       return;
     }

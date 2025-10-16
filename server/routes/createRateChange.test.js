@@ -65,7 +65,6 @@ values ($1,$2,$3,$4,$5,$6,$7,$8);`,
   });
 });
 
-
 describe("POST /api/createratechange", () => {
   it("accepts fixed rate data from a mocked api put and then runs an insert query on the database", async () => {
     mockedQuery.mockResolvedValueOnce({}).mockResolvedValueOnce({});
@@ -74,7 +73,7 @@ describe("POST /api/createratechange", () => {
       trancheId: "1111",
       changeDate: "2025-10-31",
       rateType: "Fixed Rate",
-      fixedCoupon: .1,
+      fixedCoupon: 0.1,
       spread: null,
       floor: null,
       refRate: null,
@@ -101,7 +100,7 @@ WHERE rate_data_id = (
 
       `INSERT INTO rate_data (tranche_id, is_fixed, fixed_rate, spread, floor, start_date, has_floor, reference_rate)
 values ($1,$2,$3,$4,$5,$6,$7,$8);`,
-      ["1111", true, .1, null, null, "2025-10-31", false, null],
+      ["1111", true, 0.1, null, null, "2025-10-31", false, null],
     );
   });
 });

@@ -56,7 +56,7 @@ function LoanApprovalCreate() {
         });
 
         setBorrowerData(sortedBorrowers);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -71,7 +71,7 @@ function LoanApprovalCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loanagreementquery`,
         );
         setLoanAgreementData(fullInfoResponse.data);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -85,7 +85,7 @@ function LoanApprovalCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loantranchequery`,
         );
         setLoanTrancheData(fullInfoResponse.data);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -103,7 +103,7 @@ function LoanApprovalCreate() {
           return first.lender_name.localeCompare(second.lender_name);
         });
         setLenderData(sortedLenders);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -117,7 +117,7 @@ function LoanApprovalCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/facilities`,
         );
         setFacilityData(fullInfoResponse.data);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching data from server");
       }
     }
@@ -186,7 +186,7 @@ function LoanApprovalCreate() {
         clearData();
         setMessage("Loan Approval Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the loan approval.");
     }
   }
@@ -212,7 +212,8 @@ function LoanApprovalCreate() {
     setLoanAgreementOptions([]);
     setSelectedLoanAgreement(null);
     setSelectedBorrower(setValue);
-    if(!setValue) {  // If value in Borrower is null, set Loan Agreement Options and Loan Tranche Options to Null
+    if (!setValue) {
+      // If value in Borrower is null, set Loan Agreement Options and Loan Tranche Options to Null
       setLoanAgreementOptions([]);
       setLoanTrancheOptions([]);
       return;
@@ -227,7 +228,8 @@ function LoanApprovalCreate() {
     setLoanTrancheOptions([]);
     setSelectedLoanTranche(null);
     setSelectedLoanAgreement(setValue);
-    if(!setValue) {  // If value in Loan Agreement is null, set Loan Tranche Options to Null
+    if (!setValue) {
+      // If value in Loan Agreement is null, set Loan Tranche Options to Null
       setLoanTrancheOptions([]);
       return;
     }
@@ -241,7 +243,8 @@ function LoanApprovalCreate() {
     setFacilityOptions([]);
     setSelectedFacility(null);
     setSelectedLender(setValue);
-    if(!setValue) {  // If value in Lender Name is null, set Loan Facilities Options to Null
+    if (!setValue) {
+      // If value in Lender Name is null, set Loan Facilities Options to Null
       setFacilityOptions([]);
       return;
     }
