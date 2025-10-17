@@ -51,7 +51,7 @@ function DebtFacilityCreate() {
         });
         setLenderData(sortedLenders);
       } catch (error) {
-        console.error("Error fetching: ", error);
+        console.error("Error fetching: ", error); 
       }
     }
 
@@ -377,6 +377,7 @@ function DebtFacilityCreate() {
               customInput={TextField}
               id="first-lien-rate-textfield"
               sx={{ m: 1, width: "20ch", marginLeft: 3 }}
+              disabled={!isAssetByAssetRate}
               value={firstLienRate}
               onValueChange={(value) => setFirstLienRate(value.floatValue)}
               label="First Lien Rate"
@@ -392,6 +393,7 @@ function DebtFacilityCreate() {
               customInput={TextField}
               id="second-lien-rate-textfield"
               sx={{ m: 1, width: "20ch", marginLeft: 2 }}
+              disabled={!isAssetByAssetRate}
               value={secondLienRate}
               onValueChange={(value) => setSecondLienRate(value.floatValue)}
               label="Second Lien Rate"
@@ -407,6 +409,7 @@ function DebtFacilityCreate() {
               customInput={TextField}
               id="mezzanine-rate-textfield"
               sx={{ m: 1, width: "20ch", marginLeft: 2 }}
+              disabled={!isAssetByAssetRate}
               value={mezzanineRate}
               onValueChange={(value) => setMezzanineRate(value.floatValue)}
               label="Mezzanine Rate"

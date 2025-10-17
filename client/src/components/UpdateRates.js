@@ -159,15 +159,19 @@ function UpdateRates() {
     setSelectedBorrower(null);
     setSelectedLoanTranche(null);
     setSelectedLoanAgreement(null);
+    setSelectedTrancheId(null);
     setChangeDate("");
     setRateType("");
     setFixedRate("");
     setSpread("");
     setFloor("");
     setRefRate("");
+    setRateData([]);
   }
 
   const handleBorrowerChange = (e, setValue) => {
+    setMessage("");
+    clearData();
     setLoanAgreementOptions([]);
     setSelectedLoanAgreement(null);
     setSelectedBorrower(setValue);
