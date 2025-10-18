@@ -34,6 +34,8 @@ import LoanTrancheTransactions from "./LoanTrancheTransactions";
 import LoanTrancheCreate from "./LoanTrancheCreate";
 import LoanTrancheModify from "./LoanTrancheModify";
 import LoanTrancheDelete from "./LoanTrancheDelete";
+import UpdateRates from "./UpdateRates";
+import UpdateMetrics from "./UpdateMetrics";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 
@@ -123,7 +125,10 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="/performance/*" element={<Performance />} />
+          <Route path="/performance/*" element={<Performance />}>
+            <Route path="updaterates/" element={<UpdateRates />}></Route>
+            <Route path="updatemetrics/" element={<UpdateMetrics />}></Route>
+          </Route>
           <Route path="/reporting/*" element={<Reporting />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
 

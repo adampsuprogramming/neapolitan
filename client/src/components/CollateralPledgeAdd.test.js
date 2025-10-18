@@ -6,13 +6,13 @@
 // ************************************************************************************************
 
 import axios from "axios";
-import { render, screen, within, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import CollateralPledgeAdd from "./CollateralPledgeAdd";
 import { fireEvent } from "@testing-library/react";
 
 jest.mock("axios");
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -60,7 +60,7 @@ test("UT-48 - Testing PUT API Call to Collateral Pledge After Filling in Data fr
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanapprovalquery",
+      "http://localhost:5000/api/loanapprovalquery",
     );
   });
 
@@ -163,7 +163,7 @@ test("UT-49 - Testing Error Message if Inclusion Date Is On or After Expiration 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanapprovalquery",
+      "http://localhost:5000/api/loanapprovalquery",
     );
   });
 
@@ -246,7 +246,7 @@ test("UT-50 - Testing Error Message if Outstanding Amount is Greater than Commit
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanapprovalquery",
+      "http://localhost:5000/api/loanapprovalquery",
     );
   });
 
@@ -329,7 +329,7 @@ test("UT-51 - Testing Error Message if Outstanding Amount is Greater than Approv
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/loanapprovalquery",
+      "http://localhost:5000/api/loanapprovalquery",
     );
   });
 

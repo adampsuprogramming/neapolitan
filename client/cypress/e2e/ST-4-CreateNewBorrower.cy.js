@@ -43,7 +43,7 @@ it("submits a new borrower form", function () {
   cy.get("#autocomplete-naics-subsector-option-0").click();
   cy.get("#autocomplete-naics-subsector").should(
     "have.value",
-    "Electrical Equipment, Appliance, and Component Manufacturing",
+    "335 - Electrical Equipment, Appliance, and Component Manufacturing",
   );
 
   // Test that the toggle switch works as expected

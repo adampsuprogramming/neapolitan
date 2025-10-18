@@ -56,8 +56,8 @@ function LoanApprovalCreate() {
         });
 
         setBorrowerData(sortedBorrowers);
-      } catch (error) {
-        console.error("Error fetching");
+      } catch {
+        setMessage("Error fetching data from server");
       }
     }
 
@@ -71,8 +71,8 @@ function LoanApprovalCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loanagreementquery`,
         );
         setLoanAgreementData(fullInfoResponse.data);
-      } catch (error) {
-        console.error("Error fetching");
+      } catch {
+        setMessage("Error fetching data from server");
       }
     }
     getLoanAgreementData();
@@ -85,8 +85,8 @@ function LoanApprovalCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loantranchequery`,
         );
         setLoanTrancheData(fullInfoResponse.data);
-      } catch (error) {
-        console.error("Error fetching");
+      } catch {
+        setMessage("Error fetching data from server");
       }
     }
     getLoanTrancheData();
@@ -98,9 +98,13 @@ function LoanApprovalCreate() {
         const fullInfoResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/lenderquery`,
         );
-        setLenderData(fullInfoResponse.data);
-      } catch (error) {
-        console.error("Error fetching");
+        const data = fullInfoResponse.data;
+        const sortedLenders = data.sort((first, second) => {
+          return first.lender_name.localeCompare(second.lender_name);
+        });
+        setLenderData(sortedLenders);
+      } catch {
+        setMessage("Error fetching data from server");
       }
     }
     getLenderData();
@@ -113,8 +117,8 @@ function LoanApprovalCreate() {
           `${process.env.REACT_APP_BACKEND_URL}/api/facilities`,
         );
         setFacilityData(fullInfoResponse.data);
-      } catch (error) {
-        console.error("Error fetching");
+      } catch {
+        setMessage("Error fetching data from server");
       }
     }
     getFacilityData();
@@ -137,8 +141,18 @@ function LoanApprovalCreate() {
   }, [selectedFacility]);
 
   async function postApproval() {
-    if ((!selectedBorrower||!selectedLoanAgreement||!selectedLoanTranche||!selectedLender||!selectedFacility||!approvalDate||!approvalExpiration)) {
-      setMessage("Please input all required fields (denoted by *)");
+    if (
+      !selectedBorrower ||
+      !selectedLoanAgreement ||
+      !selectedLoanTranche ||
+      !selectedLender ||
+      !selectedFacility ||
+      !approvalDate ||
+      !approvalExpiration
+    ) {
+      setMessage(
+        "Not Saved - Please fill out all required fields - denoted by *",
+      );
       return;
     }
     // creates the loan approval name for access in the Collateral Pledge feature
@@ -172,7 +186,7 @@ function LoanApprovalCreate() {
         clearData();
         setMessage("Loan Approval Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the loan approval.");
     }
   }
@@ -198,6 +212,12 @@ function LoanApprovalCreate() {
     setLoanAgreementOptions([]);
     setSelectedLoanAgreement(null);
     setSelectedBorrower(setValue);
+    if (!setValue) {
+      // If value in Borrower is null, set Loan Agreement Options and Loan Tranche Options to Null
+      setLoanAgreementOptions([]);
+      setLoanTrancheOptions([]);
+      return;
+    }
     const loanAgreements = loanAgreementData.filter((item) =>
       item.legal_name.includes(setValue.legal_name),
     );
@@ -208,6 +228,11 @@ function LoanApprovalCreate() {
     setLoanTrancheOptions([]);
     setSelectedLoanTranche(null);
     setSelectedLoanAgreement(setValue);
+    if (!setValue) {
+      // If value in Loan Agreement is null, set Loan Tranche Options to Null
+      setLoanTrancheOptions([]);
+      return;
+    }
     const loanTranches = loanTrancheData.filter(
       (item) => item.loan_agreement_id === setValue.loan_agreement_id,
     );
@@ -218,6 +243,11 @@ function LoanApprovalCreate() {
     setFacilityOptions([]);
     setSelectedFacility(null);
     setSelectedLender(setValue);
+    if (!setValue) {
+      // If value in Lender Name is null, set Loan Facilities Options to Null
+      setFacilityOptions([]);
+      return;
+    }
     setLenderName(setValue.lender_name);
 
     const facilities = facilityData.filter(
@@ -233,8 +263,6 @@ function LoanApprovalCreate() {
         uniqueFacilities.push(facility);
       }
     }
-
-    console.log(uniqueFacilities);
     setFacilityOptions(uniqueFacilities);
   };
 
@@ -288,7 +316,7 @@ function LoanApprovalCreate() {
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required/>
+                <TextField {...params} label="Borrower Name" required />
               )}
             />
 
@@ -309,9 +337,8 @@ function LoanApprovalCreate() {
                       ? "Loan Agreement"
                       : "Loan Agreement (Select Borrower First)"
                   }
-                required
+                  required
                 />
-                
               )}
             />
 
@@ -351,7 +378,7 @@ function LoanApprovalCreate() {
               onChange={handleLenderChange}
               getOptionLabel={(option) => option.lender_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Lender Name" required/>
+                <TextField {...params} label="Lender Name" required />
               )}
             />
 
@@ -371,8 +398,7 @@ function LoanApprovalCreate() {
                     selectedLender
                       ? "Loan Facilities"
                       : "Loan Facilities (Select Lender First)"
-                      
-                  } 
+                  }
                   required
                 />
               )}
@@ -392,7 +418,7 @@ function LoanApprovalCreate() {
                       "data-testid": "tranche-approval-date-picker",
                     },
                     helperText: "MM/DD/YYYY",
-                    required: true
+                    required: true,
                   },
                 }}
               />
@@ -411,7 +437,7 @@ function LoanApprovalCreate() {
                       "data-testid": "tranche-approval-expiration-picker",
                     },
                     helperText: "MM/DD/YYYY",
-                    required: true
+                    required: true,
                   },
                 }}
               />

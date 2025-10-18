@@ -23,7 +23,7 @@ router.post("/api/createloanapproval", async (req, res) => {
     approvedValue,
   } = req.body;
   try {
-    result = await pool.query(createApprovalSQL, [
+    await pool.query(createApprovalSQL, [
       approvalName,
       selectedTrancheId,
       selectedFacilityId,

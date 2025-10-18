@@ -37,8 +37,10 @@ router.post("/api/createloantranche", async (req, res) => {
     refRate,
   } = req.body;
 
+  let newTrancheId;
+
   try {
-    result = await pool.query(createLoanTrancheSQL, [
+    const result = await pool.query(createLoanTrancheSQL, [
       loanAgreementId,
       trancheType,
       lienType,

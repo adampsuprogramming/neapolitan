@@ -43,9 +43,15 @@ function DebtFacilityCreate() {
         const fullInfoResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/lenderquery`,
         );
-        setLenderData(fullInfoResponse.data);
+        const data = fullInfoResponse.data;
+        const sortedLenders = data.sort((first, second) => {
+          const firstLenderName = first.lender_name || "";
+          const secondLenderName = second.lender_name || "";
+          return firstLenderName.localeCompare(secondLenderName);
+        });
+        setLenderData(sortedLenders);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error); 
       }
     }
 
@@ -63,7 +69,7 @@ function DebtFacilityCreate() {
         );
         setPortfolioData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching");
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -87,6 +93,31 @@ function DebtFacilityCreate() {
   }, [selectedPortfolio]);
 
   async function postFacility() {
+    if (
+      !facilityName ||
+      !selectedLender ||
+      !selectedPortfolio ||
+      !commitmentDate ||
+      !maturityDate ||
+      !commitmentAmount
+    ) {
+      setMessage(
+        "Not Saved - Please fill out all required fields - denoted by *",
+      );
+      return;
+    }
+    if (isOverallRate && !maxAdvanceRate) {
+      setMessage(
+        "Not Saved - Please input overall rate.",
+      );
+      return;
+    }
+    if (isMinimumEquity && !minimumEquity) {
+      setMessage(
+        "Not Saved - Please input minimum equity.",
+      );
+      return;
+    }
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createdebtfacility`,
@@ -98,20 +129,32 @@ function DebtFacilityCreate() {
           endDate: maturityDate,
           overAllCommitmentAmount: commitmentAmount,
           isOverallRate: isOverallRate,
-          overallRate: maxAdvanceRate / 100,
+          overallRate:
+            maxAdvanceRate !== null && maxAdvanceRate !== ""
+              ? Number((maxAdvanceRate / 100).toFixed(6))
+              : null,
           isAssetByAssetAdvance: isAssetByAssetRate,
-          firstLienRate: firstLienRate / 100,
-          secondLienRate: secondLienRate / 100,
-          mezzRate: mezzanineRate / 100,
+          firstLienRate:
+            firstLienRate !== null && firstLienRate !== ""
+              ? Number((firstLienRate / 100).toFixed(6))
+              : null,
+          secondLienRate:
+            secondLienRate !== null && secondLienRate !== ""
+              ? Number((secondLienRate / 100).toFixed(6))
+              : null,
+          mezzRate:
+            mezzanineRate !== null && mezzanineRate !== ""
+              ? Number((mezzanineRate / 100).toFixed(6))
+              : null,
           isMinEquity: isMinimumEquity,
-          minEquityAmount: minimumEquity,
+          minEquityAmount: isMinimumEquity ? minimumEquity : null,
         },
       );
       if (response.status === 201) {
         clearData();
         setMessage("Facility Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the facility.");
     }
   }
@@ -125,7 +168,7 @@ function DebtFacilityCreate() {
     setCommitmentAmount("");
     setIsOverallRate(false);
     setMaxAdvanceRate("");
-    setIsAssetByAssetRate("");
+    setIsAssetByAssetRate(false);
     setFirstLienRate("");
     setSecondLienRate("");
     setMezzanineRate("");
@@ -137,7 +180,7 @@ function DebtFacilityCreate() {
   return (
     <>
       <div className="debt-facility-create">Create Debt Facility</div>
-      <Box component="form" sx={{ paddingLeft: "115px" }}>
+      <Box sx={{ paddingLeft: "115px" }}>
         <Box
           sx={{
             border: "1px solid",
@@ -173,7 +216,7 @@ function DebtFacilityCreate() {
               onChange={(event, newValue) => setSelectedLender(newValue)}
               getOptionLabel={(option) => option.lender_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Lender Name" />
+                <TextField {...params} label="Lender Name" required/>
               )}
             />
 
@@ -190,7 +233,7 @@ function DebtFacilityCreate() {
               onChange={(event, newValue) => setSelectedPortfolio(newValue)}
               getOptionLabel={(option) => option.portfolio_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Portfolio Name" />
+                <TextField {...params} label="Portfolio Name" required/>
               )}
             />
           </div>
@@ -209,6 +252,7 @@ function DebtFacilityCreate() {
                 }}
                 slotProps={{
                   textField: {
+                    required: true,
                     inputProps: { "data-testid": "commitment-date-picker" },
                     helperText: "MM/DD/YYYY",
                   },
@@ -227,6 +271,7 @@ function DebtFacilityCreate() {
                 }}
                 slotProps={{
                   textField: {
+                    required: true,
                     helperText: "MM/DD/YYYY",
                   },
                 }}
@@ -282,8 +327,10 @@ function DebtFacilityCreate() {
           {/* Input for max advance rate */}
 
           <NumericFormat
-            sx={{ m: 1, width: "30ch", marginLeft: 6, width: "22ch" }}
+            sx={{ m: 1, marginLeft: 6, width: "23ch" }}
             customInput={TextField}
+            required={isOverallRate}
+            disabled={!isOverallRate}
             id="max-advance-rate-field"
             value={maxAdvanceRate}
             onValueChange={(value) => setMaxAdvanceRate(value.floatValue)}
@@ -330,6 +377,7 @@ function DebtFacilityCreate() {
               customInput={TextField}
               id="first-lien-rate-textfield"
               sx={{ m: 1, width: "20ch", marginLeft: 3 }}
+              disabled={!isAssetByAssetRate}
               value={firstLienRate}
               onValueChange={(value) => setFirstLienRate(value.floatValue)}
               label="First Lien Rate"
@@ -345,6 +393,7 @@ function DebtFacilityCreate() {
               customInput={TextField}
               id="second-lien-rate-textfield"
               sx={{ m: 1, width: "20ch", marginLeft: 2 }}
+              disabled={!isAssetByAssetRate}
               value={secondLienRate}
               onValueChange={(value) => setSecondLienRate(value.floatValue)}
               label="Second Lien Rate"
@@ -360,6 +409,7 @@ function DebtFacilityCreate() {
               customInput={TextField}
               id="mezzanine-rate-textfield"
               sx={{ m: 1, width: "20ch", marginLeft: 2 }}
+              disabled={!isAssetByAssetRate}
               value={mezzanineRate}
               onValueChange={(value) => setMezzanineRate(value.floatValue)}
               label="Mezzanine Rate"
@@ -402,6 +452,8 @@ function DebtFacilityCreate() {
 
           <NumericFormat
             customInput={TextField}
+            required={isMinimumEquity}
+            disabled={!isMinimumEquity}
             id="min-equity-textfield"
             sx={{ marginLeft: "5ch" }}
             value={minimumEquity}

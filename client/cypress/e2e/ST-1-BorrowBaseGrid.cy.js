@@ -15,6 +15,7 @@ describe("template spec", () => {
   });
 
   it("displays the correct EBITDA amount in the first row", () => {
+    cy.get(".ag-body-horizontal-scroll-viewport").scrollTo(3000, 0);
     cy.get(".ag-center-cols-container .ag-row")
       .eq(0)
       .find('[col-id="approved_ebitda"]')
@@ -31,8 +32,4 @@ describe("template spec", () => {
   it("retrieves the correct number of rows", () => {
     cy.get(".ag-center-cols-container .ag-row").should("have.length", 19);
   });
-});
-
-it("createloanagreement", function () {
-  cy.visit("localhost:3000");
 });

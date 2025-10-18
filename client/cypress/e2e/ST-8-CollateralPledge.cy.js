@@ -65,7 +65,3 @@ it("submits a new collateral pledge form", function () {
   cy.wait(500);
   cy.contains("Collateral Pledge Created Successfully").should("be.visible");
 });
-
-it("t", function () {
-  cy.visit("localhost:3000");
-});

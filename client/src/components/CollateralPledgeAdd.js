@@ -37,9 +37,8 @@ function CollateralPledgeAdd() {
           `${process.env.REACT_APP_BACKEND_URL}/api/loanapprovalquery`,
         );
         setLoanApprovalData(fullInfoResponse.data);
-        console.log(setLoanApprovalData);
       } catch (error) {
-        console.error("Error fetching");
+        setMessage("Error fetching data: ", error);
       }
     }
 
@@ -94,7 +93,7 @@ function CollateralPledgeAdd() {
         clearData();
         setMessage("Collateral Pledge Created Successfully");
       }
-    } catch (error) {
+    } catch {
       setMessage("There was an error creating the collateral pledge.");
     }
   }
@@ -107,6 +106,13 @@ function CollateralPledgeAdd() {
     setLoanApprovalId("");
     setDebtFacilityId("");
     setTrancheId("");
+    setBorrowerName("");
+    setAgreementName("");
+    setTrancheName("");
+    setMaxApproved("");
+    setExpiration("");
+    setBankName("");
+    setFacilityName("");
   }
 
   return (

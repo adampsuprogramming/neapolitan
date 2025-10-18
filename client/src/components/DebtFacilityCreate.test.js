@@ -7,14 +7,13 @@
 // ********************************************************************************************
 
 import axios from "axios";
-import { render, screen, within, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import DebtFacilityCreate from "./DebtFacilityCreate";
 import { fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 jest.mock("axios");
 
-process.env.REACT_APP_BACKEND_URL = "http://localhost:3000";
+process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -53,11 +52,11 @@ test("UT-4 – Populating search options for Bank Name from API call", async () 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
-  const lenderName = screen.getByLabelText("Lender Name");
+  const lenderName = screen.getByLabelText("Lender Name *");
 
   fireEvent.mouseDown(lenderName);
 
@@ -93,11 +92,11 @@ test("UT-5 – Populating search options for Portfolio from API call", async () 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/portfolioquery",
+      "http://localhost:5000/api/portfolioquery",
     );
   });
 
-  const portfolioName = screen.getByLabelText("Portfolio Name");
+  const portfolioName = screen.getByLabelText("Portfolio Name *");
 
   fireEvent.mouseDown(portfolioName);
 
@@ -152,13 +151,13 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/portfolioquery",
+      "http://localhost:5000/api/portfolioquery",
     );
   });
 
@@ -170,13 +169,13 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   expect(facilityNameInput.value).toBe("Mario Kart Facility");
 
   // Find autocomplete box for lender name and select lender
-  const lenderAutocomplete = screen.getByLabelText("Lender Name");
+  const lenderAutocomplete = screen.getByLabelText("Lender Name *");
   fireEvent.mouseDown(lenderAutocomplete);
   fireEvent.click(screen.getByText("Cherry Blossom Bank"));
   expect(lenderAutocomplete.value).toBe("Cherry Blossom Bank");
 
   // Find autocomplete box for portfolio name and select portfolio
-  const portfolioAutocomplete = screen.getByLabelText("Portfolio Name");
+  const portfolioAutocomplete = screen.getByLabelText("Portfolio Name *");
   fireEvent.mouseDown(portfolioAutocomplete);
   fireEvent.click(screen.getByText("Fund Banana"));
   expect(portfolioAutocomplete.value).toBe("Fund Banana");
@@ -185,7 +184,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   // Note that we had to specify "input" because React renders the words Commitment Date (including
   // a hidden input, so it doesn't know which to select without the selector)
 
-  const commitmentDateInput = screen.getByLabelText("Commitment Date", {
+  const commitmentDateInput = screen.getByLabelText("Commitment Date *", {
     selector: "input",
   });
   fireEvent.change(commitmentDateInput, { target: { value: "01/02/2025" } });
@@ -194,7 +193,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   // Find autocomplete box for Maturity Date input and enter date
   // Note that we had to specify "input" because React renders the words Maturity Date (including
   // a hidden input, so it doesn't know which to select without the selector)
-  const maturityDateInput = screen.getByLabelText("Maturity Date", {
+  const maturityDateInput = screen.getByLabelText("Maturity Date *", {
     selector: "input",
   });
   fireEvent.change(maturityDateInput, { target: { value: "01/02/2030" } });
@@ -213,7 +212,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
 
   // Find Overall Rate input box and input text.  Note the text is auto formatted so our
   // expect assertion needs to be as well.
-  const overallAdvanceRateInput = screen.getByLabelText("Overall Advance Rate");
+  const overallAdvanceRateInput = screen.getByLabelText("Overall Advance Rate *");
   fireEvent.change(overallAdvanceRateInput, { target: { value: "65" } });
   expect(overallAdvanceRateInput.value).toBe("65.000000%");
 
@@ -248,7 +247,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   // Find Mezzanine Rate input box and input text.  Note the text is auto formatted so our
   // expect assertion needs to be as well.
   const minimumEquityAmountInput = screen.getByLabelText(
-    "Minimum Equity Amount",
+    "Minimum Equity Amount *",
   );
   fireEvent.change(minimumEquityAmountInput, { target: { value: "5000000" } });
   expect(minimumEquityAmountInput.value).toBe("$5,000,000.00");
@@ -321,11 +320,11 @@ test("UT-13 – Test to ensure autocomplete works if there is one lender with a 
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/lenderquery",
+      "http://localhost:5000/api/lenderquery",
     );
   });
 
-  const lenderName = screen.getByLabelText("Lender Name");
+  const lenderName = screen.getByLabelText("Lender Name *");
   fireEvent.mouseDown(lenderName);
 
   expect(screen.getByText("Donkey Kong Bank")).toBeInTheDocument(); // ensure that this still renders even though a lender name is null
@@ -353,11 +352,11 @@ test("UT-14 – Test to ensure autocomplete works if there is one portfolio with
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:3000/api/portfolioquery",
+      "http://localhost:5000/api/portfolioquery",
     );
   });
 
-  const portfolioName = screen.getByLabelText("Portfolio Name");
+  const portfolioName = screen.getByLabelText("Portfolio Name *");
   fireEvent.mouseDown(portfolioName);
 
   expect(screen.getByText("Wario Portfolio")).toBeInTheDocument(); // ensure that this still renders even though a portfolio name is null

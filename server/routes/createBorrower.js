@@ -19,7 +19,7 @@ router.post("/api/createborrower", async (req, res) => {
   } = req.body;
 
   try {
-    result = await pool.query(createBorrowerSQL, [
+    await pool.query(createBorrowerSQL, [
       legalName,
       shortName,
       corporateHqId,
