@@ -22,6 +22,8 @@ const loanApprovalQuery = require("./routes/loanApprovalQuery");
 const createCollateral = require("./routes/createCollateral");
 const rateDataQuery = require("./routes/rateDataQuery");
 const createRateChange = require("./routes/createRateChange");
+const metricsQuery = require("./routes/metricsQuery");
+const createMetricsChange = require("./routes/createMetricsChange");
 
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((origin) => origin.trim())
@@ -75,5 +77,7 @@ app.use(loanApprovalQuery);
 app.use(createCollateral);
 app.use(rateDataQuery);
 app.use(createRateChange);
+app.use(metricsQuery);
+app.use(createMetricsChange);
 
 module.exports = app;

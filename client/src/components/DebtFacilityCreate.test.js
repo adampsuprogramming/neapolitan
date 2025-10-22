@@ -212,7 +212,9 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
 
   // Find Overall Rate input box and input text.  Note the text is auto formatted so our
   // expect assertion needs to be as well.
-  const overallAdvanceRateInput = screen.getByLabelText("Overall Advance Rate *");
+  const overallAdvanceRateInput = screen.getByLabelText(
+    "Overall Advance Rate *",
+  );
   fireEvent.change(overallAdvanceRateInput, { target: { value: "65" } });
   expect(overallAdvanceRateInput.value).toBe("65.000000%");
 

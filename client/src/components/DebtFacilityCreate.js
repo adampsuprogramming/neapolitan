@@ -51,7 +51,7 @@ function DebtFacilityCreate() {
         });
         setLenderData(sortedLenders);
       } catch (error) {
-        console.error("Error fetching: ", error); 
+        console.error("Error fetching: ", error);
       }
     }
 
@@ -107,15 +107,11 @@ function DebtFacilityCreate() {
       return;
     }
     if (isOverallRate && !maxAdvanceRate) {
-      setMessage(
-        "Not Saved - Please input overall rate.",
-      );
+      setMessage("Not Saved - Please input overall rate.");
       return;
     }
     if (isMinimumEquity && !minimumEquity) {
-      setMessage(
-        "Not Saved - Please input minimum equity.",
-      );
+      setMessage("Not Saved - Please input minimum equity.");
       return;
     }
     try {
@@ -216,7 +212,7 @@ function DebtFacilityCreate() {
               onChange={(event, newValue) => setSelectedLender(newValue)}
               getOptionLabel={(option) => option.lender_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Lender Name" required/>
+                <TextField {...params} label="Lender Name" required />
               )}
             />
 
@@ -233,7 +229,7 @@ function DebtFacilityCreate() {
               onChange={(event, newValue) => setSelectedPortfolio(newValue)}
               getOptionLabel={(option) => option.portfolio_name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="Portfolio Name" required/>
+                <TextField {...params} label="Portfolio Name" required />
               )}
             />
           </div>
