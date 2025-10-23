@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
@@ -17,7 +17,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Checkbox,
 } from "@mui/material";
 
 function PaymentsReceived() {
@@ -60,19 +59,17 @@ function PaymentsReceived() {
       (item) => item.collateralId !== collateralId,
     ); // get existing array for newData but without the line the collateralId passed in
 
-
     // If there is an amount in principalReceived, then reduce the new outstanding amount
-    if(field==="principalReceived") {
+    if (field === "principalReceived") {
       newOutstanding = outstandingAmt - value;
     } else {
-      newOutstanding=outstandingAmt;
+      newOutstanding = outstandingAmt;
     }
     tempArray.push({
       ...existingRecord, // the array items in existing (if any)
       collateralId: collateralId, // included for the first time we're create the new row array
       outstanding: newOutstanding,
       [field]: value, // set new value for whatever field name we'reupdating
-      
     });
 
     setNewData(tempArray);
@@ -157,7 +154,7 @@ function PaymentsReceived() {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createPayments`,
         {
-          paymentDate:paymentDate,
+          paymentDate: paymentDate,
           paymentsReceived: newData,
         },
       );
@@ -169,8 +166,6 @@ function PaymentsReceived() {
       setMessage("There was an error posting the payments.");
     }
   }
-  
-
 
   return (
     <>
@@ -236,145 +231,154 @@ function PaymentsReceived() {
         </LocalizationProvider>
       </Box>
 
-      <TableContainer
-        component={Paper}
-        sx={{ width: "75%", marginLeft: "5ch" }}
-      >
-        <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
-          <TableHead
+      {rowData.length > 0 ? (
+        <TableContainer
+          component={Paper}
+          sx={{ width: "75%", marginLeft: "5ch" }}
+        >
+          <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
+            <TableHead
+              sx={{
+                "& .MuiTableCell-root": {
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  backgroundColor: "#33648A",
+                  color: "#fff",
+                },
+              }}
+            >
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Borrower</TableCell>
+                <TableCell>Commitment Amount</TableCell>
+                <TableCell>Outstanding Amount</TableCell>
+                <TableCell>Principal Received</TableCell>
+                <TableCell>Interest Received</TableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {rowData.map((loan, index) => (
+                <TableRow
+                  key={loan.collateral_id}
+                  sx={{
+                    "&:nth-of-type(odd)": { backgroundColor: "#edf8fdff" },
+                  }}
+                >
+                  <TableCell>{loan.collateral_id}</TableCell>
+                  <TableCell>{loan.legal_name}</TableCell>
+                  <TableCell>
+                    {" "}
+                    <NumericFormat
+                      value={loan.commitment_amount}
+                      displayType="text"
+                      thousandSeparator=","
+                      decimalScale={2}
+                      prefix="$"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <NumericFormat
+                      value={loan.outstanding_amount}
+                      displayType="text"
+                      thousandSeparator=","
+                      decimalScale={2}
+                      prefix="$"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {" "}
+                    <NumericFormat
+                      customInput={TextField}
+                      id="new-principal-received"
+                      size="small"
+                      sx={{ width: "25ch" }}
+                      value={getAmount(loan.collateral_id, "principalReceived")}
+                      onValueChange={(values) =>
+                        handleDataChange(
+                          loan.collateral_id,
+                          loan.outstanding_amount,
+                          "principalReceived",
+                          values.floatValue,
+                        )
+                      }
+                      label="Principal Received"
+                      prefix="$"
+                      thousandSeparator=","
+                      decimalScale={2}
+                      fixedDecimalScale
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {" "}
+                    <NumericFormat
+                      customInput={TextField}
+                      id="new-interest-received"
+                      size="small"
+                      sx={{ width: "25ch" }}
+                      value={getAmount(loan.collateral_id, "interestReceived")}
+                      onValueChange={(values) =>
+                        handleDataChange(
+                          loan.collateral_id,
+                          loan.outstanding_amount,
+                          "interestReceived",
+                          values.floatValue,
+                        )
+                      }
+                      label="Interest Received"
+                      prefix="$"
+                      thousandSeparator=","
+                      decimalScale={2}
+                      fixedDecimalScale
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        ""
+      )}
+
+      {newData.length > 0 && (
+        <Box sx={{ marginTop: "2ch", marginLeft: "2ch", marginBottom: "10ch" }}>
+          <Button
+            variant="contained"
+            onClick={postPaymentUpdate}
             sx={{
-              "& .MuiTableCell-root": {
-                fontSize: "16px",
-                fontWeight: "bold",
-                backgroundColor: "#33648A",
-                color: "#fff",
-              },
+              marginLeft: "25px",
+              minWidth: "225px",
+              minHeight: "50px",
+              borderRadius: 2,
+              backgroundColor: "#F6AE2D",
+              color: "#000000",
+              textTransform: "none",
+              fontSize: "20px",
             }}
           >
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Borrower</TableCell>
-              <TableCell>Commitment Amount</TableCell>
-              <TableCell>Outstanding Amount</TableCell>
-              <TableCell>Principal Received</TableCell>
-              <TableCell>Interest Received</TableCell>
-            </TableRow>
-          </TableHead>
+            Save
+          </Button>
 
-          <TableBody>
-            {rowData.map((loan, index) => (
-              <TableRow
-                key={loan.collateral_id}
-                sx={{ "&:nth-of-type(odd)": { backgroundColor: "#edf8fdff" } }}
-              >
-                <TableCell>{loan.collateral_id}</TableCell>
-                <TableCell>{loan.legal_name}</TableCell>
-                <TableCell>
-                  {" "}
-                  <NumericFormat
-                    value={loan.commitment_amount}
-                    displayType="text"
-                    thousandSeparator=","
-                    decimalScale={2}
-                    prefix="$"
-                  />
-                </TableCell>
-                <TableCell>
-                  <NumericFormat
-                    value={loan.outstanding_amount}
-                    displayType="text"
-                    thousandSeparator=","
-                    decimalScale={2}
-                    prefix="$"
-                  />
-                </TableCell>
-                <TableCell>
-                  {" "}
-                  <NumericFormat
-                    customInput={TextField}
-                    id="new-principal-received"
-                    size="small"
-                    sx={{ width: "25ch" }}
-                    value={getAmount(loan.collateral_id, "principalReceived")}
-                    onValueChange={(values) =>
-                      handleDataChange(
-                        loan.collateral_id,
-                        loan.outstanding_amount,
-                        "principalReceived",
-                        values.floatValue,
-                      )
-                    }
-                    label="Principal Received"
-                    prefix="$"
-                    thousandSeparator=","
-                    decimalScale={2}
-                    fixedDecimalScale
-                  />
-                </TableCell>
-                <TableCell>
-                  {" "}
-                  <NumericFormat
-                    customInput={TextField}
-                    id="new-interest-received"
-                    size="small"
-                    sx={{ width: "25ch" }}
-                    value={getAmount(loan.collateral_id, "interestReceived")}
-                    onValueChange={(values) =>
-                      handleDataChange(
-                        loan.collateral_id,
-                        loan.outstanding_amount,
-                        "interestReceived",
-                        values.floatValue,
-                      )
-                    }
-                    label="Interest Received"
-                    prefix="$"
-                    thousandSeparator=","
-                    decimalScale={2}
-                    fixedDecimalScale
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Box sx={{ marginTop: "2ch", marginLeft: "2ch", marginBottom: "10ch" }}>
-        <Button
-          variant="contained"
-          onClick={postPaymentUpdate}
-          sx={{
-            marginLeft: "25px",
-            minWidth: "225px",
-            minHeight: "50px",
-            borderRadius: 2,
-            backgroundColor: "#F6AE2D",
-            color: "#000000",
-            textTransform: "none",
-            fontSize: "20px",
-          }}
-        >
-          Save
-        </Button>
-
-        <Button
-          variant="contained"
-          // onClick={clearData}
-          sx={{
-            marginLeft: "25px",
-            minWidth: "225px",
-            minHeight: "50px",
-            borderRadius: 2,
-            backgroundColor: "#d4d4d4ff",
-            color: "#000000",
-            textTransform: "none",
-            fontSize: "20px",
-          }}
-        >
-          Cancel
-        </Button>
-        {message && <div className="alertMessage">{message}</div>}
-      </Box>
+          <Button
+            variant="contained"
+            // onClick={clearData}
+            sx={{
+              marginLeft: "25px",
+              minWidth: "225px",
+              minHeight: "50px",
+              borderRadius: 2,
+              backgroundColor: "#d4d4d4ff",
+              color: "#000000",
+              textTransform: "none",
+              fontSize: "20px",
+            }}
+          >
+            Cancel
+          </Button>
+          {message && <div className="alertMessage">{message}</div>}
+        </Box>
+      )}
     </>
   );
 }

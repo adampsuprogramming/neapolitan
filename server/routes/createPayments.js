@@ -4,14 +4,8 @@ const pool = require("../db");
 
 //PLACEHOLDER PAYMENT CREATE
 
-
-
 router.post("/api/createPayments", async (req, res) => {
-  const {
-    paymentDate,
-    paymentsReceived,
-  } = req.body;
-
+  const { paymentDate, paymentsReceived } = req.body;
 
   try {
     console.log(paymentDate, paymentsReceived);
