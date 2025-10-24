@@ -31,6 +31,7 @@ router.post("/api/createMetricsChange", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("DB create loan_metrics query failed");
+    return;
   }
 
   try {
@@ -48,6 +49,7 @@ router.post("/api/createMetricsChange", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("DB create loan_metrics query failed");
+    return;
   }
 });
 

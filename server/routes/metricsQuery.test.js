@@ -32,27 +32,28 @@ describe("GET /api/metricsQuery", () => {
           int_coverage_ratio: 3,
           ebitda: 1500000,
           start_date: "2024-12-31",
-          end_date: "2029-12-31"
+          end_date: "2029-12-31",
         },
       ],
     });
 
-    const response = await request(app).get("/api/metricsQuery").query({ tranche_id: 22222});
+    const response = await request(app)
+      .get("/api/metricsQuery")
+      .query({ tranche_id: 22222 });
 
     expect(response.body).toEqual([
-
-        {
-          loan_metrics_id: 67891,
-          tranche_id: 22222,
-          is_cov_default: true,
-          is_payment_default: true,
-          leverage_ratio: 6.025,
-          net_leverage_ratio: 6,
-          int_coverage_ratio: 3,
-          ebitda: 1500000,
-          start_date: "2024-12-31",
-          end_date: "2029-12-31"
-        },
+      {
+        loan_metrics_id: 67891,
+        tranche_id: 22222,
+        is_cov_default: true,
+        is_payment_default: true,
+        leverage_ratio: 6.025,
+        net_leverage_ratio: 6,
+        int_coverage_ratio: 3,
+        ebitda: 1500000,
+        start_date: "2024-12-31",
+        end_date: "2029-12-31",
+      },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(
