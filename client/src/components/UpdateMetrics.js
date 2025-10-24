@@ -23,14 +23,14 @@ function UpdateMetrics() {
   const [loanTrancheOptions, setLoanTrancheOptions] = useState([]); // Filtered loan tranche options based on loan_agreement
   const [selectedTrancheId, setSelectedTrancheId] = useState(null); // After user chooses loan tranche, related ID is set here
   const [changeDate, setChangeDate] = useState(""); // After user chooses change date, it is stored here
-  const [isCovDefault, setIsCovDefault] = useState(null); // Hold results for whether loan is in covenant default, as chosen in toggle
-  const [isPaymentDefault, setIsPaymentDefault] = useState(null); // Hold results for whether loan is in payment default, as chosen in toggle
-  const [leverageRatio, setLeverageRatio] = useState(null); //After user enters leverage ratio, it is stored here
-  const [netLeverageRatio, setNetLeverageRatio] = useState(null); //After user enters net leverage ratio, it is stored here
-  const [intCoverageRatio, setIntCoverageRatio] = useState(null); //After user enters interest coverage ratio, it is stored here
+  const [isCovDefault, setIsCovDefault] = useState(false); // Hold results for whether loan is in covenant default, as chosen in toggle
+  const [isPaymentDefault, setIsPaymentDefault] = useState(false); // Hold results for whether loan is in payment default, as chosen in toggle
+  const [leverageRatio, setLeverageRatio] = useState(""); //After user enters leverage ratio, it is stored here
+  const [netLeverageRatio, setNetLeverageRatio] = useState(""); //After user enters net leverage ratio, it is stored here
+  const [intCoverageRatio, setIntCoverageRatio] = useState(""); //After user enters interest coverage ratio, it is stored here
   const [message, setMessage] = useState(null);
   const [metrics, setMetrics] = useState([]);
-  const [ebitda, setEbitda] = useState(null); //After user enters EBITDA, it is stored here
+  const [ebitda, setEbitda] = useState(""); //After user enters EBITDA, it is stored here
 
   // the following useEffects load up the following on page loan:
   // 1. Borrower Names 2. Loan Agreements 3. Loan Tranches
@@ -154,8 +154,9 @@ function UpdateMetrics() {
     setSelectedLoanTranche(null);
     setSelectedLoanAgreement(null);
     setSelectedTrancheId(null);
-    setIsCovDefault("");
-    setIsPaymentDefault("");
+    setChangeDate("");
+    setIsCovDefault(false);
+    setIsPaymentDefault(false);
     setLeverageRatio("");
     setNetLeverageRatio("");
     setIntCoverageRatio("");
