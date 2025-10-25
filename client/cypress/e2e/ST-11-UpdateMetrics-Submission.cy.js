@@ -56,7 +56,7 @@ it("fills out metric update form", function () {
 
       cy.get('input[data-testid="change-date-picker"]').click({ force: true });
       cy.focused().clear().type(newDate);
-      // cy.get('input[data-testid="change-date-picker"]').blur();
+      cy.get('[data-testid="change-date-picker"]').should("not.have.value", "");
     });
 
   // Test that text box for leverage ratio and contains value inputted

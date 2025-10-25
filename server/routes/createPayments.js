@@ -7,12 +7,7 @@ const pool = require("../db");
 router.post("/api/createPayments", async (req, res) => {
   const { paymentDate, paymentsReceived } = req.body;
 
-  // 
-
-
-
-
-
+  //
 
   try {
     console.log(paymentDate, paymentsReceived);
