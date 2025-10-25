@@ -29,7 +29,7 @@
     "test-no-coverage": "craco test --watchAll=false",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "npx rimraf .nyc_output coverage && cypress run"
   },
   "eslintConfig": {
     "extends": [

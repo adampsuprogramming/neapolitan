@@ -34,6 +34,7 @@ import LoanTrancheTransactions from "./LoanTrancheTransactions";
 import LoanTrancheCreate from "./LoanTrancheCreate";
 import LoanTrancheModify from "./LoanTrancheModify";
 import LoanTrancheDelete from "./LoanTrancheDelete";
+import PaymentsReceived from "./PaymentsReceived";
 import UpdateRates from "./UpdateRates";
 import UpdateMetrics from "./UpdateMetrics";
 import Home from "./Home";
@@ -123,6 +124,10 @@ function App() {
                 element={<CollateralPledgeRemove />}
               />
             </Route>
+            <Route
+              path="paymentsreceived"
+              element={<PaymentsReceived />}
+            ></Route>
           </Route>
 
           <Route path="/performance/*" element={<Performance />}>

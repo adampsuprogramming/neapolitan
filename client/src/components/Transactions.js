@@ -48,6 +48,15 @@ export default function Transactions() {
         >
           Collateral Pledge
         </NavLink>
+
+        <NavLink
+          to="paymentsreceived"
+          className={({ isActive }) =>
+            isActive ? "transactions-nav-highlighted" : ""
+          }
+        >
+          Payments Received
+        </NavLink>
       </nav>
       <Outlet />
     </div>
