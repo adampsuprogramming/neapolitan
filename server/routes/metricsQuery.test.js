@@ -1,5 +1,5 @@
 // **************************************************************************
-// *       UT-?? – Testing /api/metricsQuery endpoint’s functionality *
+// *       UT-68 – Testing /api/metricsQuery endpoint’s functionality *
 // **************************************************************************
 
 // This mock must come before the import of object

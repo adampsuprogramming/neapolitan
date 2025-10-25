@@ -1,8 +1,8 @@
 // ************************************************************************
-// * UT-??– Determine if Node Receives Metrics Update and Sends Out       *
+// * UT-65– Determine if Node Receives Metrics Update and Sends Out       *
 // * Correct SQL Update and Insert Commands                               *
-// * UT-??- Determine if first query handles error properly               *
-// * UT-??- Determine if second query handles error properly              *
+// * UT-66- Determine if first query handles error properly               *
+// * UT-67- Determine if second query handles error properly              *
 // ************************************************************************
 
 // This mock must come before the import of object

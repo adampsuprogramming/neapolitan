@@ -169,6 +169,19 @@ function PaymentsReceived() {
 
   return (
     <>
+      <div
+        className="record-payments-received"
+        style={{
+          fontSize: "18px",
+          fontFamily: "Inter",
+          paddingLeft: 60,
+          paddingTop: 20,
+          paddingBottom: 20,
+          fontWeight: "800",
+        }}
+      >
+        Record Payments Received
+      </div>
       <Box
         sx={{
           display: "flex",
@@ -258,7 +271,7 @@ function PaymentsReceived() {
             </TableHead>
 
             <TableBody>
-              {rowData.map((loan, index) => (
+              {rowData.map((loan) => (
                 <TableRow
                   key={loan.collateral_id}
                   sx={{

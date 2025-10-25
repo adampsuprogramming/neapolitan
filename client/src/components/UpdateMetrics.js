@@ -429,7 +429,7 @@ function UpdateMetrics() {
                   marginBottom: "25px",
                 }}
               >
-                Current Rate Data
+                Current Metrics
               </div>
 
               <Box
@@ -536,7 +536,7 @@ function UpdateMetrics() {
                     marginTop: "1.2ch",
                   }}
                 >
-                  Is Cov Default:
+                  Is Covenant Default:
                 </Box>
                 <Box sx={{ fontSize: "18px", marginTop: "1.2ch" }}>
                   {metrics[0]?.start_date
