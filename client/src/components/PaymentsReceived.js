@@ -50,8 +50,15 @@ function PaymentsReceived() {
     setFacilityNumber(facility_numb);
   };
 
-  const handleDataChange = (collateralId, outstandingAmt, field, value) => {
+  const handleDataChange = (
+    collateralId,
+    commitAmt,
+    outstandingAmt,
+    field,
+    value,
+  ) => {
     let newOutstanding;
+    let newCommit;
     const existingRecord = newData.find(
       (item) => item.collateralId === collateralId,
     ); // find existing row for collateralId and save it as a new variable
@@ -59,21 +66,26 @@ function PaymentsReceived() {
       (item) => item.collateralId !== collateralId,
     ); // get existing array for newData but without the line the collateralId passed in
 
+    const currCommit = existingRecord?.commitment ?? commitAmt;
+    const currOutstanding = existingRecord?.outstanding ?? outstandingAmt;
+
     // If there is an amount in principalReceived, then reduce the new outstanding amount
     if (field === "principalReceived") {
       newOutstanding = outstandingAmt - value;
+      newCommit = commitAmt - value;
     } else {
-      newOutstanding = outstandingAmt;
+      newCommit = currCommit;
+      newOutstanding = currOutstanding;
     }
     tempArray.push({
       ...existingRecord, // the array items in existing (if any)
       collateralId: collateralId, // included for the first time we're create the new row array
+      commitment: newCommit,
       outstanding: newOutstanding,
       [field]: value, // set new value for whatever field name we'reupdating
     });
 
     setNewData(tempArray);
-    console.log(newData);
   };
 
   useEffect(() => {
@@ -310,6 +322,7 @@ function PaymentsReceived() {
                       onValueChange={(values) =>
                         handleDataChange(
                           loan.collateral_id,
+                          loan.commitment_amount,
                           loan.outstanding_amount,
                           "principalReceived",
                           values.floatValue,
@@ -333,6 +346,7 @@ function PaymentsReceived() {
                       onValueChange={(values) =>
                         handleDataChange(
                           loan.collateral_id,
+                          loan.commitment_amount,
                           loan.outstanding_amount,
                           "interestReceived",
                           values.floatValue,
