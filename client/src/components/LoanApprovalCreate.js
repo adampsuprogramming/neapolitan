@@ -258,8 +258,8 @@ function LoanApprovalCreate() {
     const idsInFacilities = new Set();
 
     for (const facility of facilities) {
-      if (!idsInFacilities.has(facility.facility_id)) {
-        idsInFacilities.add(facility.facility_id);
+      if (!idsInFacilities.has(facility.debt_facility_id)) {
+        idsInFacilities.add(facility.debt_facility_id);
         uniqueFacilities.push(facility);
       }
     }
