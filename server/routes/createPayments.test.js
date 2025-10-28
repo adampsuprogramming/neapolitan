@@ -1,9 +1,10 @@
 // ************************************************************************
-// * UT-70–accepts data from a mocked api put an update and insert query  *
+// * UT-70– Determine if node receives payment creation request and sends *
+// * out correct SQL update and insert query                              *
 // * on the database                                                      *
 // * UT-71- Determine if first query handles error properly               *
 // * UT-72- Determine if second query handles error properly              *
-// * UT-73- Determine if second query handles error properly              *
+// * UT-73- Determine if third query handles error properly               *
 // ************************************************************************
 
 // This mock must come before the import of object
@@ -142,7 +143,7 @@ describe("POST /api/createPayments", () => {
   });
 });
 
-describe("POST /api/createMetricsChange", () => {
+describe("POST /api/createPayments", () => {
   it("accepts data from a mocked api put and then fails on the second query to the database", async () => {
     mockedQuery
       .mockResolvedValueOnce({})
@@ -174,7 +175,7 @@ describe("POST /api/createMetricsChange", () => {
   });
 });
 
-describe("POST /api/createMetricsChange", () => {
+describe("POST /api/createPayments", () => {
   it("accepts data from a mocked api put and then fails on the third query to the database", async () => {
     mockedQuery
       .mockResolvedValueOnce({})

@@ -190,11 +190,13 @@ test("UT-69: Ensure payment page can populate after making selections, inputs fo
   const portfolioNameInput = screen.getByLabelText("Portfolio Name *");
   fireEvent.mouseDown(portfolioNameInput);
   fireEvent.click(screen.getByText("Fund Banana"));
+  expect(portfolioNameInput.value).toBe("Fund Banana");
 
   // Test Selecting Facility Name
   const facilityNameInput = screen.getByLabelText("Facility Name *");
   fireEvent.mouseDown(facilityNameInput);
   fireEvent.click(screen.getByText("Happy Bank Banana Facility"));
+  expect(facilityNameInput.value).toBe("Happy Bank Banana Facility");
 
   // Test Selecting Inputting Date
   const paymentDateInput = screen.getByLabelText("Payment Date", {
