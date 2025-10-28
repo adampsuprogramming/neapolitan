@@ -3,7 +3,6 @@
 // *     properly, and submission is handled                                                  *
 // ********************************************************************************************
 
-
 import axios from "axios";
 import { render, screen, within, waitFor } from "@testing-library/react";
 import PaymentsReceived from "./PaymentsReceived";
