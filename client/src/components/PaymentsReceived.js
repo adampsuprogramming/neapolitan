@@ -50,6 +50,17 @@ function PaymentsReceived() {
     setFacilityNumber(facility_numb);
   };
 
+  function clearData() {
+    setSelectedPortfolio("");
+    setFacilityName("");
+    setFacilityNames([]);
+    setFacilityNumber(null);
+    setUniqueFacilityNames([]);
+    setPaymentDate("");
+    setRowData([]);
+    setNewData([]);
+  }
+
   const handleDataChange = (
     collateralId,
     commitAmt,
@@ -153,16 +164,6 @@ function PaymentsReceived() {
 
   async function postPaymentUpdate() {
     try {
-      // if (
-      //   !selectedLoanTranche ||
-      //   !selectedBorrower ||
-      //   !selectedLoanAgreement ||
-      //   !changeDate ||
-      //   !rateType
-      // ) {
-      //   setMessage("Please input all required fields (denoted by *)");
-      //   return;
-      // }
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createPayments`,
         {
@@ -171,7 +172,7 @@ function PaymentsReceived() {
         },
       );
       if (response.status === 201) {
-        // clearData();
+        clearData();
         setMessage("Payments Successfully Posted");
       }
     } catch {
@@ -389,7 +390,7 @@ function PaymentsReceived() {
 
           <Button
             variant="contained"
-            // onClick={clearData}
+            onClick={clearData}
             sx={{
               marginLeft: "25px",
               minWidth: "225px",
@@ -403,9 +404,11 @@ function PaymentsReceived() {
           >
             Cancel
           </Button>
-          {message && <div className="alertMessage">{message}</div>}
         </Box>
       )}
+      <Box sx={{ marginLeft: 5 }}>
+        {message && <div className="alertMessage">{message}</div>}
+      </Box>
     </>
   );
 }

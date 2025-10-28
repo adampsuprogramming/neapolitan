@@ -90,7 +90,6 @@ WHERE c.collateral_balance_id = l.collateral_balance_id
 
     res.sendStatus(201);
   } catch (err) {
-    console.error(err);
     res.status(500).send("Creating payment records in database failed");
   }
 });
