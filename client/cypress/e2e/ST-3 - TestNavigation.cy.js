@@ -56,7 +56,8 @@ it("Displays the correct navigation pages while navigating through the System", 
   ).click();
   cy.contains("Placeholder for Collateral Pledge Remove").should("be.visible");
   cy.get('#root [href="/reporting/"]').click();
-  cy.contains("Placeholder for Reporting").should("be.visible");
+  cy.get('#root [href="/reporting/otherreporting"]').click();
+  cy.contains("Placeholder for Other Reporting").should("be.visible");
   cy.get('#root [href="/dashboard/"]').click();
   cy.contains("Placeholder for Dashboard").should("be.visible");
   cy.get('#root [href="/configuration/"]').click();
