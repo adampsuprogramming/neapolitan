@@ -51,6 +51,7 @@ afterAll(async () => {
       spread: 2.25,
       floor: 1.5,
       refRate: "LIBOR",
+      internalVal: 0.98,
     });
 
     expect(response.status).toBe(201);
@@ -77,10 +78,10 @@ returning tranche_id
       2,
 
       `
-insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda)
-values ($1,$2,$3,$4,$5,$6)
+insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda, internal_val)
+values ($1,$2,$3,$4,$5,$6,$7)
 `,
-      [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000],
+      [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000, 0.98],
     );
 
     expect(mockedQuery).toHaveBeenNthCalledWith(
@@ -119,6 +120,7 @@ values ($1,$2,$3,$4,$5,$6,$7,$8)
         spread: 2.25,
         floor: null,
         refRate: "LIBOR",
+        internalVal: 0.98,
       });
 
       expect(response.status).toBe(201);
@@ -145,10 +147,10 @@ returning tranche_id
         2,
 
         `
-insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda)
-values ($1,$2,$3,$4,$5,$6)
+insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda, internal_val)
+values ($1,$2,$3,$4,$5,$6,$7)
 `,
-        [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000],
+        [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000, 0.98],
       );
 
       expect(mockedQuery).toHaveBeenNthCalledWith(
@@ -187,6 +189,7 @@ values ($1,$2,$3,$4,$5,$6,$7,$8)
         spread: null,
         floor: null,
         refRate: null,
+        internalVal: 0.98,
       });
 
       expect(response.status).toBe(201);
@@ -213,10 +216,10 @@ returning tranche_id
         2,
 
         `
-insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda)
-values ($1,$2,$3,$4,$5,$6)
+insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda, internal_val)
+values ($1,$2,$3,$4,$5,$6,$7)
 `,
-        [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000],
+        [111, "2025-10-31", 5.4, 5.32, 1.5, 15000000, 0.98],
       );
 
       expect(mockedQuery).toHaveBeenNthCalledWith(

@@ -23,6 +23,7 @@ function LoanTrancheCreate() {
   const [leverageRatio, setLeverageRatio] = useState(null); //After use enters leverage ratio, it is stored here
   const [netLeverageRatio, setNetLeverageRatio] = useState(null); //After use enters net leverage ratio, it is stored here
   const [interestCoverage, setInterestCoverage] = useState(null); //After use enters net leverage ratio, it is stored here
+  const [internalVal, setInternalVal] = useState(null); //After user internal value, it is stored here
   const [rateType, setRateType] = useState(null); // Hold results for rate type, as selected in autocomplete
   const [fixedRate, setFixedRate] = useState(null); //After use enters leverage ratio, it is stored here
   const [spread, setSpread] = useState(null); //After use enters spread, it is stored here
@@ -136,6 +137,10 @@ function LoanTrancheCreate() {
               ? Number((floor / 100).toFixed(6))
               : null,
           refRate: refRate !== "" ? refRate : null,
+          internalVal:
+            internalVal !== null && internalVal !== ""
+              ? Number((internalVal / 100).toFixed(6))
+              : null,
         },
       );
       if (response.status === 201) {
@@ -164,6 +169,7 @@ function LoanTrancheCreate() {
     setSpread("");
     setFloor("");
     setRefRate("");
+    setInternalVal("");
   }
 
   const handleBorrowerChange = (e, setValue) => {
@@ -370,7 +376,7 @@ function LoanTrancheCreate() {
           <NumericFormat
             customInput={TextField}
             id="leverage-ratio-textfield"
-            sx={{ marginLeft: "12ch", marginTop: 1, marginBottom: 1 }}
+            sx={{ marginLeft: "7ch", marginTop: 1, marginBottom: 1 }}
             value={leverageRatio}
             onValueChange={(value) => setLeverageRatio(value.floatValue)}
             label="Leverage Ratio"
@@ -381,7 +387,7 @@ function LoanTrancheCreate() {
           <NumericFormat
             customInput={TextField}
             id="net-leverage-ratio-textfield"
-            sx={{ marginLeft: "12ch", marginTop: 1, marginBottom: 1 }}
+            sx={{ marginLeft: "7ch", marginTop: 1, marginBottom: 1 }}
             value={netLeverageRatio}
             onValueChange={(value) => setNetLeverageRatio(value.floatValue)}
             label="Net Leverage Ratio"
@@ -392,11 +398,24 @@ function LoanTrancheCreate() {
           <NumericFormat
             customInput={TextField}
             id="interest-coverage-ratio-textfield"
-            sx={{ marginLeft: "12ch", marginTop: 1, marginBottom: 1 }}
+            sx={{ marginLeft: "7ch", marginTop: 1, marginBottom: 1 }}
             value={interestCoverage}
             onValueChange={(value) => setInterestCoverage(value.floatValue)}
             label="Interest Coverage Ratio"
             decimalScale={6}
+            fixedDecimalScale
+          />
+
+          <NumericFormat
+            customInput={TextField}
+            id="internal-valuation"
+            sx={{ marginLeft: "7ch", marginTop: 1, marginBottom: 1 }}
+            value={internalVal}
+            onValueChange={(value) => setInternalVal(value.floatValue)}
+            label="Initial Internal Valuation"
+            thousandSeparator=","
+            decimalScale={6}
+            suffix="%"
             fixedDecimalScale
           />
         </Box>
