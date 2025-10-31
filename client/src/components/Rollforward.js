@@ -91,7 +91,7 @@ function Rollforward() {
         );
         setFacilityData(fullInfoResponse.data);
       } catch (error) {
-        console.error("Error fetching: ", error);
+        setMessage("Error fetching facility data");
       }
     }
 
@@ -172,7 +172,7 @@ function Rollforward() {
 
       setTotalRow(totals);
     } catch (error) {
-      console.error("Error fetching: ", error);
+      setMessage("Error fetching rollforward data");
     }
   }
 
@@ -370,7 +370,6 @@ function Rollforward() {
                       >
                         <TableCell>{loan.collateralName}</TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.balanceBeg}
                             displayType="text"
@@ -379,7 +378,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.collAdded}
                             displayType="text"
@@ -388,7 +386,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.collRemoved}
                             displayType="text"
@@ -397,7 +394,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.principalRec}
                             displayType="text"
@@ -406,7 +402,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.balanceEnd}
                             displayType="text"
@@ -428,7 +423,6 @@ function Rollforward() {
                     >
                       <TableCell>Total</TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.balanceBeg}
                           displayType="text"
@@ -437,7 +431,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.collAdded}
                           displayType="text"
@@ -446,7 +439,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.collRemoved}
                           displayType="text"
@@ -455,7 +447,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.principalRec}
                           displayType="text"
@@ -464,7 +455,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.balanceEnd}
                           displayType="text"
@@ -541,7 +531,6 @@ function Rollforward() {
                       >
                         <TableCell>{loan.collateralName}</TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.begValue}
                             displayType="text"
@@ -550,7 +539,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.chgDueToAdd}
                             displayType="text"
@@ -559,7 +547,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.chgDueToRepay}
                             displayType="text"
@@ -568,7 +555,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.chgDueToInternalVal}
                             displayType="text"
@@ -577,7 +563,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.addlChgBankVal}
                             displayType="text"
@@ -586,7 +571,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.endValue}
                             displayType="text"
@@ -608,7 +592,6 @@ function Rollforward() {
                     >
                       <TableCell>Total</TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.begValue}
                           displayType="text"
@@ -617,7 +600,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.chgDueToAdd}
                           displayType="text"
@@ -626,7 +608,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.chgDueToRepay}
                           displayType="text"
@@ -635,7 +616,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.chgDueToInternalVal}
                           displayType="text"
@@ -644,7 +624,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.addlChgBankVal}
                           displayType="text"
@@ -653,7 +632,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.endValue}
                           displayType="text"
@@ -731,7 +709,6 @@ function Rollforward() {
                       >
                         <TableCell>{loan.collateralName}</TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.begLevAvail}
                             displayType="text"
@@ -741,7 +718,6 @@ function Rollforward() {
                         </TableCell>
 
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.levAvailChgDueToAddition}
                             displayType="text"
@@ -750,7 +726,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.levAvailChgDueToRepay}
                             displayType="text"
@@ -759,7 +734,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.levAvailChgDueToVal}
                             displayType="text"
@@ -768,7 +742,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.levAvailChgDueToAdvRate}
                             displayType="text"
@@ -777,7 +750,6 @@ function Rollforward() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.endLevAvail}
                             displayType="text"
@@ -799,7 +771,6 @@ function Rollforward() {
                     >
                       <TableCell>Total</TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.begLevAvail}
                           displayType="text"
@@ -808,7 +779,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.levAvailChgDueToAddition}
                           displayType="text"
@@ -817,7 +787,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.levAvailChgDueToRepay}
                           displayType="text"
@@ -826,7 +795,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.levAvailChgDueToVal}
                           displayType="text"
@@ -835,7 +803,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.levAvailChgDueToAdvRate}
                           displayType="text"
@@ -844,7 +811,6 @@ function Rollforward() {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        {" "}
                         <NumericFormat
                           value={totalRow.endLevAvail}
                           displayType="text"
@@ -942,7 +908,6 @@ function Rollforward() {
                           {(loan.advanceRateEnd * 100).toFixed(2)}%
                         </TableCell>
                         <TableCell align="right">
-                          {" "}
                           <NumericFormat
                             value={loan.intRec}
                             displayType="text"
@@ -957,208 +922,216 @@ function Rollforward() {
               </TableContainer>
             </Box>
 
-            <Box
-              sx={{
-                border: "1px solid",
-                borderRadius: 4,
-                borderColor: "#c7c7c7ff",
-                width: "50ch",
-                marginTop: 8,
-                padding: 2,
-                fontSize: "20px",
-              }}
-            >
-              <Box
-                sx={{ textAlign: "center", marginBottom: 5, fontWeight: "700" }}
-              >
-                Funds Flow from {dayjs(startDate).format("M/DD/YYYY")} to{" "}
-                {dayjs(endDate).format("M/DD/YYYY")}
-              </Box>
+            {isFundsFlow ? (
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
+                  border: "1px solid",
+                  borderRadius: 4,
+                  borderColor: "#c7c7c7ff",
+                  width: "50ch",
+                  marginTop: 8,
+                  padding: 2,
+                  fontSize: "20px",
                 }}
               >
-                <Box sx={{ fontWeight: "500" }}>Current Facility Balance</Box>
-                <Box>
-                  {
-                    <NumericFormat
-                      value={flowData.currFacBal}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    marginBottom: 5,
+                    fontWeight: "700",
+                  }}
+                >
+                  Funds Flow from {dayjs(startDate).format("M/DD/YYYY")} to{" "}
+                  {dayjs(endDate).format("M/DD/YYYY")}
                 </Box>
-              </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "500" }}>Current Facility Balance</Box>
+                  <Box>
+                    {
+                      <NumericFormat
+                        value={flowData.currFacBal}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
+                </Box>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "500" }}>
-                  Total Borrowing Availability
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "500" }}>
+                    Total Borrowing Availability
+                  </Box>
+                  <Box>
+                    {
+                      <NumericFormat
+                        value={flowData.endLevAvail}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
                 </Box>
-                <Box>
-                  {
-                    <NumericFormat
-                      value={flowData.endLevAvail}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "700" }}>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Excess/(Deficit)
+                  </Box>
+                  <Box sx={{ fontWeight: "700" }}>
+                    {
+                      <NumericFormat
+                        value={flowData.currAvail}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
                 </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "700" }}>
-                  &nbsp;&nbsp;&nbsp;&nbsp;Excess/(Deficit)
+                <br></br>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "700" }}>Interest Expense Due:</Box>
+                  <Box sx={{ fontWeight: "700" }}>
+                    {
+                      <NumericFormat
+                        value={flowData.intExp}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
                 </Box>
-                <Box sx={{ fontWeight: "700" }}>
-                  {
-                    <NumericFormat
-                      value={flowData.currAvail}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
+                <br></br>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "500" }}>
+                    Total Principal Received:
+                  </Box>
+                  <Box>
+                    {
+                      <NumericFormat
+                        value={flowData.principalRec}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
                 </Box>
-              </Box>
-              <br></br>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "700" }}>Interest Expense Due:</Box>
-                <Box sx={{ fontWeight: "700" }}>
-                  {
-                    <NumericFormat
-                      value={flowData.intExp}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "500" }}>Total Interest Received:</Box>
+                  <Box>
+                    {
+                      <NumericFormat
+                        value={flowData.intRec}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
                 </Box>
-              </Box>
-              <br></br>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "500" }}>Total Principal Received:</Box>
-                <Box>
-                  {
-                    <NumericFormat
-                      value={flowData.principalRec}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "700" }}>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Total Funds to Distribute:
+                  </Box>
+                  <Box sx={{ fontWeight: "700" }}>
+                    {
+                      <NumericFormat
+                        value={flowData.totalDist}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
                 </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "500" }}>Total Interest Received:</Box>
-                <Box>
-                  {
-                    <NumericFormat
-                      value={flowData.intRec}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "700" }}>
-                  &nbsp;&nbsp;&nbsp;&nbsp;Total Funds to Distribute:
-                </Box>
-                <Box sx={{ fontWeight: "700" }}>
-                  {
-                    <NumericFormat
-                      value={flowData.totalDist}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
-                </Box>
-              </Box>
 
-              <br></br>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "700" }}>Funds Due to Bank</Box>
-                <Box sx={{ fontWeight: "700" }}>
-                  {
-                    <NumericFormat
-                      value={flowData.dueToBank}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
+                <br></br>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "700" }}>Funds Due to Bank</Box>
+                  <Box sx={{ fontWeight: "700" }}>
+                    {
+                      <NumericFormat
+                        value={flowData.dueToBank}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 1,
+                  }}
+                >
+                  <Box sx={{ fontWeight: "700" }}>
+                    Funds Due to / (from) Client
+                  </Box>
+                  <Box sx={{ fontWeight: "700" }}>
+                    {
+                      <NumericFormat
+                        value={flowData.dueToClient}
+                        displayType="text"
+                        thousandSeparator=","
+                        decimalScale={0}
+                      />
+                    }
+                  </Box>
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 1,
-                }}
-              >
-                <Box sx={{ fontWeight: "700" }}>
-                  Funds Due to / (from) Client
-                </Box>
-                <Box sx={{ fontWeight: "700" }}>
-                  {
-                    <NumericFormat
-                      value={flowData.dueToClient}
-                      displayType="text"
-                      thousandSeparator=","
-                      decimalScale={0}
-                    />
-                  }
-                </Box>
-              </Box>
-            </Box>
+            ) : null}
           </Box>
         </>
       ) : (
