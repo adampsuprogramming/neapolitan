@@ -17,11 +17,38 @@ left join collateral c
 where c.debt_facility_id = $1
 `;
 
+
+// Query to get advance rates in effect for given facility_id $1 and at given date $2
 const facilityQuery = `
-select *
-from debt_facilities d
-where d.lender_id = $1 
-`;
+SELECT d.portfolio_id, d.lender_id, d.debt_facility_id, dfo.start_date, dfo.end_date, dfo.is_overall_rate, dfo.overall_rate, dfo.is_first_lien_advance_rate, dfo.first_lien_advance_rate, 
+dfo.is_second_lien_advance_rate, dfo.second_lien_advance_rate, dfo.is_mezzanine_advance_rate, dfo.mezzanine_advance_rate
+FROM public.debt_facilities d
+left join debt_facility_balances dfb
+	on dfb.debt_facility_id  = d.debt_facility_id 
+left join debt_facility_options dfo
+	on dfo.debt_facility_id  = d.debt_facility_id 
+WHERE d.debt_facility_id=$1 and dfo.start_date<=$2 and dfo.end_date>$2`;
+
+// Query to get bank advance rates and valuations in effect for given facility_id $1
+
+const bankMetrics = 
+`SELECT * FROM bank_metrics bm
+left join collateral c
+	on c.collateral_id = bm.collateral_id
+left join debt_facilities df
+	on c.debt_facility_id = df.debt_facility_id
+where df.debt_facility_id = $1`
+
+// Query to get all internal valuations for given facility_id $1
+const constIntValQuery = `
+SELECT c.collateral_id, lm.start_date, lm.end_date, lm.internal_val FROM public.loan_metrics lm
+left join loan_tranches lt
+	on lm.tranche_id  = lt.tranche_id
+left join collateral c
+	on c.tranche_id = lt.tranche_id
+left join debt_facilities df
+	on c.debt_facility_id = df.debt_facility_id
+WHERE df.debt_facility_id = $1`
 
 let startDateObject;
 let endDateObject;
