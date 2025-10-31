@@ -1,5 +1,5 @@
 // ********************************************************************************************
-// *     UT-74 – Ensure rollforward page can populate after making selections and clickingat  *
+// *     UT-74 – Ensure rollforward page can populate after making selections and clicking    *
 // *     generate and inputs format correctly                                                 *
 // *     UT-75 – Test error handling for failed facility data retrieval                       *
 // *     UT-76 - Test error handling for failed rollforward retrieval                         *
@@ -285,7 +285,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-      // "https://mocki.io/v1/c70e6088-442e-4428-ba53-b029718b1b5e",
+    
       "http://localhost:5000/api/facilities",
     );
   });
@@ -328,7 +328,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
 
   const intExpDue = screen.getByLabelText("Interest Expense Due *");
   fireEvent.change(intExpDue, {
-    target: { value: "125,458" },
+    target: { value: "125458" },
   });
   expect(intExpDue.value).toBe("$125,458.00");
 
@@ -416,7 +416,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
     "10,900,000",
   );
 
-  // Test Rollforward of Outstandings
+  // Test Rollforward of Value
 
   const valueRows = within(value).getAllByRole("row");
 
