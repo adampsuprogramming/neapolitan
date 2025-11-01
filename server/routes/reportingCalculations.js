@@ -46,7 +46,7 @@ left join collateral c
 	on c.tranche_id = lt.tranche_id
 left join debt_facilities df
 	on c.debt_facility_id = df.debt_facility_id
-WHERE df.debt_facility_id = $1`;
+WHERE df.debt_facility_id = $1 and lm.start_date<=$2 and (lm.end_date>$2 OR lm.end_date IS NULL)`;
 
 const lienTypeQuery = `SELECT c.collateral_id, lt.lien_Type FROM public.loan_metrics lm
 left join loan_tranches lt
@@ -56,6 +56,14 @@ left join collateral c
 left join debt_facilities df
 	on c.debt_facility_id = df.debt_facility_id
 WHERE df.debt_facility_id = $1`;
+
+const paymentQuery = `SELECT * FROM public.payments p
+left join collateral c
+	on c.collateral_id  = p.collateral_id
+left join debt_facilities df
+    on df.debt_facility_id = c.debt_facility_id
+where df.debt_facility_id = $1 and p.payment_date >= $2 and p.payment_date <= $3
+ORDER BY payments_id ASC `;
 
 let startDateObject;
 let endDateObject;
@@ -562,6 +570,130 @@ router.get("/api/reportingCalculations", async (req, res) => {
         console.log(bankValuations[i].bankValBeg);
         console.log(bankValuations[i].bankValEnd);
       }
+    }
+
+    // **************************************** internal valuations **************************************
+
+    let internalValuations = [];
+
+    try {
+      intValStart = await pool.query(intValQuery, [debtFacilityId, startDate]);
+      console.log("intValMetrics ");
+      for (let i = 0; i < intValStart.rows.length; i++) {
+        console.log(intValStart.rows[i]);
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Bank Metrics Query Failed");
+    }
+
+    try {
+      intValEnd = await pool.query(intValQuery, [debtFacilityId, endDate]);
+      console.log("intValMetrics End ");
+      for (let i = 0; i < intValEnd.rows.length; i++) {
+        console.log(intValEnd.rows[i]);
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Bank Metrics Query Failed");
+    }
+
+    for (let i = 0; i < allIdsStart.length; i++) {
+      collateralId = allIdsStart[i];
+
+      intValStartRow =
+        intValStart.rows.find((row) => row.collateral_id === collateralId) ||
+        null;
+
+      if (intValStartRow) {
+        startIntVal = intValStartRow.internal_val || null;
+      } else {
+        startIntVal = null;
+      }
+
+      internalValuations.push({
+        collateralId: collateralId,
+        internalValBeg: startIntVal,
+        internalValEnd: null,
+      });
+    }
+
+    for (let i = 0; i < allIdsEnd.length; i++) {
+      collateralId = allIdsEnd[i].collateralId;
+      intValEndRow =
+        intValEnd.rows.find((row) => row.collateral_id === collateralId) ||
+        null;
+
+      if (intValEndRow) {
+        endIntVal = intValEndRow.internal_val || null;
+      } else {
+        endIntVal = null;
+      }
+
+      const existingIntVal = internalValuations.find(
+        (items) => items.collateralId === collateralId,
+      );
+
+      if (existingIntVal) {
+        existingIntVal.internalValEnd = endIntVal;
+      } else {
+        internalValuations.push({
+          collateralId: collateralId,
+          internalValBeg: null,
+          internalValEnd: endIntVal,
+        });
+      }
+
+      for (let i = 0; i < internalValuations.length; i++) {
+        console.log("FINAL");
+        console.log(internalValuations[i].collateralId);
+        console.log(internalValuations[i].internalValBeg);
+        console.log(internalValuations[i].internalValEnd);
+      }
+    }
+    // **************************************** payments **************************************
+
+    let payments = [];
+    try {
+      paymentsResults = await pool.query(paymentQuery, [
+        debtFacilityId,
+        startDate,
+        endDate,
+      ]);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Payments Query Failed");
+    }
+
+    let totalPrincipalInPeriod = 0;
+    let totalInterestInPeriod = 0;
+
+    for (let i = 0; i < everyIdInPeriod.length; i++) {
+      totalPrincipalInPeriod = 0;
+      totalInterestInPeriod = 0;
+
+      for (let j = 0; j < paymentsResults.rows.length; j++) {
+        if (paymentsResults.rows[j].collateral_id === everyIdInPeriod[i].id) {
+          totalPrincipalInPeriod =
+            totalPrincipalInPeriod +
+            parseFloat(paymentsResults.rows[j].principal_received || 0);
+          totalInterestInPeriod =
+            totalInterestInPeriod +
+            parseFloat(paymentsResults.rows[j].interest_received || 0);
+        }
+      }
+      payments.push({
+        collateralId: everyIdInPeriod[i].id,
+        principalRec: totalPrincipalInPeriod,
+        interestRec: totalInterestInPeriod,
+      });
+    }
+
+    for (let i = 0; i < payments.length; i++) {
+      console.log("Payments");
+      console.log(payments[i].collateralId);
+      console.log(payments[i].principalRec);
+      console.log(payments[i].interestRec);
     }
 
     res.status(200).send("Working");
