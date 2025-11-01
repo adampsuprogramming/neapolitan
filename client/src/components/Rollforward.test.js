@@ -285,7 +285,6 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
 
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith(
-    
       "http://localhost:5000/api/facilities",
     );
   });

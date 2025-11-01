@@ -65,6 +65,4 @@ it("fills out payments update form", function () {
     "have.value",
     "$500.00",
   );
-
-
 });
