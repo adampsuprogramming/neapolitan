@@ -9,8 +9,8 @@ returning tranche_id
 `;
 
 const createLoanMetricsSQL = `
-insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda)
-values ($1,$2,$3,$4,$5,$6)
+insert into loan_metrics (tranche_id, start_date, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda, internal_val)
+values ($1,$2,$3,$4,$5,$6,$7)
 `;
 
 const createRateSQL = `
@@ -35,6 +35,7 @@ router.post("/api/createloantranche", async (req, res) => {
     spread,
     floor,
     refRate,
+    internalVal,
   } = req.body;
 
   let newTrancheId;
@@ -62,6 +63,7 @@ router.post("/api/createloantranche", async (req, res) => {
       netLeverageRatio,
       interestCoverage,
       ebitda,
+      internalVal,
     ]);
   } catch (err) {
     console.error(err);

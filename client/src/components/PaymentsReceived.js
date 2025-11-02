@@ -50,8 +50,26 @@ function PaymentsReceived() {
     setFacilityNumber(facility_numb);
   };
 
-  const handleDataChange = (collateralId, outstandingAmt, field, value) => {
+  function clearData() {
+    setSelectedPortfolio("");
+    setFacilityName("");
+    setFacilityNames([]);
+    setFacilityNumber(null);
+    setUniqueFacilityNames([]);
+    setPaymentDate("");
+    setRowData([]);
+    setNewData([]);
+  }
+
+  const handleDataChange = (
+    collateralId,
+    commitAmt,
+    outstandingAmt,
+    field,
+    value,
+  ) => {
     let newOutstanding;
+    let newCommit;
     const existingRecord = newData.find(
       (item) => item.collateralId === collateralId,
     ); // find existing row for collateralId and save it as a new variable
@@ -59,21 +77,26 @@ function PaymentsReceived() {
       (item) => item.collateralId !== collateralId,
     ); // get existing array for newData but without the line the collateralId passed in
 
+    const currCommit = existingRecord?.commitment ?? commitAmt;
+    const currOutstanding = existingRecord?.outstanding ?? outstandingAmt;
+
     // If there is an amount in principalReceived, then reduce the new outstanding amount
     if (field === "principalReceived") {
       newOutstanding = outstandingAmt - value;
+      newCommit = commitAmt - value;
     } else {
-      newOutstanding = outstandingAmt;
+      newCommit = currCommit;
+      newOutstanding = currOutstanding;
     }
     tempArray.push({
       ...existingRecord, // the array items in existing (if any)
       collateralId: collateralId, // included for the first time we're create the new row array
+      commitment: newCommit,
       outstanding: newOutstanding,
       [field]: value, // set new value for whatever field name we'reupdating
     });
 
     setNewData(tempArray);
-    console.log(newData);
   };
 
   useEffect(() => {
@@ -141,16 +164,6 @@ function PaymentsReceived() {
 
   async function postPaymentUpdate() {
     try {
-      // if (
-      //   !selectedLoanTranche ||
-      //   !selectedBorrower ||
-      //   !selectedLoanAgreement ||
-      //   !changeDate ||
-      //   !rateType
-      // ) {
-      //   setMessage("Please input all required fields (denoted by *)");
-      //   return;
-      // }
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createPayments`,
         {
@@ -159,7 +172,7 @@ function PaymentsReceived() {
         },
       );
       if (response.status === 201) {
-        // clearData();
+        clearData();
         setMessage("Payments Successfully Posted");
       }
     } catch {
@@ -310,6 +323,7 @@ function PaymentsReceived() {
                       onValueChange={(values) =>
                         handleDataChange(
                           loan.collateral_id,
+                          loan.commitment_amount,
                           loan.outstanding_amount,
                           "principalReceived",
                           values.floatValue,
@@ -333,6 +347,7 @@ function PaymentsReceived() {
                       onValueChange={(values) =>
                         handleDataChange(
                           loan.collateral_id,
+                          loan.commitment_amount,
                           loan.outstanding_amount,
                           "interestReceived",
                           values.floatValue,
@@ -375,7 +390,7 @@ function PaymentsReceived() {
 
           <Button
             variant="contained"
-            // onClick={clearData}
+            onClick={clearData}
             sx={{
               marginLeft: "25px",
               minWidth: "225px",
@@ -389,9 +404,11 @@ function PaymentsReceived() {
           >
             Cancel
           </Button>
-          {message && <div className="alertMessage">{message}</div>}
         </Box>
       )}
+      <Box sx={{ marginLeft: 5 }}>
+        {message && <div className="alertMessage">{message}</div>}
+      </Box>
     </>
   );
 }

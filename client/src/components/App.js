@@ -37,8 +37,11 @@ import LoanTrancheDelete from "./LoanTrancheDelete";
 import PaymentsReceived from "./PaymentsReceived";
 import UpdateRates from "./UpdateRates";
 import UpdateMetrics from "./UpdateMetrics";
+import Rollforward from "./Rollforward";
+import OtherReporting from "./OtherReporting";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
+import ReportingSubmenu from "./ReportingSubmenu";
 
 function App() {
   return (
@@ -134,7 +137,11 @@ function App() {
             <Route path="updaterates/" element={<UpdateRates />}></Route>
             <Route path="updatemetrics/" element={<UpdateMetrics />}></Route>
           </Route>
-          <Route path="/reporting/*" element={<Reporting />} />
+          <Route path="/reporting/*" element={<ReportingSubmenu />}>
+            <Route path="rollforward/" element={<Rollforward />}></Route>
+            <Route path="otherreporting/" element={<OtherReporting />}></Route>
+          </Route>
+
           <Route path="/dashboard/*" element={<Dashboard />} />
 
           <Route path="/configuration/*" element={<Configuration />}>
