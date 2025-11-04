@@ -44,9 +44,7 @@ test("UT-26 – Populating borrower dropdown from API call -- /api/borrowerquery
   render(<LoanAgreementCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   const borrowerName = screen.getByLabelText("Borrower Name *");
@@ -83,9 +81,7 @@ test("UT-27 - Testing PUT API Call to createloanagreement after filling out form
   render(<LoanAgreementCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   // Find "Borrwer Name" and select "Megaman Company"
@@ -99,9 +95,7 @@ test("UT-27 - Testing PUT API Call to createloanagreement after filling out form
   fireEvent.change(loanAgreementInput, {
     target: { value: "The Megaman Company Term Loan Agreement" },
   });
-  expect(loanAgreementInput.value).toBe(
-    "The Megaman Company Term Loan Agreement",
-  );
+  expect(loanAgreementInput.value).toBe("The Megaman Company Term Loan Agreement");
 
   const loanAgreementDate = screen.getByLabelText("Loan Agreement Date *", {
     selector: "input",
@@ -160,9 +154,7 @@ test("UT-28 – Populating search options from API call -- Borrower Name but wit
   render(<LoanAgreementCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   const borrowerName = screen.getByLabelText("Borrower Name *");
@@ -199,9 +191,7 @@ test("UT-58 - Testing error for missing agreement data", async () => {
   render(<LoanAgreementCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   // simulate save click

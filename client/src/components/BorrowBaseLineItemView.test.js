@@ -74,9 +74,7 @@ test("UT-1: Portfolio data correctly loads from API on page load into dropdown m
   render(<BorrowBaseLineItemView />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   const combos_portfolio = await screen.findByLabelText("Portfolio Name");
@@ -139,27 +137,20 @@ test("UT-2: Facility data correctly loads into second dropdown menu after choice
   render(<BorrowBaseLineItemView />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   const combos_portfolio = await screen.findByLabelText("Portfolio Name");
   const options = await within(combos_portfolio).findAllByRole("option");
   const portfolioText = options.map((opt) => opt.textContent);
 
-  expect(portfolioText).toEqual([
-    "Choose a Portfolio",
-    "Fund Apple",
-    "Fund Banana",
-  ]);
+  expect(portfolioText).toEqual(["Choose a Portfolio", "Fund Apple", "Fund Banana"]);
 
   const portfolioSelect = screen.getByLabelText("Portfolio Name");
   fireEvent.change(portfolioSelect, { target: { value: "Fund Banana" } });
 
   const combos_facility = await screen.findByLabelText("Facility Name");
-  const options_facility =
-    await within(combos_facility).findAllByRole("option");
+  const options_facility = await within(combos_facility).findAllByRole("option");
   const facilityText = options_facility.map((opt) => opt.textContent);
 
   expect(facilityText).toEqual([

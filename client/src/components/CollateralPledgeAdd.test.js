@@ -59,9 +59,7 @@ test("UT-48 - Testing PUT API Call to Collateral Pledge After Filling in Data fr
   render(<CollateralPledgeAdd />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanapprovalquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanapprovalquery");
   });
 
   // Find loan approval and input name
@@ -162,9 +160,7 @@ test("UT-49 - Testing Error Message if Inclusion Date Is On or After Expiration 
   render(<CollateralPledgeAdd />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanapprovalquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanapprovalquery");
   });
 
   // Find loan approval and input name
@@ -198,9 +194,7 @@ test("UT-49 - Testing Error Message if Inclusion Date Is On or After Expiration 
   const saveButton = screen.getByText("Pledge Collateral");
   fireEvent.click(saveButton);
 
-  const errorMessage = screen.getByText(
-    "Inclusion Date Must Be Prior to Expiration Date",
-  );
+  const errorMessage = screen.getByText("Inclusion Date Must Be Prior to Expiration Date");
   expect(errorMessage).toBeVisible();
 });
 
@@ -245,9 +239,7 @@ test("UT-50 - Testing Error Message if Outstanding Amount is Greater than Commit
   render(<CollateralPledgeAdd />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanapprovalquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanapprovalquery");
   });
 
   // Find loan approval and input name
@@ -328,9 +320,7 @@ test("UT-51 - Testing Error Message if Outstanding Amount is Greater than Approv
   render(<CollateralPledgeAdd />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanapprovalquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanapprovalquery");
   });
 
   // Find loan approval and input name

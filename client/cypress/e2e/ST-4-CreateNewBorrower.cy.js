@@ -7,9 +7,7 @@ it("submits a new borrower form", function () {
   cy.visit("localhost:3000");
   cy.get('#root [href="/transactions/"]').click();
   cy.get('#root [href="/transactions/borrowertransactions"]').click();
-  cy.get(
-    '#root [href="/transactions/borrowertransactions/borrowercreate"]',
-  ).click();
+  cy.get('#root [href="/transactions/borrowertransactions/borrowercreate"]').click();
 
   // Test that legal name input works and contains value inputted
   cy.get("#legal-name-input").click();

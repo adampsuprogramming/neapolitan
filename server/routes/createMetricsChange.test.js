@@ -87,9 +87,7 @@ describe("POST /api/createMetricsChange", () => {
 
 describe("POST /api/createMetricsChange", () => {
   it("accepts data from a mocked api put and then fails on the second query to the database", async () => {
-    mockedQuery
-      .mockResolvedValueOnce({})
-      .mockRejectedValueOnce(new Error("Failure"));
+    mockedQuery.mockResolvedValueOnce({}).mockRejectedValueOnce(new Error("Failure"));
 
     const response = await request(app).post("/api/createMetricsChange").send({
       trancheId: "112",

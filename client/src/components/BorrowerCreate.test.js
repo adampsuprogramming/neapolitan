@@ -48,9 +48,7 @@ test("UT-18 – Populating search options from API call -- selectedCorpHQId", as
   render(<BorrowerCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/regionquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/regionquery");
   });
 
   const corpHQ = screen.getByLabelText("Corporate Headquarters *");
@@ -87,9 +85,7 @@ test("UT-19 – Populating search options from API call -- selectedRevRegion", a
   render(<BorrowerCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/regionquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/regionquery");
   });
 
   const revGeography = screen.getByLabelText("Primary Geography (Revenue) *");
@@ -126,9 +122,7 @@ test("UT-20 – Populating search options from API call -- NAICS subsector", asy
   render(<BorrowerCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/subsectorquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/subsectorquery");
   });
 
   const naicsSubsector = screen.getByLabelText("NAICS Subsector Code *");
@@ -184,15 +178,11 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
   render(<BorrowerCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/regionquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/regionquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/subsectorquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/subsectorquery");
   });
 
   // Find borrower name and input borrower
@@ -216,9 +206,7 @@ test("UT-21 - Testing PUT API Call to Borrower After Filling in Data from Form",
   expect(corpHqAutocomplete.value).toBe("Labyrinth");
 
   // Find autocomplete box for Primary Geography (Revenue) and Select
-  const primaryGeoRevAutocomplete = screen.getByLabelText(
-    "Primary Geography (Revenue) *",
-  );
+  const primaryGeoRevAutocomplete = screen.getByLabelText("Primary Geography (Revenue) *");
   fireEvent.mouseDown(primaryGeoRevAutocomplete);
   fireEvent.click(screen.getByText("Middle Earth"));
   expect(primaryGeoRevAutocomplete.value).toBe("Middle Earth");
@@ -302,9 +290,7 @@ test("UT-22 – Populating search options from API call for NAICS subsector but 
   render(<BorrowerCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/subsectorquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/subsectorquery");
   });
 
   const naicsSubsector = screen.getByLabelText("NAICS Subsector Code *");
@@ -339,9 +325,7 @@ test("UT-23 – Populating search options from API call for Corporate Headquarte
   render(<BorrowerCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/regionquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/regionquery");
   });
 
   const corpHQ = screen.getByLabelText("Corporate Headquarters *");
@@ -397,15 +381,11 @@ test("UT-57 – Testing error for missing borrower data", async () => {
   render(<BorrowerCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/regionquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/regionquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/subsectorquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/subsectorquery");
   });
 
   // simulate save click

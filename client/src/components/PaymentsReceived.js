@@ -42,9 +42,7 @@ function PaymentsReceived() {
 
   const handleFacilityChange = (e, value) => {
     setFacilityName(value || "");
-    const facility_record = facilityData.find(
-      (f) => f.debt_facility_name === value,
-    );
+    const facility_record = facilityData.find((f) => f.debt_facility_name === value);
 
     const facility_numb = facility_record.debt_facility_id;
     setFacilityNumber(facility_numb);
@@ -61,21 +59,11 @@ function PaymentsReceived() {
     setNewData([]);
   }
 
-  const handleDataChange = (
-    collateralId,
-    commitAmt,
-    outstandingAmt,
-    field,
-    value,
-  ) => {
+  const handleDataChange = (collateralId, commitAmt, outstandingAmt, field, value) => {
     let newOutstanding;
     let newCommit;
-    const existingRecord = newData.find(
-      (item) => item.collateralId === collateralId,
-    ); // find existing row for collateralId and save it as a new variable
-    const tempArray = newData.filter(
-      (item) => item.collateralId !== collateralId,
-    ); // get existing array for newData but without the line the collateralId passed in
+    const existingRecord = newData.find((item) => item.collateralId === collateralId); // find existing row for collateralId and save it as a new variable
+    const tempArray = newData.filter((item) => item.collateralId !== collateralId); // get existing array for newData but without the line the collateralId passed in
 
     const currCommit = existingRecord?.commitment ?? commitAmt;
     const currOutstanding = existingRecord?.outstanding ?? outstandingAmt;
@@ -101,12 +89,8 @@ function PaymentsReceived() {
 
   useEffect(() => {
     if (facilityNames.length > 0) {
-      const facilityNameSelection = facilityNames.map(
-        (a) => a.debt_facility_name,
-      );
-      const uniqueDebtFacilityNamesArray = Array.from(
-        new Set(facilityNameSelection),
-      ).sort();
+      const facilityNameSelection = facilityNames.map((a) => a.debt_facility_name);
+      const uniqueDebtFacilityNamesArray = Array.from(new Set(facilityNameSelection)).sort();
       setUniqueFacilityNames(uniqueDebtFacilityNamesArray);
     }
   }, [facilityNames]);
@@ -157,20 +141,15 @@ function PaymentsReceived() {
   }, [paymentDate, facilityNumber]);
 
   const getAmount = (collateralID, field) => {
-    return (
-      newData.find((item) => item.collateralId === collateralID)?.[field] || ""
-    );
+    return newData.find((item) => item.collateralId === collateralID)?.[field] || "";
   };
 
   async function postPaymentUpdate() {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/createPayments`,
-        {
-          paymentDate: paymentDate,
-          paymentsReceived: newData,
-        },
-      );
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/createPayments`, {
+        paymentDate: paymentDate,
+        paymentsReceived: newData,
+      });
       if (response.status === 201) {
         clearData();
         setMessage("Payments Successfully Posted");
@@ -217,9 +196,7 @@ function PaymentsReceived() {
           sx={{ m: 1, width: "40ch" }}
           onChange={handlePortfolioChange}
           getOptionLabel={(option) => option}
-          renderInput={(params) => (
-            <TextField {...params} label="Portfolio Name" required />
-          )}
+          renderInput={(params) => <TextField {...params} label="Portfolio Name" required />}
         />
 
         <Autocomplete
@@ -231,9 +208,7 @@ function PaymentsReceived() {
           sx={{ m: 1, width: "40ch" }}
           onChange={handleFacilityChange}
           getOptionLabel={(option) => option}
-          renderInput={(params) => (
-            <TextField {...params} label="Facility Name" required />
-          )}
+          renderInput={(params) => <TextField {...params} label="Facility Name" required />}
         />
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -258,10 +233,7 @@ function PaymentsReceived() {
       </Box>
 
       {rowData.length > 0 ? (
-        <TableContainer
-          component={Paper}
-          sx={{ width: "75%", marginLeft: "5ch" }}
-        >
+        <TableContainer component={Paper} sx={{ width: "75%", marginLeft: "5ch" }}>
           <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
             <TableHead
               sx={{
@@ -406,9 +378,7 @@ function PaymentsReceived() {
           </Button>
         </Box>
       )}
-      <Box sx={{ marginLeft: 5 }}>
-        {message && <div className="alertMessage">{message}</div>}
-      </Box>
+      <Box sx={{ marginLeft: 5 }}>{message && <div className="alertMessage">{message}</div>}</Box>
     </>
   );
 }

@@ -181,9 +181,7 @@ test("UT-69: Ensure payment page can populate after making selections, inputs fo
   render(<PaymentsReceived />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   // Test Selecting Portfolio Name

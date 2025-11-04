@@ -49,9 +49,7 @@ function Rollforward() {
 
   const handleFacilityChange = (e, value) => {
     setFacilityName(value || "");
-    const facility_record = facilityData.find(
-      (f) => f.debt_facility_name === value,
-    );
+    const facility_record = facilityData.find((f) => f.debt_facility_name === value);
 
     const facility_numb = facility_record.debt_facility_id;
     setFacilityNumber(facility_numb);
@@ -73,12 +71,8 @@ function Rollforward() {
 
   useEffect(() => {
     if (facilityNames.length > 0) {
-      const facilityNameSelection = facilityNames.map(
-        (a) => a.debt_facility_name,
-      );
-      const uniqueDebtFacilityNamesArray = Array.from(
-        new Set(facilityNameSelection),
-      ).sort();
+      const facilityNameSelection = facilityNames.map((a) => a.debt_facility_name);
+      const uniqueDebtFacilityNamesArray = Array.from(new Set(facilityNameSelection)).sort();
       setUniqueFacilityNames(uniqueDebtFacilityNamesArray);
     }
   }, [facilityNames]);
@@ -109,15 +103,16 @@ function Rollforward() {
   async function submitForm() {
     try {
       const fullInfoResponse = await axios.get(
-        `https://mocki.io/v1/c70e6088-442e-4428-ba53-b029718b1b5e`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/reportingCalculations`,
+        // `https://mocki.io/v1/c70e6088-442e-4428-ba53-b029718b1b5e`,
         {
           params: {
-            facilityNumber: facilityNumber,
+            debtFacilityId: facilityNumber,
             startDate: startDate,
             endDate: endDate,
-            isFundsFlow: isFundsFlow,
-            currentOutstandings: currentOutstandings,
-            intExpDue: intExpDue,
+            // isFundsFlow: isFundsFlow,
+            // currentOutstandings: currentOutstandings,
+            // intExpDue: intExpDue,
           },
         },
       );
@@ -159,14 +154,10 @@ function Rollforward() {
         totals.addlChgBankVal += parseFloat(loan.addlChgBankVal);
         totals.endValue += parseFloat(loan.endValue);
         totals.begLevAvail += parseFloat(loan.begLevAvail);
-        totals.levAvailChgDueToAddition += parseFloat(
-          loan.levAvailChgDueToAddition,
-        );
+        totals.levAvailChgDueToAddition += parseFloat(loan.levAvailChgDueToAddition);
         totals.levAvailChgDueToRepay += parseFloat(loan.levAvailChgDueToRepay);
         totals.levAvailChgDueToVal += parseFloat(loan.levAvailChgDueToVal);
-        totals.levAvailChgDueToAdvRate += parseFloat(
-          loan.levAvailChgDueToAdvRate,
-        );
+        totals.levAvailChgDueToAdvRate += parseFloat(loan.levAvailChgDueToAdvRate);
         totals.endLevAvail += parseFloat(loan.endLevAvail);
       }
 
@@ -203,9 +194,7 @@ function Rollforward() {
             sx={{ m: 1, width: "40ch" }}
             onChange={handlePortfolioChange}
             getOptionLabel={(option) => option}
-            renderInput={(params) => (
-              <TextField {...params} label="Portfolio Name" required />
-            )}
+            renderInput={(params) => <TextField {...params} label="Portfolio Name" required />}
           />
 
           <Autocomplete
@@ -217,9 +206,7 @@ function Rollforward() {
             sx={{ m: 1, width: "40ch" }}
             onChange={handleFacilityChange}
             getOptionLabel={(option) => option}
-            renderInput={(params) => (
-              <TextField {...params} label="Facility Name" required />
-            )}
+            renderInput={(params) => <TextField {...params} label="Facility Name" required />}
           />
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -304,7 +291,7 @@ function Rollforward() {
         </Box>
       </Box>
 
-      {rowData.length > 0 ? (
+      {rowData?.length > 0 ? (
         <>
           <Box sx={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
             <Box>
@@ -319,14 +306,10 @@ function Rollforward() {
                   fontWeight: "800",
                 }}
               >
-                Rollforward of Outstandings from{" "}
-                {dayjs(startDate).format("M/DD/YYYY")} to{" "}
+                Rollforward of Outstandings from {dayjs(startDate).format("M/DD/YYYY")} to{" "}
                 {dayjs(endDate).format("M/DD/YYYY")}
               </div>
-              <TableContainer
-                component={Paper}
-                sx={{ width: "95%", marginLeft: "5ch" }}
-              >
+              <TableContainer component={Paper} sx={{ width: "95%", marginLeft: "5ch" }}>
                 <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
                   <TableHead
                     sx={{
@@ -478,13 +461,10 @@ function Rollforward() {
                   fontWeight: "800",
                 }}
               >
-                Rollforward of Value from {dayjs(startDate).format("M/DD/YYYY")}{" "}
-                to {dayjs(endDate).format("M/DD/YYYY")}
+                Rollforward of Value from {dayjs(startDate).format("M/DD/YYYY")} to{" "}
+                {dayjs(endDate).format("M/DD/YYYY")}
               </div>
-              <TableContainer
-                component={Paper}
-                sx={{ width: "95%", marginLeft: "5ch" }}
-              >
+              <TableContainer component={Paper} sx={{ width: "95%", marginLeft: "5ch" }}>
                 <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
                   <TableHead
                     sx={{
@@ -498,22 +478,19 @@ function Rollforward() {
                   >
                     <TableRow>
                       <TableCell sx={{ width: "25%" }}>Borrower</TableCell>
-                      <TableCell sx={{ width: "12.5%" }} align="right">
+                      <TableCell sx={{ width: "15%" }} align="right">
                         Beginning Value
                       </TableCell>
-                      <TableCell sx={{ width: "12.5%" }} align="right">
+                      <TableCell sx={{ width: "15%" }} align="right">
                         Change Due to Principal Additions
                       </TableCell>
-                      <TableCell sx={{ width: "12.5%" }} align="right">
+                      <TableCell sx={{ width: "15%" }} align="right">
                         Change Due to Principal Repayments
                       </TableCell>
-                      <TableCell sx={{ width: "12.5%" }} align="right">
-                        Change Due to Internal Valuation
+                      <TableCell sx={{ width: "15%" }} align="right">
+                        Change Due to Valuation
                       </TableCell>
-                      <TableCell sx={{ width: "12.5%" }} align="right">
-                        Additional Change Due to Bank Valuation
-                      </TableCell>
-                      <TableCell sx={{ width: "12.5%" }} align="right">
+                      <TableCell sx={{ width: "15%" }} align="right">
                         Ending Value
                       </TableCell>
                     </TableRow>
@@ -556,15 +533,7 @@ function Rollforward() {
                         </TableCell>
                         <TableCell align="right">
                           <NumericFormat
-                            value={loan.chgDueToInternalVal}
-                            displayType="text"
-                            thousandSeparator=","
-                            decimalScale={0}
-                          />
-                        </TableCell>
-                        <TableCell align="right">
-                          <NumericFormat
-                            value={loan.addlChgBankVal}
+                            value={loan.chgDueToInternalVal + loan.addlChgBankVal}
                             displayType="text"
                             thousandSeparator=","
                             decimalScale={0}
@@ -617,20 +586,13 @@ function Rollforward() {
                       </TableCell>
                       <TableCell align="right">
                         <NumericFormat
-                          value={totalRow.chgDueToInternalVal}
+                          value={totalRow.chgDueToInternalVal + totalRow.addlChgBankVal}
                           displayType="text"
                           thousandSeparator=","
                           decimalScale={0}
                         />
                       </TableCell>
-                      <TableCell align="right">
-                        <NumericFormat
-                          value={totalRow.addlChgBankVal}
-                          displayType="text"
-                          thousandSeparator=","
-                          decimalScale={0}
-                        />
-                      </TableCell>
+
                       <TableCell align="right">
                         <NumericFormat
                           value={totalRow.endValue}
@@ -655,14 +617,10 @@ function Rollforward() {
                   fontWeight: "800",
                 }}
               >
-                Rollforward of Total Availability from{" "}
-                {dayjs(startDate).format("M/DD/YYYY")} to{" "}
+                Rollforward of Total Availability from {dayjs(startDate).format("M/DD/YYYY")} to{" "}
                 {dayjs(endDate).format("M/DD/YYYY")}
               </div>
-              <TableContainer
-                component={Paper}
-                sx={{ width: "95%", marginLeft: "5ch" }}
-              >
+              <TableContainer component={Paper} sx={{ width: "95%", marginLeft: "5ch" }}>
                 <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
                   <TableHead
                     sx={{
@@ -837,10 +795,7 @@ function Rollforward() {
                 Additional Data - {dayjs(startDate).format("M/DD/YYYY")} /{" "}
                 {dayjs(endDate).format("M/DD/YYYY")}
               </div>
-              <TableContainer
-                component={Paper}
-                sx={{ width: "75%", marginLeft: "5ch" }}
-              >
+              <TableContainer component={Paper} sx={{ width: "75%", marginLeft: "5ch" }}>
                 <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
                   <TableHead
                     sx={{
@@ -889,12 +844,8 @@ function Rollforward() {
                         }}
                       >
                         <TableCell>{loan.collateralName}</TableCell>
-                        <TableCell align="right">
-                          {(loan.bankValBeg * 100).toFixed(2)}%
-                        </TableCell>
-                        <TableCell align="right">
-                          {(loan.bankValEnd * 100).toFixed(2)}%
-                        </TableCell>
+                        <TableCell align="right">{(loan.bankValBeg * 100).toFixed(2)}%</TableCell>
+                        <TableCell align="right">{(loan.bankValEnd * 100).toFixed(2)}%</TableCell>
                         <TableCell align="right">
                           {(loan.internalValBeg * 100).toFixed(2)}%
                         </TableCell>
@@ -971,9 +922,7 @@ function Rollforward() {
                     marginBottom: 1,
                   }}
                 >
-                  <Box sx={{ fontWeight: "500" }}>
-                    Total Borrowing Availability
-                  </Box>
+                  <Box sx={{ fontWeight: "500" }}>Total Borrowing Availability</Box>
                   <Box>
                     {
                       <NumericFormat
@@ -992,9 +941,7 @@ function Rollforward() {
                     marginBottom: 1,
                   }}
                 >
-                  <Box sx={{ fontWeight: "700" }}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Excess/(Deficit)
-                  </Box>
+                  <Box sx={{ fontWeight: "700" }}>&nbsp;&nbsp;&nbsp;&nbsp;Excess/(Deficit)</Box>
                   <Box sx={{ fontWeight: "700" }}>
                     {
                       <NumericFormat
@@ -1034,9 +981,7 @@ function Rollforward() {
                     marginBottom: 1,
                   }}
                 >
-                  <Box sx={{ fontWeight: "500" }}>
-                    Total Principal Received:
-                  </Box>
+                  <Box sx={{ fontWeight: "500" }}>Total Principal Received:</Box>
                   <Box>
                     {
                       <NumericFormat
@@ -1116,9 +1061,7 @@ function Rollforward() {
                     marginBottom: 1,
                   }}
                 >
-                  <Box sx={{ fontWeight: "700" }}>
-                    Funds Due to / (from) Client
-                  </Box>
+                  <Box sx={{ fontWeight: "700" }}>Funds Due to / (from) Client</Box>
                   <Box sx={{ fontWeight: "700" }}>
                     {
                       <NumericFormat
@@ -1138,9 +1081,7 @@ function Rollforward() {
         ""
       )}
 
-      <Box sx={{ marginLeft: 5 }}>
-        {message && <div className="alertMessage">{message}</div>}
-      </Box>
+      <Box sx={{ marginLeft: 5 }}>{message && <div className="alertMessage">{message}</div>}</Box>
       <div style={{ marginTop: "40px" }}>
         <Button
           variant="contained"

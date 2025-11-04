@@ -125,17 +125,9 @@ function LoanTrancheCreate() {
           interestCoverage: interestCoverage,
           rateType: rateType,
           fixedRate:
-            fixedRate !== null && fixedRate !== ""
-              ? Number((fixedRate / 100).toFixed(6))
-              : null,
-          spread:
-            spread !== null && spread !== ""
-              ? Number((spread / 100).toFixed(6))
-              : null,
-          floor:
-            floor !== null && floor !== ""
-              ? Number((floor / 100).toFixed(6))
-              : null,
+            fixedRate !== null && fixedRate !== "" ? Number((fixedRate / 100).toFixed(6)) : null,
+          spread: spread !== null && spread !== "" ? Number((spread / 100).toFixed(6)) : null,
+          floor: floor !== null && floor !== "" ? Number((floor / 100).toFixed(6)) : null,
           refRate: refRate !== "" ? refRate : null,
           internalVal:
             internalVal !== null && internalVal !== ""
@@ -223,10 +215,7 @@ function LoanTrancheCreate() {
             padding: 2,
           }}
         >
-          <div
-            className="row-1-tranche-information"
-            style={{ display: "flex", gap: "50px" }}
-          >
+          <div className="row-1-tranche-information" style={{ display: "flex", gap: "50px" }}>
             <TextField
               required
               value={trancheName}
@@ -244,9 +233,7 @@ function LoanTrancheCreate() {
               sx={{ m: 1, width: "350px" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
             />
 
             <Autocomplete
@@ -262,9 +249,7 @@ function LoanTrancheCreate() {
                 <TextField
                   {...params}
                   label={
-                    selectedBorrower
-                      ? "Loan Agreement"
-                      : "Loan Agreement (Select Borrower First)"
+                    selectedBorrower ? "Loan Agreement" : "Loan Agreement (Select Borrower First)"
                   }
                   required
                 />
@@ -272,10 +257,7 @@ function LoanTrancheCreate() {
             />
           </div>
 
-          <div
-            className="row-2-tranche-information"
-            style={{ display: "flex", gap: "50px" }}
-          >
+          <div className="row-2-tranche-information" style={{ display: "flex", gap: "50px" }}>
             <Autocomplete
               disablePortal
               id="autocomplete-tranche-type"
@@ -283,9 +265,7 @@ function LoanTrancheCreate() {
               value={trancheType}
               sx={{ m: 1, width: "350px", marginTop: 4 }}
               onChange={(event, newValue) => setTrancheType(newValue)}
-              renderInput={(params) => (
-                <TextField {...params} label="Tranche Type" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Tranche Type" required />}
             />
 
             <Autocomplete
@@ -295,9 +275,7 @@ function LoanTrancheCreate() {
               value={lienType}
               sx={{ m: 1, width: "350px", marginTop: 4 }}
               onChange={(event, newValue) => setLienType(newValue)}
-              renderInput={(params) => (
-                <TextField {...params} label="Lien Type" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Lien Type" required />}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
@@ -320,9 +298,7 @@ function LoanTrancheCreate() {
                 sx={{ m: 1, width: "35ch", marginTop: 4 }}
                 value={trancheMaturity ? dayjs(trancheMaturity) : null} //
                 onChange={(newDate) => {
-                  setTrancheMaturity(
-                    newDate ? newDate.format("YYYY-MM-DD") : "",
-                  );
+                  setTrancheMaturity(newDate ? newDate.format("YYYY-MM-DD") : "");
                 }}
                 slotProps={{
                   textField: {
@@ -449,9 +425,7 @@ function LoanTrancheCreate() {
             value={rateType}
             sx={{ m: 1, width: "200px", marginTop: 1 }}
             onChange={(event, newValue) => setRateType(newValue)}
-            renderInput={(params) => (
-              <TextField {...params} label="Rate Type" />
-            )}
+            renderInput={(params) => <TextField {...params} label="Rate Type" />}
           />
           <NumericFormat
             customInput={TextField}

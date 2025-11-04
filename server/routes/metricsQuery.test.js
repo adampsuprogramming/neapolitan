@@ -37,9 +37,7 @@ describe("GET /api/metricsQuery", () => {
       ],
     });
 
-    const response = await request(app)
-      .get("/api/metricsQuery")
-      .query({ tranche_id: 22222 });
+    const response = await request(app).get("/api/metricsQuery").query({ tranche_id: 22222 });
 
     expect(response.body).toEqual([
       {

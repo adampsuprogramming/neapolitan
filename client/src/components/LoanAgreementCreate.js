@@ -52,9 +52,7 @@ function LoanAgreementCreate() {
 
   async function postLoanAgreement() {
     if (!selectedBorrower || !loanAgreementTitle || !agreementDate) {
-      setMessage(
-        "Not Saved - Please fill out all required fields - denoted by *",
-      );
+      setMessage("Not Saved - Please fill out all required fields - denoted by *");
       return;
     }
     try {
@@ -97,10 +95,7 @@ function LoanAgreementCreate() {
             padding: 2,
           }}
         >
-          <div
-            className="row-1-new-loan-agreement"
-            style={{ display: "flex", gap: "50px" }}
-          >
+          <div className="row-1-new-loan-agreement" style={{ display: "flex", gap: "50px" }}>
             <Autocomplete
               disablePortal
               id="borrower-name"
@@ -109,9 +104,7 @@ function LoanAgreementCreate() {
               sx={{ m: 1, width: "35ch" }}
               onChange={(event, newValue) => setSelectedBorrower(newValue)}
               getOptionLabel={(option) => option.legal_name} // doesn't need '|| ""' since we are filtering nulls above
-              renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
             />
 
             <TextField

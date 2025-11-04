@@ -37,9 +37,7 @@ describe("GET /api/ratedataquery", () => {
       ],
     });
 
-    const response = await request(app)
-      .get("/api/ratedataquery")
-      .query({ tranche_id: "5555" });
+    const response = await request(app).get("/api/ratedataquery").query({ tranche_id: "5555" });
 
     expect(response.body).toEqual([
       {

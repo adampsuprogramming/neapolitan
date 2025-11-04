@@ -64,14 +64,7 @@ insert into loan_tranches (loan_agreement_id, tranche_type, lien_type, start_dat
 values ($1,$2,$3,$4,$5,$6)
 returning tranche_id
 `,
-      [
-        "101",
-        "Term",
-        "First Lien",
-        "2025-10-31",
-        "2030-10-31",
-        "Fortnite Loan Tranche",
-      ],
+      ["101", "Term", "First Lien", "2025-10-31", "2030-10-31", "Fortnite Loan Tranche"],
     );
 
     expect(mockedQuery).toHaveBeenNthCalledWith(
@@ -133,14 +126,7 @@ insert into loan_tranches (loan_agreement_id, tranche_type, lien_type, start_dat
 values ($1,$2,$3,$4,$5,$6)
 returning tranche_id
 `,
-        [
-          "101",
-          "Term",
-          "First Lien",
-          "2025-10-31",
-          "2030-10-31",
-          "Fortnite Loan Tranche",
-        ],
+        ["101", "Term", "First Lien", "2025-10-31", "2030-10-31", "Fortnite Loan Tranche"],
       );
 
       expect(mockedQuery).toHaveBeenNthCalledWith(
@@ -202,14 +188,7 @@ insert into loan_tranches (loan_agreement_id, tranche_type, lien_type, start_dat
 values ($1,$2,$3,$4,$5,$6)
 returning tranche_id
 `,
-        [
-          "101",
-          "Term",
-          "First Lien",
-          "2025-10-31",
-          "2030-10-31",
-          "Fortnite Loan Tranche",
-        ],
+        ["101", "Term", "First Lien", "2025-10-31", "2030-10-31", "Fortnite Loan Tranche"],
       );
 
       expect(mockedQuery).toHaveBeenNthCalledWith(

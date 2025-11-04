@@ -8,9 +8,7 @@ it("submits a new collateral pledge form", function () {
   cy.visit("localhost:3000");
   cy.get('#root a[href="/transactions/"]').click();
   cy.get('#root a[href="/transactions/collateralpledgetransactions"]').click();
-  cy.get(
-    '#root a[href="/transactions/collateralpledgetransactions/collateralpledgeadd"]',
-  ).click();
+  cy.get('#root a[href="/transactions/collateralpledgetransactions/collateralpledgeadd"]').click();
 
   // Test that autocomplete for loan approval name works and contains value inputted
   cy.get("#autocomplete-loan-approval-name").click();
@@ -33,16 +31,10 @@ it("submits a new collateral pledge form", function () {
   cy.get("#root div:nth-child(6)")
     .contains("Test - Loan Tranche for Donkey Kong Co")
     .should("be.visible");
-  cy.get("#root div:nth-child(8)")
-    .contains("25,000,000.00")
-    .should("be.visible");
+  cy.get("#root div:nth-child(8)").contains("25,000,000.00").should("be.visible");
   cy.get("#root div:nth-child(10)").contains("10/9/2026").should("be.visible");
-  cy.get("#root div:nth-child(12)")
-    .contains("Starfish Bank")
-    .should("be.visible");
-  cy.get("#root div:nth-child(14)")
-    .contains("Starfish Bank Fund A Facility")
-    .should("be.visible");
+  cy.get("#root div:nth-child(12)").contains("Starfish Bank").should("be.visible");
+  cy.get("#root div:nth-child(14)").contains("Starfish Bank Fund A Facility").should("be.visible");
 
   // Test that inclusion date picker works and does not contain blank value after input
   cy.get('[data-testid="CalendarIcon"]').click();

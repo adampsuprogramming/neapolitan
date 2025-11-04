@@ -14,10 +14,7 @@ it("fills out metric update form", function () {
   cy.get("#autocomplete-borrower-name").type("Test - The Donkey Kong Company");
   cy.wait(200);
   cy.get("#autocomplete-borrower-name-option-0").click();
-  cy.get("#autocomplete-borrower-name").should(
-    "have.value",
-    "Test - The Donkey Kong Company",
-  );
+  cy.get("#autocomplete-borrower-name").should("have.value", "Test - The Donkey Kong Company");
   cy.wait(200);
 
   // Test that autocomplete for loan agreements works and contains value inputted

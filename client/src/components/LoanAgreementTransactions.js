@@ -7,26 +7,20 @@ export default function LoanAgreementTransactions() {
       <nav className="loan-agreement-sub-nav">
         <NavLink
           to="loanagreementcreate"
-          className={({ isActive }) =>
-            isActive ? "loan-agreement-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-agreement-sub-nav-highlighted" : "")}
         >
           Create
         </NavLink>
 
         <NavLink
           to="loanagreementmodify"
-          className={({ isActive }) =>
-            isActive ? "loan-agreement-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-agreement-sub-nav-highlighted" : "")}
         >
           Modify
         </NavLink>
         <NavLink
           to="loanagreementdelete"
-          className={({ isActive }) =>
-            isActive ? "loan-agreement-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-agreement-sub-nav-highlighted" : "")}
         >
           Delete
         </NavLink>

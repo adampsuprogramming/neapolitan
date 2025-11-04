@@ -21,10 +21,7 @@ it("selects a faciltiy and validates information display", function () {
   cy.get("#autocomplete-facility-name-option-0").click();
   cy.wait(200);
 
-  cy.get("#autocomplete-facility-name").should(
-    "have.value",
-    "Coral Reef Bank Fund A Facility",
-  );
+  cy.get("#autocomplete-facility-name").should("have.value", "Coral Reef Bank Fund A Facility");
   cy.wait(200);
 
   // Choose Date to Test Values
@@ -33,9 +30,7 @@ it("selects a faciltiy and validates information display", function () {
   cy.wait(200);
 
   // Test values displayed in first row
-  cy.get("#root tr:nth-child(1) td:nth-child(1)")
-    .contains("1")
-    .should("be.visible");
+  cy.get("#root tr:nth-child(1) td:nth-child(1)").contains("1").should("be.visible");
   cy.get("#root tr:nth-child(1) td:nth-child(2)")
     .contains("YseraCore Technologies")
     .should("be.visible");
@@ -47,9 +42,7 @@ it("selects a faciltiy and validates information display", function () {
     .should("be.visible");
 
   // Test values displayed in second to last row
-  cy.get("#root tr:nth-child(18) td:nth-child(1)")
-    .contains("15")
-    .should("be.visible");
+  cy.get("#root tr:nth-child(18) td:nth-child(1)").contains("15").should("be.visible");
   cy.get("#root tr:nth-child(18) td:nth-child(2)")
     .contains("Driftspire Holdings")
     .should("be.visible");
@@ -61,9 +54,7 @@ it("selects a faciltiy and validates information display", function () {
     .should("be.visible");
 
   // Test values displayed in last row
-  cy.get("#root tr:nth-child(19) td:nth-child(1)")
-    .contains("20")
-    .should("be.visible");
+  cy.get("#root tr:nth-child(19) td:nth-child(1)").contains("20").should("be.visible");
   cy.get("#root tr:nth-child(19) td:nth-child(2)")
     .contains("Westspire Enterprises")
     .should("be.visible");

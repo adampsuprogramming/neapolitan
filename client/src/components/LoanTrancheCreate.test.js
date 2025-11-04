@@ -48,9 +48,7 @@ test("UT-33 – Populating search options for Borrower Name from API call", asyn
   render(<LoanTrancheCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   const borrowerName = screen.getByLabelText("Borrower Name *");
@@ -116,15 +114,11 @@ test("UT-34 – Populating search options for Loan Agreement from API call", asy
 
   render(<LoanTrancheCreate />);
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
@@ -133,9 +127,7 @@ test("UT-34 – Populating search options for Loan Agreement from API call", asy
 
   const loanAgreementName = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementName);
-  expect(
-    screen.getByText("Term Loan A Facility with The Triforce Co."),
-  ).toBeInTheDocument();
+  expect(screen.getByText("Term Loan A Facility with The Triforce Co.")).toBeInTheDocument();
 });
 
 test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rate)", async () => {
@@ -193,15 +185,11 @@ test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rat
   render(<LoanTrancheCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   // Find Loan Tranche name input box and input text
@@ -221,9 +209,7 @@ test("UT-35 - Testing PUT API Call After Filling in Data from Form (Floating Rat
   const loanAgreementAutocomplete = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementAutocomplete);
   fireEvent.click(screen.getByText("Term Loan B Facility with Link Co."));
-  expect(loanAgreementAutocomplete.value).toBe(
-    "Term Loan B Facility with Link Co.",
-  );
+  expect(loanAgreementAutocomplete.value).toBe("Term Loan B Facility with Link Co.");
 
   // Find autocomplete box for Tranche Type and make selection
   const trancheTypeAutocomplete = screen.getByLabelText("Tranche Type *");
@@ -380,9 +366,7 @@ test("UT-36 – Test to ensure autocomplete works if there is a borrower with a 
   render(<LoanTrancheCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   const borrowerName = screen.getByLabelText("Borrower Name *");
@@ -444,15 +428,11 @@ test("UT-37 – Test to ensure autocomplete works if there is one loan agreement
 
   render(<LoanTrancheCreate />);
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
@@ -461,9 +441,7 @@ test("UT-37 – Test to ensure autocomplete works if there is one loan agreement
 
   const loanAgreementName = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementName);
-  expect(
-    screen.getByText("Term Loan A Facility with The Triforce Co."),
-  ).toBeInTheDocument();
+  expect(screen.getByText("Term Loan A Facility with The Triforce Co.")).toBeInTheDocument();
 });
 
 test("UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)", async () => {
@@ -521,15 +499,11 @@ test("UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)"
   render(<LoanTrancheCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   // Find Loan Tranche name input box and input text
@@ -549,9 +523,7 @@ test("UT-38 - Testing PUT API Call After Filling in Data from Form (Fixed Rate)"
   const loanAgreementAutocomplete = screen.getByLabelText("Loan Agreement *");
   fireEvent.mouseDown(loanAgreementAutocomplete);
   fireEvent.click(screen.getByText("Term Loan B Facility with Link Co."));
-  expect(loanAgreementAutocomplete.value).toBe(
-    "Term Loan B Facility with Link Co.",
-  );
+  expect(loanAgreementAutocomplete.value).toBe("Term Loan B Facility with Link Co.");
 
   // Find autocomplete box for Tranche Type and make selection
   const trancheTypeAutocomplete = screen.getByLabelText("Tranche Type *");

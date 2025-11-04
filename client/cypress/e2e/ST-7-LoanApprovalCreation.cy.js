@@ -7,24 +7,17 @@ it("submits a new loan approval creation form", function () {
   cy.visit("localhost:3000");
   cy.get('#root a[href="/transactions/"]').click();
   cy.get('#root a[href="/transactions/loanapprovaltransactions"]').click();
-  cy.get(
-    '#root a[href="/transactions/loanapprovaltransactions/loanapprovalcreate"]',
-  ).click();
+  cy.get('#root a[href="/transactions/loanapprovaltransactions/loanapprovalcreate"]').click();
 
   // Test that autocomplete for borrower name input works and contains value inputted
   cy.get("#autocomplete-borrower-name").click();
   cy.get("#autocomplete-borrower-name").type("Test - The Donkey Kong Company");
   cy.get("#autocomplete-borrower-name-option-0").click();
-  cy.get("#autocomplete-borrower-name").should(
-    "have.value",
-    "Test - The Donkey Kong Company",
-  );
+  cy.get("#autocomplete-borrower-name").should("have.value", "Test - The Donkey Kong Company");
 
   // Test that autocomplete for loan agreement input works and contains value inputted
   cy.get("#autocomplete-loan-agreeements").click();
-  cy.get("#autocomplete-loan-agreeements").type(
-    "Test - The Loan Agreement for Donkey Kong Co.",
-  );
+  cy.get("#autocomplete-loan-agreeements").type("Test - The Loan Agreement for Donkey Kong Co.");
   cy.get("#autocomplete-loan-agreeements-option-0").click();
   cy.get("#autocomplete-loan-agreeements").should(
     "have.value",
@@ -33,9 +26,7 @@ it("submits a new loan approval creation form", function () {
 
   // Test that autocomplete for loan tranche input works and contains value inputted
   cy.get("#autocomplete-loan-tranches").click();
-  cy.get("#autocomplete-loan-tranches").type(
-    "Test - Loan Tranche for Donkey Kong Co",
-  );
+  cy.get("#autocomplete-loan-tranches").type("Test - Loan Tranche for Donkey Kong Co");
   cy.get("#autocomplete-loan-tranches-option-0").click();
   cy.get("#autocomplete-loan-tranches").should(
     "have.value",
@@ -52,28 +43,19 @@ it("submits a new loan approval creation form", function () {
   cy.get("#autocomplete-facilities").click();
   cy.get("#autocomplete-facilities").type("Fund B");
   cy.get("#autocomplete-facilities-option-0").click();
-  cy.get("#autocomplete-facilities").should(
-    "have.value",
-    "Manatee Bank Fund B Facility",
-  );
+  cy.get("#autocomplete-facilities").should("have.value", "Manatee Bank Fund B Facility");
 
   // Test that approval date picker works and does not contain blank value after input
   cy.get('[data-testid="CalendarIcon"]').eq(0).click();
   cy.wait(300);
   cy.get(".MuiPickersDay-root").contains("15").click();
-  cy.get('[data-testid="tranche-approval-date-picker"]').should(
-    "not.have.value",
-    "",
-  );
+  cy.get('[data-testid="tranche-approval-date-picker"]').should("not.have.value", "");
 
   // Test that approval expiration date picker works and does not contain blank value after input
   cy.get('[data-testid="CalendarIcon"]').eq(1).click();
   cy.wait(300);
   cy.get(".MuiPickersDay-root").contains("20").click();
-  cy.get('[data-testid="tranche-approval-expiration-picker"]').should(
-    "not.have.value",
-    "",
-  );
+  cy.get('[data-testid="tranche-approval-expiration-picker"]').should("not.have.value", "");
 
   // Test that text box for approved amount input works and contains value inputted
   cy.get("#approved-amount-textfield").click();

@@ -51,9 +51,7 @@ test("UT-4 – Populating search options for Bank Name from API call", async () 
   render(<DebtFacilityCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   const lenderName = screen.getByLabelText("Lender Name *");
@@ -91,9 +89,7 @@ test("UT-5 – Populating search options for Portfolio from API call", async () 
   render(<DebtFacilityCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/portfolioquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/portfolioquery");
   });
 
   const portfolioName = screen.getByLabelText("Portfolio Name *");
@@ -150,15 +146,11 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
   render(<DebtFacilityCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/portfolioquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/portfolioquery");
   });
 
   // Find Facility name input box and input text
@@ -212,9 +204,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
 
   // Find Overall Rate input box and input text.  Note the text is auto formatted so our
   // expect assertion needs to be as well.
-  const overallAdvanceRateInput = screen.getByLabelText(
-    "Overall Advance Rate *",
-  );
+  const overallAdvanceRateInput = screen.getByLabelText("Overall Advance Rate *");
   fireEvent.change(overallAdvanceRateInput, { target: { value: "65" } });
   expect(overallAdvanceRateInput.value).toBe("65.000000%");
 
@@ -248,9 +238,7 @@ test("UT-8 - Testing PUT API Call After Filling in Data from Form", async () => 
 
   // Find Mezzanine Rate input box and input text.  Note the text is auto formatted so our
   // expect assertion needs to be as well.
-  const minimumEquityAmountInput = screen.getByLabelText(
-    "Minimum Equity Amount *",
-  );
+  const minimumEquityAmountInput = screen.getByLabelText("Minimum Equity Amount *");
   fireEvent.change(minimumEquityAmountInput, { target: { value: "5000000" } });
   expect(minimumEquityAmountInput.value).toBe("$5,000,000.00");
 
@@ -321,9 +309,7 @@ test("UT-13 – Test to ensure autocomplete works if there is one lender with a 
   render(<DebtFacilityCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   const lenderName = screen.getByLabelText("Lender Name *");
@@ -353,9 +339,7 @@ test("UT-14 – Test to ensure autocomplete works if there is one portfolio with
   render(<DebtFacilityCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/portfolioquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/portfolioquery");
   });
 
   const portfolioName = screen.getByLabelText("Portfolio Name *");

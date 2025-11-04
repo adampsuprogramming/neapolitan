@@ -7,26 +7,20 @@ export default function LoanTrancheTransactions() {
       <nav className="loan-tranche-sub-nav">
         <NavLink
           to="loantranchecreate"
-          className={({ isActive }) =>
-            isActive ? "loan-tranche-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-tranche-sub-nav-highlighted" : "")}
         >
           Create
         </NavLink>
 
         <NavLink
           to="loantranchemodify"
-          className={({ isActive }) =>
-            isActive ? "loan-tranche-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-tranche-sub-nav-highlighted" : "")}
         >
           Modify
         </NavLink>
         <NavLink
           to="loantranchedelete"
-          className={({ isActive }) =>
-            isActive ? "loan-tranche-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-tranche-sub-nav-highlighted" : "")}
         >
           Delete
         </NavLink>
