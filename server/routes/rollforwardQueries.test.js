@@ -1,32 +1,55 @@
 // ************************************************************************
-// *       UT-77 –                                                        *
+// *       UT-78 – test getFacilityCollateral(debtFacilityId)             *
+// *       UT-79 - test getBalances(debtFacilityId)
+// *       UT-80 - test getBankMetrics(debtFacilityId, date)
+// *       UT-81 - test getFacilityMetrics(debtFacilityId, date)
+// *       UT-82 - test getLienType(debtFacilityId)
+// *       UT-83 - test getLoanApprovalInfo(debtFacilityId)
+// *       UT-84 - test getInternalValInfo(debtFacilityId, date)
+// *       UT-85 - test getIntValForCollateral(collateralId, date)
+// *       UT-86 - test getPaymentsTimePeriod(debtFacilityId, startDate, endDate)
+// *       UT-87 - test getCollateralNames(debtFacilityId)
+
+
+
 // ************************************************************************
 
-
-
+// This mock must come before the import of object
+jest.mock("../db");
 
 const request = require("supertest");
 const app = require("../app");
 
-const rollforwardQueries = require("./rollforwardQueries");
-const processIds = require("./processIds");
-const processBalanceData = require("./processBalanceData");
-const processAdvanceRates = require("./processAdvanceRates");
-const processBankValuations = require("./processBankValuations");
-const processInternalValuations = require("./processInternalValuations");
-const processPayments = require("./processPayments");
+const mockedQuery = jest.fn();
+require("../db").query = mockedQuery;
 
-jest.mock("../routes/rollforwardQueries");
-jest.mock("../routes/processIds");
-jest.mock("../routes/processBalanceData");
-jest.mock("../routes/processAdvanceRates");
-jest.mock("./processBankValuations");
-jest.mock("./processInternalValuations");
-jest.mock("./processPayments");
+const pool = require("../db");
+pool.end = jest.fn();
 
-describe("GET /api/reportingCalculations", () => {
-  it("accepts region info request from the front-end, retrieves data, processes, and then returns it", async () => {
-    rollforwardQueries.getFacilityCollateral.mockResolvedValue({
+const {
+  getFacilityCollateral,
+  getBalances,
+  getBankMetrics,
+  getFacilityMetrics,
+  getLienType,
+  getLoanApprovalInfo,
+  getInternalValInfo,
+  getIntValForCollateral,
+  getPaymentsTimePeriod,
+  getCollateralNames,
+} = require("../routes/rollforwardQueries");
+
+
+afterAll(async () => {
+  await pool.end();
+});
+
+describe("test rollforwardQueries", () => {
+
+// ********************** UT-78 – test getFacilityCollateral(debtFacilityId) ***************************
+
+  it("accepts a debtFacilityId and returns data on Facility Collateral", async () => {
+    mockedQuery.mockResolvedValue({
       rows: [
       {
         inclusion_date: new Date("2025-02-27T00:00:00"),
@@ -42,10 +65,43 @@ describe("GET /api/reportingCalculations", () => {
         tranche_id: 239,
         loan_approval_id: 150,
       },]
+    });
+
+    const result = await getFacilityCollateral(201);
+
+    expect(result).toEqual({rows: [
+      {
+        inclusion_date: new Date("2025-02-27T00:00:00"),
+        removed_date: new Date("2025-08-15T00:00:00"),
+        collateral_id: 150,
+        tranche_id: 236,
+        loan_approval_id: 147,
+      },
+      {
+        inclusion_date: new Date("2025-07-14T00:00:00"),
+        removed_date: null,
+        collateral_id: 153,
+        tranche_id: 239,
+        loan_approval_id: 150,
+      },]});
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
+select 
+    inclusion_date, removed_date, collateral_id, tranche_id, loan_approval_id
+    from collateral
+    where debt_facility_id = $1
+`,
+      [201],
+    );
   });
 
-rollforwardQueries.getBalances.mockResolvedValue({
-  rows: [
+
+// ********************** UT-79 - test getBalances(debtFacilityId) *******************************
+
+  it("accepts a debtFacilityId and returns data on facility balances", async () => {
+
+    const getBalancesResult = ({rows: [
     {
       collateral_balance_id: 209,
       collateral_id: 153,
@@ -200,12 +256,32 @@ rollforwardQueries.getBalances.mockResolvedValue({
       tranche_id: 239,
       loan_approval_id: 150,
     },
-  ]
-});
+  ]})
 
-    rollforwardQueries.getBankMetrics
-    .mockResolvedValueOnce({
-      rows:[
+
+    mockedQuery.mockResolvedValue(getBalancesResult);
+
+    const result = await getBalances(201);
+
+    expect(result).toEqual(getBalancesResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
+select *
+from collateral_balance cb
+left join collateral c
+	on c.collateral_id = cb.collateral_id
+where c.debt_facility_id = $1
+`,
+      [201],
+    );
+  });
+
+// ********************** UT-80 - test getBankMetrics(debtFacilityId, date) *******************************
+
+  it("accepts a debtFacilityId and date, returning data on bank metrics", async () => {
+
+    const getBankMetricsResult = ({rows:[
       {
         collateral_id: 150,
         start_date: new Date("2025-02-27T00:00:00"),
@@ -224,34 +300,33 @@ rollforwardQueries.getBalances.mockResolvedValue({
         lender_id: 2,
         debt_facility_id_2: 201,
       },
-    ]
-    })
-    .mockResolvedValueOnce({
-      rows:[
-      {
-        collateral_id: 153,
-        start_date: new Date("2025-07-14T00:00:00"),
-        end_date: null,
-        advance_rate: 0.4,
-        valuation: 0.98,
-        bank_metrics_id: 5,
-        debt_facility_id: 201,
-        inclusion_date: new Date("2025-07-14T00:00:00"),
-        removed_date: null,
-        collateral_id_2: 153,
-        tranche_id: 239,
-        loan_approval_id: 150,
-        debt_facility_name: "Skyrim Debt Facility",
-        portfolio_id: 3,
-        lender_id: 2,
-        debt_facility_id_2: 201,
-       },
-    ]
-    })
+    ]})
 
-    rollforwardQueries.getFacilityMetrics
-    .mockResolvedValueOnce({
-      rows:[
+
+    mockedQuery.mockResolvedValue(getBankMetricsResult);
+
+    const result = await getBankMetrics(201, '2025-05-01');
+
+    expect(result).toEqual(getBankMetricsResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `SELECT * FROM bank_metrics bm
+left join collateral c
+	on c.collateral_id = bm.collateral_id
+left join debt_facilities df
+	on c.debt_facility_id = df.debt_facility_id
+where df.debt_facility_id = $1 and bm.start_date<=$2 and (bm.end_date>$2 OR bm.end_date IS NULL)`,
+      [201, '2025-05-01'],
+    );
+  });
+
+
+
+// ********************** UT-81 - test getFacilityMetrics(debtFacilityId, date) *******************************
+
+  it("accepts a debtFacilityId and date, returning data on facility metrics", async () => {
+
+    const getFacilityMetricsResult = ({rows:[
       {
         portfolio_id: 3,
         lender_id: 2,
@@ -267,30 +342,36 @@ rollforwardQueries.getBalances.mockResolvedValue({
         is_mezzanine_advance_rate: true,
         mezzanine_advance_rate: 0.25,
       },
-    ]
-    })
-    .mockResolvedValueOnce({
-      rows:[
-      {
-        portfolio_id: 3,
-        lender_id: 2,
-        debt_facility_id: 201,
-        start_date: new Date("2025-07-31T00:00:00"),
-        end_date: new Date("2030-01-01T00:00:00"),
-        is_overall_rate: false,
-        overall_rate: null,
-        is_first_lien_advance_rate: true,
-        first_lien_advance_rate: 0.75,
-        is_second_lien_advance_rate: true,
-        second_lien_advance_rate: 0.42,
-        is_mezzanine_advance_rate: true,
-        mezzanine_advance_rate: 0.375,
-      },
-    ]
-    })
+    ]})
 
-    rollforwardQueries.getLienType.mockResolvedValue({
-      rows:[
+
+    mockedQuery.mockResolvedValue(getFacilityMetricsResult);
+
+    const result = await getFacilityMetrics(201, '2025-05-01');
+
+    expect(result).toEqual(getFacilityMetricsResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
+SELECT d.portfolio_id, d.lender_id, d.debt_facility_id, dfo.start_date, dfo.end_date, dfo.is_overall_rate, dfo.overall_rate, dfo.is_first_lien_advance_rate, dfo.first_lien_advance_rate, 
+dfo.is_second_lien_advance_rate, dfo.second_lien_advance_rate, dfo.is_mezzanine_advance_rate, dfo.mezzanine_advance_rate
+FROM public.debt_facilities d
+left join debt_facility_balances dfb
+	on dfb.debt_facility_id  = d.debt_facility_id 
+left join debt_facility_options dfo
+	on dfo.debt_facility_id  = d.debt_facility_id 
+WHERE d.debt_facility_id=$1 and dfo.start_date<=$2 and (dfo.end_date>$2 OR dfo.end_date IS NULL)`,
+      [201, '2025-05-01'],
+    );
+  });
+
+
+
+// ********************** UT-82 - test getLienType(debtFacilityId) *******************************
+
+  it("accepts a debtFacilityId, returning data on lien types", async () => {
+
+    const getLienTypeResult = ({rows:[
       {
         collateral_id: 150,
         lien_type: "First Lien",
@@ -303,11 +384,35 @@ rollforwardQueries.getBalances.mockResolvedValue({
         collateral_id: 150,
         lien_type: "First Lien",
        },
-    ]
-    })
+    ]})
 
-    rollforwardQueries.getLoanApprovalInfo.mockResolvedValue({
-      rows:[
+
+    mockedQuery.mockResolvedValue(getLienTypeResult);
+
+    const result = await getLienType(201);
+
+    expect(result).toEqual(getLienTypeResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `SELECT c.collateral_id, lt.lien_Type FROM public.loan_metrics lm
+left join loan_tranches lt
+	on lm.tranche_id  = lt.tranche_id
+left join collateral c
+	on c.tranche_id = lt.tranche_id
+left join debt_facilities df
+	on c.debt_facility_id = df.debt_facility_id
+WHERE df.debt_facility_id = $1`,
+      [201],
+    );
+  });
+
+
+
+// ********************** UT-83 - test getLoanApprovalInfo(debtFacilityId) *******************************
+
+  it("accepts a debtFacilityId, returning data on loan approvals", async () => {
+
+    const getLoanApprovalInfoResult = ({rows:[
       {
         collateral_id: 153,
         approved_valuation: 0.98,
@@ -318,39 +423,102 @@ rollforwardQueries.getBalances.mockResolvedValue({
         approved_valuation: 0.98,
         approved_advance_rate: 0.7,
        },
-    ]
-    })
+    ]})
 
-    rollforwardQueries.getInternalValInfo
-    .mockResolvedValueOnce({
-      rows:[
+
+    mockedQuery.mockResolvedValue(getLoanApprovalInfoResult);
+
+    const result = await getLoanApprovalInfo(201);
+
+    expect(result).toEqual(getLoanApprovalInfoResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
+  SELECT collateral_id, lap.approved_valuation, lap.approved_advance_rate
+  FROM loan_approvals lap
+  LEFT JOIN collateral c
+  on c.loan_approval_id = lap.loan_approval_id
+  WHERE lap.debt_facility_id = $1
+`,
+      [201],
+    );
+  });
+
+  
+// ********************** UT-84 - test getInternalValInfo(debtFacilityId, date) *******************************
+
+  it("accepts a debtFacilityId and date, returning data on internal valuations", async () => {
+
+    const getInternalValInfoResult = ({rows:[
       {
         collateral_id: 150,
         start_date: new Date("2025-02-20T00:00:00"),
         end_date: new Date("2025-07-15T00:00:00"),
         internal_val: 0.98,
       },
-    ]
-    })
-    .mockResolvedValueOnce({
-      rows:[
-      {
-        collateral_id: 153,
-        start_date: new Date("2025-07-12T00:00:00"),
-        end_date: null,
-        internal_val: 0.985,
-      },
+    ]})
+
+
+    mockedQuery.mockResolvedValue(getInternalValInfoResult);
+
+    const result = await getInternalValInfo(201, "2025-05-01");
+
+    expect(result).toEqual(getInternalValInfoResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
+SELECT c.collateral_id, lm.start_date, lm.end_date, lm.internal_val FROM public.loan_metrics lm
+left join loan_tranches lt
+	on lm.tranche_id  = lt.tranche_id
+left join collateral c
+	on c.tranche_id = lt.tranche_id
+left join debt_facilities df
+	on c.debt_facility_id = df.debt_facility_id
+WHERE df.debt_facility_id = $1 and lm.start_date<=$2 and (lm.end_date>$2 OR lm.end_date IS NULL)`,
+      [201, "2025-05-01"],
+    );
+  });
+
+  
+// ********************** UT-85 - test getIntValForCollateral(collateralId, date) *******************************
+
+  it("accepts a collateralId and date, returning data for the specific internal valuation", async () => {
+
+    const getIntValForCollateralResult = ({rows:[
       {
         collateral_id: 150,
-        start_date: new Date("2025-07-15T00:00:00"),
-        end_date: null,
-        internal_val: 0.93,
+        start_date: new Date("2025-02-20T00:00:00"),
+        end_date: new Date("2025-07-15T00:00:00"),
+        internal_val: 0.98,
       },
-    ]
-    })
+    ]})
 
-    rollforwardQueries.getPaymentsTimePeriod.mockResolvedValue({
-  rows: [
+
+    mockedQuery.mockResolvedValue(getIntValForCollateralResult);
+
+    const result = await getIntValForCollateral(150, "2025-05-01");
+
+    expect(result).toEqual(getIntValForCollateralResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
+SELECT c.collateral_id, lm.start_date, lm.end_date, lm.internal_val FROM public.loan_metrics lm
+left join loan_tranches lt
+	on lm.tranche_id  = lt.tranche_id
+left join collateral c
+	on c.tranche_id = lt.tranche_id
+WHERE c.collateral_id=$1 and lm.start_date<=$2 and (lm.end_date>$2 OR lm.end_date IS NULL)`,
+      [150, "2025-05-01"],
+    );
+  });
+
+
+  
+// ********************** UT-86 - test getPaymentsTimePeriod(debtFacilityId, startDate, endDate) *******************************
+
+  it("accepts a debtFacilityId, startDate, and endDate, returning payment date for that time period", async () => {
+
+    const getPaymentsTimePeriodResult = ({rows: [
     {
       payments_id: 265,
       collateral_id: 150,
@@ -470,11 +638,34 @@ rollforwardQueries.getBalances.mockResolvedValue({
       lender_id: 2,
       debt_facility_id_2: 201,
     },
-  ]
-});
+  ]})
 
-    rollforwardQueries.getCollateralNames.mockResolvedValue({
-  rows: [
+
+    mockedQuery.mockResolvedValue(getPaymentsTimePeriodResult);
+
+    const result = await getPaymentsTimePeriod(201, "2025-05-01", "2025-10-31");
+
+    expect(result).toEqual(getPaymentsTimePeriodResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `SELECT * FROM public.payments p
+left join collateral c
+	on c.collateral_id  = p.collateral_id
+left join debt_facilities df
+    on df.debt_facility_id = c.debt_facility_id
+where df.debt_facility_id = $1 and p.payment_date >= $2 and p.payment_date <= $3
+ORDER BY payments_id ASC `,
+      [201, "2025-05-01", "2025-10-31"],
+    );
+  });
+
+
+  
+// ********************** UT-87 - test getCollateralNames(debtFacilityId) *******************************
+
+  it("accepts a debtFacilityId and returns the names of collateral in that facility", async () => {
+
+    const getCollateralNamesResult = ({rows: [
     {
         collateral_id: 150,
         legal_name: "Buttercup & Bramble Ltd.",
@@ -485,201 +676,33 @@ rollforwardQueries.getBalances.mockResolvedValue({
         legal_name: "Elfwood Delights",
         short_name: "Elfwood",
     },
-  ]
-});
-
-    processIds.getIdsOfAdditions.mockReturnValue([
-      { id: 150, addedDate: "2/27/2025" },
-      { id: 153, addedDate: "7/14/2025" },
-    ]);
-
-    processBalanceData.getFacilityBalanceAdditions.mockReturnValue([
-      {
-        collateralId: 153,
-        addedDate: "7/14/2025",
-        amtAdded: 15000000,
-      },
-    ]);
-
-    processIds.getIdsOfRemoved.mockReturnValue([{ id: 150, removalDate: "8/15/2025" }]);
-
-    processBalanceData.getFacilityBalanceRemovals.mockReturnValue([
-      {
-        collateralId: 150,
-        removalDate: "8/15/2025",
-        amtRemoved: 10600000,
-      },
-    ]);
-
-    processIds.getIdsAtStartOfPeriod.mockReturnValue([150]);
-
-    processBalanceData.getStartOfPeriodBalances.mockReturnValue([
-      {
-        collateralId: 150,
-        startBalance: 11250000,
-      },
-    ]);
-
-    processIds.getIdsAtEndOfPeriod.mockReturnValue([{ collateralId: 153, removedDate: null }]);
-
-    processBalanceData.getEndOfPeriodBalances.mockReturnValue([
-      {
-        collateralId: 153,
-        endBalance: 14125000,
-      },
-    ]);
-
-    processIds.getEveryIdInPeriod.mockReturnValue([{ id: 153 }, { id: 150 }]);
-
-    processBalanceData.getBegAndEndOustandings.mockReturnValue([
-      {
-        collateralId: 150,
-        balanceBeg: 11250000,
-        balanceEnd: null,
-      },
-      {
-        collateralId: 153,
-        balanceBeg: null,
-        balanceEnd: 14125000,
-      },
-    ]);
-
-    processAdvanceRates.getBegAndEndAdvRates.mockReturnValue([
-      {
-        collateralId: 150,
-        advanceRateBeg: 0.7,
-        advanceRateEnd: null,
-      },
-      {
-        collateralId: 153,
-        advanceRateBeg: 0.4,
-        advanceRateEnd: 0.4,
-      },
-    ]);
-
-    processBankValuations.getBegAndEndBankValuations.mockReturnValue([
-      {
-        collateralId: 150,
-        bankValBeg: 0.98,
-        bankValEnd: null,
-      },
-      {
-        collateralId: 153,
-        bankValBeg: 0.98,
-        bankValEnd: 0.98,
-      },
-    ]);
-
-    processInternalValuations.getBegAndEndInternalValuations.mockResolvedValue([
-      {
-        collateralId: 150,
-        internalValBeg: 0.98,
-        internalValEnd: null,
-      },
-      {
-        collateralId: 153,
-        internalValBeg: 0.985,
-        internalValEnd: 0.985,
-      },
-    ]);
-
-    processPayments.getPaymentInfo.mockReturnValue([
-      {
-        collateralId: 153,
-        principalRec: 875000,
-        interestRec: 125000,
-      },
-      {
-        collateralId: 150,
-        principalRec: 650000,
-        interestRec: 250000,
-      },
-    ]);
-
-    const response = await request(app).get("/api/reportingCalculations").query({
-      debtFacilityId: 999,
-      startDate: "2025-05-01",
-      endDate: "2025-10-31",
-      isFundsFlow: true,
-      currentOutstandings: 6000000,
-      intExpDue: 50000,
-    });
-
-expect(response.body).toEqual(
-  {
-    collateralData: [
-      {
-        collateralId: 153,
-        collateralName: 'Elfwood Delights',
-        balanceBeg: 0,
-        collAdded: 15000000,
-        collRemoved: 0,
-        principalRec: 875000,
-        balanceEnd: 14125000,
-        begValue: 0,
-        chgDueToAdd: 14700000,
-        chgDueToRepay: -857500,
-        chgDueToInternalVal: 70625,
-        addlChgBankVal: -70625,
-        endValue: 13842500,
-        begLevAvail: 0,
-        levAvailChgDueToAddition: 5880000,
-        levAvailChgDueToRepay: -343000,
-        levAvailChgDueToVal: 0,
-        levAvailChgDueToAdvRate: 0,
-        endLevAvail: 5537000,
-        bankValBeg: 0.98,
-        bankValEnd: 0.98,
-        internalValBeg: 0.985,
-        internalValEnd: 0.985,
-        advanceRateBeg: 0.4,
-        advanceRateEnd: 0.4,
-        intRec: 125000
-      },
-      {
-        collateralId: 150,
-        collateralName: 'Buttercup & Bramble Ltd.',
-        balanceBeg: 11250000,
-        collAdded: 0,
-        collRemoved: 10600000,
-        principalRec: 650000,
-        balanceEnd: 0,
-        begValue: 11025000,
-        chgDueToAdd: 0,
-        chgDueToRepay: -11025000,
-        chgDueToInternalVal: 0,
-        addlChgBankVal: 0,
-        endValue: 0,
-        begLevAvail: 7717500,
-        levAvailChgDueToAddition: 0,
-        levAvailChgDueToRepay: -7717500,
-        levAvailChgDueToVal: 0,
-        levAvailChgDueToAdvRate: 0,
-        endLevAvail: 0,
-        bankValBeg: 0.98,
-        bankValEnd: 0,
-        internalValBeg: 0.98,
-        internalValEnd: 0,
-        advanceRateBeg: 0.7,
-        advanceRateEnd: 0,
-        intRec: 250000
-      }
-    ],
-
-    fundsFlowData: {
-      currFacBal: "6000000",
-      endLevAvail: 5537000,
-      currAvail: -463000,
-      intExp: -50000,
-      principalRec: 1525000,
-      intRec: 375000,
-      totalDist: 1900000,
-      dueToBank: 513000,
-      dueToClient: 1387000
-    }
-  }
-);
+  ]})
 
 
+    mockedQuery.mockResolvedValue(getCollateralNamesResult);
+
+    const result = await getCollateralNames(201);
+
+    expect(result).toEqual(getCollateralNamesResult);
+
+    expect(mockedQuery).toHaveBeenCalledWith(
+      `
+select c.collateral_id, legal_name, short_name
+from borrowers b
+left join loan_agreements la
+on la.borrower_id = b.borrower_id
+left join loan_tranches lt
+on lt.loan_agreement_id = la.loan_agreement_id
+left join collateral c
+on c.tranche_id = lt.tranche_id
+left join debt_facilities df
+on df.debt_facility_id = c.debt_facility_id
+where df.debt_facility_id = $1
+`,
+      [201],
+    );
   });
+
+
+
 });

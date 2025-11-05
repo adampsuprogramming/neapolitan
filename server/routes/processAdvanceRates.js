@@ -56,28 +56,36 @@ function getBegAndEndAdvRates(
 
   for (let i = 0; i < addedIds.length; i++) {
     const collateralId = addedIds[i].id;
-    finalStartLoanAdv = null;
-
+    let finalStartLoanAdv = null;
     const lienTypeRow = collateralLien.rows.find((row) => row.collateral_id === collateralId);
 
     const lienType = lienTypeRow ? lienTypeRow.lien_type || null : null;
 
-    for (let j = 0; j < loanApprovalResults.rows.length; j++) {
-      if (loanApprovalResults.rows[j].collateral_id === addedIds[i].id) {
-        finalStartLoanAdv = parseFloat(loanApprovalResults.rows[j].approved_advance_rate || 0);
-        break;
-      } else {
+    let fallBackAdvanceRate;
+      
         if (lienType === "First Lien") {
-          finalStartLoanAdv = facilityMetricsStart.rows[0].first_lien_advance_rate;
+          fallBackAdvanceRate = facilityMetricsStart.rows[0].first_lien_advance_rate;
         }
         if (lienType === "Second Lien") {
-          finalStartLoanAdv = facilityMetricsStart.rows[0].second_lien_advance_rate;
+          fallBackAdvanceRate = facilityMetricsStart.rows[0].second_lien_advance_rate;
         }
         if (lienType === "Mezzanine") {
-          finalStartLoanAdv = facilityMetricsStart.rows[0].mezzanine_advance_rate;
+          fallBackAdvanceRate = facilityMetricsStart.rows[0].mezzanine_advance_rate;
         }
-      }
+      
+    
+
+
+
+    for (let j = 0; j < loanApprovalResults.rows.length; j++) {
+      if (loanApprovalResults.rows[j].collateral_id === addedIds[i].id) {
+        finalStartLoanAdv = parseFloat(loanApprovalResults.rows[j].approved_advance_rate || fallBackAdvanceRate);
+
+        break;
+      } 
     }
+    
+    
 
     const existingAdvRate = advanceRates.find((items) => items.collateralId === collateralId);
 
@@ -91,39 +99,34 @@ function getBegAndEndAdvRates(
   }
 
   // For each collateralId that is in outstandingBal
+  // IMPORTANT NOTE: IF THE ASSET DOES NOT EXIST AT THE END OF THE PERIOD, ADVANCE RATE IS SHOWN
+  // AS NULL, SINCE IT IS NOT RELEVANT TO CALCULATIONS.
+
+
   for (let i = 0; i < allIdsEnd.length; i++) {
+    let finalEndLoanAdv = null;
     // save lienType as lienType
     collateralId = allIdsEnd[i].collateralId;
     lienTypeRow = collateralLien.rows.find((row) => row.collateral_id === collateralId);
 
-    if (lienTypeRow) {
       lienType = lienTypeRow.lien_type || null;
-    } else {
-      lienType = null;
-    }
 
     bankMetricEndRow =
       bankMetricsEnd.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    if (bankMetricEndRow) {
       endIndLoanAdv = bankMetricEndRow.advance_rate || null;
-    } else {
-      endIndLoanAdv = null;
-    }
+
 
     if (endIndLoanAdv) {
       finalEndLoanAdv = endIndLoanAdv;
-    } else {
-      if (lienType === "First Lien") {
+    } else if (lienType === "First Lien") {
         finalEndLoanAdv = facilityMetricsEnd.rows[0].first_lien_advance_rate;
-      }
-      if (lienType === "Second Lien") {
+    } else if (lienType === "Second Lien") {
         finalEndLoanAdv = facilityMetricsEnd.rows[0].second_lien_advance_rate;
-      }
-      if (lienType === "Mezzanine") {
+    } else if (lienType === "Mezzanine") {
         finalEndLoanAdv = facilityMetricsEnd.rows[0].mezzanine_advance_rate;
       }
-    }
+    
 
     const existingAdvRate = advanceRates.find((items) => items.collateralId === collateralId);
 
