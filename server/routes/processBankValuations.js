@@ -14,11 +14,7 @@ function getBegAndEndBankValuations(
     bankMetricStartRow =
       bankMetricsStart.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    if (bankMetricStartRow) {
-      startBankLoanVal = bankMetricStartRow.valuation || null;
-    } else {
-      startBankLoanVal = null;
-    }
+    startBankLoanVal = bankMetricStartRow ? bankMetricStartRow.valuation || null : null;
 
     bankValuations.push({
       collateralId: collateralId,
@@ -47,24 +43,15 @@ function getBegAndEndBankValuations(
     bankMetricEndRow =
       bankMetricsEnd.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    if (bankMetricEndRow) {
-      endBankLoanVal = bankMetricEndRow.valuation || null;
-    } else {
-      endBankLoanVal = null;
-    }
+    endBankLoanVal = bankMetricEndRow.valuation || null;
 
     const existingVal = bankValuations.find((items) => items.collateralId === collateralId);
 
-    if (existingVal) {
-      existingVal.bankValEnd = endBankLoanVal;
-    } else {
-      bankValuations.push({
-        collateralId: collateralId,
-        bankValBeg: null,
-        bankValEnd: endBankLoanVal,
-      });
-    }
+    existingVal.bankValEnd = endBankLoanVal;
   }
+  // NOTE: IF BANK METRICS HAS NULL FOR VALUATIONS, IT SHOULD RETURN NULL FOR ANY VALUATION OTHER THAN
+  // A LOAN THAT WAS ORIGINATED IN THE PERIOD, WHICH WILL SHOULD ALWAYS DEFAULT TO THE ORIGINATION VALUATION
+  // ON THE APPROVAL FORM.
 
   return bankValuations;
 }
