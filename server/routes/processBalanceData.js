@@ -54,6 +54,7 @@ function getFacilityBalanceRemovals(
       }
     }
   }
+
   return removals;
 }
 
@@ -82,6 +83,7 @@ function getStartOfPeriodBalances(allIdsStart, collateralBalances, startDateObje
       });
     }
   }
+
   return startBalances;
 }
 
@@ -109,6 +111,7 @@ function getEndOfPeriodBalances(allIdsEnd, collateralBalances, endDateObject) {
       });
     }
   }
+
   return endBalances;
 }
 

@@ -8,7 +8,6 @@ const {
   getLienType,
   getLoanApprovalInfo,
   getInternalValInfo,
-  getIntValForCollateral,
   getPaymentsTimePeriod,
   getCollateralNames,
 } = require("../routes/rollforwardQueries");
@@ -39,12 +38,11 @@ const { getPaymentInfo } = require("./processPayments");
 
 let startDateObject;
 let endDateObject;
-let facilityCollateral;
-let collateralBalances;
 
 router.get("/api/reportingCalculations", async (req, res) => {
-  const { debtFacilityId, startDate, endDate } = req.query;
-
+  const { debtFacilityId, startDate, endDate, isFundsFlow, currentOutstandings, intExpDue } =
+    req.query;
+  console.log("test" + isFundsFlow);
   startDateObject = new Date(startDate + "T00:00:00");
   endDateObject = new Date(endDate + "T00:00:00");
 
@@ -297,45 +295,65 @@ router.get("/api/reportingCalculations", async (req, res) => {
       report.push({
         collateralId: rCollateralId || null,
         collateralName: rCollateralName || null,
-        balanceBeg: rBalanceBeg || 0,
-        collAdded: rCollAdded || 0,
-        collRemoved: rCollRemoved || 0,
-        principalRec: rPrincipalRec || 0,
-        balanceEnd: rBalanceEnd || 0,
-        begValue: rBegValue || 0,
-        chgDueToAdd: rChgDueToAdd || 0,
-        chgDueToRepay: rChgDueToRepay || 0,
-        chgDueToInternalVal: rChgDueToInternalVal || 0,
-        addlChgBankVal: rAddlChgBankVal || 0,
-        endValue: rEndValue || 0,
-        begLevAvail: rBegLevAvail || 0,
-        levAvailChgDueToAddition: rLevAvailChgDueToAddition || 0,
-        levAvailChgDueToRepay: rLevAvailChgDueToRepay || 0,
-        levAvailChgDueToVal: rLevAvailChgDueToVal || 0,
-        levAvailChgDueToAdvRate: rLevAvailChgDueToAdvRate || 0,
-        endLevAvail: rEndLevAvail || 0,
-        bankValBeg: parseFloat(rBankValBeg) || null,
-        bankValEnd: parseFloat(rBankValEnd) || null,
-        internalValBeg: parseFloat(rInternalValBeg) || null,
-        internalValEnd: parseFloat(rInternalValEnd) || null,
-        advanceRateBeg: parseFloat(rAdvanceRateBeg) || null,
-        advanceRateEnd: parseFloat(rAdvanceRateEnd) || null,
+        balanceBeg: Math.round(rBalanceBeg) || 0,
+        collAdded: Math.round(rCollAdded) || 0,
+        collRemoved: Math.round(rCollRemoved) || 0,
+        principalRec: Math.round(rPrincipalRec) || 0,
+        balanceEnd: Math.round(rBalanceEnd) || 0,
+        begValue: Math.round(rBegValue) || 0,
+        chgDueToAdd: Math.round(rChgDueToAdd) || 0,
+        chgDueToRepay: Math.round(rChgDueToRepay) || 0,
+        chgDueToInternalVal: Math.round(rChgDueToInternalVal) || 0,
+        addlChgBankVal: Math.round(rAddlChgBankVal) || 0,
+        endValue: Math.round(rEndValue) || 0,
+        begLevAvail: Math.round(rBegLevAvail) || 0,
+        levAvailChgDueToAddition: Math.round(rLevAvailChgDueToAddition) || 0,
+        levAvailChgDueToRepay: Math.round(rLevAvailChgDueToRepay) || 0,
+        levAvailChgDueToVal: Math.round(rLevAvailChgDueToVal) || 0,
+        levAvailChgDueToAdvRate: Math.round(rLevAvailChgDueToAdvRate) || 0,
+        endLevAvail: Math.round(rEndLevAvail) || 0,
+        bankValBeg: parseFloat(rBankValBeg) || 0,
+        bankValEnd: parseFloat(rBankValEnd) || 0,
+        internalValBeg: parseFloat(rInternalValBeg) || 0,
+        internalValEnd: parseFloat(rInternalValEnd) || 0,
+        advanceRateBeg: parseFloat(rAdvanceRateBeg) || 0,
+        advanceRateEnd: parseFloat(rAdvanceRateEnd) || 0,
         intRec: rIntRec || 0,
       });
+    }
+
+    let totalEndLevAvail = 0;
+    let totalPrincRec = 0;
+    let totalIntRec = 0;
+
+    for (let i = 0; i < report.length; i++) {
+      totalEndLevAvail = totalEndLevAvail + report[i].endLevAvail;
+      totalPrincRec = totalPrincRec + report[i].principalRec;
+      totalIntRec = totalIntRec + report[i].intRec;
+    }
+
+    const currAvail = totalEndLevAvail - currentOutstandings;
+    const totalDist = totalPrincRec + totalIntRec;
+    let dueToBank;
+
+    if (currAvail < 0) {
+      dueToBank = intExpDue - currAvail;
+    } else {
+      dueToBank = intExpDue;
     }
 
     returnPackage = {
       collateralData: report,
       fundsFlowData: {
-        currFacBal: 32000000.0,
-        endLevAvail: 31215700.0,
-        currAvail: -784300.0,
-        intExp: -125458.47,
-        principalRec: 3050000.0,
-        intRec: 754488.45,
-        totalDist: 3804488.45,
-        dueToBank: 909758.47,
-        dueToClient: 2894729.9800000004,
+        currFacBal: currentOutstandings,
+        endLevAvail: totalEndLevAvail,
+        currAvail: currAvail,
+        intExp: -intExpDue,
+        principalRec: totalPrincRec,
+        intRec: totalIntRec,
+        totalDist: totalDist,
+        dueToBank: dueToBank,
+        dueToClient: totalDist - dueToBank,
       },
     };
 

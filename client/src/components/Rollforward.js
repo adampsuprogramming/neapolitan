@@ -110,9 +110,9 @@ function Rollforward() {
             debtFacilityId: facilityNumber,
             startDate: startDate,
             endDate: endDate,
-            // isFundsFlow: isFundsFlow,
-            // currentOutstandings: currentOutstandings,
-            // intExpDue: intExpDue,
+            isFundsFlow: isFundsFlow,
+            currentOutstandings: currentOutstandings,
+            intExpDue: intExpDue,
           },
         },
       );

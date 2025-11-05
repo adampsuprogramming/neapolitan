@@ -510,9 +510,7 @@ test("UT-75: Test error handling for facility data retrieval", async () => {
   render(<Rollforward />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   expect(screen.getByText("Error fetching facility data")).toBeInTheDocument();
@@ -571,9 +569,7 @@ test("UT-76: Test error handling for roll forward data fetching", async () => {
   render(<Rollforward />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   // Test Selecting Portfolio Name

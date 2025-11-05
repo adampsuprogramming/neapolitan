@@ -65,6 +65,7 @@ function getBegAndEndBankValuations(
       });
     }
   }
+
   return bankValuations;
 }
 

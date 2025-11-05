@@ -18,7 +18,6 @@ function getBegAndEndAdvRates(
 
   // For each collateralId that is in allIdsStart
   for (let i = 0; i < allIdsStart.length; i++) {
-    console.log(allIdsStart[i]);
     const collateralId = allIdsStart[i];
 
     const lienTypeRow = collateralLien.rows.find((row) => row.collateral_id === collateralId);
@@ -83,18 +82,12 @@ function getBegAndEndAdvRates(
     const existingAdvRate = advanceRates.find((items) => items.collateralId === collateralId);
 
     if (!existingAdvRate) {
-      console.log("LOGGING ID : " + collateralId);
-
       advanceRates.push({
         collateralId: addedIds[i].id,
         advanceRateBeg: finalStartLoanAdv,
         advanceRateEnd: null,
       });
     }
-  }
-
-  for (let i = 0; i < advanceRates.length; i++) {
-    console.log(advanceRates[i].collateralId + ": " + advanceRates[i].advanceRateBeg);
   }
 
   // For each collateralId that is in outstandingBal
@@ -144,6 +137,7 @@ function getBegAndEndAdvRates(
       });
     }
   }
+
   return advanceRates;
 }
 

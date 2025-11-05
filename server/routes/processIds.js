@@ -22,6 +22,7 @@ function getIdsOfRemoved(facilityCollateral) {
       });
     }
   }
+
   return removedIds;
 }
 
@@ -32,6 +33,7 @@ function getIdsAtStartOfPeriod(facilityCollateral, startDateObject) {
       allIdsStart.push(facilityCollateral.rows[i].collateral_id);
     }
   }
+
   return allIdsStart;
 }
 
@@ -49,6 +51,7 @@ function getIdsAtEndOfPeriod(facilityCollateral, endDateObject) {
       });
     }
   }
+
   return allIdsEnd;
 }
 
@@ -66,7 +69,6 @@ function getEveryIdInPeriod(facilityCollateral, startDateObject, endDateObject) 
       });
     }
   }
-
   return everyIdInPeriod;
 }
 

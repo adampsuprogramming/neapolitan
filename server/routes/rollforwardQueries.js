@@ -87,11 +87,11 @@ where df.debt_facility_id = $1 and p.payment_date >= $2 and p.payment_date <= $3
 ORDER BY payments_id ASC `;
 
 const loanApprovalQuery = `
-SELECT collateral_id, lap.approved_valuation, lap.approved_advance_rate
-FROM loan_approvals lap
-LEFT JOIN collateral c
-on c.loan_approval_id = lap.loan_approval_id
-WHERE lap.debt_facility_id = $1
+  SELECT collateral_id, lap.approved_valuation, lap.approved_advance_rate
+  FROM loan_approvals lap
+  LEFT JOIN collateral c
+  on c.loan_approval_id = lap.loan_approval_id
+  WHERE lap.debt_facility_id = $1
 `;
 
 async function getFacilityCollateral(debtFacilityId) {

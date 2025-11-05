@@ -63,6 +63,7 @@ async function getBegAndEndInternalValuations(
       });
     }
   }
+
   return internalValuations;
 }
 
