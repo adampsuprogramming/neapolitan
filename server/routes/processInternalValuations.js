@@ -15,11 +15,7 @@ async function getBegAndEndInternalValuations(
     const intValStartRow =
       intValStart.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    if (intValStartRow) {
-      startIntVal = intValStartRow.internal_val || null;
-    } else {
-      startIntVal = null;
-    }
+    startIntVal = intValStartRow ? intValStartRow.internal_val || null : null;
 
     internalValuations.push({
       collateralId: collateralId,
@@ -45,11 +41,7 @@ async function getBegAndEndInternalValuations(
     collateralId = allIdsEnd[i].collateralId;
     intValEndRow = intValEnd.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    if (intValEndRow) {
-      endIntVal = intValEndRow.internal_val || null;
-    } else {
-      endIntVal = null;
-    }
+    endIntVal = intValEndRow ? intValEndRow.internal_val || null : null;
 
     const existingIntVal = internalValuations.find((items) => items.collateralId === collateralId);
 
