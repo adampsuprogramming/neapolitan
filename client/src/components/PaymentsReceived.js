@@ -30,6 +30,7 @@ function PaymentsReceived() {
   const [paymentDate, setPaymentDate] = useState("");
   const [rowData, setRowData] = useState([]);
   const [newData, setNewData] = useState([]);
+  const [latestPymtDate, setLatestPymtDate] = useState(null);
   const [message, setMessage] = useState("");
 
   const handlePortfolioChange = (e, value) => {
@@ -121,7 +122,8 @@ function PaymentsReceived() {
   useEffect(() => {
     async function getBorrowBase() {
       try {
-        const fullInfoResponse = await axios.get(
+        const [firstReponse, secondResponse] = await Promise.all([
+        axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/borrowbase`,
           {
             params: {
@@ -129,8 +131,23 @@ function PaymentsReceived() {
               facility_id: facilityNumber,
             },
           },
-        );
-        setRowData(fullInfoResponse.data);
+        ),
+        axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/paymentsQuery`,
+          {
+            params: {
+              debtFacilityId: facilityNumber,
+            },
+          },
+        ),
+        ]);
+        setRowData(firstReponse.data);
+
+        if(secondResponse.data.length>0) {
+        setLatestPymtDate(secondResponse.data[0].payment_date);
+        } else {
+          setLatestPymtDate(null);
+        }
       } catch (error) {
         console.error("Error fetching: ", error);
       }
@@ -145,6 +162,10 @@ function PaymentsReceived() {
   };
 
   async function postPaymentUpdate() {
+    if(paymentDate<=latestPymtDate) {
+      setMessage("Payment Date Must Me After Previously Entered Payments Dates for this Facility");
+      return;
+    }
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/createPayments`, {
         paymentDate: paymentDate,
