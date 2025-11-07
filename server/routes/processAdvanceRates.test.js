@@ -1,10 +1,10 @@
-// ********************************************************************************
-// *       UT-93 – function getBegAndEndAdvRates() - First Lien Stated Advance    *
-// *       UT-94 – function getBegAndEndAdvRates() - Second/Mezz Stated Advance   *
-// *       UT-95 – function getBegAndEndAdvRates() - First Lien No Stated Advance *
-// *       UT-96 – function getBegAndEndAdvRates() - Second Lien No Stated Advance*
-// *       UT-97 – function getBegAndEndAdvRates() - Mezzanine No Stated Advance  *
-// ********************************************************************************
+// *************************************************************************************
+// *       UT-93 – test function getBegAndEndAdvRates() - First Lien Stated Advance    *
+// *       UT-94 – test function getBegAndEndAdvRates() - Second/Mezz Stated Advance   *
+// *       UT-95 – test function getBegAndEndAdvRates() - First Lien No Stated Advance *
+// *       UT-96 – test function getBegAndEndAdvRates() - Second Lien No Stated Advance*
+// *       UT-97 – test function getBegAndEndAdvRates() - Mezzanine No Stated Advance  *
+// *************************************************************************************
 
 const { getBegAndEndAdvRates } = require("../routes/processAdvanceRates");
 

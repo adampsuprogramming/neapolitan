@@ -76,7 +76,7 @@ describe("test processBankValuations", () => {
   });
 
   // ********************** UT-108 – function getBegAndEndInternalValuations() - NULL START ***************************
-  it("accepts multiple parameters returns beginning and ending internal valuations for each collateral in facility for time period - Null Start", async () => {
+  it("accepts multiple parameters returns beginning and ending internal valuations for each collateral in facility for time period - no starting info for record", async () => {
     const allIdsStart = [150];
     const allIdsEnd = [{ collateralId: 150, removedDate: null }];
     const additions = [];
@@ -111,7 +111,7 @@ describe("test processBankValuations", () => {
     ]);
   });
 
-  // ********************** UT-108 – function getBegAndEndInternalValuations() - NULL END ***************************
+  // ********************** UT-109 – function getBegAndEndInternalValuations() - No ending info for record  ***************************
   it("accepts multiple parameters returns beginning and ending internal valuations for each collateral in facility for time period", async () => {
     const allIdsStart = [150];
     const allIdsEnd = [{ collateralId: 150, removedDate: null }];

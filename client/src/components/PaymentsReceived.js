@@ -123,28 +123,22 @@ function PaymentsReceived() {
     async function getBorrowBase() {
       try {
         const [firstReponse, secondResponse] = await Promise.all([
-        axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/borrowbase`,
-          {
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/borrowbase`, {
             params: {
               as_of_date: paymentDate,
               facility_id: facilityNumber,
             },
-          },
-        ),
-        axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/paymentsQuery`,
-          {
+          }),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/paymentsQuery`, {
             params: {
               debtFacilityId: facilityNumber,
             },
-          },
-        ),
+          }),
         ]);
         setRowData(firstReponse.data);
 
-        if(secondResponse.data.length>0) {
-        setLatestPymtDate(secondResponse.data[0].payment_date);
+        if (secondResponse.data.length > 0) {
+          setLatestPymtDate(secondResponse.data[0].payment_date);
         } else {
           setLatestPymtDate(null);
         }
@@ -162,7 +156,7 @@ function PaymentsReceived() {
   };
 
   async function postPaymentUpdate() {
-    if(paymentDate<=latestPymtDate) {
+    if (paymentDate <= latestPymtDate) {
       setMessage("Payment Date Must Me After Previously Entered Payments Dates for this Facility");
       return;
     }

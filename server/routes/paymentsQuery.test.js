@@ -1,5 +1,5 @@
 // **************************************************************************
-// *       UT-?? – Testing /api/paymentsQuery endpoint’s functionality *
+// *       UT-110 – Testing /api/paymentsQuery endpoint’s functionality     *
 // **************************************************************************
 
 // This mock must come before the import of object
@@ -24,19 +24,17 @@ describe("GET /api/paymentsQuery", () => {
       rows: [
         {
           collateral_id: 123,
-          debt_facility_id:123456,
-          payment_date:"2024-12-31",
-          principal_received:555555,
-          interest_received:777777,
-
+          debt_facility_id: 123456,
+          payment_date: "2024-12-31",
+          principal_received: 555555,
+          interest_received: 777777,
         },
         {
           collateral_id: 789,
           debt_facility_id: 123456,
-          payment_date:"2025-12-31",
-          principal_received:888888,
-          interest_received:999999,
-
+          payment_date: "2025-12-31",
+          principal_received: 888888,
+          interest_received: 999999,
         },
       ],
     });
@@ -44,23 +42,21 @@ describe("GET /api/paymentsQuery", () => {
     const response = await request(app).get("/api/paymentsQuery").query({ debtFacilityId: 123456 });
 
     expect(response.body).toEqual([
-        {
-          collateral_id: 123,
-          debt_facility_id:123456,
-          payment_date:"2024-12-31",
-          principal_received:555555,
-          interest_received:777777,
-
-        },
-        {
-          collateral_id: 789,
-          debt_facility_id: 123456,
-          payment_date:"2025-12-31",
-          principal_received:888888,
-          interest_received:999999,
-
-        },
-      ],);
+      {
+        collateral_id: 123,
+        debt_facility_id: 123456,
+        payment_date: "2024-12-31",
+        principal_received: 555555,
+        interest_received: 777777,
+      },
+      {
+        collateral_id: 789,
+        debt_facility_id: 123456,
+        payment_date: "2025-12-31",
+        principal_received: 888888,
+        interest_received: 999999,
+      },
+    ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(
       `SELECT p.collateral_id, df.debt_facility_id, p.payment_date, p.principal_received, p.interest_received FROM payments p

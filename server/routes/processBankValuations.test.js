@@ -1,7 +1,7 @@
 // ***************************************************************************************************************
-//                        UT-103 – function getBegAndEndBankValuations()                                          *
-//                        UT-104 – function getBegAndEndBankValuations() - metrics do not exist for collateral id *
-//                        UT-105 – function getBegAndEndBankValuations() - metrics null for collateral id         *
+//                        UT-103 – test getBegAndEndBankValuations()                                             *
+//                        UT-104 – test getBegAndEndBankValuations() - metrics do not exist for collateral id    *
+//                        UT-105 – test getBegAndEndBankValuations() - metrics null for collateral id            *
 // ***************************************************************************************************************
 
 const { getBegAndEndBankValuations } = require("./processBankValuations");

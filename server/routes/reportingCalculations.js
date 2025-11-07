@@ -342,6 +342,8 @@ router.get("/api/reportingCalculations", async (req, res) => {
       dueToBank = intExpDue;
     }
 
+    report.sort((a, b) => a.collateralName.localeCompare(b.collateralName));
+
     returnPackage = {
       collateralData: report,
       fundsFlowData: {

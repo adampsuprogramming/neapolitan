@@ -370,7 +370,7 @@ function Rollforward() {
                         </TableCell>
                         <TableCell align="right">
                           <NumericFormat
-                            value={loan.collRemoved}
+                            value={-loan.collRemoved}
                             displayType="text"
                             thousandSeparator=","
                             decimalScale={0}
@@ -378,7 +378,7 @@ function Rollforward() {
                         </TableCell>
                         <TableCell align="right">
                           <NumericFormat
-                            value={loan.principalRec}
+                            value={-loan.principalRec}
                             displayType="text"
                             thousandSeparator=","
                             decimalScale={0}
@@ -423,7 +423,7 @@ function Rollforward() {
                       </TableCell>
                       <TableCell align="right">
                         <NumericFormat
-                          value={totalRow.collRemoved}
+                          value={-totalRow.collRemoved}
                           displayType="text"
                           thousandSeparator=","
                           decimalScale={0}
@@ -431,7 +431,7 @@ function Rollforward() {
                       </TableCell>
                       <TableCell align="right">
                         <NumericFormat
-                          value={totalRow.principalRec}
+                          value={-totalRow.principalRec}
                           displayType="text"
                           thousandSeparator=","
                           decimalScale={0}
