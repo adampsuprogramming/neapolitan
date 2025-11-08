@@ -122,7 +122,7 @@ function PaymentsReceived() {
   useEffect(() => {
     async function getBorrowBase() {
       try {
-        const [firstReponse, secondResponse] = await Promise.all([
+        const [firstResponse, secondResponse] = await Promise.all([
           axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/borrowbase`, {
             params: {
               as_of_date: paymentDate,
@@ -135,7 +135,9 @@ function PaymentsReceived() {
             },
           }),
         ]);
-        setRowData(firstReponse.data);
+
+        const sortedFirstResponse = firstResponse.data.sort((a, b) => a.legal_name.localeCompare(b.legal_name));
+        setRowData(sortedFirstResponse);
 
         if (secondResponse.data.length > 0) {
           setLatestPymtDate(secondResponse.data[0].payment_date);

@@ -180,7 +180,7 @@ function Rollforward() {
           marginLeft: 6,
           marginBottom: 3,
           padding: 2,
-          width: "120ch",
+          width: "140ch",
           gap: 2,
         }}
       >
@@ -203,7 +203,7 @@ function Rollforward() {
             required
             options={uniqueFacilityNames}
             value={facilityName}
-            sx={{ m: 1, width: "40ch" }}
+            sx={{ m: 1, width: "60ch" }}
             onChange={handleFacilityChange}
             getOptionLabel={(option) => option}
             renderInput={(params) => <TextField {...params} label="Facility Name" required />}
@@ -262,7 +262,7 @@ function Rollforward() {
           <NumericFormat
             customInput={TextField}
             id="current-outstandings-textfield"
-            sx={{ m: 1, width: "25ch", marginTop: 0, marginLeft: 15 }}
+            sx={{ m: 1, width: "25ch", marginTop: 0, marginLeft: 12.5 }}
             disabled={!isFundsFlow}
             value={currentOutstandings}
             required={isFundsFlow}

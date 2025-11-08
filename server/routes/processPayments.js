@@ -23,12 +23,6 @@ function getPaymentInfo(everyIdInPeriod, paymentsResults) {
     });
   }
 
-  for (let i = 0; i < payments.length; i++) {
-    console.log("collateralId: " + payments[i].collateralId);
-    console.log("principalRec: " + payments[i].principalRec);
-    console.log("interestRec: " + payments[i].interestRec);
-  }
-
   return payments;
 }
 

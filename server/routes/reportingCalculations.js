@@ -42,7 +42,6 @@ let endDateObject;
 router.get("/api/reportingCalculations", async (req, res) => {
   const { debtFacilityId, startDate, endDate, isFundsFlow, currentOutstandings, intExpDue } =
     req.query;
-  console.log("test" + isFundsFlow);
   startDateObject = new Date(startDate + "T00:00:00");
   endDateObject = new Date(endDate + "T00:00:00");
 

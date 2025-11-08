@@ -26,42 +26,44 @@ it("selects a faciltiy and validates information display", function () {
 
   // Choose Date to Test Values
   cy.get('input[data-testid="payment-date-picker"]').click({ force: true });
-  cy.focused().clear().type("09/30/2025");
-  cy.wait(200);
+  cy.focused().clear().type("09/30/2025{esc}");
+  cy.wait(500);
 
+
+    cy.get("#root tr:nth-child(1) td:nth-child(1)", {timeout: 10000}).should("be.visible");
   // Test values displayed in first row
-  cy.get("#root tr:nth-child(1) td:nth-child(1)").contains("1").should("be.visible");
+  cy.get("#root tr:nth-child(1) td:nth-child(1)").contains("2").should("be.visible");
   cy.get("#root tr:nth-child(1) td:nth-child(2)")
-    .contains("YseraCore Technologies")
+    .contains("Blackspire Enterprises")
     .should("be.visible");
   cy.get("#root tr:nth-child(1) td:nth-child(3) span")
-    .contains("$9,500,000.00")
+    .contains("$20,000,000.00")
     .should("be.visible");
   cy.get("#root tr:nth-child(1) td:nth-child(4) span")
-    .contains("$9,500,000.00")
+    .contains("$20,000,000.00")
     .should("be.visible");
 
   // Test values displayed in second to last row
-  cy.get("#root tr:nth-child(18) td:nth-child(1)").contains("15").should("be.visible");
+  cy.get("#root tr:nth-child(18) td:nth-child(1)").contains("13").should("be.visible");
   cy.get("#root tr:nth-child(18) td:nth-child(2)")
-    .contains("Driftspire Holdings")
+    .contains("Zephyros Global")
     .should("be.visible");
   cy.get("#root tr:nth-child(18) td:nth-child(3) span")
-    .contains("$28,000,000.00")
+    .contains("17,000,000.00")
     .should("be.visible");
   cy.get("#root tr:nth-child(18) td:nth-child(4) span")
-    .contains("$28,000,000.00")
+    .contains("$17,000,000.00")
     .should("be.visible");
 
   // Test values displayed in last row
-  cy.get("#root tr:nth-child(19) td:nth-child(1)").contains("20").should("be.visible");
+  cy.get("#root tr:nth-child(19) td:nth-child(1)").contains("10").should("be.visible");
   cy.get("#root tr:nth-child(19) td:nth-child(2)")
-    .contains("Westspire Enterprises")
+    .contains("Zirconis Labs")
     .should("be.visible");
   cy.get("#root tr:nth-child(19) td:nth-child(3) span")
-    .contains("$25,000,000.00")
+    .contains("$24,000,000.00")
     .should("be.visible");
   cy.get("#root tr:nth-child(19) td:nth-child(4) span")
-    .contains("$19,200,000.00")
+    .contains("$24,000,000.00")
     .should("be.visible");
 });
