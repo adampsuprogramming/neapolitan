@@ -7,18 +7,14 @@ export default function Performance() {
       <nav className="performance-nav">
         <NavLink
           to="updaterates"
-          className={({ isActive }) =>
-            isActive ? "performance-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "performance-nav-highlighted" : "")}
         >
           Update Rates
         </NavLink>
 
         <NavLink
           to="updatemetrics"
-          className={({ isActive }) =>
-            isActive ? "performance-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "performance-nav-highlighted" : "")}
         >
           Update Metrics
         </NavLink>

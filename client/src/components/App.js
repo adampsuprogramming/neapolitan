@@ -51,86 +51,38 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/borrowingbase/*" element={<BorrowBase />}>
-            <Route
-              path="borrowbaselineitemview"
-              element={<BorrowBaseLineItemView />}
-            />
-            <Route
-              path="borrowbasecovenantview"
-              element={<BorrowBaseCovenantView />}
-            />
+            <Route path="borrowbaselineitemview" element={<BorrowBaseLineItemView />} />
+            <Route path="borrowbasecovenantview" element={<BorrowBaseCovenantView />} />
             <Route path="borrowbasecalcview" element={<BorrowBaseCalcView />} />
           </Route>
           <Route path="/transactions/*" element={<Transactions />}>
-            <Route
-              path="borrowertransactions/*"
-              element={<BorrowerTransactions />}
-            >
+            <Route path="borrowertransactions/*" element={<BorrowerTransactions />}>
               <Route path="borrowercreate" element={<BorrowerCreate />} />
               <Route path="borrowermodify" element={<BorrowerModify />} />
               <Route path="borrowerdelete" element={<BorrowerDelete />} />
             </Route>
-            <Route
-              path="loanagreementtransactions/*"
-              element={<LoanAgreementTransactions />}
-            >
-              <Route
-                path="loanagreementcreate"
-                element={<LoanAgreementCreate />}
-              />
-              <Route
-                path="loanagreementmodify"
-                element={<LoanAgreementModify />}
-              />
-              <Route
-                path="loanagreementdelete"
-                element={<LoanAgreementDelete />}
-              />
+            <Route path="loanagreementtransactions/*" element={<LoanAgreementTransactions />}>
+              <Route path="loanagreementcreate" element={<LoanAgreementCreate />} />
+              <Route path="loanagreementmodify" element={<LoanAgreementModify />} />
+              <Route path="loanagreementdelete" element={<LoanAgreementDelete />} />
             </Route>
-            <Route
-              path="loantranchetransactions/*"
-              element={<LoanTrancheTransactions />}
-            >
+            <Route path="loantranchetransactions/*" element={<LoanTrancheTransactions />}>
               <Route path="loantranchecreate" element={<LoanTrancheCreate />} />
               <Route path="loantranchemodify" element={<LoanTrancheModify />} />
               <Route path="loantranchedelete" element={<LoanTrancheDelete />} />
             </Route>
 
-            <Route
-              path="loanapprovaltransactions/*"
-              element={<LoanApprovalTransactions />}
-            >
-              <Route
-                path="loanapprovalcreate"
-                element={<LoanApprovalCreate />}
-              />
-              <Route
-                path="loanapprovalmodify"
-                element={<LoanApprovalModify />}
-              />
-              <Route
-                path="loanapprovaldelete"
-                element={<LoanApprovalDelete />}
-              />
+            <Route path="loanapprovaltransactions/*" element={<LoanApprovalTransactions />}>
+              <Route path="loanapprovalcreate" element={<LoanApprovalCreate />} />
+              <Route path="loanapprovalmodify" element={<LoanApprovalModify />} />
+              <Route path="loanapprovaldelete" element={<LoanApprovalDelete />} />
             </Route>
 
-            <Route
-              path="collateralpledgetransactions/*"
-              element={<CollateralPledgeTransactions />}
-            >
-              <Route
-                path="collateralpledgeadd"
-                element={<CollateralPledgeAdd />}
-              />
-              <Route
-                path="collateralpledgeremove"
-                element={<CollateralPledgeRemove />}
-              />
+            <Route path="collateralpledgetransactions/*" element={<CollateralPledgeTransactions />}>
+              <Route path="collateralpledgeadd" element={<CollateralPledgeAdd />} />
+              <Route path="collateralpledgeremove" element={<CollateralPledgeRemove />} />
             </Route>
-            <Route
-              path="paymentsreceived"
-              element={<PaymentsReceived />}
-            ></Route>
+            <Route path="paymentsreceived" element={<PaymentsReceived />}></Route>
           </Route>
 
           <Route path="/performance/*" element={<Performance />}>
@@ -146,18 +98,9 @@ function App() {
 
           <Route path="/configuration/*" element={<Configuration />}>
             <Route path="configfacility/*" element={<ConfigFacility />}>
-              <Route
-                path="debtfacilitycreate"
-                element={<DebtFacilityCreate />}
-              />
-              <Route
-                path="debtfacilitymodify"
-                element={<DebtFacilityModify />}
-              />
-              <Route
-                path="debtfacilitydelete"
-                element={<DebtFacilityDelete />}
-              />
+              <Route path="debtfacilitycreate" element={<DebtFacilityCreate />} />
+              <Route path="debtfacilitymodify" element={<DebtFacilityModify />} />
+              <Route path="debtfacilitydelete" element={<DebtFacilityDelete />} />
             </Route>
             <Route path="configbank/*" element={<ConfigBank />} />
             <Route path="configportfolio/*" element={<ConfigPortfolio />} />

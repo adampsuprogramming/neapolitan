@@ -132,17 +132,9 @@ function UpdateRates() {
           changeDate: changeDate,
           rateType: rateType,
           fixedCoupon:
-            fixedRate != null && fixedRate != ""
-              ? Number((fixedRate / 100).toFixed(6))
-              : null,
-          spread:
-            spread != null && spread != ""
-              ? Number((spread / 100).toFixed(6))
-              : null,
-          floor:
-            floor != null && floor != ""
-              ? Number((floor / 100).toFixed(6))
-              : null,
+            fixedRate != null && fixedRate != "" ? Number((fixedRate / 100).toFixed(6)) : null,
+          spread: spread != null && spread != "" ? Number((spread / 100).toFixed(6)) : null,
+          floor: floor != null && floor != "" ? Number((floor / 100).toFixed(6)) : null,
           refRate: refRate != "" ? refRate : null,
         },
       );
@@ -217,10 +209,7 @@ function UpdateRates() {
             padding: 2,
           }}
         >
-          <div
-            className="row-1-tranche-selection"
-            style={{ display: "flex", gap: "25px" }}
-          >
+          <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
             <Autocomplete
               disablePortal
               id="autocomplete-borrower-name"
@@ -230,9 +219,7 @@ function UpdateRates() {
               sx={{ m: 1, minWidth: "450px" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
             />
 
             <Autocomplete
@@ -248,19 +235,14 @@ function UpdateRates() {
                 <TextField
                   {...params}
                   label={
-                    selectedBorrower
-                      ? "Loan Agreement"
-                      : "Loan Agreement (Select Borrower First)"
+                    selectedBorrower ? "Loan Agreement" : "Loan Agreement (Select Borrower First)"
                   }
                   required
                 />
               )}
             />
           </div>
-          <div
-            className="row-1-tranche-selection"
-            style={{ display: "flex", gap: "25px" }}
-          >
+          <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
             <Autocomplete
               disablePortal
               id="autocomplete-loan-tranches"
@@ -274,9 +256,7 @@ function UpdateRates() {
                 <TextField
                   {...params}
                   label={
-                    selectedLoanAgreement
-                      ? "Loan Tranche"
-                      : "Loan Tranche (Select Agreement First)"
+                    selectedLoanAgreement ? "Loan Tranche" : "Loan Tranche (Select Agreement First)"
                   }
                   required
                 />
@@ -316,9 +296,7 @@ function UpdateRates() {
                     sx={{ m: 1, width: "25ch", marginTop: 1 }}
                     value={changeDate ? dayjs(changeDate) : null}
                     onChange={(newDate) => {
-                      setChangeDate(
-                        newDate ? newDate.format("YYYY-MM-DD") : "",
-                      );
+                      setChangeDate(newDate ? newDate.format("YYYY-MM-DD") : "");
                     }}
                     slotProps={{
                       textField: {
@@ -341,9 +319,7 @@ function UpdateRates() {
                   value={rateType}
                   sx={{ m: 1, width: "25ch", marginTop: 1 }}
                   onChange={(event, newValue) => setRateType(newValue)}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Rate Type" required />
-                  )}
+                  renderInput={(params) => <TextField {...params} label="Rate Type" required />}
                 />
               </Box>
               <Box>
@@ -444,14 +420,10 @@ function UpdateRates() {
                   gridTemplateColumns: "auto 1fr",
                 }}
               >
-                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>
-                  As of Date:{" "}
-                </Box>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>As of Date: </Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
-                    ? new Date(rateData[0].start_date).toLocaleDateString(
-                        "en-US",
-                      )
+                    ? new Date(rateData[0].start_date).toLocaleDateString("en-US")
                     : ""}
                 </Box>
                 <Box
@@ -464,15 +436,9 @@ function UpdateRates() {
                   Rate Type:
                 </Box>
                 <Box sx={{ fontSize: "18px", marginTop: "1.2ch" }}>
-                  {rateData[0]?.start_date
-                    ? rateData[0]?.is_fixed
-                      ? "Fixed"
-                      : "Floating"
-                    : ""}
+                  {rateData[0]?.start_date ? (rateData[0]?.is_fixed ? "Fixed" : "Floating") : ""}
                 </Box>
-                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>
-                  Fixed Rate:
-                </Box>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>Fixed Rate:</Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
                     ? rateData[0]?.is_fixed
@@ -497,9 +463,7 @@ function UpdateRates() {
                       : `${(rateData[0]?.floor * 100).toFixed(6)}%`
                     : ""}
                 </Box>
-                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>
-                  Reference Rate:
-                </Box>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>Reference Rate:</Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
                     ? rateData[0]?.is_fixed

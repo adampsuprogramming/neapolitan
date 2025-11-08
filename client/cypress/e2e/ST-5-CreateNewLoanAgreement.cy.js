@@ -7,18 +7,13 @@ it("submits a new loan agreement form", function () {
   cy.visit("localhost:3000");
   cy.get('#root [href="/transactions/"]').click();
   cy.get('#root [href="/transactions/loanagreementtransactions"]').click();
-  cy.get(
-    '#root [href="/transactions/loanagreementtransactions/loanagreementcreate"]',
-  ).click();
+  cy.get('#root [href="/transactions/loanagreementtransactions/loanagreementcreate"]').click();
 
   // Test that autocomplete for borrower name input works and contains value inputted
   cy.get("#borrower-name").type("Test - The Donkey Kong Company");
   cy.get("#borrower-name").click();
   cy.get("#borrower-name-option-0").click();
-  cy.get("#borrower-name").should(
-    "have.value",
-    "Test - The Donkey Kong Company",
-  );
+  cy.get("#borrower-name").should("have.value", "Test - The Donkey Kong Company");
 
   // Test that loan agreement input title works and contains value inputted
   cy.get("#loan-agreement-title-input").click();

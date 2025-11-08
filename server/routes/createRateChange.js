@@ -15,15 +15,7 @@ const rateDataInsert = `INSERT INTO rate_data (tranche_id, is_fixed, fixed_rate,
 values ($1,$2,$3,$4,$5,$6,$7,$8);`;
 
 router.post("/api/createratechange", async (req, res) => {
-  const {
-    trancheId,
-    changeDate,
-    rateType,
-    fixedCoupon,
-    spread,
-    floor,
-    refRate,
-  } = req.body;
+  const { trancheId, changeDate, rateType, fixedCoupon, spread, floor, refRate } = req.body;
 
   try {
     await pool.query(rateDataUpdate, [changeDate, trancheId]);

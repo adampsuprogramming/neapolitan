@@ -21,10 +21,7 @@ it("fills out payments update form", function () {
   cy.get("#autocomplete-facility-name-option-0").click();
   cy.wait(200);
 
-  cy.get("#autocomplete-facility-name").should(
-    "have.value",
-    "Katamari Facility",
-  );
+  cy.get("#autocomplete-facility-name").should("have.value", "Katamari Facility");
   cy.wait(200);
 
   // Test that inclusion date picker works and does not contain blank value after input
@@ -37,32 +34,20 @@ it("fills out payments update form", function () {
   // Test that first box for principal received works and contains value inputted
   cy.get("tr:nth-child(1) #new-principal-received").click();
   cy.get("tr:nth-child(1) #new-principal-received").type("1");
-  cy.get("tr:nth-child(1) #new-principal-received").should(
-    "have.value",
-    "$1.00",
-  );
+  cy.get("tr:nth-child(1) #new-principal-received").should("have.value", "$1.00");
 
   // Test that first box for principal received works and contains value inputted
   cy.get("tr:nth-child(1) #new-interest-received").click();
   cy.get("tr:nth-child(1) #new-interest-received").type("2500");
-  cy.get("tr:nth-child(1) #new-interest-received").should(
-    "have.value",
-    "$2,500.00",
-  );
+  cy.get("tr:nth-child(1) #new-interest-received").should("have.value", "$2,500.00");
 
   // Test that last box for principal received works and contains value inputted
   cy.get("tr:nth-child(5) #new-principal-received").click();
   cy.get("tr:nth-child(5) #new-principal-received").type("2");
-  cy.get("tr:nth-child(5) #new-principal-received").should(
-    "have.value",
-    "$2.00",
-  );
+  cy.get("tr:nth-child(5) #new-principal-received").should("have.value", "$2.00");
 
   // Test that last box for interest received works and contains value inputted
   cy.get("tr:nth-child(5) #new-interest-received").click();
   cy.get("tr:nth-child(5) #new-interest-received").type("500");
-  cy.get("tr:nth-child(5) #new-interest-received").should(
-    "have.value",
-    "$500.00",
-  );
+  cy.get("tr:nth-child(5) #new-interest-received").should("have.value", "$500.00");
 });

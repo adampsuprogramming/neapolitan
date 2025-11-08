@@ -7,26 +7,20 @@ export default function LoanApprovalTransactions() {
       <nav className="loan-approval-sub-nav">
         <NavLink
           to="loanapprovalcreate"
-          className={({ isActive }) =>
-            isActive ? "loan-approval-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-approval-sub-nav-highlighted" : "")}
         >
           Create
         </NavLink>
 
         <NavLink
           to="loanapprovalmodify"
-          className={({ isActive }) =>
-            isActive ? "loan-approval-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-approval-sub-nav-highlighted" : "")}
         >
           Modify
         </NavLink>
         <NavLink
           to="loanapprovaldelete"
-          className={({ isActive }) =>
-            isActive ? "loan-approval-sub-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "loan-approval-sub-nav-highlighted" : "")}
         >
           Delete
         </NavLink>

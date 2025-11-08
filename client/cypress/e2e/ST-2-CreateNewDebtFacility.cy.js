@@ -7,9 +7,7 @@ it("submits a new facility form and receives confirmation", function () {
   cy.visit("localhost:3000");
   cy.get('#root [href="/configuration/"]').click();
   cy.get('#root [href="/configuration/configfacility"]').click();
-  cy.get(
-    '#root [href="/configuration/configfacility/debtfacilitycreate"]',
-  ).click();
+  cy.get('#root [href="/configuration/configfacility/debtfacilitycreate"]').click();
 
   // Test that Facility Name input works and contains value inputted
   cy.get("#facility-name-input").click();

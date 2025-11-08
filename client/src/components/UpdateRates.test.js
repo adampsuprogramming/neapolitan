@@ -111,21 +111,15 @@ test("UT-54 – Testing populating and submitting Update Rate Data form", async 
   render(<UpdateRates />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loantranchequery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loantranchequery");
   });
 
   const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");

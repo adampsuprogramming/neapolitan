@@ -7,18 +7,14 @@ export default function ReportingSubmenu() {
       <nav className="reporting-nav">
         <NavLink
           to="rollforward"
-          className={({ isActive }) =>
-            isActive ? "reporting-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "reporting-nav-highlighted" : "")}
         >
           Periodic Rollforward
         </NavLink>
 
         <NavLink
           to="otherreporting"
-          className={({ isActive }) =>
-            isActive ? "reporting-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "reporting-nav-highlighted" : "")}
         >
           Other Reporting
         </NavLink>

@@ -28,10 +28,8 @@ function LoanApprovalCreate() {
   const [approvedAmount, setApprovedAmount] = useState(null); //After use enters approved amount, it is stored here
   const [approvedEbitda, setApprovedEbitda] = useState(null); //After use enters approved ebitda, it is stored here
   const [approvedLeverageRatio, setApprovedLeverageRatio] = useState(null); //After user enters leverage ratio, it is stored here
-  const [approvedNetLeverageRatio, setApprovedNetLeverageRatio] =
-    useState(null); //After use enters net leverage ratio, it is stored here
-  const [approvedInterestCoverage, setApprovedInterestCoverage] =
-    useState(null); //After use enters interest coverage ratio, it is stored here
+  const [approvedNetLeverageRatio, setApprovedNetLeverageRatio] = useState(null); //After use enters net leverage ratio, it is stored here
+  const [approvedInterestCoverage, setApprovedInterestCoverage] = useState(null); //After use enters interest coverage ratio, it is stored here
   const [approvedAdvanceRate, setApprovedAdvanceRate] = useState(null); //After use enters approved amount, it is stored here
   const [approvedValue, setApprovedValue] = useState(null); //After use enters approved value (the value the bank assigned the loan), it is stored here
   const [selectedTrancheId, setSelectedTrancheId] = useState(null); // After user chooses loan tranche, related ID is set here
@@ -150,9 +148,7 @@ function LoanApprovalCreate() {
       !approvalDate ||
       !approvalExpiration
     ) {
-      setMessage(
-        "Not Saved - Please fill out all required fields - denoted by *",
-      );
+      setMessage("Not Saved - Please fill out all required fields - denoted by *");
       return;
     }
     // creates the loan approval name for access in the Collateral Pledge feature
@@ -173,13 +169,8 @@ function LoanApprovalCreate() {
           approvedInterestCoverage,
           approvedNetLeverageRatio,
           approvedAdvanceRate:
-            approvedAdvanceRate != null
-              ? Number((approvedAdvanceRate / 100).toFixed(6))
-              : null,
-          approvedValue:
-            approvedValue != null
-              ? Number((approvedValue / 100).toFixed(6))
-              : null,
+            approvedAdvanceRate != null ? Number((approvedAdvanceRate / 100).toFixed(6)) : null,
+          approvedValue: approvedValue != null ? Number((approvedValue / 100).toFixed(6)) : null,
         },
       );
       if (response.status === 201) {
@@ -250,9 +241,7 @@ function LoanApprovalCreate() {
     }
     setLenderName(setValue.lender_name);
 
-    const facilities = facilityData.filter(
-      (item) => item.lender_id === setValue.lender_id,
-    );
+    const facilities = facilityData.filter((item) => item.lender_id === setValue.lender_id);
 
     const uniqueFacilities = [];
     const idsInFacilities = new Set();
@@ -302,10 +291,7 @@ function LoanApprovalCreate() {
             padding: 2,
           }}
         >
-          <div
-            className="row-1-approval-information"
-            style={{ display: "flex", gap: "25px" }}
-          >
+          <div className="row-1-approval-information" style={{ display: "flex", gap: "25px" }}>
             <Autocomplete
               disablePortal
               id="autocomplete-borrower-name"
@@ -315,9 +301,7 @@ function LoanApprovalCreate() {
               sx={{ m: 1, minWidth: "300px" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
             />
 
             <Autocomplete
@@ -333,9 +317,7 @@ function LoanApprovalCreate() {
                 <TextField
                   {...params}
                   label={
-                    selectedBorrower
-                      ? "Loan Agreement"
-                      : "Loan Agreement (Select Borrower First)"
+                    selectedBorrower ? "Loan Agreement" : "Loan Agreement (Select Borrower First)"
                   }
                   required
                 />
@@ -355,9 +337,7 @@ function LoanApprovalCreate() {
                 <TextField
                   {...params}
                   label={
-                    selectedLoanAgreement
-                      ? "Loan Tranche"
-                      : "Loan Tranche (Select Agreement First)"
+                    selectedLoanAgreement ? "Loan Tranche" : "Loan Tranche (Select Agreement First)"
                   }
                   required
                 />
@@ -377,9 +357,7 @@ function LoanApprovalCreate() {
               sx={{ m: 1, minWidth: "300px" }}
               onChange={handleLenderChange}
               getOptionLabel={(option) => option.lender_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Lender Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Lender Name" required />}
             />
 
             <Autocomplete
@@ -395,9 +373,7 @@ function LoanApprovalCreate() {
                 <TextField
                   {...params}
                   label={
-                    selectedLender
-                      ? "Loan Facilities"
-                      : "Loan Facilities (Select Lender First)"
+                    selectedLender ? "Loan Facilities" : "Loan Facilities (Select Lender First)"
                   }
                   required
                 />
@@ -427,9 +403,7 @@ function LoanApprovalCreate() {
                 sx={{ m: 1, minWidth: "175px" }}
                 value={approvalExpiration ? dayjs(approvalExpiration) : null} //
                 onChange={(newDate) => {
-                  setApprovalExpiration(
-                    newDate ? newDate.format("YYYY-MM-DD") : "",
-                  );
+                  setApprovalExpiration(newDate ? newDate.format("YYYY-MM-DD") : "");
                 }}
                 slotProps={{
                   textField: {
@@ -513,9 +487,7 @@ function LoanApprovalCreate() {
                 minWidth: "30ch",
               }}
               value={approvedLeverageRatio}
-              onValueChange={(value) =>
-                setApprovedLeverageRatio(value.floatValue)
-              }
+              onValueChange={(value) => setApprovedLeverageRatio(value.floatValue)}
               label="Leverage Ratio"
               decimalScale={6}
               fixedDecimalScale
@@ -532,18 +504,13 @@ function LoanApprovalCreate() {
                 minWidth: "30ch",
               }}
               value={approvedInterestCoverage}
-              onValueChange={(value) =>
-                setApprovedInterestCoverage(value.floatValue)
-              }
+              onValueChange={(value) => setApprovedInterestCoverage(value.floatValue)}
               label="Interest Coverage Ratio"
               decimalScale={6}
               fixedDecimalScale
             />
           </div>
-          <div
-            className="row-2-approved-amounts"
-            style={{ display: "flex", marginTop: "25px" }}
-          >
+          <div className="row-2-approved-amounts" style={{ display: "flex", marginTop: "25px" }}>
             <NumericFormat
               customInput={TextField}
               id="net-leverage-ratio-textfield"
@@ -554,9 +521,7 @@ function LoanApprovalCreate() {
                 minWidth: "30ch",
               }}
               value={approvedNetLeverageRatio}
-              onValueChange={(value) =>
-                setApprovedNetLeverageRatio(value.floatValue)
-              }
+              onValueChange={(value) => setApprovedNetLeverageRatio(value.floatValue)}
               label="Net Leverage Ratio"
               decimalScale={6}
               fixedDecimalScale
@@ -571,9 +536,7 @@ function LoanApprovalCreate() {
                 minWidth: "30ch",
               }}
               value={approvedAdvanceRate}
-              onValueChange={(value) =>
-                setApprovedAdvanceRate(value.floatValue)
-              }
+              onValueChange={(value) => setApprovedAdvanceRate(value.floatValue)}
               label="Approved Advance Rate"
               decimalScale={6}
               suffix="%"

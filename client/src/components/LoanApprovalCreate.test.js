@@ -50,9 +50,7 @@ test("UT-40 – Populating borrower dropdown from API call -- /api/borrowerquery
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   const borrowerName = screen.getByLabelText("Borrower Name *");
@@ -117,15 +115,11 @@ test("UT-41 – Populating loan agreement dropdown from API call -- /api/loanagr
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
@@ -214,21 +208,15 @@ test("UT-42 – Populating loan tranche dropdown from API call -- /api/loantranc
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loantranchequery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loantranchequery");
   });
 
   const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
@@ -271,9 +259,7 @@ test("UT-43 – Populating lender name from API call -- /api/lenderQuery", async
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   const lenderName = screen.getByLabelText("Lender Name *");
@@ -342,15 +328,11 @@ test("UT-44 – Populating loan facilities dropdown -- /api/facilities", async (
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   const lenderAutoComplete = screen.getByLabelText("Lender Name *");
@@ -492,33 +474,23 @@ test("UT-45 – Testing populating and submitting create Loan Approval form", as
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loantranchequery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loantranchequery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
@@ -552,12 +524,9 @@ test("UT-45 – Testing populating and submitting create Loan Approval form", as
   fireEvent.change(approvalDateInput, { target: { value: "09/02/2025" } });
   expect(approvalDateInput.value).toBe("09/02/2025");
 
-  const approvalDateExpiration = screen.getByLabelText(
-    "Approval Expiration *",
-    {
-      selector: "input",
-    },
-  );
+  const approvalDateExpiration = screen.getByLabelText("Approval Expiration *", {
+    selector: "input",
+  });
   fireEvent.change(approvalDateExpiration, { target: { value: "11/02/2025" } });
   expect(approvalDateExpiration.value).toBe("11/02/2025");
 
@@ -776,33 +745,23 @@ test("UT-59 – This is a unit test to ensure that error message is correctly di
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loantranchequery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loantranchequery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   const saveButton = screen.getByText("Save");
@@ -944,33 +903,23 @@ test("UT-60 – Testing server error handling", async () => {
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loantranchequery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loantranchequery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   const borrowerAutoComplete = screen.getByLabelText("Borrower Name *");
@@ -1004,12 +953,9 @@ test("UT-60 – Testing server error handling", async () => {
   fireEvent.change(approvalDateInput, { target: { value: "09/02/2025" } });
   expect(approvalDateInput.value).toBe("09/02/2025");
 
-  const approvalDateExpiration = screen.getByLabelText(
-    "Approval Expiration *",
-    {
-      selector: "input",
-    },
-  );
+  const approvalDateExpiration = screen.getByLabelText("Approval Expiration *", {
+    selector: "input",
+  });
   fireEvent.change(approvalDateExpiration, { target: { value: "11/02/2025" } });
   expect(approvalDateExpiration.value).toBe("11/02/2025");
 
@@ -1061,9 +1007,7 @@ test("UT-60 – Testing server error handling", async () => {
   fireEvent.click(saveButton);
 
   await waitFor(() => {
-    expect(
-      screen.getByText("There was an error creating the loan approval."),
-    ).toBeVisible();
+    expect(screen.getByText("There was an error creating the loan approval.")).toBeVisible();
   });
 });
 
@@ -1073,33 +1017,23 @@ test("UT-61 – Testing APIs throwing error", async () => {
   render(<LoanApprovalCreate />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/borrowerquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/borrowerquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loanagreementquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loanagreementquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/loantranchequery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/loantranchequery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/lenderquery",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/lenderquery");
   });
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   const errorMessage = screen.getByText("Error fetching data from server");

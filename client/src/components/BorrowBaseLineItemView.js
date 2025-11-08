@@ -294,9 +294,7 @@ function BorrowBaseLineItemView() {
   const handleFacilityChange = (e) => {
     const selectionValue = e.target.value;
     setFacilityName(selectionValue);
-    const facility_record = facilityData.find(
-      (f) => f.debt_facility_name === selectionValue,
-    );
+    const facility_record = facilityData.find((f) => f.debt_facility_name === selectionValue);
     const facility_numb = facility_record.debt_facility_id;
     setFacilityNumber(facility_numb);
     setAsOfDate(todayDate.toLocaleDateString("en-CA"));
@@ -309,12 +307,8 @@ function BorrowBaseLineItemView() {
 
   useEffect(() => {
     if (facilityNames.length > 0) {
-      const facilityNameSelection = facilityNames.map(
-        (a) => a.debt_facility_name,
-      );
-      const uniqueDebtFacilityNamesArray = Array.from(
-        new Set(facilityNameSelection),
-      ).sort();
+      const facilityNameSelection = facilityNames.map((a) => a.debt_facility_name);
+      const uniqueDebtFacilityNamesArray = Array.from(new Set(facilityNameSelection)).sort();
       setUniqueFacilityNames(uniqueDebtFacilityNamesArray);
     }
   }, [facilityNames]);
@@ -381,19 +375,12 @@ function BorrowBaseLineItemView() {
 
   return (
     <div>
-      <div
-        className="line_item_view_options"
-        style={{ display: "flex", alignItems: "center" }}
-      >
+      <div className="line_item_view_options" style={{ display: "flex", alignItems: "center" }}>
         <div>
           <label htmlFor="portfolio_select">
             <b>Portfolio Name </b>
           </label>
-          <select
-            id="portfolio_select"
-            value={selectedPortfolio}
-            onChange={handlePortfolioChange}
-          >
+          <select id="portfolio_select" value={selectedPortfolio} onChange={handlePortfolioChange}>
             <option value="">Choose a Portfolio</option>
             {uniqueNames.map((portfolio) => (
               <option key={portfolio} value={portfolio}>
@@ -406,11 +393,7 @@ function BorrowBaseLineItemView() {
           <label htmlFor="facility_select">
             <b>Facility Name </b>
           </label>
-          <select
-            id="facility_select"
-            value={facilityName}
-            onChange={handleFacilityChange}
-          >
+          <select id="facility_select" value={facilityName} onChange={handleFacilityChange}>
             <option value="">Choose a Facility</option>
             {uniqueFacilityNames.map((facility) => (
               <option key={facility} value={facility}>
@@ -424,12 +407,7 @@ function BorrowBaseLineItemView() {
             <label htmlFor="asOfDate">
               <b>Select As Of Date: </b>
             </label>
-            <input
-              type="date"
-              id="asOfDate"
-              value={asOfDate}
-              onChange={handleDateSelection}
-            />
+            <input type="date" id="asOfDate" value={asOfDate} onChange={handleDateSelection} />
           </form>
         </div>
         <div style={{ marginLeft: "auto" }}>

@@ -7,26 +7,20 @@ export default function Configuration() {
       <nav className="config-nav">
         <NavLink
           to="configfacility"
-          className={({ isActive }) =>
-            isActive ? "config-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "config-nav-highlighted" : "")}
         >
           Debt Facility
         </NavLink>
 
         <NavLink
           to="configbank"
-          className={({ isActive }) =>
-            isActive ? "config-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "config-nav-highlighted" : "")}
         >
           Bank
         </NavLink>
         <NavLink
           to="configportfolio"
-          className={({ isActive }) =>
-            isActive ? "config-nav-highlighted" : ""
-          }
+          className={({ isActive }) => (isActive ? "config-nav-highlighted" : "")}
         >
           Portfolio
         </NavLink>

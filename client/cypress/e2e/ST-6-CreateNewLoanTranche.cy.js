@@ -7,9 +7,7 @@ it("submits a new loan tranche creation form", function () {
   cy.visit("localhost:3000");
   cy.get('#root [href="/transactions/"]').click();
   cy.get('#root [href="/transactions/loantranchetransactions"]').click();
-  cy.get(
-    '#root [href="/transactions/loantranchetransactions/loantranchecreate"]',
-  ).click();
+  cy.get('#root [href="/transactions/loantranchetransactions/loantranchecreate"]').click();
 
   // Test that text box for loan tranche name input works and contains value inputted
   cy.get("#tranche-name-input").click();
@@ -22,16 +20,11 @@ it("submits a new loan tranche creation form", function () {
   cy.get("#autocomplete-borrower-name").click();
   cy.get("#autocomplete-borrower-name").type("Test - The Donkey Kong Company");
   cy.get("#autocomplete-borrower-name-option-0").click();
-  cy.get("#autocomplete-borrower-name").should(
-    "have.value",
-    "Test - The Donkey Kong Company",
-  );
+  cy.get("#autocomplete-borrower-name").should("have.value", "Test - The Donkey Kong Company");
 
   // Test that autocomplete for loan agreement input works and contains value inputted
   cy.get("#autocomplete-loan-agreeements").click();
-  cy.get("#autocomplete-loan-agreeements").type(
-    "Test - The Loan Agreement for Donkey Kong Co.",
-  );
+  cy.get("#autocomplete-loan-agreeements").type("Test - The Loan Agreement for Donkey Kong Co.");
   cy.get("#autocomplete-loan-agreeements-option-0").click();
   cy.get("#autocomplete-loan-agreeements").should(
     "have.value",
@@ -52,19 +45,13 @@ it("submits a new loan tranche creation form", function () {
   cy.get('[data-testid="CalendarIcon"]').eq(0).click();
   cy.wait(300);
   cy.get(".MuiPickersDay-root").contains("15").click();
-  cy.get('[data-testid="tranche-start-date-picker"]').should(
-    "not.have.value",
-    "",
-  );
+  cy.get('[data-testid="tranche-start-date-picker"]').should("not.have.value", "");
 
   // Test that maturity date picker works and does not contain blank value after input
   cy.get('[data-testid="CalendarIcon"]').eq(1).click();
   cy.wait(300);
   cy.get(".MuiPickersDay-root").contains("20").click();
-  cy.get('[data-testid="tranche-maturity-date-picker"]').should(
-    "not.have.value",
-    "",
-  );
+  cy.get('[data-testid="tranche-maturity-date-picker"]').should("not.have.value", "");
 
   // Test that text box for ebitda input works and contains value inputted
   cy.get("#ebitda-ltm-textfield").click();

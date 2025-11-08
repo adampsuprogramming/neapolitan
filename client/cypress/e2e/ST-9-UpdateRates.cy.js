@@ -14,10 +14,7 @@ it("fills out rate update form", function () {
   cy.get("#autocomplete-borrower-name").type("Test - The Donkey Kong Company");
   cy.wait(200);
   cy.get("#autocomplete-borrower-name-option-0").click();
-  cy.get("#autocomplete-borrower-name").should(
-    "have.value",
-    "Test - The Donkey Kong Company",
-  );
+  cy.get("#autocomplete-borrower-name").should("have.value", "Test - The Donkey Kong Company");
   cy.wait(200);
 
   // Test that autocomplete for loan agreements works and contains value inputted
@@ -43,13 +40,9 @@ it("fills out rate update form", function () {
   cy.wait(200);
 
   // Ensure that Info Box to the right is populated with correct information after loan approval is selected.
-  cy.get("#root div.css-1aegatr div:nth-child(2)")
-    .contains("10/9/2025")
-    .should("be.visible");
+  cy.get("#root div.css-1aegatr div:nth-child(2)").contains("10/9/2025").should("be.visible");
   cy.get("#root div.css-u0gk6s").contains("Floating").should("be.visible");
-  cy.get("#root div.css-1aegatr div:nth-child(6)")
-    .contains("N/A")
-    .should("be.visible");
+  cy.get("#root div.css-1aegatr div:nth-child(6)").contains("N/A").should("be.visible");
   cy.get("#root div:nth-child(8)").contains("5.000000%").should("be.visible");
   cy.get("#root div:nth-child(10)").contains("5.000000%").should("be.visible");
   cy.get("#root div:nth-child(12)").contains("LIBOR").should("be.visible");

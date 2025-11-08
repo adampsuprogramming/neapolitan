@@ -29,10 +29,7 @@ beforeEach(() => {
 
 describe("POST /api/createPayments", () => {
   it("accepts data from a mocked api put an update and insert query on the database", async () => {
-    mockedQuery
-      .mockResolvedValueOnce({})
-      .mockResolvedValueOnce({})
-      .mockResolvedValueOnce({});
+    mockedQuery.mockResolvedValueOnce({}).mockResolvedValueOnce({}).mockResolvedValueOnce({});
 
     const response = await request(app)
       .post("/api/createPayments")
@@ -83,32 +80,14 @@ WHERE c.collateral_balance_id = l.collateral_balance_id
       2,
 
       `INSERT INTO collateral_balance (start_date, collateral_id, outstanding_amount, commitment_amount) VALUES ($1,$2,$3,$4),($5,$6,$7,$8);`,
-      [
-        "2025-07-31",
-        101,
-        53000000.0,
-        53000000.0,
-        "2025-07-31",
-        102,
-        94000000.0,
-        94000000.0,
-      ],
+      ["2025-07-31", 101, 53000000.0, 53000000.0, "2025-07-31", 102, 94000000.0, 94000000.0],
     );
 
     expect(mockedQuery).toHaveBeenNthCalledWith(
       3,
 
       `INSERT INTO payments (payment_date, collateral_id, principal_received, interest_received) VALUES ($1,$2,$3,$4),($5,$6,$7,$8);`,
-      [
-        "2025-07-31",
-        101,
-        3000000.0,
-        200000.0,
-        "2025-07-31",
-        102,
-        4000000.0,
-        300000.0,
-      ],
+      ["2025-07-31", 101, 3000000.0, 200000.0, "2025-07-31", 102, 4000000.0, 300000.0],
     );
   });
 });
@@ -145,9 +124,7 @@ describe("POST /api/createPayments", () => {
 
 describe("POST /api/createPayments", () => {
   it("accepts data from a mocked api put and then fails on the second query to the database", async () => {
-    mockedQuery
-      .mockResolvedValueOnce({})
-      .mockRejectedValueOnce(new Error("Failure"));
+    mockedQuery.mockResolvedValueOnce({}).mockRejectedValueOnce(new Error("Failure"));
 
     const response = await request(app)
       .post("/api/createPayments")

@@ -118,12 +118,7 @@ function UpdateMetrics() {
 
   async function postRateUpdate() {
     try {
-      if (
-        !selectedLoanTranche ||
-        !selectedBorrower ||
-        !selectedLoanAgreement ||
-        !changeDate
-      ) {
+      if (!selectedLoanTranche || !selectedBorrower || !selectedLoanAgreement || !changeDate) {
         setMessage("Please input all required fields (denoted by *)");
         return;
       }
@@ -211,10 +206,7 @@ function UpdateMetrics() {
             padding: 2,
           }}
         >
-          <div
-            className="row-1-tranche-selection"
-            style={{ display: "flex", gap: "25px" }}
-          >
+          <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
             <Autocomplete
               disablePortal
               id="autocomplete-borrower-name"
@@ -224,9 +216,7 @@ function UpdateMetrics() {
               sx={{ m: 1, minWidth: "450px" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Borrower Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
             />
 
             <Autocomplete
@@ -242,19 +232,14 @@ function UpdateMetrics() {
                 <TextField
                   {...params}
                   label={
-                    selectedBorrower
-                      ? "Loan Agreement"
-                      : "Loan Agreement (Select Borrower First)"
+                    selectedBorrower ? "Loan Agreement" : "Loan Agreement (Select Borrower First)"
                   }
                   required
                 />
               )}
             />
           </div>
-          <div
-            className="row-1-tranche-selection"
-            style={{ display: "flex", gap: "25px" }}
-          >
+          <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
             <Autocomplete
               disablePortal
               id="autocomplete-loan-tranches"
@@ -268,9 +253,7 @@ function UpdateMetrics() {
                 <TextField
                   {...params}
                   label={
-                    selectedLoanAgreement
-                      ? "Loan Tranche"
-                      : "Loan Tranche (Select Agreement First)"
+                    selectedLoanAgreement ? "Loan Tranche" : "Loan Tranche (Select Agreement First)"
                   }
                   required
                 />
@@ -310,9 +293,7 @@ function UpdateMetrics() {
                     sx={{ m: 1, width: "25ch", marginTop: 1 }}
                     value={changeDate ? dayjs(changeDate) : null}
                     onChange={(newDate) => {
-                      setChangeDate(
-                        newDate ? newDate.format("YYYY-MM-DD") : "",
-                      );
+                      setChangeDate(newDate ? newDate.format("YYYY-MM-DD") : "");
                     }}
                     slotProps={{
                       textField: {
@@ -346,9 +327,7 @@ function UpdateMetrics() {
                   id="net-leverage-ratio"
                   sx={{ m: 1, width: "25ch", marginTop: 2 }}
                   value={netLeverageRatio}
-                  onValueChange={(value) =>
-                    setNetLeverageRatio(value.floatValue)
-                  }
+                  onValueChange={(value) => setNetLeverageRatio(value.floatValue)}
                   label="Net Leverage Ratio"
                   thousandSeparator=","
                   decimalScale={6}
@@ -361,9 +340,7 @@ function UpdateMetrics() {
                   id="int-coverage-ratio"
                   sx={{ m: 1, width: "25ch", marginTop: 2 }}
                   value={intCoverageRatio}
-                  onValueChange={(value) =>
-                    setIntCoverageRatio(value.floatValue)
-                  }
+                  onValueChange={(value) => setIntCoverageRatio(value.floatValue)}
                   label="Interest Coverage Ratio"
                   thousandSeparator=","
                   decimalScale={6}
@@ -444,14 +421,10 @@ function UpdateMetrics() {
                   gridTemplateColumns: "auto 1fr",
                 }}
               >
-                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>
-                  As of Date:{" "}
-                </Box>
+                <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>As of Date: </Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {metrics[0]?.start_date
-                    ? new Date(metrics[0].start_date).toLocaleDateString(
-                        "en-US",
-                      )
+                    ? new Date(metrics[0].start_date).toLocaleDateString("en-US")
                     : ""}
                 </Box>
 
@@ -539,11 +512,7 @@ function UpdateMetrics() {
                   Is Covenant Default:
                 </Box>
                 <Box sx={{ fontSize: "18px", marginTop: "1.2ch" }}>
-                  {metrics[0]?.start_date
-                    ? metrics[0]?.is_cov_default
-                      ? "Yes"
-                      : "No"
-                    : ""}
+                  {metrics[0]?.start_date ? (metrics[0]?.is_cov_default ? "Yes" : "No") : ""}
                 </Box>
 
                 <Box
@@ -556,11 +525,7 @@ function UpdateMetrics() {
                   Is Payment Default:
                 </Box>
                 <Box sx={{ fontSize: "18px", marginTop: "1.2ch" }}>
-                  {metrics[0]?.start_date
-                    ? metrics[0]?.is_payment_default
-                      ? "Yes"
-                      : "No"
-                    : ""}
+                  {metrics[0]?.start_date ? (metrics[0]?.is_payment_default ? "Yes" : "No") : ""}
                 </Box>
               </Box>
             </Box>

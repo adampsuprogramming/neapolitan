@@ -16,8 +16,7 @@ function BorrowerCreate() {
   const [selectedRevId, setSelectedRevId] = useState(null); // What is primary key for revenue region
   const [naicsSubSectorData, setNaicsSubSectorData] = useState([]); // Hold subsector data from API call
   const [selectedNaicsSubsector, setSelectedNaicsSubsector] = useState(null); // Which subsector was selected?
-  const [selectedNaicsSubsectorId, setSelectedNaicsSubsectorId] =
-    useState(null); // What is primary key for subsector?
+  const [selectedNaicsSubsectorId, setSelectedNaicsSubsectorId] = useState(null); // What is primary key for subsector?
   const [legalName, setLegalName] = useState(""); // After user enters borrower legal name, it is set here via an onChange
   const [shortName, setShortName] = useState(""); // After user enters borrower nick name, it is set here via an onChange
   const [isPublicBorrower, setIsPublicBorrower] = useState(false); // Sets based on user interaction with toggle switch
@@ -88,21 +87,12 @@ function BorrowerCreate() {
   // The following axios post function is run when the user clicks save
 
   async function postBorrower() {
-    if (
-      !legalName ||
-      !selectedCorpHQId ||
-      !selectedCorpHQRegion ||
-      !selectedNaicsSubsector
-    ) {
-      setMessage(
-        "Not Saved - Please fill out all required fields - denoted by *",
-      );
+    if (!legalName || !selectedCorpHQId || !selectedCorpHQRegion || !selectedNaicsSubsector) {
+      setMessage("Not Saved - Please fill out all required fields - denoted by *");
       return;
     }
     if (isPublicBorrower && !tickerSymbol) {
-      setMessage(
-        "Not Saved - If borrower is public, a ticker symbol must be entered.",
-      );
+      setMessage("Not Saved - If borrower is public, a ticker symbol must be entered.");
       return;
     }
     if (!isPublicBorrower && tickerSymbol) {
@@ -112,18 +102,15 @@ function BorrowerCreate() {
       return;
     }
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/createborrower`,
-        {
-          legalName: legalName,
-          shortName: shortName,
-          corporateHqId: selectedCorpHQId,
-          revenueGeographyId: selectedRevId,
-          naicsSubsectorId: selectedNaicsSubsectorId,
-          isPublic: isPublicBorrower,
-          tickerSymbol: tickerSymbol,
-        },
-      );
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/createborrower`, {
+        legalName: legalName,
+        shortName: shortName,
+        corporateHqId: selectedCorpHQId,
+        revenueGeographyId: selectedRevId,
+        naicsSubsectorId: selectedNaicsSubsectorId,
+        isPublic: isPublicBorrower,
+        tickerSymbol: tickerSymbol,
+      });
       if (response.status === 201) {
         clearData();
         setMessage("Borrower Created Successfully");
@@ -191,11 +178,7 @@ function BorrowerCreate() {
               onChange={(event, newValue) => setSelectedCorpHQRegion(newValue)}
               getOptionLabel={(option) => option.region_name || ""}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Corporate Headquarters"
-                  required
-                />
+                <TextField {...params} label="Corporate Headquarters" required />
               )}
             />
           </div>
@@ -211,11 +194,7 @@ function BorrowerCreate() {
               onChange={(event, newValue) => setSelectedRevRegion(newValue)}
               getOptionLabel={(option) => option.region_name || ""}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Primary Geography (Revenue) "
-                  required
-                />
+                <TextField {...params} label="Primary Geography (Revenue) " required />
               )}
             />
             <Autocomplete
@@ -225,9 +204,7 @@ function BorrowerCreate() {
               options={naicsSubSectorData}
               value={selectedNaicsSubsector}
               sx={{ m: 1, width: "60ch", marginTop: 4 }}
-              onChange={(event, newValue) =>
-                setSelectedNaicsSubsector(newValue)
-              }
+              onChange={(event, newValue) => setSelectedNaicsSubsector(newValue)}
               getOptionLabel={(option) =>
                 option
                   ? `${option.naics_subsector_id ?? ""} - ${option.naics_subsector_name ?? ""}`
@@ -262,9 +239,7 @@ function BorrowerCreate() {
               labelPlacement="start"
               label="Public Borrower"
             />
-            <FormHelperText>
-              Is the borrower a publicly traded company?
-            </FormHelperText>
+            <FormHelperText>Is the borrower a publicly traded company?</FormHelperText>
           </Box>
 
           <TextField

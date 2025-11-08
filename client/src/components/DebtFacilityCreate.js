@@ -101,9 +101,7 @@ function DebtFacilityCreate() {
       !maturityDate ||
       !commitmentAmount
     ) {
-      setMessage(
-        "Not Saved - Please fill out all required fields - denoted by *",
-      );
+      setMessage("Not Saved - Please fill out all required fields - denoted by *");
       return;
     }
     if (isOverallRate && !maxAdvanceRate) {
@@ -211,9 +209,7 @@ function DebtFacilityCreate() {
               sx={{ m: 1, width: "30ch" }}
               onChange={(event, newValue) => setSelectedLender(newValue)}
               getOptionLabel={(option) => option.lender_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Lender Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Lender Name" required />}
             />
 
             {/* Autocomplete for Portfolio Name - Stored in */}
@@ -228,9 +224,7 @@ function DebtFacilityCreate() {
               sx={{ m: 1, width: "30ch" }}
               onChange={(event, newValue) => setSelectedPortfolio(newValue)}
               getOptionLabel={(option) => option.portfolio_name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="Portfolio Name" required />
-              )}
+              renderInput={(params) => <TextField {...params} label="Portfolio Name" required />}
             />
           </div>
 
@@ -242,9 +236,7 @@ function DebtFacilityCreate() {
                 sx={{ m: 1, width: "30ch", marginTop: 4 }}
                 value={commitmentDate ? dayjs(commitmentDate) : null} // This is needed if date is not yet a valid date or a crash occurs
                 onChange={(newDate) => {
-                  setCommitmentDate(
-                    newDate ? newDate.format("YYYY-MM-DD") : "",
-                  ); // if there is anything in new date, set commitment date or else set it to blank
+                  setCommitmentDate(newDate ? newDate.format("YYYY-MM-DD") : ""); // if there is anything in new date, set commitment date or else set it to blank
                 }}
                 slotProps={{
                   textField: {
@@ -316,9 +308,7 @@ function DebtFacilityCreate() {
               labelPlacement="start"
               label="Overall Rate"
             />
-            <FormHelperText>
-              Is the facility governed by a maximum advance rate?
-            </FormHelperText>
+            <FormHelperText>Is the facility governed by a maximum advance rate?</FormHelperText>
           </Box>
           {/* Input for max advance rate */}
 
@@ -440,9 +430,7 @@ function DebtFacilityCreate() {
               labelPlacement="start"
               label="Minimum Equity"
             />
-            <FormHelperText>
-              Is the facility governed by a minimum equity balance?
-            </FormHelperText>
+            <FormHelperText>Is the facility governed by a minimum equity balance?</FormHelperText>
           </Box>
           {/* Input for min equity amount */}
 

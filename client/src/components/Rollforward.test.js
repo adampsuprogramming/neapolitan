@@ -62,7 +62,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
       });
     }
 
-    if (url.includes("mock")) {
+    if (url.includes("reportingCalculations")) {
       return Promise.resolve({
         data: {
           collateralData: [
@@ -72,7 +72,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
               balanceBeg: 10000000,
               collAdded: 0,
               collRemoved: 0,
-              principalRec: -500000,
+              principalRec: 500000,
               balanceEnd: 9500000,
               begValue: 9800000,
               chgDueToAdd: 0,
@@ -100,7 +100,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
               balanceBeg: 15000000,
               collAdded: 0,
               collRemoved: 0,
-              principalRec: -1000000,
+              principalRec: 1000000,
               balanceEnd: 14000000,
               begValue: 13500000,
               chgDueToAdd: 0,
@@ -128,7 +128,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
               balanceBeg: 12000000,
               collAdded: 0,
               collRemoved: 0,
-              principalRec: -200000,
+              principalRec: 200000,
               balanceEnd: 11800000,
               begValue: 11640000,
               chgDueToAdd: 0,
@@ -183,8 +183,8 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
               collateralName: "Loan E",
               balanceBeg: 7000000,
               collAdded: 0,
-              collRemoved: -6750000,
-              principalRec: -250000,
+              collRemoved: 6750000,
+              principalRec: 250000,
               balanceEnd: 0,
               begValue: 5950000,
               chgDueToAdd: 0,
@@ -212,7 +212,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
               balanceBeg: 10000000,
               collAdded: 0,
               collRemoved: 0,
-              principalRec: -1000000,
+              principalRec: 1000000,
               balanceEnd: 9000000,
               begValue: 9000000,
               chgDueToAdd: 0,
@@ -240,7 +240,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
               balanceBeg: 0,
               collAdded: 11000000,
               collRemoved: 0,
-              principalRec: -100000,
+              principalRec: 100000,
               balanceEnd: 10900000,
               begValue: 0,
               chgDueToAdd: 11000000,
@@ -284,9 +284,7 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
   render(<Rollforward />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   // Test Selecting Portfolio Name
@@ -350,311 +348,139 @@ test("UT-74: Ensure reporting page can populate after making selections and inpu
   const outstandingRows = within(outstandings).getAllByRole("row");
 
   expect(
-    screen.getByText(
-      "Rollforward of Outstandings from 5/31/2025 to 10/31/2025",
-    ),
+    screen.getByText("Rollforward of Outstandings from 5/31/2025 to 10/31/2025"),
   ).toBeInTheDocument();
 
-  expect(within(outstandingRows[1]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan A",
-  );
-  expect(within(outstandingRows[2]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan B",
-  );
-  expect(within(outstandingRows[7]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan G",
-  );
+  expect(within(outstandingRows[1]).getAllByRole("cell")[0]).toHaveTextContent("Loan A");
+  expect(within(outstandingRows[2]).getAllByRole("cell")[0]).toHaveTextContent("Loan B");
+  expect(within(outstandingRows[7]).getAllByRole("cell")[0]).toHaveTextContent("Loan G");
 
-  expect(within(outstandingRows[1]).getAllByRole("cell")[1]).toHaveTextContent(
-    "10,000,000",
-  );
-  expect(within(outstandingRows[4]).getAllByRole("cell")[1]).toHaveTextContent(
-    "9,000,000",
-  );
-  expect(within(outstandingRows[7]).getAllByRole("cell")[1]).toHaveTextContent(
-    "0",
-  );
+  expect(within(outstandingRows[1]).getAllByRole("cell")[1]).toHaveTextContent("10,000,000");
+  expect(within(outstandingRows[4]).getAllByRole("cell")[1]).toHaveTextContent("9,000,000");
+  expect(within(outstandingRows[7]).getAllByRole("cell")[1]).toHaveTextContent("0");
 
-  expect(within(outstandingRows[1]).getAllByRole("cell")[2]).toHaveTextContent(
-    "0",
-  );
-  expect(within(outstandingRows[2]).getAllByRole("cell")[2]).toHaveTextContent(
-    "0",
-  );
-  expect(within(outstandingRows[7]).getAllByRole("cell")[2]).toHaveTextContent(
-    "11,000,000",
-  );
+  expect(within(outstandingRows[1]).getAllByRole("cell")[2]).toHaveTextContent("0");
+  expect(within(outstandingRows[2]).getAllByRole("cell")[2]).toHaveTextContent("0");
+  expect(within(outstandingRows[7]).getAllByRole("cell")[2]).toHaveTextContent("11,000,000");
 
-  expect(within(outstandingRows[1]).getAllByRole("cell")[3]).toHaveTextContent(
-    "0",
-  );
-  expect(within(outstandingRows[5]).getAllByRole("cell")[3]).toHaveTextContent(
-    "-6,750,000",
-  );
-  expect(within(outstandingRows[8]).getAllByRole("cell")[3]).toHaveTextContent(
-    "-6,750,000",
-  );
+  expect(within(outstandingRows[1]).getAllByRole("cell")[3]).toHaveTextContent("0");
+  expect(within(outstandingRows[5]).getAllByRole("cell")[3]).toHaveTextContent("-6,750,000");
+  expect(within(outstandingRows[8]).getAllByRole("cell")[3]).toHaveTextContent("-6,750,000");
 
-  expect(within(outstandingRows[1]).getAllByRole("cell")[4]).toHaveTextContent(
-    "-500,000",
-  );
-  expect(within(outstandingRows[3]).getAllByRole("cell")[4]).toHaveTextContent(
-    "-200,000",
-  );
-  expect(within(outstandingRows[8]).getAllByRole("cell")[4]).toHaveTextContent(
-    "-3,050,000",
-  );
+  expect(within(outstandingRows[1]).getAllByRole("cell")[4]).toHaveTextContent("-500,000");
+  expect(within(outstandingRows[3]).getAllByRole("cell")[4]).toHaveTextContent("-200,000");
+  expect(within(outstandingRows[8]).getAllByRole("cell")[4]).toHaveTextContent("-3,050,000");
 
-  expect(within(outstandingRows[1]).getAllByRole("cell")[5]).toHaveTextContent(
-    "9,500,000",
-  );
-  expect(within(outstandingRows[2]).getAllByRole("cell")[5]).toHaveTextContent(
-    "14,000,000",
-  );
-  expect(within(outstandingRows[7]).getAllByRole("cell")[5]).toHaveTextContent(
-    "10,900,000",
-  );
+  expect(within(outstandingRows[1]).getAllByRole("cell")[5]).toHaveTextContent("9,500,000");
+  expect(within(outstandingRows[2]).getAllByRole("cell")[5]).toHaveTextContent("14,000,000");
+  expect(within(outstandingRows[7]).getAllByRole("cell")[5]).toHaveTextContent("10,900,000");
 
   // Test Rollforward of Value
 
   const valueRows = within(value).getAllByRole("row");
 
-  expect(
-    screen.getByText("Rollforward of Value from 5/31/2025 to 10/31/2025"),
-  ).toBeInTheDocument();
+  expect(screen.getByText("Rollforward of Value from 5/31/2025 to 10/31/2025")).toBeInTheDocument();
 
-  expect(within(valueRows[3]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan C",
-  );
-  expect(within(valueRows[5]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan E",
-  );
-  expect(within(valueRows[6]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan F",
-  );
+  expect(within(valueRows[3]).getAllByRole("cell")[0]).toHaveTextContent("Loan C");
+  expect(within(valueRows[5]).getAllByRole("cell")[0]).toHaveTextContent("Loan E");
+  expect(within(valueRows[6]).getAllByRole("cell")[0]).toHaveTextContent("Loan F");
 
-  expect(within(valueRows[2]).getAllByRole("cell")[1]).toHaveTextContent(
-    "13,500,000",
-  );
-  expect(within(valueRows[3]).getAllByRole("cell")[1]).toHaveTextContent(
-    "11,640,000",
-  );
+  expect(within(valueRows[2]).getAllByRole("cell")[1]).toHaveTextContent("13,500,000");
+  expect(within(valueRows[3]).getAllByRole("cell")[1]).toHaveTextContent("11,640,000");
   expect(within(valueRows[7]).getAllByRole("cell")[1]).toHaveTextContent("0");
 
   expect(within(valueRows[3]).getAllByRole("cell")[2]).toHaveTextContent("0");
   expect(within(valueRows[4]).getAllByRole("cell")[2]).toHaveTextContent("0");
-  expect(within(valueRows[7]).getAllByRole("cell")[2]).toHaveTextContent(
-    "11,000,000",
-  );
+  expect(within(valueRows[7]).getAllByRole("cell")[2]).toHaveTextContent("11,000,000");
 
-  expect(within(valueRows[2]).getAllByRole("cell")[3]).toHaveTextContent(
-    "-900,000",
-  );
+  expect(within(valueRows[2]).getAllByRole("cell")[3]).toHaveTextContent("-900,000");
   expect(within(valueRows[4]).getAllByRole("cell")[3]).toHaveTextContent("0");
-  expect(within(valueRows[6]).getAllByRole("cell")[3]).toHaveTextContent(
-    "-900,000",
-  );
+  expect(within(valueRows[6]).getAllByRole("cell")[3]).toHaveTextContent("-900,000");
 
-  expect(within(valueRows[1]).getAllByRole("cell")[4]).toHaveTextContent(
-    "-285,000",
-  );
-  expect(within(valueRows[2]).getAllByRole("cell")[4]).toHaveTextContent(
-    "700,000",
-  );
-  expect(within(valueRows[8]).getAllByRole("cell")[4]).toHaveTextContent(
-    "454,000",
-  );
+  expect(within(valueRows[1]).getAllByRole("cell")[4]).toHaveTextContent("-285,000");
+  expect(within(valueRows[2]).getAllByRole("cell")[4]).toHaveTextContent("-1,400,000");
+  expect(within(valueRows[8]).getAllByRole("cell")[4]).toHaveTextContent("-2,663,000");
 
-  expect(within(valueRows[1]).getAllByRole("cell")[5]).toHaveTextContent("0");
-  expect(within(valueRows[3]).getAllByRole("cell")[5]).toHaveTextContent(
-    "-472,000",
-  );
-  expect(within(valueRows[7]).getAllByRole("cell")[5]).toHaveTextContent(
-    "-545,000",
-  );
-
-  expect(within(valueRows[2]).getAllByRole("cell")[6]).toHaveTextContent(
-    "11,200,000",
-  );
-  expect(within(valueRows[4]).getAllByRole("cell")[6]).toHaveTextContent(
-    "8,550,000",
-  );
-  expect(within(valueRows[6]).getAllByRole("cell")[6]).toHaveTextContent(
-    "8,100,000",
-  );
+  expect(within(valueRows[2]).getAllByRole("cell")[5]).toHaveTextContent("11,200,000");
+  expect(within(valueRows[4]).getAllByRole("cell")[5]).toHaveTextContent("8,550,000");
+  expect(within(valueRows[6]).getAllByRole("cell")[5]).toHaveTextContent("8,100,000");
 
   // Test Rollforward of Total Availability
 
   const totalAvailRows = within(totalAvail).getAllByRole("row");
 
   expect(
-    screen.getByText(
-      "Rollforward of Total Availability from 5/31/2025 to 10/31/2025",
-    ),
+    screen.getByText("Rollforward of Total Availability from 5/31/2025 to 10/31/2025"),
   ).toBeInTheDocument();
 
-  expect(within(totalAvailRows[1]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan A",
-  );
-  expect(within(totalAvailRows[3]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan C",
-  );
-  expect(within(totalAvailRows[8]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Total",
-  );
+  expect(within(totalAvailRows[1]).getAllByRole("cell")[0]).toHaveTextContent("Loan A");
+  expect(within(totalAvailRows[3]).getAllByRole("cell")[0]).toHaveTextContent("Loan C");
+  expect(within(totalAvailRows[8]).getAllByRole("cell")[0]).toHaveTextContent("Total");
 
-  expect(within(totalAvailRows[2]).getAllByRole("cell")[1]).toHaveTextContent(
-    "5,400,000",
-  );
-  expect(within(totalAvailRows[3]).getAllByRole("cell")[1]).toHaveTextContent(
-    "4,656,000",
-  );
-  expect(within(totalAvailRows[5]).getAllByRole("cell")[1]).toHaveTextContent(
-    "2,975,000",
-  );
+  expect(within(totalAvailRows[2]).getAllByRole("cell")[1]).toHaveTextContent("5,400,000");
+  expect(within(totalAvailRows[3]).getAllByRole("cell")[1]).toHaveTextContent("4,656,000");
+  expect(within(totalAvailRows[5]).getAllByRole("cell")[1]).toHaveTextContent("2,975,000");
 
-  expect(within(totalAvailRows[1]).getAllByRole("cell")[2]).toHaveTextContent(
-    "0",
-  );
-  expect(within(totalAvailRows[2]).getAllByRole("cell")[2]).toHaveTextContent(
-    "0",
-  );
-  expect(within(totalAvailRows[7]).getAllByRole("cell")[2]).toHaveTextContent(
-    "7,150,000",
-  );
+  expect(within(totalAvailRows[1]).getAllByRole("cell")[2]).toHaveTextContent("0");
+  expect(within(totalAvailRows[2]).getAllByRole("cell")[2]).toHaveTextContent("0");
+  expect(within(totalAvailRows[7]).getAllByRole("cell")[2]).toHaveTextContent("7,150,000");
 
-  expect(within(totalAvailRows[1]).getAllByRole("cell")[3]).toHaveTextContent(
-    "-318,500",
-  );
-  expect(within(totalAvailRows[4]).getAllByRole("cell")[3]).toHaveTextContent(
-    "0",
-  );
-  expect(within(totalAvailRows[6]).getAllByRole("cell")[3]).toHaveTextContent(
-    "-495,000",
-  );
+  expect(within(totalAvailRows[1]).getAllByRole("cell")[3]).toHaveTextContent("-318,500");
+  expect(within(totalAvailRows[4]).getAllByRole("cell")[3]).toHaveTextContent("0");
+  expect(within(totalAvailRows[6]).getAllByRole("cell")[3]).toHaveTextContent("-495,000");
 
-  expect(within(totalAvailRows[3]).getAllByRole("cell")[4]).toHaveTextContent(
-    "-47,200",
-  );
-  expect(within(totalAvailRows[4]).getAllByRole("cell")[4]).toHaveTextContent(
-    "-204,750",
-  );
-  expect(within(totalAvailRows[8]).getAllByRole("cell")[4]).toHaveTextContent(
-    "-1,351,450",
-  );
+  expect(within(totalAvailRows[3]).getAllByRole("cell")[4]).toHaveTextContent("-47,200");
+  expect(within(totalAvailRows[4]).getAllByRole("cell")[4]).toHaveTextContent("-204,750");
+  expect(within(totalAvailRows[8]).getAllByRole("cell")[4]).toHaveTextContent("-1,351,450");
 
-  expect(within(totalAvailRows[6]).getAllByRole("cell")[5]).toHaveTextContent(
-    "-405,000",
-  );
-  expect(within(totalAvailRows[7]).getAllByRole("cell")[5]).toHaveTextContent(
-    "0",
-  );
-  expect(within(totalAvailRows[8]).getAllByRole("cell")[5]).toHaveTextContent(
-    "-405,000",
-  );
+  expect(within(totalAvailRows[6]).getAllByRole("cell")[5]).toHaveTextContent("-405,000");
+  expect(within(totalAvailRows[7]).getAllByRole("cell")[5]).toHaveTextContent("0");
+  expect(within(totalAvailRows[8]).getAllByRole("cell")[5]).toHaveTextContent("-405,000");
 
-  expect(within(totalAvailRows[1]).getAllByRole("cell")[6]).toHaveTextContent(
-    "5,866,250",
-  );
-  expect(within(totalAvailRows[2]).getAllByRole("cell")[6]).toHaveTextContent(
-    "4,480,000",
-  );
-  expect(within(totalAvailRows[7]).getAllByRole("cell")[6]).toHaveTextContent(
-    "6,730,750",
-  );
+  expect(within(totalAvailRows[1]).getAllByRole("cell")[6]).toHaveTextContent("5,866,250");
+  expect(within(totalAvailRows[2]).getAllByRole("cell")[6]).toHaveTextContent("4,480,000");
+  expect(within(totalAvailRows[7]).getAllByRole("cell")[6]).toHaveTextContent("6,730,750");
 
   // Test Rollforward of Additional Data
 
   const addlDataRows = within(addlData).getAllByRole("row");
 
-  expect(
-    screen.getByText("Additional Data - 5/31/2025 / 10/31/2025"),
-  ).toBeInTheDocument();
+  expect(screen.getByText("Additional Data - 5/31/2025 / 10/31/2025")).toBeInTheDocument();
 
-  expect(within(addlDataRows[2]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan B",
-  );
-  expect(within(addlDataRows[5]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan E",
-  );
-  expect(within(addlDataRows[7]).getAllByRole("cell")[0]).toHaveTextContent(
-    "Loan G",
-  );
+  expect(within(addlDataRows[2]).getAllByRole("cell")[0]).toHaveTextContent("Loan B");
+  expect(within(addlDataRows[5]).getAllByRole("cell")[0]).toHaveTextContent("Loan E");
+  expect(within(addlDataRows[7]).getAllByRole("cell")[0]).toHaveTextContent("Loan G");
 
-  expect(within(addlDataRows[1]).getAllByRole("cell")[1]).toHaveTextContent(
-    "98.00%",
-  );
-  expect(within(addlDataRows[2]).getAllByRole("cell")[1]).toHaveTextContent(
-    "90.00%",
-  );
-  expect(within(addlDataRows[6]).getAllByRole("cell")[1]).toHaveTextContent(
-    "90.00%",
-  );
+  expect(within(addlDataRows[1]).getAllByRole("cell")[1]).toHaveTextContent("98.00%");
+  expect(within(addlDataRows[2]).getAllByRole("cell")[1]).toHaveTextContent("90.00%");
+  expect(within(addlDataRows[6]).getAllByRole("cell")[1]).toHaveTextContent("90.00%");
 
-  expect(within(addlDataRows[3]).getAllByRole("cell")[2]).toHaveTextContent(
-    "96.00%",
-  );
-  expect(within(addlDataRows[4]).getAllByRole("cell")[2]).toHaveTextContent(
-    "98.50%",
-  );
-  expect(within(addlDataRows[5]).getAllByRole("cell")[2]).toHaveTextContent(
-    "90.00%",
-  );
+  expect(within(addlDataRows[3]).getAllByRole("cell")[2]).toHaveTextContent("96.00%");
+  expect(within(addlDataRows[4]).getAllByRole("cell")[2]).toHaveTextContent("98.50%");
+  expect(within(addlDataRows[5]).getAllByRole("cell")[2]).toHaveTextContent("90.00%");
 
-  expect(within(addlDataRows[2]).getAllByRole("cell")[3]).toHaveTextContent(
-    "95.00%",
-  );
-  expect(within(addlDataRows[3]).getAllByRole("cell")[3]).toHaveTextContent(
-    "100.00%",
-  );
-  expect(within(addlDataRows[5]).getAllByRole("cell")[3]).toHaveTextContent(
-    "97.00%",
-  );
+  expect(within(addlDataRows[2]).getAllByRole("cell")[3]).toHaveTextContent("95.00%");
+  expect(within(addlDataRows[3]).getAllByRole("cell")[3]).toHaveTextContent("100.00%");
+  expect(within(addlDataRows[5]).getAllByRole("cell")[3]).toHaveTextContent("97.00%");
 
-  expect(within(addlDataRows[1]).getAllByRole("cell")[4]).toHaveTextContent(
-    "95.00%",
-  );
-  expect(within(addlDataRows[2]).getAllByRole("cell")[4]).toHaveTextContent(
-    "95.00%",
-  );
-  expect(within(addlDataRows[7]).getAllByRole("cell")[4]).toHaveTextContent(
-    "100.00%",
-  );
+  expect(within(addlDataRows[1]).getAllByRole("cell")[4]).toHaveTextContent("95.00%");
+  expect(within(addlDataRows[2]).getAllByRole("cell")[4]).toHaveTextContent("95.00%");
+  expect(within(addlDataRows[7]).getAllByRole("cell")[4]).toHaveTextContent("100.00%");
 
-  expect(within(addlDataRows[3]).getAllByRole("cell")[5]).toHaveTextContent(
-    "40.00%",
-  );
-  expect(within(addlDataRows[4]).getAllByRole("cell")[5]).toHaveTextContent(
-    "65.00%",
-  );
-  expect(within(addlDataRows[6]).getAllByRole("cell")[5]).toHaveTextContent(
-    "55.00%",
-  );
+  expect(within(addlDataRows[3]).getAllByRole("cell")[5]).toHaveTextContent("40.00%");
+  expect(within(addlDataRows[4]).getAllByRole("cell")[5]).toHaveTextContent("65.00%");
+  expect(within(addlDataRows[6]).getAllByRole("cell")[5]).toHaveTextContent("55.00%");
 
-  expect(within(addlDataRows[3]).getAllByRole("cell")[6]).toHaveTextContent(
-    "40.00%",
-  );
-  expect(within(addlDataRows[4]).getAllByRole("cell")[6]).toHaveTextContent(
-    "65.00%",
-  );
-  expect(within(addlDataRows[6]).getAllByRole("cell")[6]).toHaveTextContent(
-    "50.00%",
-  );
+  expect(within(addlDataRows[3]).getAllByRole("cell")[6]).toHaveTextContent("40.00%");
+  expect(within(addlDataRows[4]).getAllByRole("cell")[6]).toHaveTextContent("65.00%");
+  expect(within(addlDataRows[6]).getAllByRole("cell")[6]).toHaveTextContent("50.00%");
 
-  expect(within(addlDataRows[1]).getAllByRole("cell")[7]).toHaveTextContent(
-    "200,000",
-  );
-  expect(within(addlDataRows[2]).getAllByRole("cell")[7]).toHaveTextContent(
-    "300,000",
-  );
-  expect(within(addlDataRows[5]).getAllByRole("cell")[7]).toHaveTextContent(
-    "180,000",
-  );
+  expect(within(addlDataRows[1]).getAllByRole("cell")[7]).toHaveTextContent("200,000");
+  expect(within(addlDataRows[2]).getAllByRole("cell")[7]).toHaveTextContent("300,000");
+  expect(within(addlDataRows[5]).getAllByRole("cell")[7]).toHaveTextContent("180,000");
 
   // Test funds flow box
-  expect(
-    screen.getByText("Funds Flow from 5/31/2025 to 10/31/2025"),
-  ).toBeInTheDocument();
+  expect(screen.getByText("Funds Flow from 5/31/2025 to 10/31/2025")).toBeInTheDocument();
   expect(screen.getByText("32,000,000")).toBeInTheDocument();
   expect(screen.getByText("-125,458")).toBeInTheDocument();
   expect(screen.getByText("909,758")).toBeInTheDocument();
@@ -684,10 +510,7 @@ test("UT-75: Test error handling for facility data retrieval", async () => {
   render(<Rollforward />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      // "https://mocki.io/v1/c70e6088-442e-4428-ba53-b029718b1b5e",
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   expect(screen.getByText("Error fetching facility data")).toBeInTheDocument();
@@ -734,7 +557,7 @@ test("UT-76: Test error handling for roll forward data fetching", async () => {
       });
     }
 
-    if (url.includes("mock")) {
+    if (url.includes("reportingCalculations")) {
       return Promise.reject({
         status: 500,
       });
@@ -746,10 +569,7 @@ test("UT-76: Test error handling for roll forward data fetching", async () => {
   render(<Rollforward />);
 
   await waitFor(() => {
-    expect(axios.get).toHaveBeenCalledWith(
-      // "https://mocki.io/v1/c70e6088-442e-4428-ba53-b029718b1b5e",
-      "http://localhost:5000/api/facilities",
-    );
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:5000/api/facilities");
   });
 
   // Test Selecting Portfolio Name
@@ -798,8 +618,6 @@ test("UT-76: Test error handling for roll forward data fetching", async () => {
   fireEvent.click(genButton);
 
   await waitFor(() => {
-    expect(
-      screen.getByText("Error fetching rollforward data"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Error fetching rollforward data")).toBeInTheDocument();
   });
 });

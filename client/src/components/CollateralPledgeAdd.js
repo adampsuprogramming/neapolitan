@@ -66,15 +66,11 @@ function CollateralPledgeAdd() {
         return;
       }
       if (outstandingAmount > commitmentAmount) {
-        setMessage(
-          "Outstanding Amount Must Be Less Than Or Equal To Commitment Amount",
-        );
+        setMessage("Outstanding Amount Must Be Less Than Or Equal To Commitment Amount");
         return;
       }
       if (outstandingAmount > maxApproved) {
-        setMessage(
-          "Outstanding Amount Must Be Less Than Or Equal To Maximum Approved",
-        );
+        setMessage("Outstanding Amount Must Be Less Than Or Equal To Maximum Approved");
         return;
       }
 
@@ -140,9 +136,7 @@ function CollateralPledgeAdd() {
             sx={{ m: 1, marginTop: 3, width: "80ch" }}
             onChange={(event, newValue) => setSelectedApproval(newValue)}
             getOptionLabel={(option) => option.loan_approval_name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="Select Loan Approval" />
-            )}
+            renderInput={(params) => <TextField {...params} label="Select Loan Approval" />}
           />
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -228,11 +222,7 @@ function CollateralPledgeAdd() {
           </Box>
 
           <Box sx={{ fontWeight: "700" }}>Approval Expiration:</Box>
-          <Box>
-            {expiration === ""
-              ? ""
-              : new Date(expiration).toLocaleDateString("en-US", {})}
-          </Box>
+          <Box>{expiration === "" ? "" : new Date(expiration).toLocaleDateString("en-US", {})}</Box>
 
           <Box sx={{ fontWeight: "700" }}>Bank Name:</Box>
           <Box>{bankName}</Box>
