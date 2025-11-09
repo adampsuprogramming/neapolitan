@@ -3,7 +3,6 @@ import TopNav from "./TopNav";
 import BorrowBase from "./BorrowBase";
 import Transactions from "./Transactions";
 import Performance from "./Performance";
-import Reporting from "./Reporting";
 import Dashboard from "./Dashboard";
 import Configuration from "./Configuration";
 import ConfigFacility from "./ConfigFacility";
