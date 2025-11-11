@@ -127,7 +127,7 @@ function getBegAndEndOustandings(startBalances, endBalances) {
   }
 
   for (let i = 0; i < endBalances.length; i++) {
-    collateralId = endBalances[i].collateralId;
+    const collateralId = endBalances[i].collateralId;
     const existingBal = outstandingBal.find((items) => items.collateralId === collateralId);
 
     if (existingBal) {

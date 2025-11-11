@@ -31,7 +31,10 @@ jobs:
         env:
           CI: false
           REACT_APP_BACKEND_URL: ${{ secrets.BACKEND_URL }}
-
+          REACT_APP_ENV: production
+          REACT_APP_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          
       - name: Configure AWS Creds
         uses: aws-actions/configure-aws-credentials@v4
         with:

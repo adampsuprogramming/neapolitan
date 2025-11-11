@@ -84,7 +84,7 @@ function Rollforward() {
           `${process.env.REACT_APP_BACKEND_URL}/api/facilities`,
         );
         setFacilityData(fullInfoResponse.data);
-      } catch (error) {
+      } catch {
         setMessage("Error fetching facility data");
       }
     }

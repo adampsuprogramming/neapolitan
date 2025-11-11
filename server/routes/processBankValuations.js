@@ -9,12 +9,12 @@ function getBegAndEndBankValuations(
   let bankValuations = [];
 
   for (let i = 0; i < allIdsStart.length; i++) {
-    collateralId = allIdsStart[i];
+    const collateralId = allIdsStart[i];
 
-    bankMetricStartRow =
+    const bankMetricStartRow =
       bankMetricsStart.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    startBankLoanVal = bankMetricStartRow ? bankMetricStartRow.valuation || null : null;
+    const startBankLoanVal = bankMetricStartRow ? bankMetricStartRow.valuation || null : null;
 
     bankValuations.push({
       collateralId: collateralId,
@@ -24,7 +24,7 @@ function getBegAndEndBankValuations(
   }
 
   for (let i = 0; i < additions.length; i++) {
-    startBankLoanVal = null;
+    let startBankLoanVal = null;
     for (let j = 0; j < loanApprovalResults.rows.length; j++) {
       if (loanApprovalResults.rows[j].collateral_id === additions[i].collateralId) {
         startBankLoanVal = parseFloat(loanApprovalResults.rows[j].approved_valuation || 0);
@@ -39,11 +39,11 @@ function getBegAndEndBankValuations(
   }
 
   for (let i = 0; i < allIdsEnd.length; i++) {
-    collateralId = allIdsEnd[i].collateralId;
-    bankMetricEndRow =
+    const collateralId = allIdsEnd[i].collateralId;
+    const bankMetricEndRow =
       bankMetricsEnd.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    endBankLoanVal = bankMetricEndRow.valuation || null;
+    const endBankLoanVal = bankMetricEndRow.valuation || null;
 
     const existingVal = bankValuations.find((items) => items.collateralId === collateralId);
 

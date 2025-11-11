@@ -101,15 +101,15 @@ function getBegAndEndAdvRates(
   for (let i = 0; i < allIdsEnd.length; i++) {
     let finalEndLoanAdv = null;
     // save lienType as lienType
-    collateralId = allIdsEnd[i].collateralId;
-    lienTypeRow = collateralLien.rows.find((row) => row.collateral_id === collateralId);
+    const collateralId = allIdsEnd[i].collateralId;
+    const lienTypeRow = collateralLien.rows.find((row) => row.collateral_id === collateralId);
 
-    lienType = lienTypeRow.lien_type || null;
+    const lienType = lienTypeRow.lien_type || null;
 
-    bankMetricEndRow =
+    const bankMetricEndRow =
       bankMetricsEnd.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    endIndLoanAdv = bankMetricEndRow.advance_rate || null;
+    const endIndLoanAdv = bankMetricEndRow.advance_rate || null;
 
     if (endIndLoanAdv) {
       finalEndLoanAdv = endIndLoanAdv;

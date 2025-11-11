@@ -15,9 +15,6 @@
 // This mock must come before the import of object
 jest.mock("../db");
 
-const request = require("supertest");
-const app = require("../app");
-
 const mockedQuery = jest.fn();
 require("../db").query = mockedQuery;
 
