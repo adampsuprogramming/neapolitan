@@ -3,7 +3,6 @@ import TopNav from "./TopNav";
 import BorrowBase from "./BorrowBase";
 import Transactions from "./Transactions";
 import Performance from "./Performance";
-import Reporting from "./Reporting";
 import Dashboard from "./Dashboard";
 import Configuration from "./Configuration";
 import ConfigFacility from "./ConfigFacility";
@@ -42,6 +41,7 @@ import OtherReporting from "./OtherReporting";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 import ReportingSubmenu from "./ReportingSubmenu";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -50,12 +50,27 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/borrowingbase/*" element={<BorrowBase />}>
+
+          <Route
+            path="/borrowingbase/*"
+            element={
+              <ProtectedRoute>
+                <BorrowBase />
+              </ProtectedRoute>
+            }
+          >
             <Route path="borrowbaselineitemview" element={<BorrowBaseLineItemView />} />
             <Route path="borrowbasecovenantview" element={<BorrowBaseCovenantView />} />
             <Route path="borrowbasecalcview" element={<BorrowBaseCalcView />} />
           </Route>
-          <Route path="/transactions/*" element={<Transactions />}>
+          <Route
+            path="/transactions/*"
+            element={
+              <ProtectedRoute>
+                <Transactions />
+              </ProtectedRoute>
+            }
+          >
             <Route path="borrowertransactions/*" element={<BorrowerTransactions />}>
               <Route path="borrowercreate" element={<BorrowerCreate />} />
               <Route path="borrowermodify" element={<BorrowerModify />} />
@@ -85,18 +100,46 @@ function App() {
             <Route path="paymentsreceived" element={<PaymentsReceived />}></Route>
           </Route>
 
-          <Route path="/performance/*" element={<Performance />}>
+          <Route
+            path="/performance/*"
+            element={
+              <ProtectedRoute>
+                <Performance />
+              </ProtectedRoute>
+            }
+          >
             <Route path="updaterates/" element={<UpdateRates />}></Route>
             <Route path="updatemetrics/" element={<UpdateMetrics />}></Route>
           </Route>
-          <Route path="/reporting/*" element={<ReportingSubmenu />}>
+          <Route
+            path="/reporting/*"
+            element={
+              <ProtectedRoute>
+                <ReportingSubmenu />
+              </ProtectedRoute>
+            }
+          >
             <Route path="rollforward/" element={<Rollforward />}></Route>
             <Route path="otherreporting/" element={<OtherReporting />}></Route>
           </Route>
 
-          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route
+            path="/dashboard/*"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/configuration/*" element={<Configuration />}>
+          <Route
+            path="/configuration/*"
+            element={
+              <ProtectedRoute>
+                <Configuration />
+              </ProtectedRoute>
+            }
+          >
             <Route path="configfacility/*" element={<ConfigFacility />}>
               <Route path="debtfacilitycreate" element={<DebtFacilityCreate />} />
               <Route path="debtfacilitymodify" element={<DebtFacilityModify />} />

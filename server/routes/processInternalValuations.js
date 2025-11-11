@@ -10,12 +10,12 @@ async function getBegAndEndInternalValuations(
   let internalValuations = [];
 
   for (let i = 0; i < allIdsStart.length; i++) {
-    collateralId = allIdsStart[i];
+    const collateralId = allIdsStart[i];
 
     const intValStartRow =
       intValStart.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    startIntVal = intValStartRow ? intValStartRow.internal_val || null : null;
+    const startIntVal = intValStartRow ? intValStartRow.internal_val || null : null;
 
     internalValuations.push({
       collateralId: collateralId,
@@ -25,8 +25,8 @@ async function getBegAndEndInternalValuations(
   }
 
   for (let i = 0; i < additions.length; i++) {
-    collateralId = additions[i].collateralId;
-    inclusionDate = additions[i].addedDate;
+    const collateralId = additions[i].collateralId;
+    const inclusionDate = additions[i].addedDate;
 
     const intValStartOneColl = await getIntValForCollateral(collateralId, inclusionDate);
 
@@ -38,10 +38,10 @@ async function getBegAndEndInternalValuations(
   }
 
   for (let i = 0; i < allIdsEnd.length; i++) {
-    collateralId = allIdsEnd[i].collateralId;
-    intValEndRow = intValEnd.rows.find((row) => row.collateral_id === collateralId) || null;
+    const collateralId = allIdsEnd[i].collateralId;
+    const intValEndRow = intValEnd.rows.find((row) => row.collateral_id === collateralId) || null;
 
-    endIntVal = intValEndRow ? intValEndRow.internal_val || null : null;
+    const endIntVal = intValEndRow ? intValEndRow.internal_val || null : null;
 
     const existingIntVal = internalValuations.find((items) => items.collateralId === collateralId);
 

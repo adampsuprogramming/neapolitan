@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
-const e = require("express");
 
 router.post("/api/createPayments", async (req, res) => {
   const { paymentDate, paymentsReceived } = req.body;
@@ -41,7 +40,7 @@ WHERE c.collateral_balance_id = l.collateral_balance_id
     "INSERT INTO collateral_balance (start_date, collateral_id, outstanding_amount, commitment_amount) VALUES ";
 
   // loop to build the ending of the SQLs for batch inserts
-  for (var i = 1; i <= paymentsReceived.length * 4; i++) {
+  for (let i = 1; i <= paymentsReceived.length * 4; i++) {
     if (i % 4 === 1) {
       insertSQL = insertSQL + "(";
       insertBalanceSQL = insertBalanceSQL + "(";
@@ -63,7 +62,7 @@ WHERE c.collateral_balance_id = l.collateral_balance_id
   }
 
   // loop to populate the array with the parameters that will be inserted into payments
-  for (var i = 0; i < paymentsReceived.length; i++) {
+  for (let i = 0; i < paymentsReceived.length; i++) {
     insertValues.push(paymentDate);
     insertValues.push(paymentsReceived[i].collateralId);
     insertValues.push(paymentsReceived[i].principalReceived || 0);
@@ -71,7 +70,7 @@ WHERE c.collateral_balance_id = l.collateral_balance_id
   }
 
   // loop to populate the array with the parameters that will be inserted into balances
-  for (var i = 0; i < paymentsReceived.length; i++) {
+  for (let i = 0; i < paymentsReceived.length; i++) {
     insertBalances.push(paymentDate);
     insertBalances.push(paymentsReceived[i].collateralId);
     insertBalances.push(paymentsReceived[i].outstanding);
@@ -79,7 +78,7 @@ WHERE c.collateral_balance_id = l.collateral_balance_id
   }
 
   // loop to populate collateralIdArray with collateral ids
-  for (var i = 0; i < paymentsReceived.length; i++) {
+  for (let i = 0; i < paymentsReceived.length; i++) {
     collateralIdArray.push(paymentsReceived[i].collateralId);
   }
 
@@ -89,7 +88,7 @@ WHERE c.collateral_balance_id = l.collateral_balance_id
     await pool.query(insertSQL, insertValues);
 
     res.sendStatus(201);
-  } catch (err) {
+  } catch {
     res.status(500).send("Creating payment records in database failed");
   }
 });

@@ -40,8 +40,7 @@ let startDateObject;
 let endDateObject;
 
 router.get("/api/reportingCalculations", async (req, res) => {
-  const { debtFacilityId, startDate, endDate, isFundsFlow, currentOutstandings, intExpDue } =
-    req.query;
+  const { debtFacilityId, startDate, endDate, currentOutstandings, intExpDue } = req.query;
   startDateObject = new Date(startDate + "T00:00:00");
   endDateObject = new Date(endDate + "T00:00:00");
 
@@ -343,7 +342,7 @@ router.get("/api/reportingCalculations", async (req, res) => {
 
     report.sort((a, b) => a.collateralName.localeCompare(b.collateralName));
 
-    returnPackage = {
+    const returnPackage = {
       collateralData: report,
       fundsFlowData: {
         currFacBal: currentOutstandings,

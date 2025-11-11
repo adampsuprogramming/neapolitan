@@ -12,12 +12,6 @@ order by m.start_date desc
 limit 1;
 `;
 
-const additionsQuery = `
-SELECT *
-FROM collateral_balance
-WHERE 
-`;
-
 router.get("/api/metricsQuery", async (req, res) => {
   const { tranche_id } = req.query;
   try {

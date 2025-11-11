@@ -28,7 +28,7 @@ router.post("/api/createMetricsChange", async (req, res) => {
 
   try {
     await pool.query(metricsDataUpdate, [changeDate, trancheId]);
-  } catch (err) {
+  } catch {
     res.status(500).send("DB create loan_metrics query failed");
     return;
   }
@@ -45,7 +45,7 @@ router.post("/api/createMetricsChange", async (req, res) => {
       changeDate,
     ]);
     res.sendStatus(201);
-  } catch (err) {
+  } catch {
     res.status(500).send("DB create loan_metrics query failed");
     return;
   }

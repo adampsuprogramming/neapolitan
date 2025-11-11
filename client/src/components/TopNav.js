@@ -1,6 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
 
 const TopNav = () => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
   return (
     <nav className="navbar">
       <div className="nav-left-grouping">
@@ -55,19 +59,20 @@ const TopNav = () => {
         </div>
       </div>
       <div className="nav-right">
-        <NavLink
-          to="/users"
-          className={({ isActive }) => (isActive ? "nav-button highlighted" : "nav-button")}
-        >
-          user
-        </NavLink>
+        {isAuthenticated && user ? (
+          <>
+            <NavLink
+              to="/users"
+              className={({ isActive }) => (isActive ? "nav-button highlighted" : "nav-button")}
+            >
+              {user?.name}
+            </NavLink>
 
-        <NavLink
-          to="/logout"
-          className={({ isActive }) => (isActive ? "nav-button highlighted" : "nav-button")}
-        >
-          logout
-        </NavLink>
+            <LogoutButton />
+          </>
+        ) : (
+          <LoginButton />
+        )}
       </div>
     </nav>
   );
