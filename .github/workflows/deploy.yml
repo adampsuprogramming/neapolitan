@@ -69,6 +69,8 @@ jobs:
           cd ./server
           docker build \
           --build-arg FRONTEND_URL=${{ secrets.FRONTEND_URL }} \
+          --build-arg AUTH0_AUDIENCE=${{ secrets.AUTH0_AUDIENCE }} \
+          --build-arg AUTH0_ISSUER_BASE_URL=${{ secrets.AUTH0_ISSUER_BASE_URL }} \
           -t neapolitan-backend .
           docker tag neapolitan-backend:latest ${{ steps.login-ecr.outputs.registry }}/neapolitan-backend:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/neapolitan-backend:latest

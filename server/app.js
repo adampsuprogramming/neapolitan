@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const app = express();
 
+const { conditionalAuth } = require("./middleware/auth");
 const borrowBaseRoutes = require("./routes/borrowBase");
 const facilityRoutes = require("./routes/facilityQuery");
 const lenderQueryRoutes = require("./routes/lenderQuery");
@@ -50,16 +51,7 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });
 });
 
-// Test route to ensure that DB connection is working
-// app.get("/tranches", async (req, res) => {
-//   try {
-//     const result = await pool.query("SELECT * FROM loan_tranches");
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("DB test tranches query failed)");
-//   }
-// });
+app.use(conditionalAuth);
 
 // Route to retrieve borrowing base
 app.use(borrowBaseRoutes);
