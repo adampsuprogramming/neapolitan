@@ -1,4 +1,7 @@
 import "./App.css";
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
+import { useEffect } from 'react';
 import TopNav from "./TopNav";
 import BorrowBase from "./BorrowBase";
 import Transactions from "./Transactions";
@@ -44,6 +47,32 @@ import ReportingSubmenu from "./ReportingSubmenu";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
+
+  const { getAccessTokenSilently } = useAuth0();
+  const isProduction = process.env.REACT_APP_ENV === 'production';
+
+  useEffect(() => {
+    // Only set up interceptor in production
+    if (isProduction) {
+      const requestInterceptor = axios.interceptors.request.use(
+        async (config) => {
+          try {
+            const token = await getAccessTokenSilently();
+            config.headers.Authorization = `Bearer ${token}`;
+          } catch (error) {
+            console.error('Error getting token:', error);
+          }
+          return config;
+        },
+        (error) => Promise.reject(error)
+      );
+
+      return () => {
+        axios.interceptors.request.eject(requestInterceptor);
+      };
+    }
+  }, [getAccessTokenSilently, isProduction]);
+
   return (
     <div className="page">
       <TopNav />

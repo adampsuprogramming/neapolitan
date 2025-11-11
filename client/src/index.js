@@ -6,6 +6,8 @@ import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
+const isProduction = process.env.REACT_APP_ENV === 'production';
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Auth0Provider
@@ -13,6 +15,7 @@ root.render(
     clientId="3gkaRBfV7PA55yu3vxKZkRmOZGBFOnri"
     authorizationParams={{
       redirect_uri: window.location.origin,
+      ...(isProduction && { audience: "https://api.neapolitandebt.com/" }),
     }}
   >
     <BrowserRouter>
