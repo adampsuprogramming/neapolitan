@@ -29,8 +29,7 @@ it("selects a faciltiy and validates information display", function () {
   cy.focused().clear().type("09/30/2025{esc}");
   cy.wait(500);
 
-
-    cy.get("#root tr:nth-child(1) td:nth-child(1)", {timeout: 10000}).should("be.visible");
+  cy.get("#root tr:nth-child(1) td:nth-child(1)", { timeout: 10000 }).should("be.visible");
   // Test values displayed in first row
   cy.get("#root tr:nth-child(1) td:nth-child(1)").contains("2").should("be.visible");
   cy.get("#root tr:nth-child(1) td:nth-child(2)")
@@ -45,9 +44,7 @@ it("selects a faciltiy and validates information display", function () {
 
   // Test values displayed in second to last row
   cy.get("#root tr:nth-child(18) td:nth-child(1)").contains("13").should("be.visible");
-  cy.get("#root tr:nth-child(18) td:nth-child(2)")
-    .contains("Zephyros Global")
-    .should("be.visible");
+  cy.get("#root tr:nth-child(18) td:nth-child(2)").contains("Zephyros Global").should("be.visible");
   cy.get("#root tr:nth-child(18) td:nth-child(3) span")
     .contains("17,000,000.00")
     .should("be.visible");
@@ -57,9 +54,7 @@ it("selects a faciltiy and validates information display", function () {
 
   // Test values displayed in last row
   cy.get("#root tr:nth-child(19) td:nth-child(1)").contains("10").should("be.visible");
-  cy.get("#root tr:nth-child(19) td:nth-child(2)")
-    .contains("Zirconis Labs")
-    .should("be.visible");
+  cy.get("#root tr:nth-child(19) td:nth-child(2)").contains("Zirconis Labs").should("be.visible");
   cy.get("#root tr:nth-child(19) td:nth-child(3) span")
     .contains("$24,000,000.00")
     .should("be.visible");

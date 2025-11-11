@@ -5,7 +5,7 @@ const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
   return (
-      <a href="#" onClick={() => loginWithRedirect()}>
+    <a href="#" onClick={() => loginWithRedirect()}>
       Log In / Sign Up
     </a>
   );

@@ -136,7 +136,9 @@ function PaymentsReceived() {
           }),
         ]);
 
-        const sortedFirstResponse = firstResponse.data.sort((a, b) => a.legal_name.localeCompare(b.legal_name));
+        const sortedFirstResponse = firstResponse.data.sort((a, b) =>
+          a.legal_name.localeCompare(b.legal_name),
+        );
         setRowData(sortedFirstResponse);
 
         if (secondResponse.data.length > 0) {
