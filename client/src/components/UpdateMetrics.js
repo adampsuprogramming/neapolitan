@@ -28,6 +28,7 @@ function UpdateMetrics() {
   const [leverageRatio, setLeverageRatio] = useState(""); //After user enters leverage ratio, it is stored here
   const [netLeverageRatio, setNetLeverageRatio] = useState(""); //After user enters net leverage ratio, it is stored here
   const [intCoverageRatio, setIntCoverageRatio] = useState(""); //After user enters interest coverage ratio, it is stored here
+  const [internalVal, setInternalVal] = useState(""); //After user enters internal valuation, it is stored here
   const [message, setMessage] = useState(null);
   const [metrics, setMetrics] = useState([]);
   const [ebitda, setEbitda] = useState(""); //After user enters EBITDA, it is stored here
@@ -133,6 +134,7 @@ function UpdateMetrics() {
           netLeverageRatio,
           intCoverageRatio,
           ebitda,
+          internalVal: internalVal != null && internalVal != "" ? Number((internalVal / 100).toFixed(6)) : null,
         },
       );
       if (response.status === 201) {
@@ -155,6 +157,7 @@ function UpdateMetrics() {
     setLeverageRatio("");
     setNetLeverageRatio("");
     setIntCoverageRatio("");
+    setInternalVal("");
     setEbitda("");
   }
 
@@ -350,6 +353,20 @@ function UpdateMetrics() {
               <Box>
                 <NumericFormat
                   customInput={TextField}
+                  id="internal-val"
+                  sx={{ m: 1, width: "25ch", marginTop: 2 }}
+                  value={internalVal}
+                  onValueChange={(value) => setInternalVal(value.floatValue)}
+                  label="Internal Valuation"
+                  thousandSeparator=","
+                  suffix="%"
+                  decimalScale={6}
+                  fixedDecimalScale
+                />
+              </Box>
+              <Box>
+                <NumericFormat
+                  customInput={TextField}
                   id="ebitda"
                   sx={{ m: 1, width: "25ch", marginTop: 2 }}
                   value={ebitda}
@@ -479,6 +496,25 @@ function UpdateMetrics() {
                         minimumFractionDigits: 6,
                         maximumFractionDigits: 6,
                       }).format(metrics[0]?.int_coverage_ratio)
+                    : ""}
+                </Box>
+
+                <Box
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    paddingTop: "1.5ch",
+                  }}
+                >
+                  Internal Valuation:
+                </Box>
+                <Box sx={{ fontSize: "18px", paddingTop: "1.5ch" }}>
+                  {metrics[0]?.start_date
+                    ? new Intl.NumberFormat("en-US", {
+                        style: "percent",
+                        minimumFractionDigits: 6,
+                        maximumFractionDigits: 6,
+                      }).format(metrics[0]?.internal_val)
                     : ""}
                 </Box>
 

@@ -71,6 +71,11 @@ it("fills out metric update form", function () {
   cy.get("#int-coverage-ratio").type("2.456789");
   cy.get("#int-coverage-ratio").should("have.value", "2.456789");
 
+  // Test that text box for net leverage ratio and contains value inputted
+  cy.get("#internal-val").click();
+  cy.get("#internal-val").type("97.454");
+  cy.get("#internal-val").should("have.value", "97.454000%");
+
   // Test that text box for ebtida and contains value inputted
   cy.get("#ebitda").click();
   cy.get("#ebitda").type("8000000.01");

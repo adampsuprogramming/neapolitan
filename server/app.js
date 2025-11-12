@@ -28,6 +28,7 @@ const createMetricsChange = require("./routes/createMetricsChange");
 const createPayments = require("./routes/createPayments");
 const reportingCalculations = require("./routes/reportingCalculations");
 const paymentsQuery = require("./routes/paymentsQuery");
+const bankMetricsQuery = require("./routes/bankMetricsQuery");
 
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((origin) => origin.trim())
@@ -77,5 +78,6 @@ app.use(createMetricsChange);
 app.use(createPayments);
 app.use(reportingCalculations);
 app.use(paymentsQuery);
+app.use(bankMetricsQuery);
 
 module.exports = app;

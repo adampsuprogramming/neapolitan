@@ -11,8 +11,8 @@ WHERE loan_metrics_id = (
       ORDER BY start_date DESC
       LIMIT 1);`;
 
-const metricsDataInsert = `INSERT INTO loan_metrics (tranche_id, is_cov_default, is_payment_default, leverage_ratio, net_leverage_ratio, int_coverage_ratio, ebitda, start_date)
-values ($1,$2,$3,$4,$5,$6,$7,$8);`;
+const metricsDataInsert = `INSERT INTO loan_metrics (tranche_id, is_cov_default, is_payment_default, leverage_ratio, net_leverage_ratio, int_coverage_ratio, internal_val, ebitda, start_date)
+values ($1,$2,$3,$4,$5,$6,$7,$8,$9);`;
 
 router.post("/api/createMetricsChange", async (req, res) => {
   const {
@@ -23,6 +23,7 @@ router.post("/api/createMetricsChange", async (req, res) => {
     leverageRatio,
     netLeverageRatio,
     intCoverageRatio,
+    internalVal,
     ebitda,
   } = req.body;
 
@@ -41,6 +42,7 @@ router.post("/api/createMetricsChange", async (req, res) => {
       leverageRatio,
       netLeverageRatio,
       intCoverageRatio,
+      internalVal,
       ebitda,
       changeDate,
     ]);
