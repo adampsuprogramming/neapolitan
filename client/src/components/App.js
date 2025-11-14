@@ -39,12 +39,15 @@ import LoanTrancheDelete from "./LoanTrancheDelete";
 import PaymentsReceived from "./PaymentsReceived";
 import UpdateRates from "./UpdateRates";
 import UpdateMetrics from "./UpdateMetrics";
+import UpdateBankMetrics from "./UpdateBankMetrics";
 import Rollforward from "./Rollforward";
 import OtherReporting from "./OtherReporting";
+import Profile from "./Profile";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 import ReportingSubmenu from "./ReportingSubmenu";
 import ProtectedRoute from "./ProtectedRoute";
+
 
 function App() {
 
@@ -139,6 +142,7 @@ function App() {
           >
             <Route path="updaterates/" element={<UpdateRates />}></Route>
             <Route path="updatemetrics/" element={<UpdateMetrics />}></Route>
+            <Route path="updatebankmetrics/" element={<UpdateBankMetrics />}></Route>
           </Route>
           <Route
             path="/reporting/*"
@@ -177,6 +181,7 @@ function App() {
             <Route path="configbank/*" element={<ConfigBank />} />
             <Route path="configportfolio/*" element={<ConfigPortfolio />} />
           </Route>
+          <Route path="profile" element ={<Profile />}></Route>
         </Routes>
       </div>
     </div>

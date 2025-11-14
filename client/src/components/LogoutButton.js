@@ -6,7 +6,7 @@ const LogoutButton = () => {
 
   return (
     <a href="#" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-      Log Out
+      log out
     </a>
   );
 };

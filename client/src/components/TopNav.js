@@ -62,7 +62,7 @@ const TopNav = () => {
         {isAuthenticated && user ? (
           <>
             <NavLink
-              to="/users"
+              to="/profile"
               className={({ isActive }) => (isActive ? "nav-button highlighted" : "nav-button")}
             >
               {user?.name}
