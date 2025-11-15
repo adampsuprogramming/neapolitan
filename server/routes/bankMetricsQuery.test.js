@@ -52,7 +52,7 @@ describe("GET /api/bankMetricsQuery", () => {
       `
 SELECT *
 FROM bank_metrics m
-where m.tranche_id=$1
+where m.collateral_id=$1
 order by m.start_date desc
 limit 1;
 `,
