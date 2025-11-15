@@ -62,7 +62,7 @@ WHERE loan_metrics_id = (
 
       `INSERT INTO loan_metrics (tranche_id, is_cov_default, is_payment_default, leverage_ratio, net_leverage_ratio, int_coverage_ratio, internal_val, ebitda, start_date)
 values ($1,$2,$3,$4,$5,$6,$7,$8,$9);`,
-      ["112", true, true, 5, 4.75, 2, .98, 15000000, "2025-09-30"],
+      ["112", true, true, 5, 4.75, 2, 0.98, 15000000, "2025-09-30"],
     );
   });
 });

@@ -33,7 +33,7 @@ describe("GET /api/metricsQuery", () => {
           ebitda: 1500000,
           start_date: "2024-12-31",
           end_date: "2029-12-31",
-          internal_val: .98,
+          internal_val: 0.98,
         },
       ],
     });
@@ -52,7 +52,7 @@ describe("GET /api/metricsQuery", () => {
         ebitda: 1500000,
         start_date: "2024-12-31",
         end_date: "2029-12-31",
-        internal_val: .98,
+        internal_val: 0.98,
       },
     ]);
 

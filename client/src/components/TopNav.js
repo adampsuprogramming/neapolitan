@@ -4,7 +4,7 @@ import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 
 const TopNav = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   return (
     <nav className="navbar">
       <div className="nav-left-grouping">

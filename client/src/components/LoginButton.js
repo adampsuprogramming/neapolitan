@@ -6,7 +6,7 @@ const LoginButton = () => {
 
   return (
     <a href="#" onClick={() => loginWithRedirect()}>
-      Log In / Sign Up
+      Log In
     </a>
   );
 };

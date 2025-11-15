@@ -1,5 +1,5 @@
 // **********************************************************************************
-// *       UT-__ – Testing /api/borrowerquerybyfacility endpoint’s functionality    *
+// *       UT-114 – Testing /api/borrowerquerybyfacility endpoint’s functionality   *
 // **********************************************************************************
 
 jest.mock("../db");
@@ -27,7 +27,7 @@ describe("GET /api/borrowerquerybyfacility", () => {
           tranche_id: 789,
           inclusion_date: "2025-03-01",
           removed_date: null,
-          legal_name: "The Mario Company"
+          legal_name: "The Mario Company",
         },
         {
           collateral_id: 111,
@@ -35,30 +35,32 @@ describe("GET /api/borrowerquerybyfacility", () => {
           tranche_id: 777,
           inclusion_date: "2025-04-01",
           removed_date: null,
-          legal_name: "The Yoshi Company"
+          legal_name: "The Yoshi Company",
         },
       ],
     });
 
-    const response = await request(app).get("/api/borrowerquerybyfacility").query({ debtFacilityId: 456 });
+    const response = await request(app)
+      .get("/api/borrowerquerybyfacility")
+      .query({ debtFacilityId: 456 });
 
     expect(response.body).toEqual([
-        {
-          collateral_id: 123,
-          debt_facility_id: 456,
-          tranche_id: 789,
-          inclusion_date: "2025-03-01",
-          removed_date: null,
-          legal_name: "The Mario Company"
-        },
-        {
-          collateral_id: 111,
-          debt_facility_id: 456,
-          tranche_id: 777,
-          inclusion_date: "2025-04-01",
-          removed_date: null,
-          legal_name: "The Yoshi Company"
-        },
+      {
+        collateral_id: 123,
+        debt_facility_id: 456,
+        tranche_id: 789,
+        inclusion_date: "2025-03-01",
+        removed_date: null,
+        legal_name: "The Mario Company",
+      },
+      {
+        collateral_id: 111,
+        debt_facility_id: 456,
+        tranche_id: 777,
+        inclusion_date: "2025-04-01",
+        removed_date: null,
+        legal_name: "The Yoshi Company",
+      },
     ]);
 
     expect(mockedQuery).toHaveBeenCalledWith(

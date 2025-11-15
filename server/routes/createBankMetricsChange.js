@@ -15,12 +15,7 @@ const bankMetricsDataInsert = `INSERT INTO bank_metrics (collateral_id, advance_
 values ($1,$2,$3,$4);`;
 
 router.post("/api/createBankMetricsChange", async (req, res) => {
-  const {
-    collateralId,
-    advanceRate,
-    valuation,
-    changeDate,
-  } = req.body;
+  const { collateralId, advanceRate, valuation, changeDate } = req.body;
 
   try {
     await pool.query(bankMetricsDataUpdate, [changeDate, collateralId]);
@@ -30,13 +25,7 @@ router.post("/api/createBankMetricsChange", async (req, res) => {
   }
 
   try {
-    await pool.query(bankMetricsDataInsert, [
-      collateralId,
-      advanceRate,
-      valuation,
-      changeDate,
-
-    ]);
+    await pool.query(bankMetricsDataInsert, [collateralId, advanceRate, valuation, changeDate]);
     res.sendStatus(201);
   } catch {
     res.status(500).send("DB create bank_metrics query failed");

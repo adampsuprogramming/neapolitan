@@ -18,6 +18,13 @@ export default function Performance() {
         >
           Update Metrics
         </NavLink>
+
+        <NavLink
+          to="updatebankmetrics"
+          className={({ isActive }) => (isActive ? "performance-nav-highlighted" : "")}
+        >
+          Update Bank Metrics
+        </NavLink>
       </nav>
       <Outlet />
     </div>

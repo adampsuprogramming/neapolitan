@@ -1,8 +1,8 @@
 // ************************************************************************
-// * UT-__– Determine if Node Receives Metrics Update and Sends Out       *
+// * UT-111– Determine if Node Receives Metrics Update and Sends Out      *
 // * Correct SQL Update and Insert Commands                               *
-// * UT-__- Determine if first query handles error properly               *
-// * UT-__- Determine if second query handles error properly              *
+// * UT-112- Determine if first query handles error properly              *
+// * UT-113- Determine if second query handles error properly             *
 // ************************************************************************
 
 // This mock must come before the import of object
@@ -31,8 +31,8 @@ describe("POST /api/createBankMetricsChange", () => {
 
     const response = await request(app).post("/api/createBankMetricsChange").send({
       collateralId: "123",
-      advanceRate: .655,
-      valuation: .988,
+      advanceRate: 0.655,
+      valuation: 0.988,
       changeDate: "2025-09-30",
     });
 
@@ -57,7 +57,7 @@ WHERE bank_metrics_id = (
 
       `INSERT INTO bank_metrics (collateral_id, advance_rate, valuation, start_date)
 values ($1,$2,$3,$4);`,
-      ["123", .655, .988, "2025-09-30"],
+      ["123", 0.655, 0.988, "2025-09-30"],
     );
   });
 });
@@ -68,8 +68,8 @@ describe("POST /api/createMetricsChange", () => {
 
     const response = await request(app).post("/api/createBankMetricsChange").send({
       collateralId: "123",
-      advanceRate: .655,
-      valuation: .988,
+      advanceRate: 0.655,
+      valuation: 0.988,
       changeDate: "2025-09-30",
     });
 
@@ -83,8 +83,8 @@ describe("POST /api/createMetricsChange", () => {
 
     const response = await request(app).post("/api/createBankMetricsChange").send({
       collateralId: "123",
-      advanceRate: .655,
-      valuation: .988,
+      advanceRate: 0.655,
+      valuation: 0.988,
       changeDate: "2025-09-30",
     });
 

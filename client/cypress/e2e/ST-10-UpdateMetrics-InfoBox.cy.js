@@ -44,7 +44,7 @@ it("fills out metric update form", function () {
   cy.get("#root div.css-1pq0g67").contains("4.400000").should("be.visible");
   cy.get("#root div.css-ziijsz").contains("4.00000").should("be.visible");
   cy.get("#root div.css-11eceka").contains("3.000000").should("be.visible");
-  cy.get("#root div:nth-child(10)").contains("98.000000%").should("be.visible");  
+  cy.get("#root div:nth-child(10)").contains("98.000000%").should("be.visible");
   cy.get("#root div:nth-child(12)").contains("$15,000,000.00").should("be.visible");
   cy.get("#root div:nth-child(14)").contains("No").should("be.visible");
   cy.get("#root div:nth-child(16)").contains("No").should("be.visible");

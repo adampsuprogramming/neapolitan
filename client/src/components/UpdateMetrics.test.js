@@ -100,7 +100,7 @@ test("UT-?? – Testing populating and submitting Update Rate Data form", async 
             ebitda: 1500000,
             start_date: "2024-12-31",
             end_date: "2029-12-31",
-            internal_val: .987,
+            internal_val: 0.987,
           },
         ],
       });
@@ -171,13 +171,11 @@ test("UT-?? – Testing populating and submitting Update Rate Data form", async 
   });
   expect(intCovTextBox.value).toBe("2.000000");
 
-  
   const intValTextBox = screen.getByLabelText("Internal Valuation");
   fireEvent.change(intValTextBox, {
     target: { value: "98.1" },
   });
   expect(intValTextBox.value).toBe("98.100000%");
-
 
   const ebitda = screen.getByLabelText("EBITDA");
   fireEvent.change(ebitda, {
@@ -209,7 +207,7 @@ test("UT-?? – Testing populating and submitting Update Rate Data form", async 
         leverageRatio: 5,
         netLeverageRatio: 4.75,
         intCoverageRatio: 2,
-        internalVal: .981,
+        internalVal: 0.981,
         ebitda: 15000000,
       }),
     );

@@ -132,7 +132,6 @@ function Rollforward() {
         chgDueToInternalVal: 0,
         addlChgBankVal: 0,
         endValue: 0,
-        collateralName: 0,
         begLevAvail: 0,
         levAvailChgDueToAddition: 0,
         levAvailChgDueToRepay: 0,

@@ -8,8 +8,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 
 function UpdateMetrics() {
@@ -23,31 +21,117 @@ function UpdateMetrics() {
   const [loanTrancheOptions, setLoanTrancheOptions] = useState([]); // Filtered loan tranche options based on loan_agreement
   const [selectedTrancheId, setSelectedTrancheId] = useState(null); // After user chooses loan tranche, related ID is set here
   const [changeDate, setChangeDate] = useState(""); // After user chooses change date, it is stored here
-  const [isCovDefault, setIsCovDefault] = useState(false); // Hold results for whether loan is in covenant default, as chosen in toggle
-  const [isPaymentDefault, setIsPaymentDefault] = useState(false); // Hold results for whether loan is in payment default, as chosen in toggle
-  const [leverageRatio, setLeverageRatio] = useState(""); //After user enters leverage ratio, it is stored here
-  const [netLeverageRatio, setNetLeverageRatio] = useState(""); //After user enters net leverage ratio, it is stored here
-  const [intCoverageRatio, setIntCoverageRatio] = useState(""); //After user enters interest coverage ratio, it is stored here
-  const [internalVal, setInternalVal] = useState(""); //After user enters internal valuation, it is stored here
   const [message, setMessage] = useState(null);
   const [metrics, setMetrics] = useState([]);
-  const [ebitda, setEbitda] = useState(""); //After user enters EBITDA, it is stored here
-
+  const [facilityData, setFacilityData] = useState([]);
+  const [uniqueNames, setUniqueNames] = useState([]);
+  const [selectedPortfolio, setSelectedPortfolio] = useState("");
+  const [facilityName, setFacilityName] = useState("");
+  const [facilityNames, setFacilityNames] = useState([]);
+  const [facilityNumber, setFacilityNumber] = useState(null);
+  const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]);
+  const [fullBorrowerData, setFullBorrowerData] = useState([]);
+  const [advanceRate, setAdvanceRate] = useState("");
+  const [valuation, setValuation] = useState("");
+  const [collateralId, setCollateralId] = useState("");
   // the following useEffects load up the following on page loan:
   // 1. Borrower Names 2. Loan Agreements 3. Loan Tranches
+
+  // function clearData() {
+  //   setSelectedPortfolio("");
+  //   setFacilityName("");
+  //   setFacilityNames([]);
+  //   setFacilityNumber(null);
+  //   setUniqueFacilityNames([]);
+  //   setStartDate("");
+  //   setEndDate("");
+  //   setRowData([]);
+  //   setCurrentOutstandings("");
+  //   setIntExpDue("");
+  //   setIsFundsFlow(false);
+  // }
+
+  // On page load, get Portfolio Names and Lender Names
+  useEffect(() => {
+    async function getFacilityData() {
+      try {
+        const fullInfoResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/facilities`,
+        );
+        setFacilityData(fullInfoResponse.data);
+      } catch {
+        setMessage("Error fetching facility data");
+      }
+    }
+
+    getFacilityData();
+  }, []);
+
+  // Once facility data is populated, extract portfolio names into new array and then
+  // use Set to get only the unique names and sort the array.
+
+  useEffect(() => {
+    if (facilityData.length > 0) {
+      const porfolioName = facilityData.map((a) => a.portfolio_name);
+      const uniqueNamesArray = Array.from(new Set(porfolioName)).sort();
+      setUniqueNames(uniqueNamesArray);
+    }
+  }, [facilityData]);
+
+  // When the portfolio is selected, filter facilityData object
+  // to get only those records that contain the facility.  Set
+  // facilityNames equal to that record
+  const handlePortfolioChange = (e, value) => {
+    setSelectedPortfolio(value || "");
+    const portfolioFacilities = facilityData.filter((item) =>
+      item.portfolio_name.includes(value || ""),
+    );
+    setFacilityNames(portfolioFacilities);
+  };
+
+  // Once facilityNames is set to that value (from above) create an accray of just debt
+  // facility names and then set an array equal to the results of the sorted set function
+  // run on that array
+  useEffect(() => {
+    if (facilityNames.length > 0) {
+      const facilityNameSelection = facilityNames.map((a) => a.debt_facility_name);
+      const uniqueDebtFacilityNamesArray = Array.from(new Set(facilityNameSelection)).sort();
+      setUniqueFacilityNames(uniqueDebtFacilityNamesArray);
+    }
+  }, [facilityNames]);
+
+  // When the facility is chosen, search the facilityData object to find the
+  // record with the facility name that matches the chosen value.
+  // Set facility_numb equal to the debt_facility_id value of that record.
+  const handleFacilityChange = (e, value) => {
+    setFacilityName(value || "");
+    const facility_record = facilityData.find((f) => f.debt_facility_name === value);
+
+    const facility_numb = facility_record.debt_facility_id;
+    setFacilityNumber(facility_numb);
+  };
+
+  // When facilityNumber is set, get borrowerquerybyfacility, which accepts
+  // faclityNumber as a parameter and returns the borrowers are part of that
+  // facility's collateral
 
   useEffect(() => {
     async function getBorrowerNames() {
       try {
         const fullInfoResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/borrowerquery`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/borrowerquerybyfacility`,
+          {
+            params: {
+              debtFacilityId: facilityNumber,
+            },
+          },
         );
         const data = fullInfoResponse.data;
         const dataWithoutNull = data.filter((borrower) => borrower.legal_name);
         const sortedBorrowers = dataWithoutNull.sort((first, second) => {
           return first.legal_name.localeCompare(second.legal_name);
         });
-
+        setFullBorrowerData(data);
         setBorrowerData(sortedBorrowers);
       } catch {
         setMessage("Error fetching data from server");
@@ -55,8 +139,9 @@ function UpdateMetrics() {
     }
 
     getBorrowerNames();
-  }, []);
+  }, [facilityNumber]);
 
+  // Gets all loan agreement  data at page load
   useEffect(() => {
     async function getLoanAgreementData() {
       try {
@@ -71,6 +156,21 @@ function UpdateMetrics() {
     getLoanAgreementData();
   }, []);
 
+  // When the borrower is chosen, filter the loan agreement data for only the loan
+  // agreements that are related to that specific borrower and
+  // set loanAgreementOptions equal to those loan agreements
+
+  const handleBorrowerChange = (e, setValue) => {
+    setLoanAgreementOptions([]);
+    setSelectedLoanAgreement(null);
+    setSelectedBorrower(setValue);
+    const loanAgreements = loanAgreementData.filter((item) =>
+      item.legal_name.includes(setValue.legal_name),
+    );
+    setLoanAgreementOptions(loanAgreements);
+  };
+
+  // Gets all loan tranche data at page load
   useEffect(() => {
     async function getLoanTrancheData() {
       try {
@@ -85,16 +185,47 @@ function UpdateMetrics() {
     getLoanTrancheData();
   }, []);
 
-  // Upon choosing a loan tranche, rate data is retrieved from server
+  // When the loan agreement is chosen, filter the loan tranche data
+  // for only the loan tranches that are related to that loan agreements
+  // set loanTrancheOptions equal to those loan agreements
+
+  const handleLoanAgreementChange = (e, setValue) => {
+    setLoanTrancheOptions([]);
+    setSelectedLoanTranche(null);
+    setSelectedLoanAgreement(setValue);
+    const loanTranches = loanTrancheData.filter(
+      (item) => item.loan_agreement_id === setValue.loan_agreement_id,
+    );
+    setLoanTrancheOptions(loanTranches);
+  };
 
   useEffect(() => {
-    async function getMetrics() {
+    if (!facilityName) {
+      const porfolioName = facilityData.map((a) => a.portfolio_name);
+      const uniqueNamesArray = Array.from(new Set(porfolioName)).sort();
+      setUniqueNames(uniqueNamesArray);
+    }
+  }, [facilityName]);
+
+  const getCollateralId = (trancheId, facilityId) => {
+    const collateral = fullBorrowerData.filter(
+      (item) => item.tranche_id === trancheId && item.debt_facility_id === facilityId,
+    );
+    return collateral[0]?.collateral_id;
+  };
+
+  // Upon choosing a loan tranche, metrics are retrieved from server
+
+  useEffect(() => {
+    const collateralId = getCollateralId(selectedTrancheId, facilityNumber);
+    setCollateralId(collateralId);
+    async function getBankMetrics() {
       try {
         const fullInfoResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/metricsQuery`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/bankMetricsQuery`,
           {
             params: {
-              tranche_id: selectedTrancheId,
+              collateral_id: collateralId,
             },
           },
         );
@@ -105,7 +236,7 @@ function UpdateMetrics() {
       }
     }
 
-    getMetrics();
+    getBankMetrics();
   }, [selectedTrancheId]);
 
   // Upon choosing a loan tranche, the loan tranche's id is saved
@@ -117,74 +248,53 @@ function UpdateMetrics() {
 
   // Posts rate update
 
-  async function postRateUpdate() {
+  async function postMetricsUpdate() {
     try {
-      if (!selectedLoanTranche || !selectedBorrower || !selectedLoanAgreement || !changeDate) {
+      if (
+        !selectedPortfolio ||
+        !facilityName ||
+        !selectedLoanTranche ||
+        !selectedBorrower ||
+        !selectedLoanAgreement ||
+        !changeDate
+      ) {
         setMessage("Please input all required fields (denoted by *)");
         return;
       }
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/createMetricsChange`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/createBankMetricsChange`,
         {
-          trancheId: selectedTrancheId,
-          changeDate: changeDate,
-          isCovDefault,
-          isPaymentDefault,
-          leverageRatio,
-          netLeverageRatio,
-          intCoverageRatio,
-          ebitda,
-          internalVal:
-            internalVal != null && internalVal != ""
-              ? Number((internalVal / 100).toFixed(6))
+          collateralId: collateralId,
+          advanceRate:
+            advanceRate != null && advanceRate != ""
+              ? Number((advanceRate / 100).toFixed(6))
               : null,
+          valuation:
+            valuation != null && valuation != "" ? Number((valuation / 100).toFixed(6)) : null,
+          changeDate: changeDate,
         },
       );
       if (response.status === 201) {
         clearData();
-        setMessage("Metric Update Successful");
+        setMessage("Bank Metric Update Successful");
       }
     } catch {
-      setMessage("There was an error updating the loan metrics.");
+      setMessage("There was an error updating the bank metrics.");
     }
   }
 
   function clearData() {
+    setSelectedPortfolio(null);
+    setFacilityName(null);
     setSelectedBorrower(null);
     setSelectedLoanTranche(null);
     setSelectedLoanAgreement(null);
     setSelectedTrancheId(null);
     setChangeDate("");
-    setIsCovDefault(false);
-    setIsPaymentDefault(false);
-    setLeverageRatio("");
-    setNetLeverageRatio("");
-    setIntCoverageRatio("");
-    setInternalVal("");
-    setEbitda("");
+    setValuation("");
+    setAdvanceRate("");
+
   }
-
-  const handleBorrowerChange = (e, setValue) => {
-    setMessage("");
-    clearData();
-    setLoanAgreementOptions([]);
-    setSelectedLoanAgreement(null);
-    setSelectedBorrower(setValue);
-    const loanAgreements = loanAgreementData.filter((item) =>
-      item.legal_name.includes(setValue.legal_name),
-    );
-    setLoanAgreementOptions(loanAgreements);
-  };
-
-  const handleLoanAgreementChange = (e, setValue) => {
-    setLoanTrancheOptions([]);
-    setSelectedLoanTranche(null);
-    setSelectedLoanAgreement(setValue);
-    const loanTranches = loanTrancheData.filter(
-      (item) => item.loan_agreement_id === setValue.loan_agreement_id,
-    );
-    setLoanTrancheOptions(loanTranches);
-  };
 
   return (
     <>
@@ -197,7 +307,7 @@ function UpdateMetrics() {
           paddingBottom: 20,
         }}
       >
-        Update Metrics
+        Update Bank Metrics
       </div>
       <Box component="form" sx={{ paddingLeft: "115px", paddingTop: "5px" }}>
         <Box
@@ -205,7 +315,7 @@ function UpdateMetrics() {
             border: 1,
             borderRadius: 4,
             borderColor: "#c7c7c7ff",
-            width: "112ch",
+            width: "165ch",
             marginTop: 0,
             marginLeft: 6,
             marginBottom: 3,
@@ -215,22 +325,48 @@ function UpdateMetrics() {
           <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
             <Autocomplete
               disablePortal
+              id="autocomplete-portfolio-name"
+              required
+              options={uniqueNames}
+              value={selectedPortfolio}
+              sx={{ m: 1, width: "50ch" }}
+              onChange={handlePortfolioChange}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => <TextField {...params} label="Portfolio Name" required />}
+            />
+
+            <Autocomplete
+              disablePortal
+              id="autocomplete-facility-name"
+              required
+              options={uniqueFacilityNames}
+              value={facilityName}
+              sx={{ m: 1, width: "50ch" }}
+              onChange={handleFacilityChange}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => <TextField {...params} label="Facility Name" required />}
+            />
+            <Autocomplete
+              disablePortal
               id="autocomplete-borrower-name"
               required
               options={borrowerData}
               value={selectedBorrower}
-              sx={{ m: 1, minWidth: "450px" }}
+              sx={{ m: 1, width: "50ch" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
               renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
             />
 
+          </div>
+          <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
+            
             <Autocomplete
               disablePortal
               id="autocomplete-loan-agreeements"
               options={loanAgreementOptions}
               value={selectedLoanAgreement}
-              sx={{ m: 1, minWidth: "450px" }}
+              sx={{ m: 1, width: "50ch" }}
               onChange={handleLoanAgreementChange}
               getOptionLabel={(option) => option.loan_agreement_name || ""}
               disabled={!selectedBorrower}
@@ -244,14 +380,12 @@ function UpdateMetrics() {
                 />
               )}
             />
-          </div>
-          <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
             <Autocomplete
               disablePortal
               id="autocomplete-loan-tranches"
               options={loanTrancheOptions}
               value={selectedLoanTranche}
-              sx={{ m: 1, minWidth: "450px" }}
+              sx={{ m: 1, width: "50ch" }}
               onChange={(event, newValue) => setSelectedLoanTranche(newValue)}
               getOptionLabel={(option) => option.tranche_name || ""}
               disabled={!selectedLoanAgreement}
@@ -317,50 +451,11 @@ function UpdateMetrics() {
               <Box>
                 <NumericFormat
                   customInput={TextField}
-                  id="leverage-ratio"
+                  id="advance-rate"
                   sx={{ m: 1, width: "25ch", marginTop: 2 }}
-                  value={leverageRatio}
-                  onValueChange={(value) => setLeverageRatio(value.floatValue)}
-                  label="Leverage Ratio"
-                  thousandSeparator=","
-                  decimalScale={6}
-                  fixedDecimalScale
-                />
-              </Box>
-              <Box>
-                <NumericFormat
-                  customInput={TextField}
-                  id="net-leverage-ratio"
-                  sx={{ m: 1, width: "25ch", marginTop: 2 }}
-                  value={netLeverageRatio}
-                  onValueChange={(value) => setNetLeverageRatio(value.floatValue)}
-                  label="Net Leverage Ratio"
-                  thousandSeparator=","
-                  decimalScale={6}
-                  fixedDecimalScale
-                />
-              </Box>
-              <Box>
-                <NumericFormat
-                  customInput={TextField}
-                  id="int-coverage-ratio"
-                  sx={{ m: 1, width: "25ch", marginTop: 2 }}
-                  value={intCoverageRatio}
-                  onValueChange={(value) => setIntCoverageRatio(value.floatValue)}
-                  label="Interest Coverage Ratio"
-                  thousandSeparator=","
-                  decimalScale={6}
-                  fixedDecimalScale
-                />
-              </Box>
-              <Box>
-                <NumericFormat
-                  customInput={TextField}
-                  id="internal-val"
-                  sx={{ m: 1, width: "25ch", marginTop: 2 }}
-                  value={internalVal}
-                  onValueChange={(value) => setInternalVal(value.floatValue)}
-                  label="Internal Valuation"
+                  value={advanceRate}
+                  onValueChange={(value) => setAdvanceRate(value.floatValue)}
+                  label="Advance Rate"
                   thousandSeparator=","
                   suffix="%"
                   decimalScale={6}
@@ -370,41 +465,15 @@ function UpdateMetrics() {
               <Box>
                 <NumericFormat
                   customInput={TextField}
-                  id="ebitda"
+                  id="valuation"
                   sx={{ m: 1, width: "25ch", marginTop: 2 }}
-                  value={ebitda}
-                  onValueChange={(value) => setEbitda(value.floatValue)}
-                  label="EBITDA"
+                  value={valuation}
+                  onValueChange={(value) => setValuation(value.floatValue)}
+                  label="Valuation"
                   thousandSeparator=","
-                  prefix="$"
-                  decimalScale={2}
+                  suffix="%"
+                  decimalScale={6}
                   fixedDecimalScale
-                />
-              </Box>
-              <Box sx={{ marginTop: "2.4ch" }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isCovDefault}
-                      id="is-cov-default"
-                      onChange={(e) => setIsCovDefault(e.target.checked)}
-                    />
-                  }
-                  labelPlacement="start"
-                  label="Covenant Default"
-                />
-              </Box>
-              <Box sx={{ marginTop: "4.7ch" }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isPaymentDefault}
-                      id="is-payment-default"
-                      onChange={(e) => setIsPaymentDefault(e.target.checked)}
-                    />
-                  }
-                  labelPlacement="start"
-                  label="Payment Default"
                 />
               </Box>
             </Box>
@@ -451,54 +520,19 @@ function UpdateMetrics() {
                 <Box
                   sx={{
                     fontWeight: "bold",
-                    paddingTop: "4ch",
                     fontSize: "18px",
+                    paddingTop: "3.5ch",
                   }}
                 >
-                  Leverage Ratio:
-                </Box>
-                <Box sx={{ fontSize: "18px", paddingTop: "4ch" }}>
-                  {metrics[0]?.start_date
-                    ? new Intl.NumberFormat("en-US", {
-                        minimumFractionDigits: 6,
-                        maximumFractionDigits: 6,
-                      }).format(metrics[0]?.leverage_ratio)
-                    : ""}
-                </Box>
-
-                <Box
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    paddingTop: "1.1ch",
-                  }}
-                >
-                  Net Leverage Ratio:
-                </Box>
-                <Box sx={{ fontSize: "18px", paddingTop: "1.1ch" }}>
-                  {metrics[0]?.start_date
-                    ? new Intl.NumberFormat("en-US", {
-                        minimumFractionDigits: 6,
-                        maximumFractionDigits: 6,
-                      }).format(metrics[0]?.net_leverage_ratio)
-                    : ""}
-                </Box>
-
-                <Box
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    paddingTop: "1.5ch",
-                  }}
-                >
-                  Interest Coverage Ratio:
+                  Advance Rate:
                 </Box>
                 <Box sx={{ fontSize: "18px", paddingTop: "1.5ch" }}>
-                  {metrics[0]?.start_date
+                  {metrics[0]?.advance_rate
                     ? new Intl.NumberFormat("en-US", {
+                        style: "percent",
                         minimumFractionDigits: 6,
                         maximumFractionDigits: 6,
-                      }).format(metrics[0]?.int_coverage_ratio)
+                      }).format(metrics[0]?.advance_rate)
                     : ""}
                 </Box>
 
@@ -509,7 +543,7 @@ function UpdateMetrics() {
                     paddingTop: "1.5ch",
                   }}
                 >
-                  Internal Valuation:
+                  Valuation:
                 </Box>
                 <Box sx={{ fontSize: "18px", paddingTop: "1.5ch" }}>
                   {metrics[0]?.start_date
@@ -517,54 +551,8 @@ function UpdateMetrics() {
                         style: "percent",
                         minimumFractionDigits: 6,
                         maximumFractionDigits: 6,
-                      }).format(metrics[0]?.internal_val)
+                      }).format(metrics[0]?.valuation)
                     : ""}
-                </Box>
-
-                <Box
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    paddingTop: "1.8ch",
-                  }}
-                >
-                  EBITDA:
-                </Box>
-                <Box sx={{ fontSize: "18px", paddingTop: "1.8ch" }}>
-                  {metrics[0]?.start_date
-                    ? new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(metrics[0]?.ebitda)
-                    : ""}
-                </Box>
-
-                <Box
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    marginTop: "1.2ch",
-                  }}
-                >
-                  Is Covenant Default:
-                </Box>
-                <Box sx={{ fontSize: "18px", marginTop: "1.2ch" }}>
-                  {metrics[0]?.start_date ? (metrics[0]?.is_cov_default ? "Yes" : "No") : ""}
-                </Box>
-
-                <Box
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    marginTop: "1.2ch",
-                  }}
-                >
-                  Is Payment Default:
-                </Box>
-                <Box sx={{ fontSize: "18px", marginTop: "1.2ch" }}>
-                  {metrics[0]?.start_date ? (metrics[0]?.is_payment_default ? "Yes" : "No") : ""}
                 </Box>
               </Box>
             </Box>
@@ -572,7 +560,7 @@ function UpdateMetrics() {
           <div style={{ marginTop: "40px" }}>
             <Button
               variant="contained"
-              onClick={postRateUpdate}
+              onClick={postMetricsUpdate}
               sx={{
                 marginLeft: "25px",
                 minWidth: "225px",

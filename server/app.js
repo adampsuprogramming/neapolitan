@@ -29,7 +29,7 @@ const createPayments = require("./routes/createPayments");
 const reportingCalculations = require("./routes/reportingCalculations");
 const paymentsQuery = require("./routes/paymentsQuery");
 const bankMetricsQuery = require("./routes/bankMetricsQuery");
-const createBankMetricsChange = require("./routes/createBankMetricsChange")
+const createBankMetricsChange = require("./routes/createBankMetricsChange");
 const borrowerQueryByFacility = require("./routes/borrowerQueryByFacility");
 
 const allowedOrigins = process.env.FRONTEND_URL

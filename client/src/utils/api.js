@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
+import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 export const useAuthenticatedAxios = () => {
   const { getAccessTokenSilently } = useAuth0();
-  const isProduction = process.env.REACT_APP_ENV === 'production';
+  const isProduction = process.env.REACT_APP_ENV === "production";
 
   const axiosInstance = axios.create();
 
@@ -19,7 +19,7 @@ export const useAuthenticatedAxios = () => {
         },
         (error) => {
           return Promise.reject(error);
-        }
+        },
       );
 
       return () => {

@@ -24,27 +24,27 @@ describe("GET /api/bankMetricsQuery", () => {
       rows: [
         {
           collateral_id: 123456,
-          tranche_id: 999,
           start_date: "2025-03-31",
           end_date: "2025-06-30",
-          advance_rate: .655,
-          valuation: .915,    
-          bank_metrics_id: 789,     
+          advance_rate: 0.655,
+          valuation: 0.915,
+          bank_metrics_id: 789,
         },
       ],
     });
 
-    const response = await request(app).get("/api/bankMetricsQuery").query({ tranche_id: 999 });
+    const response = await request(app)
+      .get("/api/bankMetricsQuery")
+      .query({ collateral_id: 123456 });
 
     expect(response.body).toEqual([
       {
-          collateral_id: 123456,
-          tranche_id: 999,
-          start_date: "2025-03-31",
-          end_date: "2025-06-30",
-          advance_rate: .655,
-          valuation: .915,    
-          bank_metrics_id: 789,     
+        collateral_id: 123456,
+        start_date: "2025-03-31",
+        end_date: "2025-06-30",
+        advance_rate: 0.655,
+        valuation: 0.915,
+        bank_metrics_id: 789,
       },
     ]);
 
@@ -56,7 +56,7 @@ where m.tranche_id=$1
 order by m.start_date desc
 limit 1;
 `,
-      ["999"],
+      ["123456"],
     );
   });
 });
