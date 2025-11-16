@@ -1,7 +1,7 @@
 import "./App.css";
-import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
-import { useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import { useEffect } from "react";
 import TopNav from "./TopNav";
 import BorrowBase from "./BorrowBase";
 import Transactions from "./Transactions";
@@ -39,17 +39,18 @@ import LoanTrancheDelete from "./LoanTrancheDelete";
 import PaymentsReceived from "./PaymentsReceived";
 import UpdateRates from "./UpdateRates";
 import UpdateMetrics from "./UpdateMetrics";
+import UpdateBankMetrics from "./UpdateBankMetrics";
 import Rollforward from "./Rollforward";
 import OtherReporting from "./OtherReporting";
+import Profile from "./Profile";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 import ReportingSubmenu from "./ReportingSubmenu";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
-
   const { getAccessTokenSilently } = useAuth0();
-  const isProduction = process.env.REACT_APP_ENV === 'production';
+  const isProduction = process.env.REACT_APP_ENV === "production";
 
   useEffect(() => {
     // Only set up interceptor in production
@@ -60,11 +61,11 @@ function App() {
             const token = await getAccessTokenSilently();
             config.headers.Authorization = `Bearer ${token}`;
           } catch (error) {
-            console.error('Error getting token:', error);
+            console.error("Error getting token:", error);
           }
           return config;
         },
-        (error) => Promise.reject(error)
+        (error) => Promise.reject(error),
       );
 
       return () => {
@@ -139,6 +140,7 @@ function App() {
           >
             <Route path="updaterates/" element={<UpdateRates />}></Route>
             <Route path="updatemetrics/" element={<UpdateMetrics />}></Route>
+            <Route path="updatebankmetrics/" element={<UpdateBankMetrics />}></Route>
           </Route>
           <Route
             path="/reporting/*"
@@ -177,6 +179,7 @@ function App() {
             <Route path="configbank/*" element={<ConfigBank />} />
             <Route path="configportfolio/*" element={<ConfigPortfolio />} />
           </Route>
+          <Route path="profile" element={<Profile />}></Route>
         </Routes>
       </div>
     </div>

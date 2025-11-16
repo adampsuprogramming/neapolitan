@@ -13,6 +13,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+        Intl: "readonly",
       },
     },
     settings: {
@@ -20,12 +21,16 @@ export default [
     },
     rules: {
       "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
     },
   },
   {
     files: ["**/*.test.{js,jsx}", "**/*.spec.{js,jsx}"],
     languageOptions: {
-      globals: globals.jest,
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
     },
   },
   {
