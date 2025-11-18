@@ -70,7 +70,7 @@ router.get("/api/pieChartCalculations", async (req, res) => {
         revRegionName: pieChartDataRow.rev_region_name,
         naicsCode: pieChartDataRow.naics_subsector_id,
         naicsSubsector: pieChartDataRow.naics_subsector_name,
-        isPublic: pieChartDataRow.is_public,
+        isPublic: pieChartDataRow.is_public ? "Public" : "Private",
       });
     }
 
