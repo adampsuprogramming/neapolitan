@@ -6,6 +6,7 @@
 // *     UT-22 - Testing handling null values received for NAICS subsector API Call *
 // *     UT-23 - Testing handling null values received for Region (HQ) API Call     *
 // *     UT-24 - Testing handling null values received for Region (Rev) API Call    *
+// *     UT-57 - Testing error for missing borrower data                            *
 // **********************************************************************************
 
 import axios from "axios";

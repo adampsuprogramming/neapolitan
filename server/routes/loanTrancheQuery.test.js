@@ -1,5 +1,5 @@
 // **************************************************************************
-// *       UT-40 – Testing /api/loantranchequery endpoint’s functionality *
+// *       UT-40a – Testing /api/loantranchequery endpoint’s functionality  *
 // **************************************************************************
 
 // This mock must come before the import of object
