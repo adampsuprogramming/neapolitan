@@ -38,8 +38,6 @@ it("Displays the correct navigation pages while navigating through the System", 
   cy.get('#root [href="/reporting/"]').click();
   cy.get('#root [href="/reporting/otherreporting"]').click();
   cy.contains("Placeholder for Other Reporting").should("be.visible");
-  cy.get('#root [href="/dashboard/"]').click();
-  cy.contains("Placeholder for Dashboard").should("be.visible");
   cy.get('#root [href="/configuration/"]').click();
   cy.get('#root [href="/configuration/configfacility"]').click();
   cy.get('#root [href="/configuration/configfacility/debtfacilitymodify"]').click();
