@@ -44,7 +44,7 @@ router.get("/api/pieChartCalculations", async (req, res) => {
         ) || null;
       const intValRow =
         intValEnd.rows.find((row) => row.collateral_id === allIdsEnd[i].collateralId) || null;
-      const internalValue = intValRow.internal_val;
+      const internalValue = intValRow?.internal_val || null;
       const endBalance =
         endBalances.find((row) => row.collateralId === allIdsEnd[i].collateralId) || null;
       const collateralName =
@@ -52,17 +52,19 @@ router.get("/api/pieChartCalculations", async (req, res) => {
       if (bankMetricEndRow) {
         bankValuation = bankMetricEndRow.valuation;
       } else {
-        bankValuation = loanApprovalRow.approved_valuation;
+        bankValuation = loanApprovalRow?.approved_valuation;
       }
       const pieChartDataRow =
         pieChartData.rows.find((row) => row.collateral_id === allIdsEnd[i].collateralId) || null;
+      const applicableValuation =
+        internalValue !== null ? Math.min(bankValuation, internalValue) : bankValuation;
 
       values.push({
         collateralId: allIdsEnd[i].collateralId,
-        collateralName: collateralName.legal_name,
-        valuationPercentage: Math.min(bankValuation, internalValue),
+        collateralName: collateralName?.legal_name || null,
+        valuationPercentage: applicableValuation,
         outstandingBalance: endBalance.endBalance,
-        valuation: Math.min(bankValuation, internalValue) * endBalance.endBalance,
+        valuation: applicableValuation * endBalance.endBalance,
         lienType: pieChartDataRow.lien_type,
         corpHQId: pieChartDataRow.corporate_hq_id,
         corpHQRegionName: pieChartDataRow.hq_region_name,
@@ -74,25 +76,9 @@ router.get("/api/pieChartCalculations", async (req, res) => {
       });
     }
 
-    for (let i = 0; i < values.length; i++) {
-      console.log("Collateral ID: " + values[i].collateralId);
-      console.log("Collateral Name: " + values[i].collateralName);
-      console.log("Valuation %: " + values[i].valuationPercentage);
-      console.log("Outstanding Balance: " + values[i].outstandingBalance);
-      console.log("Valuation: " + values[i].valuation);
-      console.log("Lien Type: " + values[i].lienType);
-      console.log("Corp HQ Id: " + values[i].corpHQId);
-      console.log("Corp HQ Region Name: " + values[i].corpHQRegionName);
-      console.log("Corp Revenue Region ID: " + values[i].revRegionID);
-      console.log("Corp Revenue Region Name: " + values[i].revRegionName);
-      console.log("NAICS Subsector ID: " + values[i].naicsCode);
-      console.log("NAICS Subsector Name: " + values[i].naicsSubsector);
-      console.log("Public: " + values[i].isPublic);
-    }
-
     res.json(values);
-  } catch (err) {
-    console.log(err);
+  } catch {
+    res.status(500).send("Payments Query Has Failed)");
   }
 });
 
