@@ -1,9 +1,9 @@
-// ************************************************************************
-// * UT-6– Determine that Node Receives Debt Facility Data and Sends out  *
-// * Correct SQL Inserts                                                  *
-// * UT-64 – Determine that Node Receives Debt Facility Data and Sends out*
-// * Correct SQL Inserts w/ no lien specific advance rates                *
-// ************************************************************************
+// *************************************************************************
+// * UT-6– Determine that Node Receives Debt Facility Data and Sends out   *
+// * Correct SQL Inserts                                                   *
+// * UT-64a – Determine that Node Receives Debt Facility Data and Sends out*
+// * Correct SQL Inserts w/ no lien specific advance rates                 *
+// *************************************************************************
 
 // This mock must come before the import of object
 jest.mock("../db");

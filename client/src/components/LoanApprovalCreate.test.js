@@ -1,5 +1,5 @@
 // ************************************************************************************************
-// *     UT-40 – Populating borrower dropdown from API call -- /api/borrowerquery                 *
+// *     UT-40b – Populating borrower dropdown from API call -- /api/borrowerquery                *
 // *     UT-41 – Populating loan agreement dropdown from API call -- /api/loanagreementquery      *
 // *     UT-42 – Populating loan tranche dropdown from API call -- /api/loantranchequery          *
 // *     UT-43 – Populating lender name from API call -- /api/lenderQuery                         *

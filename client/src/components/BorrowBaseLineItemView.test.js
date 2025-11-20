@@ -4,6 +4,8 @@
 // *  UT-7 - Test borrowing base line item data loading and formatting    *
 // *  UT-12 - Ensure borrowing base line item data is formatted correctly *
 // *  after receiving array of mostly null objects from /api/borrowbase   *
+// *  UT-55 - Test that global.URL.createObjectURL() is being called      *
+// *  correctly                                                           *
 // ************************************************************************
 
 import axios from "axios";

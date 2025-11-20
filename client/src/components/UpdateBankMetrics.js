@@ -293,7 +293,6 @@ function UpdateMetrics() {
     setChangeDate("");
     setValuation("");
     setAdvanceRate("");
-
   }
 
   return (
@@ -357,10 +356,8 @@ function UpdateMetrics() {
               getOptionLabel={(option) => option.legal_name || ""}
               renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
             />
-
           </div>
           <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
-            
             <Autocomplete
               disablePortal
               id="autocomplete-loan-agreeements"
