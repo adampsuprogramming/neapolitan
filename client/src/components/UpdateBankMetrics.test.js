@@ -112,7 +112,7 @@ test("UT-120 – Testing populating and submitting Update Bank Metrics Data form
       });
     }
 
-    if (url.includes("metricsQuery")) {
+    if (url.includes("bankMetricsQuery")) {
       return Promise.resolve({
         data: [
           {

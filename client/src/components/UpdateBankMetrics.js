@@ -539,7 +539,7 @@ function UpdateMetrics() {
                 >
                   Advance Rate:
                 </Box>
-                <Box sx={{ fontSize: "18px", paddingTop: "1.5ch" }}>
+                <Box sx={{ fontSize: "18px", paddingTop: "3.7ch" }}>
                   {metrics[0]?.advance_rate
                     ? new Intl.NumberFormat("en-US", {
                         style: "percent",
@@ -558,7 +558,7 @@ function UpdateMetrics() {
                 >
                   Valuation:
                 </Box>
-                <Box sx={{ fontSize: "18px", paddingTop: "1.5ch" }}>
+                <Box sx={{ fontSize: "18px", paddingTop: "1.7ch" }}>
                   {metrics[0]?.start_date
                     ? new Intl.NumberFormat("en-US", {
                         style: "percent",
