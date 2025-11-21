@@ -17,7 +17,6 @@ it("fills out bank metric update form", function () {
   cy.get("#autocomplete-portfolio-name").should("have.value", "Fund C");
   cy.wait(200);
 
-  
   // Test that autocomplete for facility contains value inputted
   cy.get("#autocomplete-facility-name").click();
   cy.get("#autocomplete-facility-name").type("Skyrim");
@@ -50,10 +49,7 @@ it("fills out bank metric update form", function () {
   cy.get("#autocomplete-loan-tranches-option-0").click();
   cy.wait(200);
 
-  cy.get("#autocomplete-loan-tranches").should(
-    "have.value",
-    "Senior Secured Term Loan",
-  );
+  cy.get("#autocomplete-loan-tranches").should("have.value", "Senior Secured Term Loan");
   cy.wait(200);
 
   // Ensure that Info Box to the right is populated with correct information after loan tranche is selected.

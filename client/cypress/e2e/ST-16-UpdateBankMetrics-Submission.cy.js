@@ -1,5 +1,5 @@
 // ***********************************************************************
-// *  ST-15 – Test Bank Metric Updates - Info Box
+// *  ST-16 – Test Bank Metric Updates - Submission
 // ***********************************************************************
 
 it("fills out bank metric update form", function () {
@@ -16,7 +16,7 @@ it("fills out bank metric update form", function () {
   cy.get("#autocomplete-portfolio-name-option-0").click();
   cy.get("#autocomplete-portfolio-name").should("have.value", "Fund A");
   cy.wait(200);
-  
+
   // Test that autocomplete for facility contains value inputted
   cy.get("#autocomplete-facility-name").click();
   cy.get("#autocomplete-facility-name").type("Star");
@@ -54,7 +54,6 @@ it("fills out bank metric update form", function () {
     "Test - Loan Tranche for Donkey Kong Co",
   );
   cy.wait(200);
-
 
   cy.get("#root div.css-1flyc9m")
     .invoke("text")
