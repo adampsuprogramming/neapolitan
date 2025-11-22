@@ -116,6 +116,8 @@ function UpdateMetrics() {
   // facility's collateral
 
   useEffect(() => {
+    if (!facilityNumber) return;
+
     async function getBorrowerNames() {
       try {
         const fullInfoResponse = await axios.get(
@@ -337,24 +339,38 @@ function UpdateMetrics() {
             <Autocomplete
               disablePortal
               id="autocomplete-facility-name"
-              required
               options={uniqueFacilityNames}
               value={facilityName}
               sx={{ m: 1, width: "50ch" }}
               onChange={handleFacilityChange}
               getOptionLabel={(option) => option}
-              renderInput={(params) => <TextField {...params} label="Facility Name" required />}
+              disabled={!selectedPortfolio}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={
+                    selectedPortfolio ? "Facility Name" : "Facility Name (Select Portfolio First)"
+                  }
+                  required
+                />
+              )}
             />
             <Autocomplete
               disablePortal
               id="autocomplete-borrower-name"
-              required
               options={borrowerData}
               value={selectedBorrower}
               sx={{ m: 1, width: "50ch" }}
               onChange={handleBorrowerChange}
               getOptionLabel={(option) => option.legal_name || ""}
-              renderInput={(params) => <TextField {...params} label="Borrower Name" required />}
+              disabled={!facilityName}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={facilityName ? "Borrower Name" : "Borrower Name (Select Facility First)"}
+                  required
+                />
+              )}
             />
           </div>
           <div className="row-1-tranche-selection" style={{ display: "flex", gap: "25px" }}>
@@ -523,7 +539,7 @@ function UpdateMetrics() {
                 >
                   Advance Rate:
                 </Box>
-                <Box sx={{ fontSize: "18px", paddingTop: "1.5ch" }}>
+                <Box sx={{ fontSize: "18px", paddingTop: "3.7ch" }}>
                   {metrics[0]?.advance_rate
                     ? new Intl.NumberFormat("en-US", {
                         style: "percent",
@@ -542,7 +558,7 @@ function UpdateMetrics() {
                 >
                   Valuation:
                 </Box>
-                <Box sx={{ fontSize: "18px", paddingTop: "1.5ch" }}>
+                <Box sx={{ fontSize: "18px", paddingTop: "1.7ch" }}>
                   {metrics[0]?.start_date
                     ? new Intl.NumberFormat("en-US", {
                         style: "percent",

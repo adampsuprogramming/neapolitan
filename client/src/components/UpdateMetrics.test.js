@@ -15,7 +15,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-test("UT-?? – Testing populating and submitting Update Rate Data form", async () => {
+test("UT-64b – Testing populating and submitting Update Metrics Data form", async () => {
   axios.get.mockImplementation((url) => {
     if (url.includes("borrowerquery")) {
       return Promise.resolve({
