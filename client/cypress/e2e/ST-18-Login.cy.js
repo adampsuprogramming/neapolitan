@@ -10,8 +10,8 @@ it("test", function () {
     cy.get("#password").type(Cypress.env("auth0_test_password"), { log: false });
     cy.get('button[type="submit"]').click();
   });
-  cy.url().should("include", "localhost:3000");
-  cy.contains("Welcome to Neapolitan").should("be.visible");
+  cy.url({timeout: 10000}).should("include", "localhost:3000");
+  cy.contains("Welcome to Neapolitan", { timeout: 10000}).should("be.visible");
 
   cy.contains("neapolitandebtsoftware@gmail.com").scrollIntoView().click();
 
