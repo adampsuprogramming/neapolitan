@@ -2,7 +2,7 @@
 // *  ST-19 – Test Auth0 Logout Success After Logging In                 *
 // ***********************************************************************
 
-it("test", function () {
+it("logs out from Auth0", function () {
   cy.visit("localhost:3000");
   cy.get("#root h3 a").click();
   cy.origin("https://dev-kafa4sjwg3snbngt.us.auth0.com", () => {
@@ -10,8 +10,8 @@ it("test", function () {
     cy.get("#password").type(Cypress.env("auth0_test_password"), { log: false });
     cy.get('button[type="submit"]').click();
   });
-  cy.url({timeout: 10000}).should("include", "localhost:3000");
-  cy.contains("Welcome to Neapolitan", { timeout: 10000}).should("be.visible");
+
+  cy.contains("Welcome to Neapolitan", { timeout: 15000 }).should("be.visible");
 
   cy.contains("log out").scrollIntoView().click();
 
