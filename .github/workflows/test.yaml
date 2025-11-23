@@ -146,6 +146,8 @@ jobs:
           CYPRESS_API_URL: http://localhost:5000
           ELECTRON_EXTRA_LAUNCH_ARGS: --disable-gpu
           NO_COLOR: 1
+          AUTH0_TEST_EMAIL: ${{ secrets.AUTH0_TEST_EMAIL }}
+          AUTH0_TEST_PASSWORD: ${{ secrets.AUTH0_TEST_PASSWORD }}
 
       - name: Cleanup servers
         if: always()

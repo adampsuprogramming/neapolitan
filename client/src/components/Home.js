@@ -15,7 +15,8 @@ const Home = () => {
         </>
       ) : (
         <h3>
-          Please click on <LoginButton /> to log into Neapolitan or sign up for access{" "}
+          Please click on <LoginButton /> to log into Neapolitan or contact your adminstrator for
+          access{" "}
         </h3>
       )}
       <br></br>
