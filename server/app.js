@@ -32,6 +32,7 @@ const bankMetricsQuery = require("./routes/bankMetricsQuery");
 const createBankMetricsChange = require("./routes/createBankMetricsChange");
 const borrowerQueryByFacility = require("./routes/borrowerQueryByFacility");
 const pieChartCalculations = require("./routes/pieChartCalculations");
+const balanceReportCalculations = require("./routes/balanceReportCalculations");
 
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((origin) => origin.trim())
@@ -85,5 +86,6 @@ app.use(bankMetricsQuery);
 app.use(createBankMetricsChange);
 app.use(borrowerQueryByFacility);
 app.use(pieChartCalculations);
+app.use(balanceReportCalculations);
 
 module.exports = app;

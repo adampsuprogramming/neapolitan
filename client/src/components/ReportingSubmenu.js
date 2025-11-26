@@ -13,10 +13,10 @@ export default function ReportingSubmenu() {
         </NavLink>
 
         <NavLink
-          to="otherreporting"
+          to="assetbalancereport"
           className={({ isActive }) => (isActive ? "reporting-nav-highlighted" : "")}
         >
-          Other Reporting
+          Asset Balance Report
         </NavLink>
       </nav>
       <Outlet />

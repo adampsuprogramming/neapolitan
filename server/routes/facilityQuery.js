@@ -8,6 +8,7 @@ const pool = require("../db");
 const facilityQuery = `
 select 
 	p.portfolio_name,
+	p.portfolio_id,
 	d.debt_facility_name,
 	d.debt_facility_id,
 	l.lender_name,
