@@ -39,6 +39,7 @@ function PaymentsReceived() {
       item.portfolio_name.includes(value || ""),
     );
     setFacilityNames(portfolioFacilities);
+    setMessage("");
   };
 
   const handleFacilityChange = (e, value) => {
