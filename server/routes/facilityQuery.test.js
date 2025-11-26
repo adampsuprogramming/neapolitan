@@ -24,6 +24,7 @@ describe("GET /api/facilities", () => {
       rows: [
         {
           portfolio_name: "Sonic Portfolio",
+          portfolio_id: 5,
           debt_facility_name: "Racetrack Facility",
           debt_facility_id: 999,
           lender_name: "Silksong Lender",
@@ -33,6 +34,7 @@ describe("GET /api/facilities", () => {
         },
         {
           portfolio_name: "Toadstool Portfolio",
+          portfolio_id: 6,
           debt_facility_name: "Mushroom Facility",
           debt_facility_id: 1000,
           lender_name: "Obra Dinn Lender",
@@ -48,6 +50,7 @@ describe("GET /api/facilities", () => {
     expect(response.body).toEqual([
       {
         portfolio_name: "Sonic Portfolio",
+        portfolio_id: 5,
         debt_facility_name: "Racetrack Facility",
         debt_facility_id: 999,
         lender_name: "Silksong Lender",
@@ -57,6 +60,7 @@ describe("GET /api/facilities", () => {
       },
       {
         portfolio_name: "Toadstool Portfolio",
+        portfolio_id: 6,
         debt_facility_name: "Mushroom Facility",
         debt_facility_id: 1000,
         lender_id: 2,
@@ -70,6 +74,7 @@ describe("GET /api/facilities", () => {
       `
 select 
 	p.portfolio_name,
+	p.portfolio_id,
 	d.debt_facility_name,
 	d.debt_facility_id,
 	l.lender_name,

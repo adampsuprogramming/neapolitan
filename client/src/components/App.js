@@ -47,6 +47,7 @@ import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 import ReportingSubmenu from "./ReportingSubmenu";
 import ProtectedRoute from "./ProtectedRoute";
+import AssetBalanceReport from "./AssetBalanceReport";
 
 function App() {
   const { getAccessTokenSilently } = useAuth0();
@@ -151,7 +152,7 @@ function App() {
             }
           >
             <Route path="rollforward/" element={<Rollforward />}></Route>
-            <Route path="otherreporting/" element={<OtherReporting />}></Route>
+            <Route path="assetbalancereport/" element={<AssetBalanceReport />}></Route>
           </Route>
 
           <Route

@@ -18,12 +18,8 @@ const Profile = () => {
         <br></br>
         <table>
           <tr>
-            <td style={{ paddingRight: 20, fontWeight: 700 }}>First Name:</td>
-            <td>{user.given_name}</td>
-          </tr>
-          <tr>
-            <td style={{ paddingRight: 20, fontWeight: 700 }}>Last Name:</td>
-            <td>{user.family_name}</td>
+            <td style={{ paddingRight: 20, fontWeight: 700 }}>User Name:</td>
+            <td>{user.name}</td>
           </tr>
           <tr>
             <td style={{ paddingRight: 20, fontWeight: 700 }}>Nickname:</td>
