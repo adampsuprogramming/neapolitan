@@ -424,7 +424,7 @@ function UpdateRates() {
                 <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>As of Date: </Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
-                    ? dayjs(rateData[0].start_date).format("M/D/YYYY")
+                    ? new Date(new Date(rateData[0].start_date).toISOString().split('T')[0] + "T12:00:00").toLocaleDateString("en-US")
                     : ""}
                 </Box>
                 <Box
