@@ -527,7 +527,7 @@ function UpdateMetrics() {
                 <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>As of Date: </Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {metrics[0]?.start_date
-                    ? dayjs(metrics[0].start_date).format("MM/DD/YYYY")
+                    ? dayjs(metrics[0].start_date).format("M/D/YYYY")
                     : ""}
                 </Box>
 
