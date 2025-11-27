@@ -87,6 +87,7 @@ function UpdateMetrics() {
       item.portfolio_name.includes(value || ""),
     );
     setFacilityNames(portfolioFacilities);
+    setMessage("");
   };
 
   // Once facilityNames is set to that value (from above) create an accray of just debt
