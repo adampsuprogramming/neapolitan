@@ -222,7 +222,7 @@ function CollateralPledgeAdd() {
           </Box>
 
           <Box sx={{ fontWeight: "700" }}>Approval Expiration:</Box>
-          <Box>{expiration === "" ? "" : new Date(expiration).toLocaleDateString("en-US", {})}</Box>
+          <Box>{expiration === "" ? "" : dayjs(expiration).format("MM/DD/YYYY")}</Box>
 
           <Box sx={{ fontWeight: "700" }}>Bank Name:</Box>
           <Box>{bankName}</Box>

@@ -7,6 +7,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc"
 import { NumericFormat } from "react-number-format";
 import Button from "@mui/material/Button";
 
@@ -423,7 +424,7 @@ function UpdateRates() {
                 <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>As of Date: </Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {rateData[0]?.start_date
-                    ? new Date(rateData[0].start_date).toLocaleDateString("en-US")
+                    ? dayjs(rateData[0].start_date).format("MM/DD/YYYY")
                     : ""}
                 </Box>
                 <Box
