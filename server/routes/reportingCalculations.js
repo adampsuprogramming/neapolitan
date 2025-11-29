@@ -45,6 +45,8 @@ router.get("/api/reportingCalculations", async (req, res) => {
   endDateObject = new Date(endDate + "T00:00:00");
 
   try {
+
+    // Populate variables with queried data from rollforward Queries
     const facilityCollateral = await getFacilityCollateral(debtFacilityId);
     const collateralBalances = await getBalances(debtFacilityId);
     const bankMetricsStart = await getBankMetrics(debtFacilityId, startDate);
@@ -58,8 +60,10 @@ router.get("/api/reportingCalculations", async (req, res) => {
     const paymentsResults = await getPaymentsTimePeriod(debtFacilityId, startDate, endDate);
     const collateralNames = await getCollateralNames(debtFacilityId);
 
+    // Process IDs of additions
     const addedIds = getIdsOfAdditions(facilityCollateral);
 
+    // Process balances of additions
     const additions = getFacilityBalanceAdditions(
       collateralBalances,
       addedIds,
@@ -129,7 +133,7 @@ router.get("/api/reportingCalculations", async (req, res) => {
     // **************************************** payments **************************************
     const payments = getPaymentInfo(everyIdInPeriod, paymentsResults);
 
-    // Calculations
+    // ******************************   CALCULATIONS SECTION ***********************************
 
     let report = [];
     let rCollateralId;
@@ -159,6 +163,8 @@ router.get("/api/reportingCalculations", async (req, res) => {
     let rAdvanceRateEnd;
     let rIntRec;
 
+
+    // ******* ASSET-BY-ASSET LOOP FOR EACH ASSET ACTIVE AT SOME POINT DURING ROLLFORWARD PERIOD *******
     for (let i = 0; i < everyIdInPeriod.length; i++) {
       rCollateralId = null;
       rCollateralName = null;
@@ -249,15 +255,23 @@ router.get("/api/reportingCalculations", async (req, res) => {
         }
       }
 
+
+      // **** VALUE ROLLFORWARD CALCULATIONS ***
+
+      // Calculate beginning value
       rBegValue = rBalanceBeg * Math.min(rBankValBeg, rInternalValBeg);
 
+      // Calculate change due to additions
       rChgDueToAdd = rCollAdded * rBankValBeg;
 
+      // Calculate change due to repayments
       rChgDueToRepay = -(rCollRemoved + rPrincipalRec) * Math.min(rBankValBeg, rInternalValBeg);
 
+      // Calculation change due to internal valuation
       rChgDueToInternalVal =
         rBalanceEnd * (rInternalValEnd - Math.min(rBankValBeg, rInternalValBeg));
 
+      // Calculate additional change due to bank valuations  
       if (
         (rBankValEnd - rBankValBeg) * rBalanceEnd <
         (rInternalValEnd - Math.min(rInternalValBeg, rBankValBeg)) * rBalanceEnd
@@ -269,16 +283,24 @@ router.get("/api/reportingCalculations", async (req, res) => {
         rAddlChgBankVal = 0;
       }
 
+      // Calculate ending value
       rEndValue = Math.min(rInternalValEnd, rBankValEnd) * rBalanceEnd;
 
+      // **** AVAILABILITY ROLLFORWARD CALCULATIONS ***
+
+      // Calculate beginning leverage avaialable
       rBegLevAvail = rBegValue * rAdvanceRateBeg;
 
+      // Caculate availability change due to additions
       rLevAvailChgDueToAddition = rChgDueToAdd * rAdvanceRateBeg;
 
+      // Calculate availability change due to repayments
       rLevAvailChgDueToRepay = rChgDueToRepay * rAdvanceRateBeg;
 
+      // Calculate availability change due to valuations      
       rLevAvailChgDueToVal = (rChgDueToInternalVal + rAddlChgBankVal) * rAdvanceRateBeg;
 
+      // Calculate availability change due to advance rate changes
       rLevAvailChgDueToAdvRate = -(
         rBegLevAvail +
         rLevAvailChgDueToAddition +
@@ -287,9 +309,10 @@ router.get("/api/reportingCalculations", async (req, res) => {
         rEndValue * rAdvanceRateEnd
       );
 
+      // Calculate ending availability
       rEndLevAvail = rEndValue * rAdvanceRateEnd;
 
-      // Add them to the final array
+      // Populate report object
       report.push({
         collateralId: rCollateralId || null,
         collateralName: rCollateralName || null,
@@ -318,18 +341,22 @@ router.get("/api/reportingCalculations", async (req, res) => {
         advanceRateEnd: parseFloat(rAdvanceRateEnd) || 0,
         intRec: rIntRec || 0,
       });
-    }
+    } // CLOSES ASSET BY ASSET LOOP
+
+    // ****************** FUNDS FLOW DATA ***********************
 
     let totalEndLevAvail = 0;
     let totalPrincRec = 0;
     let totalIntRec = 0;
 
+    // Loops through object created in asset-by-asset section to populate totals
     for (let i = 0; i < report.length; i++) {
       totalEndLevAvail = totalEndLevAvail + report[i].endLevAvail;
       totalPrincRec = totalPrincRec + report[i].principalRec;
       totalIntRec = totalIntRec + report[i].intRec;
     }
 
+    // Remaining funds flow calculations
     const currAvail = totalEndLevAvail - currentOutstandings;
     const totalDist = totalPrincRec + totalIntRec;
     let dueToBank;
@@ -340,8 +367,10 @@ router.get("/api/reportingCalculations", async (req, res) => {
       dueToBank = intExpDue;
     }
 
+    // Alphabetize Report
     report.sort((a, b) => a.collateralName.localeCompare(b.collateralName));
 
+    // Add report object and funds flow object to package for frontend
     const returnPackage = {
       collateralData: report,
       fundsFlowData: {
@@ -357,6 +386,7 @@ router.get("/api/reportingCalculations", async (req, res) => {
       },
     };
 
+    // Return package to frontend
     res.json(returnPackage);
   } catch (err) {
     console.error(err);
