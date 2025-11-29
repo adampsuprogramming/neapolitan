@@ -292,7 +292,7 @@ function Rollforward() {
 
       {rowData?.length > 0 ? (
         <>
-          <Box sx={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+          <Box sx={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
             <Box>
               <div
                 className="record-payments-received"
@@ -880,6 +880,7 @@ function Rollforward() {
                   borderColor: "#c7c7c7ff",
                   width: "50ch",
                   marginTop: 8,
+                  marginRight: "100px",
                   padding: 2,
                   fontSize: "20px",
                 }}

@@ -161,8 +161,7 @@ function AssetBalanceReport() {
                   fontWeight: "800",
                 }}
               >
-                Rollforward of Outstandings from {dayjs(asOfDate).format("M/DD/YYYY")} to{" "}
-                {dayjs(asOfDate).format("M/DD/YYYY")}
+                Tranche Balance By Facility - {dayjs(asOfDate).format("M/DD/YYYY")} 
               </div>
               <TableContainer component={Paper} sx={{ width: "75%", marginLeft: "5ch" }}>
                 <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
@@ -185,9 +184,30 @@ function AssetBalanceReport() {
 
                   <TableBody>
                     {rowData.slice(1).map((item, key) => (
-                      <TableRow>
+                      <TableRow key={key}>
                         {item.map((colItem, colKey) => (
-                          <TableCell key={colKey}>{colItem}</TableCell>
+                          <TableCell 
+                          key={colKey}
+                          sx={key === rowData.slice(1).length - 1 ? {
+                          fontWeight: 'bold',
+                          borderTop: '2px solid #000',
+                          backgroundColor: '#f5f5f5',
+                          textAlign: typeof colItem === 'number'? 'right' : 'left'
+                          
+                        } : {textAlign: typeof colItem === 'number'? 'right' : 'left', ...(colKey === 0 && {width: '300px'})}}>
+                            {typeof colItem === 'number' ? (
+                              <NumericFormat
+                                 value={colItem}
+                                 displayType="text"
+                                 thousandSeparator=","
+                                 decimalScale={0}
+                                 fixedDecimalScale
+                              />
+                            ) : (
+                              colItem
+                                                     
+                                )}
+                            </TableCell>
                         ))}
                       </TableRow>
                     ))}
