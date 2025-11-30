@@ -639,7 +639,7 @@ left join collateral c
 	on c.collateral_id  = p.collateral_id
 left join debt_facilities df
     on df.debt_facility_id = c.debt_facility_id
-where df.debt_facility_id = $1 and p.payment_date >= $2 and p.payment_date <= $3
+where df.debt_facility_id = $1 and p.payment_date > $2 and p.payment_date <= $3
 ORDER BY payments_id ASC `,
       [201, "2025-05-01", "2025-10-31"],
     );
