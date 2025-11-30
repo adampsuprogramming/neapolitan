@@ -8,7 +8,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import Dashboard from "./Dashboard";
 import { fireEvent } from "@testing-library/react";
 
-
 const mockPieChart = jest.fn((props) => (
   <div data-testid="pie-chart">{props.series[0].data ? "Chart rendered" : "No data"}</div>
 ));
@@ -16,8 +15,8 @@ const mockPieChart = jest.fn((props) => (
 jest.mock("@mui/x-charts/PieChart", () => ({
   PieChart: (props) => mockPieChart(props),
   pieArcLabelClasses: {
-    root: 'MuiPieArcLabel-root'
-  }
+    root: "MuiPieArcLabel-root",
+  },
 }));
 
 jest.mock("axios", () => ({
