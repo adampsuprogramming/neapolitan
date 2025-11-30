@@ -54,7 +54,7 @@ router.get("/api/balanceReportCalculations", async (req, res) => {
     }
 
     const result = Object.values(trancheBalancesByFacility);
-    
+
     // Get unique facility names in the data
     const uniqueFaciltiesUnsorted = [];
     for (const item of result) {
@@ -64,8 +64,9 @@ router.get("/api/balanceReportCalculations", async (req, res) => {
         }
       }
     }
-const uniqueFacilties = uniqueFaciltiesUnsorted
-      .sort((firstToSort, secondToSort) => firstToSort[0].localeCompare(secondToSort[0]));
+    const uniqueFacilties = uniqueFaciltiesUnsorted.sort((firstToSort, secondToSort) =>
+      firstToSort[0].localeCompare(secondToSort[0]),
+    );
 
     // Create header row of output array, including Tranche Name, Facility Names, and Total Column
     const arrayOutput = [];

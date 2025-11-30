@@ -18,22 +18,14 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 
 function AssetBalanceReport() {
   const [facilityData, setFacilityData] = useState([]);
   const [uniqueNames, setUniqueNames] = useState([]);
   const [selectedPortfolio, setSelectedPortfolio] = useState("");
-  const [facilityName, setFacilityName] = useState("");
-  const [facilityNames, setFacilityNames] = useState([]);
   const [portfolioNumber, setPortfolioNumber] = useState("");
-  const [facilityNumber, setFacilityNumber] = useState(null);
-  const [flowData, setFlowData] = useState([]);
-  const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]);
   const [asOfDate, setAsOfDate] = useState("");
   const [rowData, setRowData] = useState([]);
-  const [totalRow, setTotalRow] = useState([]);
   const [message, setMessage] = useState("");
 
   const handlePortfolioChange = (e, value) => {
@@ -41,13 +33,11 @@ function AssetBalanceReport() {
     const portfolioFacilities = facilityData.filter((item) =>
       item.portfolio_name.includes(value || ""),
     );
-    setFacilityNames(portfolioFacilities);
     setPortfolioNumber(portfolioFacilities[0].portfolio_id);
   };
 
   function clearData() {
     setSelectedPortfolio("");
-    setUniqueFacilityNames([]);
     setAsOfDate("");
     setRowData([]);
   }
@@ -88,7 +78,6 @@ function AssetBalanceReport() {
         },
       );
       setRowData(fullInfoResponse.data);
-
     } catch (error) {
       setMessage("Error fetching rollforward data");
     }
@@ -161,7 +150,7 @@ function AssetBalanceReport() {
                   fontWeight: "800",
                 }}
               >
-                Tranche Balance By Facility - {dayjs(asOfDate).format("M/DD/YYYY")} 
+                Tranche Balance By Facility - {dayjs(asOfDate).format("M/DD/YYYY")}
               </div>
               <TableContainer component={Paper} sx={{ width: "75%", marginLeft: "5ch" }}>
                 <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
@@ -186,28 +175,34 @@ function AssetBalanceReport() {
                     {rowData.slice(1).map((item, key) => (
                       <TableRow key={key}>
                         {item.map((colItem, colKey) => (
-                          <TableCell 
-                          key={colKey}
-                          sx={key === rowData.slice(1).length - 1 ? {
-                          fontWeight: 'bold',
-                          borderTop: '2px solid #000',
-                          backgroundColor: '#f5f5f5',
-                          textAlign: typeof colItem === 'number'? 'right' : 'left'
-                          
-                        } : {textAlign: typeof colItem === 'number'? 'right' : 'left', ...(colKey === 0 && {width: '300px'})}}>
-                            {typeof colItem === 'number' ? (
+                          <TableCell
+                            key={colKey}
+                            sx={
+                              key === rowData.slice(1).length - 1
+                                ? {
+                                    fontWeight: "bold",
+                                    borderTop: "2px solid #000",
+                                    backgroundColor: "#f5f5f5",
+                                    textAlign: typeof colItem === "number" ? "right" : "left",
+                                  }
+                                : {
+                                    textAlign: typeof colItem === "number" ? "right" : "left",
+                                    ...(colKey === 0 && { width: "300px" }),
+                                  }
+                            }
+                          >
+                            {typeof colItem === "number" ? (
                               <NumericFormat
-                                 value={colItem}
-                                 displayType="text"
-                                 thousandSeparator=","
-                                 decimalScale={0}
-                                 fixedDecimalScale
+                                value={colItem}
+                                displayType="text"
+                                thousandSeparator=","
+                                decimalScale={0}
+                                fixedDecimalScale
                               />
                             ) : (
                               colItem
-                                                     
-                                )}
-                            </TableCell>
+                            )}
+                          </TableCell>
                         ))}
                       </TableRow>
                     ))}
