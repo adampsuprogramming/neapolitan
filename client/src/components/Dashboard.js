@@ -7,8 +7,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
-import { PieChart } from "@mui/x-charts/PieChart";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { Typography, Box } from "@mui/material";
+
 
 function Dashboard() {
   const [facilityData, setFacilityData] = useState([]);
@@ -97,6 +98,11 @@ function Dashboard() {
     }
     return lienAmounts;
   }
+
+  const getArcLabelPercentage = (params) => {
+    const total = lienChartData.data.reduce((a,b) => a + b.value, 0);
+    return `${((params.value / total) * 100).toFixed(0)}%`;
+  };
 
   function aggregateNAICS(naicsObject) {
     let naicsAmounts = [];
@@ -275,9 +281,19 @@ function Dashboard() {
                 <>
                   <Typography align="center">Value by Lien Type</Typography>
                   <PieChart
-                    series={[lienChartData]}
+                    series={[
+                      {
+                        ...lienChartData,
+                        arcLabel: getArcLabelPercentage,
+                        arcLabelMinAngle: 20,
+                      }]}
                     width={600}
                     height={350}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fontWeight: 'bold',
+                      }
+                    }}
                     slotProps={{
                       legend: {
                         direction: "row",
@@ -294,9 +310,19 @@ function Dashboard() {
                 <>
                   <Typography align="center">Value by NAICS Subsector</Typography>
                   <PieChart
-                    series={[naicsChartData]}
+                    series={[
+                      {
+                        ...naicsChartData,
+                        arcLabel: getArcLabelPercentage,
+                        arcLabelMinAngle: 20,
+                      }]}
                     width={600}
                     height={350}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fontWeight: 'bold',
+                      }
+                    }}
                     slotProps={{
                       legend: {
                         direction: "horizontal",
@@ -314,9 +340,19 @@ function Dashboard() {
                 <>
                   <Typography align="center">Value by Corporate HQ</Typography>
                   <PieChart
-                    series={[hqChartData]}
+                    series={[
+                      {
+                        ...hqChartData,
+                        arcLabel: getArcLabelPercentage,
+                        arcLabelMinAngle: 20,
+                      }]}
                     width={600}
                     height={350}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fontWeight: 'bold',
+                      }
+                    }}
                     slotProps={{
                       legend: {
                         direction: "horizontal",
@@ -333,9 +369,19 @@ function Dashboard() {
                 <>
                   <Typography align="center">Value by Primary Revenue Region</Typography>
                   <PieChart
-                    series={[revRegionData]}
+                    series={[
+                      {
+                        ...revRegionData,
+                        arcLabel: getArcLabelPercentage,
+                        arcLabelMinAngle: 20,
+                      }]}
                     width={600}
                     height={350}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fontWeight: 'bold',
+                      }
+                    }}
                     slotProps={{
                       legend: {
                         direction: "horizontal",
@@ -352,9 +398,19 @@ function Dashboard() {
               <>
                 <Typography align="center">Value by Public/Private</Typography>
                 <PieChart
-                  series={[publicData]}
-                  width={600}
-                  height={350}
+                  series={[
+                      {
+                        ...publicData,
+                        arcLabel: getArcLabelPercentage,
+                        arcLabelMinAngle: 20,
+                      }]}
+                    width={600}
+                    height={350}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fontWeight: 'bold',
+                      }
+                    }}
                   slotProps={{
                     legend: {
                       direction: "horizontal",
