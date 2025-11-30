@@ -11,14 +11,13 @@ require("../db").query = mockedQuery;
 const pool = require("../db");
 pool.end = jest.fn();
 
-const {getCollateralByPortfolio} = require("../routes/collateralQueryByPortfolio");
+const { getCollateralByPortfolio } = require("../routes/collateralQueryByPortfolio");
 
 afterAll(async () => {
   await pool.end();
 });
 
 describe("test getCollateralByPortfolio(portfolioId, asOfDate)", () => {
-
   it("test ability of collateralQueryByPortfolio to accept portfolioID and asOfDate and return collateral in a portfolio", async () => {
     mockedQuery.mockResolvedValue({
       rows: [
@@ -28,7 +27,7 @@ describe("test getCollateralByPortfolio(portfolioId, asOfDate)", () => {
           removed_date: null,
           collateral_id: 333,
           tranche_id: 150,
-          loan_approval_id: 555
+          loan_approval_id: 555,
         },
         {
           debt_facility_id: 111,
@@ -36,7 +35,7 @@ describe("test getCollateralByPortfolio(portfolioId, asOfDate)", () => {
           removed_date: null,
           collateral_id: 334,
           tranche_id: 151,
-          loan_approval_id: 556
+          loan_approval_id: 556,
         },
         {
           debt_facility_id: 222,
@@ -44,7 +43,7 @@ describe("test getCollateralByPortfolio(portfolioId, asOfDate)", () => {
           removed_date: null,
           collateral_id: 335,
           tranche_id: 152,
-          loan_approval_id: 557
+          loan_approval_id: 557,
         },
       ],
     });
@@ -59,7 +58,7 @@ describe("test getCollateralByPortfolio(portfolioId, asOfDate)", () => {
           removed_date: null,
           collateral_id: 333,
           tranche_id: 150,
-          loan_approval_id: 555
+          loan_approval_id: 555,
         },
         {
           debt_facility_id: 111,
@@ -67,7 +66,7 @@ describe("test getCollateralByPortfolio(portfolioId, asOfDate)", () => {
           removed_date: null,
           collateral_id: 334,
           tranche_id: 151,
-          loan_approval_id: 556
+          loan_approval_id: 556,
         },
         {
           debt_facility_id: 222,
@@ -75,7 +74,7 @@ describe("test getCollateralByPortfolio(portfolioId, asOfDate)", () => {
           removed_date: null,
           collateral_id: 335,
           tranche_id: 152,
-          loan_approval_id: 557
+          loan_approval_id: 557,
         },
       ],
     });
@@ -90,5 +89,5 @@ WHERE d.portfolio_id=$1 and c.inclusion_date<=$2 and (c.removed_date>$2 OR c.rem
 `,
       [888, "2025-05-02"],
     );
-       });
   });
+});

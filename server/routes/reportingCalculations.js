@@ -45,7 +45,6 @@ router.get("/api/reportingCalculations", async (req, res) => {
   endDateObject = new Date(endDate + "T00:00:00");
 
   try {
-
     // Populate variables with queried data from rollforward Queries
     const facilityCollateral = await getFacilityCollateral(debtFacilityId);
     const collateralBalances = await getBalances(debtFacilityId);
@@ -163,7 +162,6 @@ router.get("/api/reportingCalculations", async (req, res) => {
     let rAdvanceRateEnd;
     let rIntRec;
 
-
     // ******* ASSET-BY-ASSET LOOP FOR EACH ASSET ACTIVE AT SOME POINT DURING ROLLFORWARD PERIOD *******
     for (let i = 0; i < everyIdInPeriod.length; i++) {
       rCollateralId = null;
@@ -255,7 +253,6 @@ router.get("/api/reportingCalculations", async (req, res) => {
         }
       }
 
-
       // **** VALUE ROLLFORWARD CALCULATIONS ***
 
       // Calculate beginning value
@@ -271,7 +268,7 @@ router.get("/api/reportingCalculations", async (req, res) => {
       rChgDueToInternalVal =
         rBalanceEnd * (rInternalValEnd - Math.min(rBankValBeg, rInternalValBeg));
 
-      // Calculate additional change due to bank valuations  
+      // Calculate additional change due to bank valuations
       if (
         (rBankValEnd - rBankValBeg) * rBalanceEnd <
         (rInternalValEnd - Math.min(rInternalValBeg, rBankValBeg)) * rBalanceEnd
@@ -297,7 +294,7 @@ router.get("/api/reportingCalculations", async (req, res) => {
       // Calculate availability change due to repayments
       rLevAvailChgDueToRepay = rChgDueToRepay * rAdvanceRateBeg;
 
-      // Calculate availability change due to valuations      
+      // Calculate availability change due to valuations
       rLevAvailChgDueToVal = (rChgDueToInternalVal + rAddlChgBankVal) * rAdvanceRateBeg;
 
       // Calculate availability change due to advance rate changes

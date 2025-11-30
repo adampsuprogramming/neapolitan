@@ -22,23 +22,24 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 
 function Rollforward() {
-  const [facilityData, setFacilityData] = useState([]);
-  const [uniqueNames, setUniqueNames] = useState([]);
-  const [selectedPortfolio, setSelectedPortfolio] = useState("");
-  const [facilityName, setFacilityName] = useState("");
-  const [facilityNames, setFacilityNames] = useState([]);
-  const [facilityNumber, setFacilityNumber] = useState(null);
-  const [flowData, setFlowData] = useState([]);
-  const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [rowData, setRowData] = useState([]);
-  const [totalRow, setTotalRow] = useState([]);
-  const [currentOutstandings, setCurrentOutstandings] = useState(null);
-  const [intExpDue, setIntExpDue] = useState(null);
-  const [isFundsFlow, setIsFundsFlow] = useState(false);
-  const [message, setMessage] = useState("");
+  const [facilityData, setFacilityData] = useState([]); // Holds the API response for autoocomplete population
+  const [uniqueNames, setUniqueNames] = useState([]); // Holds the unique portfolio names (after deduplication)
+  const [selectedPortfolio, setSelectedPortfolio] = useState(""); // Holds the portfolio selected by the user
+  const [facilityNames, setFacilityNames] = useState([]); // Based on a selection of the portfolio, holds the facilities within that portfolio
+  const [uniqueFacilityNames, setUniqueFacilityNames] = useState([]); // Holds deduplicated facility names
+  const [facilityName, setFacilityName] = useState(""); // Holds the user selection for facility name
+  const [facilityNumber, setFacilityNumber] = useState(null); // Based on user selection for facility name, holds facility number
+  const [rowData, setRowData] = useState([]); // Holds portion of response from backend relating to rollforwards
+  const [flowData, setFlowData] = useState([]); // Holds portion of response from backend relating to funds flow
+  const [startDate, setStartDate] = useState(""); // Holds user selection for start date of rollforward
+  const [endDate, setEndDate] = useState(""); // Holds user selection of end date of rollforward
+  const [totalRow, setTotalRow] = useState([]); // Holds totals for each column of data for display as total row
+  const [currentOutstandings, setCurrentOutstandings] = useState(null); // Holds user input for current facility oustandings (borrowings)
+  const [intExpDue, setIntExpDue] = useState(null); // Holds user input for interest expense due
+  const [isFundsFlow, setIsFundsFlow] = useState(false); // Holds results of toggle switch input for whether there is a funds flow
+  const [message, setMessage] = useState(""); // Holds message displayed to user at bottom of page
 
+  // Based on user selection of portfolio, sets facility names
   const handlePortfolioChange = (e, value) => {
     setSelectedPortfolio(value || "");
     const portfolioFacilities = facilityData.filter((item) =>
@@ -47,6 +48,7 @@ function Rollforward() {
     setFacilityNames(portfolioFacilities);
   };
 
+  // Based on user selection of facility, sets finds and sets facility number
   const handleFacilityChange = (e, value) => {
     setFacilityName(value || "");
     const facility_record = facilityData.find((f) => f.debt_facility_name === value);
@@ -55,6 +57,7 @@ function Rollforward() {
     setFacilityNumber(facility_numb);
   };
 
+  // Clears all selected data
   function clearData() {
     setSelectedPortfolio("");
     setFacilityName("");
@@ -69,6 +72,7 @@ function Rollforward() {
     setIsFundsFlow(false);
   }
 
+  // Upon a population of facilityNames, creates an array of unique facility names
   useEffect(() => {
     if (facilityNames.length > 0) {
       const facilityNameSelection = facilityNames.map((a) => a.debt_facility_name);
@@ -77,6 +81,7 @@ function Rollforward() {
     }
   }, [facilityNames]);
 
+  // Loads results of getFacilityData to populate autocompletes
   useEffect(() => {
     async function getFacilityData() {
       try {
@@ -92,6 +97,7 @@ function Rollforward() {
     getFacilityData();
   }, []);
 
+  // Upon load of facility data, creates unique list of portfolio names for autocomplete population
   useEffect(() => {
     if (facilityData.length > 0) {
       const porfolioName = facilityData.map((a) => a.portfolio_name);
@@ -100,6 +106,7 @@ function Rollforward() {
     }
   }, [facilityData]);
 
+  // API call to send user selections and receive response for report
   async function submitForm() {
     try {
       const fullInfoResponse = await axios.get(
@@ -116,9 +123,10 @@ function Rollforward() {
           },
         },
       );
-      setRowData(fullInfoResponse.data.collateralData);
-      setFlowData(fullInfoResponse.data.fundsFlowData);
+      setRowData(fullInfoResponse.data.collateralData); // Set variable that holds rollforward data
+      setFlowData(fullInfoResponse.data.fundsFlowData); // Set variable that holds funds flow data
 
+      // Initializes values for keys in object that holds totals for rows
       let totals = {
         balanceBeg: 0,
         collAdded: 0,
@@ -140,6 +148,7 @@ function Rollforward() {
         endLevAvail: 0,
       };
 
+      // Loop over rollforward loans to accumulate totals for each data type
       for (let loan of fullInfoResponse.data.collateralData) {
         totals.balanceBeg += parseFloat(loan.balanceBeg);
         totals.collAdded += parseFloat(loan.collAdded);
@@ -160,6 +169,7 @@ function Rollforward() {
         totals.endLevAvail += parseFloat(loan.endLevAvail);
       }
 
+      // Set totalRow for use in displaying rollforward totals
       setTotalRow(totals);
     } catch (error) {
       setMessage("Error fetching rollforward data");
@@ -168,6 +178,7 @@ function Rollforward() {
 
   return (
     <>
+      {/* User Input box */}
       <Box
         sx={{
           display: "flex",
@@ -183,6 +194,7 @@ function Rollforward() {
           gap: 2,
         }}
       >
+        {/* Box for Rollforward Options */}
         <Box sx={{ display: "flex", gap: 1, marginBottom: 2 }}>
           <Autocomplete
             disablePortal
@@ -245,7 +257,7 @@ function Rollforward() {
             />
           </LocalizationProvider>
         </Box>
-
+        {/* Box for Funds Flow Options */}
         <Box sx={{ display: "flex", gap: 2 }}>
           <FormControlLabel
             control={
@@ -290,9 +302,11 @@ function Rollforward() {
         </Box>
       </Box>
 
+      {/* Display of rollforwards */}
       {rowData?.length > 0 ? (
         <>
           <Box sx={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+            {/* Display first rollforward for outstandings */}
             <Box>
               <div
                 className="record-payments-received"
@@ -320,6 +334,7 @@ function Rollforward() {
                       },
                     }}
                   >
+                    {/* Outstandings Columns Headers */}
                     <TableRow>
                       <TableCell sx={{ width: "25%" }}>Borrower</TableCell>
                       <TableCell sx={{ width: "15%" }} align="right">
@@ -340,6 +355,7 @@ function Rollforward() {
                     </TableRow>
                   </TableHead>
 
+                  {/* Loops over each loan and displays related field for outstandings*/}
                   <TableBody>
                     {rowData.map((loan) => (
                       <TableRow
@@ -393,6 +409,8 @@ function Rollforward() {
                         </TableCell>
                       </TableRow>
                     ))}
+
+                    {/* Displays total row for outstandings rollforward */}
                     <TableRow
                       sx={{
                         backgroundColor: "#33648A",
@@ -475,6 +493,7 @@ function Rollforward() {
                       },
                     }}
                   >
+                    {/* Value Rollforward Columns Headers */}
                     <TableRow>
                       <TableCell sx={{ width: "25%" }}>Borrower</TableCell>
                       <TableCell sx={{ width: "15%" }} align="right">
@@ -495,6 +514,7 @@ function Rollforward() {
                     </TableRow>
                   </TableHead>
 
+                  {/* Loops over each loan and displays related field for value*/}
                   <TableBody>
                     {rowData.map((loan) => (
                       <TableRow
@@ -548,6 +568,8 @@ function Rollforward() {
                         </TableCell>
                       </TableRow>
                     ))}
+
+                    {/* Displays total row for value rollforward */}
                     <TableRow
                       sx={{
                         backgroundColor: "#33648A",
@@ -621,6 +643,7 @@ function Rollforward() {
               </div>
               <TableContainer component={Paper} sx={{ width: "95%", marginLeft: "5ch" }}>
                 <Table sx={{ "& .MuiTableCell-root": { fontSize: "16px" } }}>
+                  {/* Availability Column Headers */}
                   <TableHead
                     sx={{
                       "& .MuiTableCell-root": {
@@ -655,6 +678,7 @@ function Rollforward() {
                   </TableHead>
 
                   <TableBody>
+                    {/* Loops over each loan and displays related field for availability*/}
                     {rowData.map((loan) => (
                       <TableRow
                         key={loan.collateralId}
@@ -716,6 +740,7 @@ function Rollforward() {
                         </TableCell>
                       </TableRow>
                     ))}
+                    {/* Displays total row for availability rollforward */}
                     <TableRow
                       sx={{
                         backgroundColor: "#33648A",
@@ -806,6 +831,7 @@ function Rollforward() {
                       },
                     }}
                   >
+                    {/* Additional Data Column Headers */}
                     <TableRow>
                       <TableCell sx={{ width: "25%" }}>Borrower</TableCell>
                       <TableCell sx={{ width: "10.7%" }} align="right">
@@ -831,7 +857,7 @@ function Rollforward() {
                       </TableCell>
                     </TableRow>
                   </TableHead>
-
+                  {/* Loops over each loan and displays related field for additional data*/}
                   <TableBody>
                     {rowData.map((loan) => (
                       <TableRow
@@ -872,6 +898,7 @@ function Rollforward() {
               </TableContainer>
             </Box>
 
+            {/* Displays Funds Flow */}
             {isFundsFlow ? (
               <Box
                 sx={{
@@ -1081,6 +1108,7 @@ function Rollforward() {
         ""
       )}
 
+      {/* Form submit and clear buttons */}
       <Box sx={{ marginLeft: 5 }}>{message && <div className="alertMessage">{message}</div>}</Box>
       <div style={{ marginTop: "40px" }}>
         <Button

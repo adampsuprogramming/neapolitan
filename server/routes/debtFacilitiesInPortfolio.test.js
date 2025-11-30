@@ -11,14 +11,13 @@ require("../db").query = mockedQuery;
 const pool = require("../db");
 pool.end = jest.fn();
 
-const {getDebtFacilities} = require("../routes/debtFacilitiesInPortfolio");
+const { getDebtFacilities } = require("../routes/debtFacilitiesInPortfolio");
 
 afterAll(async () => {
   await pool.end();
 });
 
 describe("test getDebtFacilities(portfolioId, asOfDate)", () => {
-
   it("test ability of getDebtFacilities to accept portfolioID and asOfDate and return list of debt facilities IDs in a portfolio", async () => {
     mockedQuery.mockResolvedValue({
       rows: [
@@ -60,5 +59,5 @@ WHERE d.portfolio_id=$1 and dfo.start_date<=$2 and (dfo.end_date>$2 OR dfo.end_d
 `,
       [888, "2025-09-01"],
     );
-       });
   });
+});

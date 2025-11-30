@@ -527,7 +527,9 @@ function UpdateMetrics() {
                 <Box sx={{ fontWeight: "bold", fontSize: "18px" }}>As of Date: </Box>
                 <Box sx={{ fontSize: "18px" }}>
                   {metrics[0]?.start_date
-                    ? new Date(new Date(metrics[0].start_date).toISOString().split('T')[0] + "T12:00:00").toLocaleDateString("en-US")
+                    ? new Date(
+                        new Date(metrics[0].start_date).toISOString().split("T")[0] + "T12:00:00",
+                      ).toLocaleDateString("en-US")
                     : ""}
                 </Box>
 
