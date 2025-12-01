@@ -10,7 +10,6 @@ import Button from "@mui/material/Button";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { Typography, Box } from "@mui/material";
 
-
 function Dashboard() {
   const [facilityData, setFacilityData] = useState([]);
   const [uniqueNames, setUniqueNames] = useState([]);
@@ -100,7 +99,7 @@ function Dashboard() {
   }
 
   const getArcLabelPercentage = (params) => {
-    const total = lienChartData.data.reduce((a,b) => a + b.value, 0);
+    const total = lienChartData.data.reduce((a, b) => a + b.value, 0);
     return `${((params.value / total) * 100).toFixed(0)}%`;
   };
 
@@ -286,13 +285,14 @@ function Dashboard() {
                         ...lienChartData,
                         arcLabel: getArcLabelPercentage,
                         arcLabelMinAngle: 20,
-                      }]}
+                      },
+                    ]}
                     width={600}
                     height={350}
                     sx={{
                       [`& .${pieArcLabelClasses.root}`]: {
-                        fontWeight: 'bold',
-                      }
+                        fontWeight: "bold",
+                      },
                     }}
                     slotProps={{
                       legend: {
@@ -315,13 +315,14 @@ function Dashboard() {
                         ...naicsChartData,
                         arcLabel: getArcLabelPercentage,
                         arcLabelMinAngle: 20,
-                      }]}
+                      },
+                    ]}
                     width={600}
                     height={350}
                     sx={{
                       [`& .${pieArcLabelClasses.root}`]: {
-                        fontWeight: 'bold',
-                      }
+                        fontWeight: "bold",
+                      },
                     }}
                     slotProps={{
                       legend: {
@@ -345,13 +346,14 @@ function Dashboard() {
                         ...hqChartData,
                         arcLabel: getArcLabelPercentage,
                         arcLabelMinAngle: 20,
-                      }]}
+                      },
+                    ]}
                     width={600}
                     height={350}
                     sx={{
                       [`& .${pieArcLabelClasses.root}`]: {
-                        fontWeight: 'bold',
-                      }
+                        fontWeight: "bold",
+                      },
                     }}
                     slotProps={{
                       legend: {
@@ -374,13 +376,14 @@ function Dashboard() {
                         ...revRegionData,
                         arcLabel: getArcLabelPercentage,
                         arcLabelMinAngle: 20,
-                      }]}
+                      },
+                    ]}
                     width={600}
                     height={350}
                     sx={{
                       [`& .${pieArcLabelClasses.root}`]: {
-                        fontWeight: 'bold',
-                      }
+                        fontWeight: "bold",
+                      },
                     }}
                     slotProps={{
                       legend: {
@@ -399,18 +402,19 @@ function Dashboard() {
                 <Typography align="center">Value by Public/Private</Typography>
                 <PieChart
                   series={[
-                      {
-                        ...publicData,
-                        arcLabel: getArcLabelPercentage,
-                        arcLabelMinAngle: 20,
-                      }]}
-                    width={600}
-                    height={350}
-                    sx={{
-                      [`& .${pieArcLabelClasses.root}`]: {
-                        fontWeight: 'bold',
-                      }
-                    }}
+                    {
+                      ...publicData,
+                      arcLabel: getArcLabelPercentage,
+                      arcLabelMinAngle: 20,
+                    },
+                  ]}
+                  width={600}
+                  height={350}
+                  sx={{
+                    [`& .${pieArcLabelClasses.root}`]: {
+                      fontWeight: "bold",
+                    },
+                  }}
                   slotProps={{
                     legend: {
                       direction: "horizontal",
