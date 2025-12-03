@@ -7,10 +7,7 @@ import { render, screen, within, waitFor } from "@testing-library/react";
 import AssetBalanceReport from "./AssetBalanceReport";
 import { fireEvent } from "@testing-library/react";
 
-jest.mock("axios", () => ({
-  get: jest.fn(() => Promise.resolve({ data: [] })),
-  post: jest.fn(() => Promise.resolve({ data: [] })),
-}));
+jest.mock("axios");
 
 process.env.REACT_APP_BACKEND_URL = "http://localhost:5000";
 
