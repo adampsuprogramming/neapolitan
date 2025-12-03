@@ -17,9 +17,7 @@ let asOfDateObject;
 
 router.get("/api/pieChartCalculations", async (req, res) => {
   const { debtFacilityId, asOfDate } = req.query;
-  console.log(asOfDate);
   asOfDateObject = new Date(asOfDate + "T00:00:00");
-  console.log(asOfDateObject);
   try {
     const facilityCollateral = await getFacilityCollateral(debtFacilityId);
     const collateralBalances = await getBalances(debtFacilityId);

@@ -41,7 +41,6 @@ import UpdateRates from "./UpdateRates";
 import UpdateMetrics from "./UpdateMetrics";
 import UpdateBankMetrics from "./UpdateBankMetrics";
 import Rollforward from "./Rollforward";
-import OtherReporting from "./OtherReporting";
 import Profile from "./Profile";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";

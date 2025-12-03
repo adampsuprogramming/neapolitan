@@ -12,6 +12,7 @@ import TopNav from "./TopNav";
 
 jest.mock(`@auth0/auth0-react`);
 
+
 describe('TopNav', () => {
     it('shows login link if user IS NOT authenticated with Auth0', () => {
         useAuth0.mockReturnValue({
