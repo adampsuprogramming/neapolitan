@@ -68,7 +68,7 @@ function getStartOfPeriodBalances(allIdsStart, collateralBalances, startDateObje
       if (collateralBalances.rows[j].collateral_id === allIdsStart[i]) {
         if (
           collateralBalances.rows[j].start_date <= startDateObject &&
-          collateralBalances.rows[j].end_date > startDateObject &&
+          (collateralBalances.rows[j].end_date > startDateObject || collateralBalances.rows[j].end_date === null) &&
           (earliestDate === null || collateralBalances.rows[j].start_date < earliestDate)
         ) {
           earliestDate = collateralBalances.rows[j].start_date;

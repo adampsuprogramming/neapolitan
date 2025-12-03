@@ -1,9 +1,17 @@
+// ************************************************************************************************
+// *     UT-125 – Test that login link is shown if user IS NOT authenticated                      *
+// *     UT-126 - Test that logout link is shown if user IS authenticated                         *
+// ************************************************************************************************
+
+
+
 import { render, screen } from "@testing-library/react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BrowserRouter } from "react-router-dom";
 import TopNav from "./TopNav";
 
 jest.mock(`@auth0/auth0-react`);
+
 
 describe('TopNav', () => {
     it('shows login link if user IS NOT authenticated with Auth0', () => {

@@ -125,6 +125,10 @@ function UpdateRates() {
         setMessage("Please input all required fields (denoted by *)");
         return;
       }
+      if (changeDate<=rateData[0].start_date) {
+        setMessage("Date must be after previous rate update date.")
+        return;
+      }
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createratechange`,
         {

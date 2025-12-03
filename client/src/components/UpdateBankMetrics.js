@@ -264,6 +264,10 @@ function UpdateMetrics() {
         setMessage("Please input all required fields (denoted by *)");
         return;
       }
+      if (changeDate<=metrics[0].start_date) {
+        setMessage("Date must be after previous bank metric date.")
+        return;
+      }
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/createBankMetricsChange`,
         {
